@@ -21,6 +21,13 @@ Each project keeps its own README, architecture notes, decisions, limitations,
 demo, selected source files and tests. They are grouped here so one link is
 enough for a recruiter, but the examples remain independently runnable.
 
+## Project Atlas navigator
+
+The [Project Atlas site](site/README.md) adds a single-page interface for
+moving between the four summaries. It uses the same bounded claims as these
+README files and links back to the reviewable source. It contains no form,
+analytics, private API call or runtime secret.
+
 ```mermaid
 flowchart LR
     P[Portfolio index] --> S[Synthevia\nfrontend and API samples]
@@ -48,8 +55,9 @@ Prerequisites: Python 3.12 or newer, [uv](https://docs.astral.sh/uv/), Node.js
 That command installs each locked dependency set, runs lint and selected tests,
 runs strict type checking where configured, audits the frontend dependencies,
 regenerates the four synthetic demo outputs, validates the Synthevia frontend
-and checks local Markdown links. It does not contact a private API, exchange,
-Discord, Telegram, production server or real database.
+and the Project Atlas site, then checks local Markdown links. It does not
+contact a private API, exchange, Discord, Telegram, production server or real
+database.
 
 For a shorter review, open a project README and run only its documented demo.
 

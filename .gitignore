@@ -38,6 +38,9 @@ htmlcov/
 dist/
 build/
 .cache/
+.design-qa/
+design-qa.md
+site/AGENTS.md
 
 .DS_Store
 Thumbs.db
@@ -45,4 +48,3 @@ Thumbs.db
 .idea/
 *.log
 *.pid
-

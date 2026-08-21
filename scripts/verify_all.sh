@@ -35,4 +35,12 @@ verify_python_project "gargantua" "gargantua_showcase.demo_data" "no"
 verify_python_project "strategy-lab" "strategy_lab_showcase.demo" "yes"
 verify_python_project "mytradingbot" "mytradingbot_showcase.qualification" "yes"
 
+(
+  cd "$repository_root/site"
+  npm ci --ignore-scripts
+  npm audit --audit-level=high
+  npm test
+  npm run build
+)
+
 python3 "$repository_root/scripts/check_markdown_links.py"

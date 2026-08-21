@@ -1,9 +1,10 @@
 # MyTradingBot
 
-An additional runnable sample derived from a larger private automation
-prototype. Its public code is limited to paper execution, explicit live-mode
-rejection, absolute and configurable equity-relative notional limits, synthetic
-qualification arithmetic and a read-only health response.
+MyTradingBot explored how far trading automation could go without crossing into
+live execution. This secondary portfolio sample keeps only the paper path,
+explicit live-mode rejection, absolute and configurable equity-relative
+notional limits, synthetic qualification arithmetic and a read-only health
+response.
 
 ## Why this is an additional sample
 

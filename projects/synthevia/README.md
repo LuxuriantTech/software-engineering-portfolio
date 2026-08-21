@@ -1,9 +1,10 @@
 # Synthevia
 
-A small runnable sample derived from a larger private product. Its public
-workspace path is React → local FastAPI → in-memory SQLite synthetic record;
-it also includes deterministic lexical retrieval over fictional documents and
-local synthetic-data generation.
+The private Synthevia product brings account, document and research workflows
+into one interface. This public edition keeps one path that a reviewer can run
+end to end: a React view loads a synthetic workspace through local FastAPI and
+in-memory SQLite. Deterministic retrieval and data generation remain separate,
+smaller examples.
 
 ## Scope of this sample
 

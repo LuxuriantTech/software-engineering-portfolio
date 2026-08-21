@@ -1,8 +1,8 @@
 # Synthevia Strategy Lab
 
-A small runnable sample derived from a larger internal research lab. It exposes
-synthetic-data controls for strategy evaluation, typed code and reproducible
-validation checks; it is not a trading product.
+Strategy Lab is where a promising backtest is expected to fail. This public
+edition contains a few generic controls I use to reject weak conclusions, all
+driven by synthetic data and strict typed checks. It is not a trading product.
 
 ## Research boundary
 

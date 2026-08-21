@@ -1,10 +1,10 @@
 # Gargantua / GLXBot
 
-A small runnable sample derived from a larger private community project. The
-public code contains an asynchronous moderation service, a role gate, an
-in-memory audit record, a fictional FastAPI response and a synthetic-data
-generator; it does not contain a Discord bot, gateway connection, React
-dashboard or database.
+Gargantua addresses the day-to-day needs of a Discord community: moderation,
+administration and an audit trail. This offline edition reduces that larger
+private system to the permission boundary I most want a reviewer to inspect,
+plus a fictional FastAPI response and synthetic-data generator. It contains no
+Discord bot, gateway connection, React dashboard or database.
 
 ## Public scope
 

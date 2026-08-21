@@ -1,5 +1,6 @@
 {
   "workspace_id": "demo-workspace-01",
+  "workspace_name": "Northstar Demo",
   "account": {
     "name": "Alex Example",
     "email": "alex@example.com"

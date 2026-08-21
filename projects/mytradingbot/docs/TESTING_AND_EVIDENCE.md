@@ -7,7 +7,7 @@ Verified locally on 21 August 2026, branch `main`, no remote, using Python
 | --- | --- | --- |
 | uv run --no-sync ruff check src tests scripts | Passed | Sanitized Python and local tooling |
 | uv run --no-sync mypy src | Passed | Public source types |
-| uv run --no-sync pytest -q | 6 passed | Paper fill, live rejection, risk, qualification and health |
+| uv run --no-sync pytest -q | 10 passed | Disabled CDN-backed docs, paper fill, live rejection, risk, qualification and health |
 | python -m mytradingbot_showcase.qualification | NO-GO | Fixed synthetic arithmetic |
 | Local Markdown link check | Passed | Versioned Markdown files, local targets only |
 

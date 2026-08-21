@@ -1,14 +1,16 @@
 # MyTradingBot
 
-A paper-first Python automation prototype with strategy orchestration, risk
-controls, FastAPI services and auditable qualification workflows.
+An additional runnable sample derived from a larger private automation
+prototype. Its public code is limited to paper execution, explicit live-mode
+rejection, absolute and configurable equity-relative notional limits, synthetic
+qualification arithmetic and a read-only health response.
 
-## Current status
+## Why this is an additional sample
 
-The private project is an advanced research prototype. It is not
-production-ready, stable live-trading software or evidence of profitability.
-This sanitized repository goes further: live execution is absent by design and
-every example uses synthetic values.
+It is intentionally secondary to the broader software samples in this
+portfolio. The private project is an advanced research prototype, not
+production-ready live-trading software or evidence of profitability. This
+edition removes live execution and uses synthetic values throughout.
 
 ## Why paper-first matters
 
@@ -26,7 +28,7 @@ historical test count as proof that the whole system was ready.
 
 - a paper exchange with deterministic simulated slippage;
 - an explicit exception when live mode is requested;
-- a Decimal-based synthetic notional gate;
+- Decimal-based absolute and configurable equity-relative notional limits;
 - a qualification report that subtracts simulated costs;
 - a local health route that reports paper-only and no external calls;
 - focused tests for the failure and audit paths.
@@ -60,9 +62,9 @@ exposes health information only. See [Architecture](docs/ARCHITECTURE.md).
 
 ## Technical stack
 
-### Automation core
+### Public automation boundary
 
-Python, FastAPI, Pydantic concepts and Decimal for price or notional examples.
+Python, FastAPI and Decimal for paper-execution and notional examples.
 
 ### Evidence boundary
 
@@ -111,7 +113,7 @@ not become a success claim.
 **Current limitation:** CANDIDATE means only that one arithmetic gate passed;
 it does not authorize deployment or capital.
 
-## Testing and evidence
+## Targeted checks
 
 Latest verified local run — 21 August 2026, branch `main`, Python 3.12.13 and uv 0.11.7.
 
@@ -123,7 +125,7 @@ uv run --no-sync pytest -q
 PYTHONPATH=src uv run --no-sync python -m mytradingbot_showcase.qualification
 ~~~
 
-Result: 6 tests passed; lint, strict type checking and the local Markdown-link
+Result: 10 tests passed; lint, strict type checking and the local Markdown-link
 check passed. Tests cover live
 mode rejection, deterministic paper fills, notional rejection, an auditable
 risk decision, a NO-GO after costs and the paper-only health response.
@@ -144,49 +146,19 @@ The demo prints a synthetic NO-GO because 4 gross basis points do not clear 6
 simulated basis points of cost. It does not contact Telegram, an exchange or a
 database. Initial dependency installation requires package-index access.
 
-## How I used Claude Code and Codex
+## Review check: live-mode rejection
 
-Claude Code and Codex helped implement, inspect and debug parts of the
-prototype. I defined the paper-first requirements, split work across
-components, reviewed tests and qualification artifacts, analysed failures and
-decided whether results were acceptable.
-
-I do not claim that the code was written without AI assistance. The engineering
-signal I want to make reviewable is the control process: bounded agent work,
-failure-path tests, explicit limits and no promotion from paper results to a live
-claim.
-
-For example, I rejected a design that relied only on a runtime flag and kept no
-live adapter in this edition. The tests require a live-mode request to raise,
-and the demo records `NO-GO` when 4 gross basis points do not clear 6 simulated
-basis points of cost.
+The portfolio-wide Claude Code and Codex workflow is described in the
+[portfolio README](../../README.md#how-i-use-coding-agents). For this sample,
+review rejected a runtime-flag-only design: there is no live adapter, and a
+live-mode request must raise before any paper-fill path can run.
 
 ## Paper-execution boundary
 
 - The paper fill model is deterministic and deliberately small.
-- Risk evaluation demonstrates one notional ceiling, not portfolio risk.
+- Risk evaluation demonstrates absolute and configurable equity-relative
+  notional limits, not portfolio risk.
 - The API has no strategy or order route.
 - No current live readiness or stable profitability has been demonstrated.
 - The complete private suite was not green in the evidence reviewed.
 - Telegram, CCXT and VPS workflows are outside the public boundary.
-
-## Private technical review
-
-The complete repositories remain private because they include proprietary
-implementation, infrastructure and operational configuration.
-
-After an initial interview, I can provide:
-
-- a guided technical walkthrough;
-- selected source files;
-- test evidence;
-- or temporary read-only access to a dedicated sanitized review repository.
-
-Any repository access would be to a separate sanitized copy for 7 to 14 days,
-without administrative permission or deployment keys. Read-only access does
-not prevent copying.
-
-## Contact
-
-Ardian Mehaj — Brussels, Belgium  
-mehajardian@gmail.com

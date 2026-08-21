@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="Gargantua sanitized demo", version="1.0.0")
+app = FastAPI(
+    title="Gargantua sanitized demo",
+    version="0.1.0",
+    docs_url=None,
+    redoc_url=None,
+)
 
 
 @app.get("/api/dashboard")
@@ -14,4 +19,3 @@ def dashboard() -> dict[str, object]:
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok", "scope": "offline-demo"}
-

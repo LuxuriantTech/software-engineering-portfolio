@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="MyTradingBot sanitized demo", version="1.0.0")
+app = FastAPI(
+    title="MyTradingBot sanitized demo",
+    version="0.1.0",
+    docs_url=None,
+    redoc_url=None,
+)
 
 
 @app.get("/health")
@@ -10,4 +15,3 @@ def health() -> dict[str, str | bool]:
         "execution": "paper-only",
         "external_calls": False,
     }
-

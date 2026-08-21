@@ -4,9 +4,10 @@ import json
 from pathlib import Path
 
 
-def generate_demo_data(output: Path) -> Path:
-    payload = {
+def build_demo_payload() -> dict[str, object]:
+    return {
         "workspace_id": "demo-workspace-01",
+        "workspace_name": "Northstar Demo",
         "account": {"name": "Alex Example", "email": "alex@example.com"},
         "financial_activity": "simulated",
         "documents": [
@@ -14,6 +15,10 @@ def generate_demo_data(output: Path) -> Path:
             {"id": "demo-2", "title": "Synthetic billing guide"},
         ],
     }
+
+
+def generate_demo_data(output: Path) -> Path:
+    payload = build_demo_payload()
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return output

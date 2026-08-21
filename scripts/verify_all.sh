@@ -25,6 +25,7 @@ verify_python_project "synthevia" "synthevia_showcase.demo_data" "no"
 (
   cd "$repository_root/projects/synthevia/frontend"
   npm ci
+  npm audit --audit-level=high
   npm test
   npm run typecheck
   npm run build
@@ -35,4 +36,3 @@ verify_python_project "strategy-lab" "strategy_lab_showcase.demo" "yes"
 verify_python_project "mytradingbot" "mytradingbot_showcase.qualification" "yes"
 
 python3 "$repository_root/scripts/check_markdown_links.py"
-

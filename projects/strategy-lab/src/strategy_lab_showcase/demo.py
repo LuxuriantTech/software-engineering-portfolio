@@ -3,16 +3,22 @@ from __future__ import annotations
 import random
 
 
-def evaluate_synthetic_candidate(*, seed: int) -> dict[str, object]:
+def evaluate_synthetic_candidate(
+    *, seed: int, simulated_cost_bps: float = 0.75
+) -> dict[str, object]:
     generator = random.Random(seed)
     simulated_gross_bps = sum(generator.uniform(-1.0, 1.0) for _ in range(40)) / 40
-    simulated_cost_bps = 0.75
+    clears_costs = simulated_gross_bps > simulated_cost_bps
     return {
         "data": "synthetic",
         "gross_edge_bps": round(simulated_gross_bps, 4),
         "simulated_cost_bps": simulated_cost_bps,
-        "verdict": "FAIL",
-        "reason": "estimated edge does not clear simulated costs",
+        "verdict": "PASS" if clears_costs else "FAIL",
+        "reason": (
+            "estimated edge clears simulated costs"
+            if clears_costs
+            else "estimated edge does not clear simulated costs"
+        ),
     }
 
 
@@ -24,4 +30,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

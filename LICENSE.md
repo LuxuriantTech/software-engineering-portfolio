@@ -13,4 +13,3 @@ copyright holder.
 This repository does not currently accept external contributions.
 
 Contact: mehajardian@gmail.com
-

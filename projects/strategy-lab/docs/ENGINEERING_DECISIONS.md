@@ -2,9 +2,9 @@
 
 ## Falsification is an output
 
-The demo emits a structured FAIL rather than hiding an unattractive result.
-This makes the method reviewable and prevents a negative experiment from being
-mistaken for unfinished work.
+The demo emits a structured synthetic verdict rather than hiding the comparison.
+Whether it is `FAIL` or `PASS` depends on the generated gross value and supplied
+simulated cost; neither outcome is a market claim.
 
 ## Protocol state before model sophistication
 

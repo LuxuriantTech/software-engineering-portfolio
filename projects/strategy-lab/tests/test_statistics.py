@@ -1,3 +1,5 @@
+import pytest
+
 from strategy_lab_showcase.statistics import benjamini_hochberg, newey_west_mean
 
 
@@ -14,3 +16,9 @@ def test_newey_west_reports_effective_sample_information() -> None:
     assert result.max_lag == 1
     assert result.standard_error > 0
 
+
+def test_newey_west_zero_lag_matches_a_known_mean_standard_error() -> None:
+    result = newey_west_mean([1.0, 2.0, 3.0, 4.0], max_lag=0)
+
+    assert result.mean == 2.5
+    assert result.standard_error == pytest.approx(0.5590169943749475)

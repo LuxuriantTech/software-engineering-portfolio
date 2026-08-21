@@ -1,10 +1,9 @@
-# Recruiter access
+# Review path
 
-For a short review, read moderation.py and test_moderation.py, then run the API
-test. The main discussion points are asynchronous boundaries, permission
-freshness and privacy-minimising audit records.
+Read `moderation.py` and `test_moderation.py`, then run the API test. The main
+discussion points are the asynchronous role boundary and the record type without
+a message-content field.
 
-After an initial interview, I can prepare temporary read-only access to a
-separate sanitized review repository for 7 to 14 days. It would contain no
-credentials, real Discord data, deployment access or administrative permission.
-Read-only access does not prevent copying.
+No recruiter-review repository has been created. The portfolio-level policy for
+a guided discussion or selected additional evidence is in the
+[portfolio README](../../../README.md#private-technical-review).

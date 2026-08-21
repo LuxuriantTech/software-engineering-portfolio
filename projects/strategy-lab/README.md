@@ -1,9 +1,10 @@
 # Synthevia Strategy Lab
 
-Python research tooling for falsification-first strategy evaluation using
-synthetic data, typed code and reproducible validation controls.
+A small runnable sample derived from a larger internal research lab. It exposes
+synthetic-data controls for strategy evaluation, typed code and reproducible
+validation checks; it is not a trading product.
 
-## Research status
+## Research boundary
 
 The private project is internal R&D. It is not a trading product, not
 production-ready and not evidence of profitable live trading. This portfolio
@@ -24,12 +25,13 @@ from becoming a claim.
 
 ## What this edition contains
 
-- a generic Benjamini–Hochberg adjustment;
+- a Benjamini–Hochberg p-value adjustment;
 - a small Newey–West mean standard-error calculation;
 - a one-use holdout protocol;
-- a position-realizability gate;
+- a declared fill/position sanity gate;
 - an LLM output contract that abstains on invalid structure;
-- a seeded synthetic candidate that is rejected after costs;
+- a seeded synthetic candidate whose verdict depends on its generated gross
+  value and a supplied simulated cost;
 - tests and strict type checking.
 
 ## Deliberate exclusions
@@ -46,16 +48,16 @@ flowchart TD
     H[Pre-registered hypothesis] --> T[Train]
     T --> V[Validation once]
     V --> G{Protocol gates}
-    G -->|family testing| F[FDR adjustment]
+    G -->|family testing| F[BH p-value adjustment]
     G -->|dependent observations| N[HAC check]
-    G -->|position definition| P[PnL realizability]
+    G -->|position definition| P[Declared fill/position sanity gate]
     F --> O[Holdout once]
     N --> O
     P --> O
     O --> C[Costs and executable fills]
-    C --> D{Decision}
-    D -->|insufficient| X[Document FAIL]
-    D -->|survives| R[Further review, not capital]
+    C --> D{Synthetic comparison}
+    D -->|does not clear cost| X[Document FAIL]
+    D -->|clears cost| R[Further review, not capital]
 
     S[Synthetic public input] -. only public data .-> T
 ~~~
@@ -129,26 +131,18 @@ uv run --no-sync pytest -q
 PYTHONPATH=src uv run --no-sync python -m strategy_lab_showcase.demo
 ~~~
 
-Result: 7 tests passed; lint, strict type checking and the local Markdown-link
-check passed. The seeded demo
-reported FAIL because its estimated synthetic edge did not clear the stated
-simulated cost. This result covers only the selected public functions. It is
-not a validation of a strategy, a return metric or the private research corpus.
+Result: 9 tests passed; lint, strict type checking and the local Markdown-link
+check passed. The seeded demo compares a generated synthetic gross value with a
+supplied simulated cost and emits `FAIL` or `PASS`. This result covers only the
+selected public functions; it is not a validation of a strategy, a return
+metric or the private research corpus.
 
-## How I used Claude Code and Codex
+## Review check: abstention contract
 
-Claude Code and Codex supported exploration, implementation, test suggestions
-and failure analysis. I set the research rules, decomposed tasks, checked
-statistical assumptions, reviewed generated code and accepted or rejected
-results.
-
-I do not claim that every line was hand-written. The relevant skill shown here
-is structured agentic development with explicit contracts and adversarial
-verification, including the willingness to keep a negative verdict.
-
-A specific acceptance check was the LLM contract: malformed output must become
-`ABSTAIN`, never an inferred approval. Separately, the seeded candidate remains
-`FAIL` when simulated costs exceed its estimated gross edge.
+The portfolio-wide Claude Code and Codex workflow is described in the
+[portfolio README](../../README.md#how-i-use-coding-agents). Here, malformed
+LLM output must become `ABSTAIN`, never an inferred approval; the synthetic
+candidate verdict is a separate conditional comparison, not a market result.
 
 ## Known limitations
 
@@ -167,25 +161,6 @@ PYTHONPATH=src uv run --no-sync python -m strategy_lab_showcase.demo
 ~~~
 
 The command uses a fixed seed, makes no network request and prints one
-synthetic FAIL record. It cannot access a wallet, venue or real database.
+synthetic conditional verdict. It cannot access a wallet, venue or real
+database.
 Initial dependency installation requires package-index access.
-
-## Private technical review
-
-The complete repositories remain private because they include proprietary
-implementation, infrastructure and operational configuration.
-
-After an initial interview, I can provide:
-
-- a guided technical walkthrough;
-- selected source files;
-- test evidence;
-- or temporary read-only access to a dedicated sanitized review repository.
-
-Access would be limited to a separate reviewed copy, normally for 7 to 14 days.
-Read-only permission does not prevent copying.
-
-## Contact
-
-Ardian Mehaj — Brussels, Belgium  
-mehajardian@gmail.com

@@ -12,7 +12,7 @@ sequenceDiagram
     participant RiskGate
     participant PaperExchange
     participant Qualification
-    Reviewer->>RiskGate: equity + synthetic notional
+    Reviewer->>RiskGate: absolute and equity-relative synthetic notional
     RiskGate-->>Reviewer: approved or exception
     Reviewer->>PaperExchange: PAPER request
     PaperExchange-->>Reviewer: labelled simulated fill

@@ -1,9 +1,7 @@
-# AI-assisted development
+# Abstention-contract review
 
-Coding agents were used for implementation, repository exploration, test
-drafting and adversarial review. I owned the pre-registered question, protocol
-constraints, evidence standards and final verdict.
-
-LLM output is not treated as a statistical result. In the public sample it must
-match a narrow contract; otherwise deterministic code abstains. In the wider
-workflow, numerical claims still require calculation and independent checks.
+See the [portfolio-wide agent workflow](../../../README.md#how-i-use-coding-agents).
+Here, malformed LLM output is checked against a narrow contract and becomes
+`ABSTAIN`; it cannot be inferred into an approval. The separate synthetic
+candidate verdict remains conditional on its generated value and supplied
+simulated cost.

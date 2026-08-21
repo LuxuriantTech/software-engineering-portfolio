@@ -1,24 +1,21 @@
 # Ardian Mehaj — Software Engineering Portfolio
 
-Four selected software projects in one repository, with runnable synthetic
-demos, focused tests and the engineering limits I would discuss in an
-interview.
+Four small runnable samples derived from larger private projects. They use
+synthetic data, focused tests and explicit limits so that a reviewer can inspect
+selected engineering decisions without access to a private system.
 
 I am a junior software developer based in Brussels. I work mainly with Python,
 FastAPI, TypeScript, React, PostgreSQL and automated testing, with an emphasis
 on requirements, debugging and verification.
 
-Planning to begin the University of London BSc Computer Science programme in
-October 2026.
-
 ## Projects
 
 | Project | What is reviewable here | Status |
 |---|---|---|
-| [Synthevia](projects/synthevia/README.md) | FastAPI boundaries, deterministic retrieval, synthetic workspace data and a tested React view | Private product is pre-launch; this edition is offline and not production-ready |
-| [Gargantua / GLXBot](projects/gargantua/README.md) | Asynchronous moderation logic, permission failure, privacy-minimising audit records and a local API | Historically deployed; current runtime is unverified |
-| [Synthevia Strategy Lab](projects/strategy-lab/README.md) | FDR, a compact HAC check, one-use holdout, PnL-realizability and deterministic LLM abstention | Internal R&D; synthetic examples only |
-| [MyTradingBot](projects/mytradingbot/README.md) | Paper execution, explicit live-mode rejection, Decimal risk checks and auditable qualification | Paper-only prototype; no live-readiness or profitability claim |
+| [Synthevia](projects/synthevia/README.md) | React → local FastAPI → in-memory SQLite synthetic record, deterministic retrieval and focused frontend/backend tests | Private product is pre-launch; this edition is offline and not production-ready |
+| [Gargantua / GLXBot](projects/gargantua/README.md) | Asynchronous moderation logic, a rejected member action, a record type without a message-content field and a local API | Historically deployed; current runtime is unverified |
+| [Synthevia Strategy Lab](projects/strategy-lab/README.md) | Benjamini–Hochberg p-value adjustment, a compact HAC check, one-use holdout, a declared fill/position sanity gate and deterministic LLM abstention | Internal R&D; synthetic examples only |
+| [MyTradingBot](projects/mytradingbot/README.md) | Additional paper-execution sample: live-mode rejection, absolute and configurable equity-relative notional limits and synthetic NO-GO qualification | Paper-only prototype; no live-readiness or profitability claim |
 
 Each project keeps its own README, architecture notes, decisions, limitations,
 demo, selected source files and tests. They are grouped here so one link is
@@ -26,10 +23,10 @@ enough for a recruiter, but the examples remain independently runnable.
 
 ```mermaid
 flowchart LR
-    P[Portfolio index] --> S[Synthevia\nfull-stack integration]
-    P --> G[Gargantua\ncommunity automation]
-    P --> L[Strategy Lab\nresearch controls]
-    P --> M[MyTradingBot\npaper-first automation]
+    P[Portfolio index] --> S[Synthevia\nfrontend and API samples]
+    P --> G[Gargantua\nmoderation service sample]
+    P --> L[Strategy Lab\nresearch guard samples]
+    P --> M[MyTradingBot\nadditional paper-execution sample]
 
     D[Synthetic local data] --> S
     D --> G
@@ -49,10 +46,10 @@ Prerequisites: Python 3.12 or newer, [uv](https://docs.astral.sh/uv/), Node.js
 ```
 
 That command installs each locked dependency set, runs lint and selected tests,
-runs strict type checking where configured, regenerates the four synthetic demo
-outputs, validates the Synthevia frontend and checks local Markdown links. It
-does not contact a private API, exchange, Discord, Telegram, production server
-or real database.
+runs strict type checking where configured, audits the frontend dependencies,
+regenerates the four synthetic demo outputs, validates the Synthevia frontend
+and checks local Markdown links. It does not contact a private API, exchange,
+Discord, Telegram, production server or real database.
 
 For a shorter review, open a project README and run only its documented demo.
 
@@ -92,3 +89,7 @@ created recruiter-access repositories as part of this publication package.
 Ardian Mehaj — Brussels, Belgium  
 mehajardian@gmail.com
 
+## Education
+
+Planning to begin the University of London BSc Computer Science programme in
+October 2026.

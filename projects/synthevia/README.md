@@ -1,33 +1,35 @@
 # Synthevia
 
-A full-stack SaaS platform built with React, FastAPI and PostgreSQL. This
-repository contains a small offline portfolio edition of the private
-pre-launch product.
+A small runnable sample derived from a larger private product. Its public
+workspace path is React → local FastAPI → in-memory SQLite synthetic record;
+it also includes deterministic lexical retrieval over fictional documents and
+local synthetic-data generation.
 
-## Current status
+## Scope of this sample
 
 The private product is pre-launch. This repository is a small, independently
 rebuilt portfolio edition: it is offline by default, paper-only where financial
 examples appear, and not production-ready. Current deployment state was not
 verified during the 20 August 2026 portfolio audit.
 
-## Why I built it
+## Why this sample exists
 
 Synthevia started as a single workspace for account management, subscription
 flows, document retrieval and research tools. The hard part was not adding one
 more API integration. It was keeping authentication, persistence, background
 work and a TypeScript interface understandable as the scope grew.
 
-I used the project to practise product decomposition and integration: defining
-the workflow first, giving coding agents bounded tasks, reviewing their output,
-and rejecting changes that did not survive tests or security review.
+This public sample isolates a few reviewable boundaries rather than attempting
+to reproduce the private application's integrations.
 
 ## What is included
 
-- a FastAPI status endpoint that discloses the demo boundary;
+- a React workspace view that loads one local API contract;
+- a FastAPI endpoint backed by an in-memory SQLite synthetic record;
+- two read-only FastAPI responses that disclose the demo boundary;
 - deterministic retrieval over two fictional documents;
 - a synthetic workspace-data generator;
-- a small React component that labels simulated activity;
+- a separate React component that labels simulated activity;
 - focused Python and frontend tests;
 - a CI workflow with lint, tests, type checking, link checking and secret scan.
 
@@ -40,50 +42,47 @@ authentication implementation, payment and OAuth configuration, production
 endpoints, customer data, financial data, exchange adapters and research
 parameters remain private. No credential or real account is required here.
 
-## Architecture
+## Public paths
 
-The first diagram describes the private system at a non-operational level. The
-highlighted public path is the only part reproduced in this repository.
+The workspace path is entirely local: Vite proxies `/api` to FastAPI, and
+FastAPI reads a generated record from in-memory SQLite. It is not a connection
+to the private PostgreSQL, authentication or provider paths.
 
 ~~~mermaid
 flowchart LR
-    U[React client] --> A[FastAPI services]
-    A --> P[(PostgreSQL)]
-    A --> R[(Redis)]
-    A --> V[(Vector search)]
-    A -. private adapters .-> E[External providers]
-
-    D[Public demo client] --> S[Sanitized FastAPI routes]
-    S --> M[In-memory retrieval]
+    R[Reviewer] --> V[React workspace view]
+    V --> A[Local FastAPI workspace route]
+    A --> D[(In-memory SQLite synthetic record)]
+    R --> Q[Deterministic retrieval]
     G[Synthetic generator] --> J[Local JSON]
 
     classDef public fill:#e8f4ff,stroke:#2563eb
-    class D,S,M,G,J public
+    class R,V,A,D,Q,G,J public
 ~~~
 
-In the full project, the API is the boundary between the browser and data or
-external services. In this edition, persistence and providers are replaced by
-deterministic local objects. See [the architecture notes](docs/ARCHITECTURE.md).
+The private project contains other components, but they are not reproduced here.
+See [the architecture notes](docs/ARCHITECTURE.md) for the precise boundary.
 
 ## Technical stack
 
-### Product surface
+### Public code
 
-Python, FastAPI, React and TypeScript.
+Python, FastAPI, in-memory SQLite, deterministic retrieval and a React/TypeScript
+view.
 
 ### Data boundary
 
-The private project uses PostgreSQL, SQLAlchemy, Alembic, Redis and pgvector.
-This public demo uses generated JSON and in-memory documents only.
+The public workspace route uses generated data in an in-memory SQLite database;
+retrieval uses caller-supplied in-memory documents. PostgreSQL, service
+integrations and providers are not part of this sample.
 
 ### Verification
 
 pytest, Vitest, Testing Library and TypeScript type checking.
 
-### Packaging
+### Local verification
 
-The private project contains Docker and GitHub Actions configuration. The
-portfolio workflow gives this edition dedicated Python and frontend jobs.
+The portfolio workflow gives this edition dedicated Python and frontend jobs.
 
 ## Engineering decisions
 
@@ -134,29 +133,21 @@ npm run typecheck
 npm run build
 ~~~
 
-Result: the Python suite reported 6 passed; the frontend suite reported one
-test file and one test passed. Ruff, the local Markdown-link check, frontend
+Result: the Python suite reported 9 passed; the frontend suite reported one
+test file and 4 tests passed. Ruff, the local Markdown-link check, frontend
 type checking and the Vite build completed successfully.
 The scope is this sanitized repository only. It says nothing about the complete
 private suite, current deployment health or security of the original product.
 Full commands and limits are recorded in
 [Testing and evidence](docs/TESTING_AND_EVIDENCE.md).
 
-## How I used Claude Code and Codex
+## Review check: bounded retrieval
 
-I used Claude Code and Codex to accelerate implementation, exploration, review
-and debugging in the private project and in preparing this edition. My
-responsibility covered product requirements, task decomposition, validation
-criteria, integration, test review, failure analysis and final acceptance.
-
-I do not claim that every line was written manually. The point of this
-repository is to show how I framed a system, checked generated work and reduced
-it to a reproducible, safe review surface.
-
-One concrete correction came from the final adversarial review: the retrieval
-helper accepted an unbounded document iterable. I added explicit query,
-document-count and text-length limits, then kept tests that prove consumption
-stops at the validation boundary.
+The portfolio-wide Claude Code and Codex workflow is described in the
+[portfolio README](../../README.md#how-i-use-coding-agents). For this sample,
+adversarial review found an unbounded document iterable; the public helper now
+rejects oversized queries, documents and collections, with a test that verifies
+consumption stops at the validation boundary.
 
 ## Known limitations
 
@@ -170,7 +161,7 @@ stops at the validation boundary.
 
 ## Running the demo
 
-Python 3.12 or newer and uv are required.
+Python 3.12 or newer, uv, Node.js and npm are required.
 
 ~~~bash
 uv sync --locked --dev --no-install-project
@@ -178,27 +169,16 @@ PYTHONPATH=src uv run --no-sync python -m synthevia_showcase.demo_data
 PYTHONPATH=src uv run --no-sync uvicorn synthevia_showcase.api:app --host 127.0.0.1 --port 8000
 ~~~
 
-The generator writes only fictional records under demo/synthetic_data. The API
-makes no external call. Initial dependency installation requires package-index
-access. In another terminal, curl
-http://127.0.0.1:8000/api/project-summary.
+In another terminal:
 
-## Private technical review
+~~~bash
+cd frontend
+npm ci
+npm run dev
+~~~
 
-The complete repository remains private because it includes proprietary
-implementation, infrastructure and operational configuration.
-
-After an initial interview, I can provide:
-
-- a guided technical walkthrough;
-- selected source files;
-- test evidence;
-- or temporary read-only access to a dedicated sanitized review repository.
-
-Read-only access does not technically prevent copying. It would be time-limited
-and removed manually after review.
-
-## Contact
-
-Ardian Mehaj — Brussels, Belgium  
-mehajardian@gmail.com
+Open the local Vite URL printed by the command. The frontend proxies `/api` to
+the local FastAPI process and renders only the synthetic SQLite record. The
+generator writes fictional JSON under `demo/synthetic_data`; no private or
+external service is contacted. Initial dependency installation requires
+package-index access.

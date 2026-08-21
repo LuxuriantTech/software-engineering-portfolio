@@ -1,26 +1,24 @@
 # Gargantua / GLXBot
 
-A Discord community platform combining a Python bot, FastAPI services and a
-React dashboard. This repository is an offline portfolio edition of the
-private project.
+A small runnable sample derived from a larger private community project. The
+public code contains an asynchronous moderation service, a role gate, an
+in-memory audit record, a fictional FastAPI response and a synthetic-data
+generator; it does not contain a Discord bot, gateway connection, React
+dashboard or database.
 
-## Status
+## Public scope
 
 The original project was deployed historically. Its current runtime was not
 verified during the 20 August 2026 audit, so I do not present it as an active
 service. This repository is an offline review sample, not the deployed bot and
 not a production-ready release.
 
-## The community problem
+## Moderation boundary
 
-The project grew from a practical moderation problem: routine actions,
-configuration and audit trails were split between Discord commands and manual
-administration. I wanted one bot workflow for members and moderators, plus a
-dashboard for settings that were awkward to manage through chat commands.
-
-That created an asynchronous integration problem. Discord events, permission
-checks, database writes and web requests can arrive independently, while every
-action still needs to stay inside the correct guild boundary.
+The broader project grew from routine moderation and configuration work. This
+sample narrows that problem to one asynchronous boundary: a non-moderator must
+not create an audit action, while an allowed action records only its identifiers
+and a synthetic reason.
 
 ## Included here
 
@@ -38,48 +36,41 @@ administrative commands, the complete OAuth flow, privilege-sensitive
 workflows, backups, infrastructure, monitoring configuration and original Git
 history are excluded.
 
-## System shape
+## Public service path
 
 ~~~mermaid
 flowchart LR
-    DG[Discord gateway] --> B[discord.py bot]
-    B --> C[Async services]
-    W[React dashboard] --> A[FastAPI dashboard]
-    A --> C
-    C --> DB[(PostgreSQL or SQLite)]
-    C --> O[Metrics and error reporting]
-
-    R[Reviewer] --> P[Offline FastAPI sample]
-    R --> M[Sanitized moderation service]
-    M --> I[(In-memory audit)]
+    R[Reviewer] --> A[Offline FastAPI response]
+    R --> M[Async moderation service]
+    M --> G{Moderator role?}
+    G -->|no| X[PermissionDenied]
+    G -->|yes| I[(In-memory audit record)]
 
     classDef public fill:#eef7ee,stroke:#238636
-    class R,P,M,I public
+    class R,A,M,G,X,I public
 ~~~
 
-The upper path is the verified logical architecture of the private codebase;
-the lower path is this repository. Discord, OAuth and monitoring are not mocked
-as if they were real. More detail is in [Architecture](docs/ARCHITECTURE.md).
+Discord, OAuth, storage and monitoring are not mocked as if they were real.
+More detail is in [Architecture](docs/ARCHITECTURE.md).
 
 ## Technical stack
 
-### Runtime
+### Public runtime
 
-Python, discord.py, FastAPI, React and TypeScript.
+Python, an asynchronous service, dataclasses and FastAPI.
 
 ### Storage boundary
 
-PostgreSQL and SQLite in the private system; plain Python objects and generated
-JSON in this edition.
+Plain Python objects and generated JSON only. The sample has no database.
 
 ### Failure-path checks
 
 pytest, pytest-asyncio and FastAPI TestClient.
 
-### Historical operations
+### Local verification
 
-The private repository contains Docker Compose, nginx, Prometheus and Sentry
-integration. The showcase contains GitHub Actions only.
+The portfolio workflow runs the selected Python checks without Discord, a
+private database or Sentry.
 
 ## Decisions I can defend
 
@@ -125,26 +116,17 @@ uv run --no-sync pytest -q
 PYTHONPATH=src uv run --no-sync python -m gargantua_showcase.demo_data
 ~~~
 
-Result: 4 tests passed; Ruff and the local Markdown-link check passed. The tests cover a rejected member action, an audited
+Result: 5 tests passed; Ruff and the local Markdown-link check passed. The tests cover disabled CDN-backed docs, a rejected member action, an audited
 moderator action, fictional dashboard data and generated data without message
 content. This is a selected showcase suite, not the private project's full
 historical test count or current deployment health.
 
-## How I used Claude Code and Codex
+## Review check: member-action rejection
 
-Claude Code and Codex helped explore the larger repository, implement bounded
-changes and suggest tests. I defined the behaviour, separated sensitive from
-publishable paths, reviewed failures and decided which results were acceptable.
-I do not claim that every line was manually written.
-
-The important part for this project was verification at permission and guild
-boundaries. Generated code was challenged with negative tests and an
-independent security pass; issues found in the private code are tracked
-privately rather than described here.
-
-For example, I required a member-level action to fail before accepting the
-moderation service, then checked that an allowed action records actor, subject
-and reason without copying Discord message content.
+The portfolio-wide Claude Code and Codex workflow is described in the
+[portfolio README](../../README.md#how-i-use-coding-agents). Here, the review
+criterion was that a member-level action fails before an audit mutation; the
+accepted path records actor, subject and reason without a message-content field.
 
 ## Limits
 
@@ -168,23 +150,3 @@ Open http://127.0.0.1:8000/api/dashboard. The returned guild is fictional; the
 server does not connect to Discord or write a database. Initial dependency
 installation requires package-index access; the installed demo makes no
 outbound request.
-
-## Private technical review
-
-The complete repositories remain private because they include proprietary
-implementation, infrastructure and operational configuration.
-
-After an initial interview, I can provide:
-
-- a guided technical walkthrough;
-- selected source files;
-- test evidence;
-- or temporary read-only access to a dedicated sanitized review repository.
-
-Such access would normally last 7 to 14 days and be removed manually. Read-only
-permission cannot prevent copying.
-
-## Contact
-
-Ardian Mehaj — Brussels, Belgium  
-mehajardian@gmail.com

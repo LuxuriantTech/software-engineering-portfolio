@@ -6,7 +6,7 @@ Verified locally on 21 August 2026, branch `main`, no remote, using Python
 | Check | Result | Boundary |
 | --- | --- | --- |
 | uv run --no-sync ruff check src tests scripts | Passed | Showcase Python and local tooling |
-| pytest | 4 passed | Permission, minimal audit, API and generator |
+| pytest | 5 passed | Disabled CDN-backed docs, permission, minimal audit, API and generator |
 | python -m gargantua_showcase.demo_data | Passed | Fictional JSON only |
 | Local Markdown link check | Passed | Versioned Markdown files, local targets only |
 

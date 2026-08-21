@@ -1,6 +1,6 @@
 [project]
 name = "synthevia-showcase"
-version = "1.0.0"
+version = "0.1.0"
 description = "Offline, sanitized components from a private full-stack platform"
 requires-python = ">=3.12"
 dependencies = [

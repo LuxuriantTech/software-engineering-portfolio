@@ -82,8 +82,8 @@ pytest, Vitest, Testing Library and TypeScript type checking.
 
 ### Packaging
 
-The private project contains Docker and GitHub Actions configuration. This
-edition keeps only a standalone GitHub Actions workflow.
+The private project contains Docker and GitHub Actions configuration. The
+portfolio workflow gives this edition dedicated Python and frontend jobs.
 
 ## Engineering decisions
 

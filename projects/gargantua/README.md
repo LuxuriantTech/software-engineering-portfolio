@@ -29,7 +29,7 @@ action still needs to stay inside the correct guild boundary.
 - a read-only FastAPI dashboard response using one fictional guild;
 - a reproducible guild-data generator;
 - focused permission, audit and API tests;
-- standalone CI without Discord, a private database or Sentry.
+- a dedicated CI job without Discord, a private database or Sentry.
 
 ## Kept private
 

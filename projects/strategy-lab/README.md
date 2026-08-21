@@ -80,8 +80,8 @@ pytest, Ruff and mypy strict.
 
 ### Reproducibility
 
-uv lockfiles and a self-contained GitHub Actions workflow. No tunnel, remote
-database or exchange is involved.
+A uv lockfile and a dedicated GitHub Actions job. No tunnel, remote database
+or exchange is involved.
 
 ## Three research decisions
 

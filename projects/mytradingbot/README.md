@@ -76,8 +76,8 @@ pytest, Ruff and mypy strict.
 ### Operational separation
 
 The private project contains GitHub Actions and exchange-related operational
-material. This edition has a separate CI workflow with no secret or private
-server dependency.
+material. The portfolio CI job requires no user-supplied credential or private
+server.
 
 ## Engineering choices
 

@@ -13,7 +13,7 @@ real configuration is not part of this edition.
 
 ## Public request flow
 
-~~~mermaid
+```mermaid
 sequenceDiagram
     participant Reviewer
     participant API
@@ -25,7 +25,7 @@ sequenceDiagram
     Service->>Service: require moderator role
     Service->>Audit: append minimal action
     Audit-->>Reviewer: sanitized action
-~~~
+```
 
 No token, gateway connection, OAuth callback, background worker or external
 telemetry is reachable from the sample.

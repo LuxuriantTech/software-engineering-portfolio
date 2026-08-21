@@ -17,7 +17,7 @@ workspace route reads a generated record from in-memory SQLite; the React sample
 loads it through the local `/api` Vite proxy. Retrieval accepts caller-supplied
 fictional documents, and the generator writes one local JSON file.
 
-~~~mermaid
+```mermaid
 sequenceDiagram
     participant Reviewer
     participant ReactView
@@ -34,7 +34,7 @@ sequenceDiagram
     Retrieval-->>Reviewer: deterministic ranking
     Reviewer->>LocalFile: generate demo data
     LocalFile-->>Reviewer: example.com identities
-~~~
+```
 
 There is no route from this edition to a production database, payment service,
 OAuth provider or trading venue.

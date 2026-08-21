@@ -42,7 +42,7 @@ history are not included.
 
 ## Control flow
 
-~~~mermaid
+```mermaid
 flowchart LR
     S[Strategy candidate] --> G{Risk gate}
     G -->|reject| N[NO-GO record]
@@ -55,7 +55,7 @@ flowchart LR
     L[Live mode] --> X[Disabled in showcase]
     T[Telegram control] -. private, excluded .-> S
     E[Exchange adapter] -. private, excluded .-> P
-~~~
+```
 
 In the public path, no node has network access or a live adapter. The API
 exposes health information only. See [Architecture](docs/ARCHITECTURE.md).

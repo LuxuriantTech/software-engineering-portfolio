@@ -7,7 +7,7 @@ are outside this repository.
 
 The public package has no I/O except the demo's JSON output to stdout:
 
-~~~mermaid
+```mermaid
 flowchart LR
     S[Seeded synthetic values] --> D[Candidate demo]
     P[P-values] --> B[BH adjustment]
@@ -16,7 +16,7 @@ flowchart LR
     O[Ordered observations] --> H[One-use holdout]
     L[Untrusted LLM object] --> V[Schema contract]
     V -->|invalid| A[ABSTAIN]
-~~~
+```
 
 The components are intentionally independent so a reviewer can challenge one
 assumption without running a research campaign.

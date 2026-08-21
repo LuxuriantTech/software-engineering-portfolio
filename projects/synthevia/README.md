@@ -48,7 +48,7 @@ The workspace path is entirely local: Vite proxies `/api` to FastAPI, and
 FastAPI reads a generated record from in-memory SQLite. It is not a connection
 to the private PostgreSQL, authentication or provider paths.
 
-~~~mermaid
+```mermaid
 flowchart LR
     R[Reviewer] --> V[React workspace view]
     V --> A[Local FastAPI workspace route]
@@ -58,7 +58,7 @@ flowchart LR
 
     classDef public fill:#e8f4ff,stroke:#2563eb
     class R,V,A,D,Q,G,J public
-~~~
+```
 
 The private project contains other components, but they are not reproduced here.
 See [the architecture notes](docs/ARCHITECTURE.md) for the precise boundary.

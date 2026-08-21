@@ -38,7 +38,7 @@ history are excluded.
 
 ## Public service path
 
-~~~mermaid
+```mermaid
 flowchart LR
     R[Reviewer] --> A[Offline FastAPI response]
     R --> M[Async moderation service]
@@ -48,7 +48,7 @@ flowchart LR
 
     classDef public fill:#eef7ee,stroke:#238636
     class R,A,M,G,X,I public
-~~~
+```
 
 Discord, OAuth, storage and monitoring are not mocked as if they were real.
 More detail is in [Architecture](docs/ARCHITECTURE.md).

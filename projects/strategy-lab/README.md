@@ -43,7 +43,7 @@ carried over.
 
 ## Method flow
 
-~~~mermaid
+```mermaid
 flowchart TD
     H[Pre-registered hypothesis] --> T[Train]
     T --> V[Validation once]
@@ -60,7 +60,7 @@ flowchart TD
     D -->|clears cost| R[Further review, not capital]
 
     S[Synthetic public input] -. only public data .-> T
-~~~
+```
 
 The public functions represent a few gates from that workflow. They are not a
 complete statistical research library. See [Architecture](docs/ARCHITECTURE.md).

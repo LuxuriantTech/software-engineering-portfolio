@@ -1,0 +1,29 @@
+[project]
+name = "strategy-lab-showcase"
+version = "1.0.0"
+description = "Falsification-first research controls using synthetic data"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "mypy>=1.18,<2",
+  "pytest>=9,<10",
+  "ruff>=0.15,<1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]

@@ -1,0 +1,18 @@
+{
+  "workspace_id": "demo-workspace-01",
+  "account": {
+    "name": "Alex Example",
+    "email": "alex@example.com"
+  },
+  "financial_activity": "simulated",
+  "documents": [
+    {
+      "id": "demo-1",
+      "title": "Synthetic onboarding guide"
+    },
+    {
+      "id": "demo-2",
+      "title": "Synthetic billing guide"
+    }
+  ]
+}

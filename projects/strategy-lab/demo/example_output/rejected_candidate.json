@@ -1,0 +1,7 @@
+{
+  "data": "synthetic",
+  "gross_edge_bps": -0.217,
+  "simulated_cost_bps": 0.75,
+  "verdict": "FAIL",
+  "reason": "estimated edge does not clear simulated costs"
+}

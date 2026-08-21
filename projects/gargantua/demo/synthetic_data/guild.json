@@ -1,0 +1,18 @@
+{
+  "guild": {
+    "id": "demo-guild-01",
+    "name": "Northstar Demo"
+  },
+  "members": [
+    {
+      "id": "demo-user-01",
+      "display_name": "Morgan Example"
+    },
+    {
+      "id": "demo-user-02",
+      "display_name": "Sam Example"
+    }
+  ],
+  "moderation_actions": [],
+  "source": "synthetic"
+}

@@ -5,7 +5,6 @@ import {
   MarkGithubIcon,
 } from "@primer/octicons-react";
 import {
-  EDUCATION_STATEMENT,
   EVIDENCE_ITEMS,
   PROJECTS,
   ROOT_REPOSITORY_URL,
@@ -215,15 +214,15 @@ export function App() {
         <p className="footer-group">
           <span>No trackers · No forms · No live services</span>
           <a
-            href={ROOT_REPOSITORY_URL + "#how-i-use-coding-agents"}
+            href={ROOT_REPOSITORY_URL + "#development-process"}
             target="_blank"
             rel="noopener noreferrer"
           >
-            How I use coding agents
+            Development process
           </a>
         </p>
         <p className="footer-group footer-group-right">
-          <span>{EDUCATION_STATEMENT}</span>
+          <span>Open to junior software, backend and applied AI roles</span>
           <a href="mailto:mehajardian@gmail.com">mehajardian@gmail.com</a>
         </p>
       </footer>

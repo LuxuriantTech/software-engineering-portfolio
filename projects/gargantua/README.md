@@ -107,7 +107,7 @@ level, not through the Discord network.
 
 ## Evidence
 
-Latest verified local run — 21 August 2026, branch `main`, Python 3.12.13 and uv 0.11.7.
+Latest verified local run: 21 August 2026, branch `main`, Python 3.12.13 and uv 0.11.7.
 
 ~~~bash
 uv sync --locked --dev --no-install-project

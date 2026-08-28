@@ -79,7 +79,7 @@ export function App({ loadWorkspace = fetchWorkspace }: AppProps) {
         </article>
         <article>
           <p className="label">Knowledge documents</p>
-          <strong>{workspace?.document_count ?? "—"}</strong>
+          <strong>{workspace?.document_count ?? "N/A"}</strong>
           <p>Synthetic onboarding and billing guides</p>
         </article>
         <article>

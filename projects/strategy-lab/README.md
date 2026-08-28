@@ -121,7 +121,7 @@ correctness of a model's reason.
 
 ## Verified checks
 
-Latest local run — 21 August 2026, branch `main`, Python 3.12.13 and uv 0.11.7.
+Latest local run: 21 August 2026, branch `main`, Python 3.12.13 and uv 0.11.7.
 
 ~~~bash
 uv sync --locked --dev --no-install-project

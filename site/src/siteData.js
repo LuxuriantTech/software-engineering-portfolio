@@ -33,6 +33,23 @@ export const EVIDENCE_ITEMS = [
 
 export const PROJECTS = [
   {
+    id: "evidencedesk",
+    name: "EvidenceDesk",
+    status: "Experimental · HONEST_NEGATIVE",
+    tone: "amber",
+    architecture: ["React + FastAPI", "Redis + ARQ", "PostgreSQL + pgvector"],
+    architectureLabel:
+      "React and FastAPI through Redis and ARQ to PostgreSQL and pgvector",
+    highlights: [
+      "Asynchronous ingestion of allowlisted synthetic documents",
+      "Hybrid retrieval reached 100% Recall@5 on 25/25 answerable v7 cases",
+      "Answers link to page-level evidence or explicitly abstain",
+    ],
+    limitation:
+      "blind v7 reached 36% answerable-case accuracy and 45.67% extraction F1, so it is not validated for production or real documents.",
+    url: "https://github.com/LuxuriantTech/evidencedesk",
+  },
+  {
     id: "synthevia",
     name: "Synthevia",
     status: "Pre-launch",

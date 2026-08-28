@@ -1,6 +1,6 @@
 # Project Atlas
 
-Project Atlas is the static navigator for this portfolio. It keeps the four
+Project Atlas is the static navigator for this portfolio. It keeps the five
 projects in one interface: choose a project, read its current status, inspect
 three reviewable boundaries and open the corresponding source directory.
 
@@ -26,7 +26,6 @@ or connection to one of the private projects.
 
 `vercel.json` publishes only `dist/client` and defines a restrictive content
 security policy, framing protection, referrer policy and permissions policy.
-The Vercel project must use `site` as its Root Directory. The production
-deployment should use the Git integration for this repository, with no
-environment variables. Preview deployments should remain protected until the
-exact production candidate has passed local and fresh-clone checks.
+Automatic Git deployments are disabled for this source-only publication. A
+separate explicit approval is required before re-enabling or performing a Vercel
+deployment.

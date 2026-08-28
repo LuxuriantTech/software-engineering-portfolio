@@ -10,14 +10,18 @@ import {
   skipToProjectDetails,
 } from "../src/siteData.js";
 
-test("publishes four distinct, bounded project summaries", () => {
-  assert.equal(PROJECTS.length, 4);
-  assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 4);
+test("publishes five distinct, bounded project summaries", () => {
+  assert.equal(PROJECTS.length, 5);
+  assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 5);
 
   for (const project of PROJECTS) {
     assert.ok(project.limitation.length > 30);
     assert.equal(project.highlights.length, 3);
-    assert.ok(project.url.startsWith(ROOT_REPOSITORY_URL + "/tree/main/projects/"));
+    if (project.id === "evidencedesk") {
+      assert.equal(project.url, "https://github.com/LuxuriantTech/evidencedesk");
+    } else {
+      assert.ok(project.url.startsWith(ROOT_REPOSITORY_URL + "/tree/main/projects/"));
+    }
   }
 });
 
@@ -43,8 +47,17 @@ test("keeps education conditional and avoids rejected marketing claims", () => {
 
 test("resolves known hashes and falls back without creating a route", () => {
   assert.equal(projectFromHash("#strategy-lab").id, "strategy-lab");
-  assert.equal(projectFromHash("#unknown").id, "synthevia");
-  assert.equal(projectFromHash("").id, "synthevia");
+  assert.equal(projectFromHash("#evidencedesk").id, "evidencedesk");
+  assert.equal(projectFromHash("#unknown").id, "evidencedesk");
+  assert.equal(projectFromHash("").id, "evidencedesk");
+});
+
+test("keeps EvidenceDesk's dedicated URL, HONEST_NEGATIVE status, and v7 answerable limit", () => {
+  const evidencedesk = PROJECTS.find((project) => project.id === "evidencedesk");
+  assert.ok(evidencedesk);
+  assert.match(evidencedesk.status, /HONEST_NEGATIVE/);
+  assert.equal(evidencedesk.url, "https://github.com/LuxuriantTech/evidencedesk");
+  assert.match(evidencedesk.limitation, /36%/);
 });
 
 test("skip link focuses the active detail without changing its project hash", () => {
@@ -98,7 +111,7 @@ test("keeps mobile project choices visibly discoverable", async () => {
   const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
   const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 
-  assert.match(appSource, /Browse all four projects/);
+  assert.match(appSource, /Browse all five projects/);
   assert.match(styleSource, /\.project-tabs-hint/);
   assert.doesNotMatch(styleSource, /\.project-tabs::-webkit-scrollbar\s*\{\s*display:\s*none;/);
 });
@@ -112,6 +125,7 @@ test("Vercel serves only the static client build with restrictive headers", asyn
   assert.equal(packageConfig.scripts["test:sites"], undefined);
   assert.equal(config.outputDirectory, "dist/client");
   assert.equal(config.framework, "vite");
+  assert.equal(config.git.deploymentEnabled, false);
   assert.equal(config.headers.length, 1);
 
   const headers = Object.fromEntries(

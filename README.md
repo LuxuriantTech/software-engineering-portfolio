@@ -1,4 +1,4 @@
-# Ardian Mehaj — Software Engineering Portfolio
+# Ardian Mehaj: Software Engineering Portfolio
 
 Four small runnable samples derived from larger private projects, plus the dedicated
 public repository for EvidenceDesk. They use synthetic data, focused tests and
@@ -99,7 +99,7 @@ published separately at [LuxuriantTech/evidencedesk](https://github.com/Luxurian
 
 ## Contact
 
-Ardian Mehaj — Brussels, Belgium  
+Ardian Mehaj, Brussels, Belgium  
 mehajardian@gmail.com
 
 ## Education

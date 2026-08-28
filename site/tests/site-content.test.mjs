@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
-  EDUCATION_STATEMENT,
   EVIDENCE_ITEMS,
   PROJECTS,
   ROOT_REPOSITORY_URL,
@@ -25,15 +24,12 @@ test("publishes five distinct, bounded project summaries", () => {
   }
 });
 
-test("keeps education conditional and avoids rejected marketing claims", () => {
-  assert.equal(
-    EDUCATION_STATEMENT,
-    "Planning to begin the University of London BSc Computer Science programme in October 2026.",
-  );
-
-  const publicCopy = JSON.stringify({ EDUCATION_STATEMENT, EVIDENCE_ITEMS, PROJECTS });
+test("avoids unconfirmed education and rejected marketing claims", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const publicCopy = JSON.stringify({ EVIDENCE_ITEMS, PROJECTS, appSource });
   const rejectedLanguage = [
     /University of London student/i,
+    /Planning to begin the University of London/i,
     /production[- ]grade/i,
     /fully secure/i,
     /profitable trading system/i,

@@ -1,13 +1,15 @@
 # Ardian Mehaj: Software Engineering Portfolio
 
-Four small runnable samples derived from larger private projects, plus the dedicated
-public repository for EvidenceDesk. They use synthetic data, focused tests and
-explicit limits so that a reviewer can inspect the work without access to a
-private system.
-
 I am a junior software developer based in Brussels. I work mainly with Python,
-FastAPI, TypeScript, React, PostgreSQL and automated testing, with an emphasis
-on requirements, debugging and verification.
+FastAPI, TypeScript, React and PostgreSQL.
+
+This repository brings together four runnable samples from larger private projects and a direct
+review path for EvidenceDesk. The examples use synthetic data and keep their limitations visible,
+so the work can be inspected without access to private systems.
+
+- [Browse the live portfolio](https://ardian-mehaj-portfolio.vercel.app)
+- [Review the complete EvidenceDesk repository](https://github.com/LuxuriantTech/evidencedesk)
+- [Run the full local verification](scripts/verify_all.sh)
 
 ## Projects
 
@@ -78,17 +80,11 @@ The examples demonstrate selected contracts, decisions and failure paths. They
 do not prove commercial traction, current deployment, production maturity,
 complete security, trading profitability or readiness to use capital.
 
-## How I use coding agents
+## Development process
 
-I use Claude Code and Codex for exploration, implementation, review and
-debugging. I define the requirements, split work into bounded tasks, inspect
-the result, run the evidence and decide what is accepted. I do not claim that
-every line was written manually.
-
-The project READMEs give concrete examples: an unbounded retrieval input was
-restricted in Synthevia; a permission-failure path was retained in Gargantua;
-malformed LLM output must become `ABSTAIN` in Strategy Lab; and MyTradingBot
-removes the live adapter instead of trusting only a runtime flag.
+I use coding assistants when they are useful, but I remain responsible for the requirements,
+review, tests and final publication. The examples keep failure cases and limits visible instead of
+claiming results they do not prove.
 
 ## Private technical review
 
@@ -102,7 +98,6 @@ published separately at [LuxuriantTech/evidencedesk](https://github.com/Luxurian
 Ardian Mehaj, Brussels, Belgium  
 mehajardian@gmail.com
 
-## Education
+## License
 
-Planning to begin the University of London BSc Computer Science programme in
-October 2026.
+The repository is published for portfolio review under the terms in [LICENSE.md](LICENSE.md).

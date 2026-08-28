@@ -1,9 +1,6 @@
 export const ROOT_REPOSITORY_URL =
   "https://github.com/LuxuriantTech/software-engineering-portfolio";
 
-export const EDUCATION_STATEMENT =
-  "Planning to begin the University of London BSc Computer Science programme in October 2026.";
-
 export const EVIDENCE_ITEMS = [
   {
     kind: "test-metric",

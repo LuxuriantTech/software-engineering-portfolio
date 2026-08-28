@@ -3,6 +3,9 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/client",
+  "git": {
+    "deploymentEnabled": false
+  },
   "headers": [
     {
       "source": "/(.*)",

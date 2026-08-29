@@ -1,8 +1,11 @@
 # Project Atlas
 
-Project Atlas is the static navigator for this portfolio. It keeps the five
+Project Atlas is the static navigator for this portfolio. It keeps the six
 projects in one interface: choose a project, read its current status, inspect
 three reviewable boundaries and open the corresponding source directory.
+
+EvidenceDesk and API Contract Guard link to their dedicated public repositories;
+their source trees are not copied into this portfolio.
 
 The interface is deliberately smaller than the project README files. Claims,
 limitations and test totals come from the verified public edition; the site

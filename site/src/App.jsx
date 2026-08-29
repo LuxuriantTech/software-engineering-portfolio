@@ -24,7 +24,7 @@ function ProjectNavigation({ activeId, onSelect }) {
 
   return (
     <nav className="project-navigation" aria-label="Selected projects">
-      <p className="project-tabs-hint">Browse all five projects</p>
+      <p className="project-tabs-hint">Browse all six projects</p>
       <div className="project-tabs" role="tablist" aria-label="Portfolio projects">
         {PROJECTS.map((project, index) => {
           const isActive = project.id === activeId;

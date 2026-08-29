@@ -47,6 +47,23 @@ export const PROJECTS = [
     url: "https://github.com/LuxuriantTech/evidencedesk",
   },
   {
+    id: "api-contract-guard",
+    name: "API Contract Guard",
+    status: "Local CLI · bounded scope",
+    tone: "blue",
+    architecture: ["OpenAPI", "TypeScript CLI", "JSON + HTML"],
+    architectureLabel:
+      "OpenAPI documents through a local TypeScript CLI to deterministic JSON and HTML reports",
+    highlights: [
+      "Five supported breaking-change categories with deterministic output",
+      "Bounded local files and references; unsupported shapes fail closed",
+      "102 tests and a reproducible synthetic operation-removal demo",
+    ],
+    limitation:
+      "this is a local tool for a defined OpenAPI subset, not a hosted service, production-client validation or a general compatibility verdict.",
+    url: "https://github.com/LuxuriantTech/api-contract-guard",
+  },
+  {
     id: "synthevia",
     name: "Synthevia",
     status: "Pre-launch",

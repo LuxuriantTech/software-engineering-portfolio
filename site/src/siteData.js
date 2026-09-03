@@ -7,26 +7,28 @@ export const CONTACT = {
   linkedin: "https://www.linkedin.com/in/ardian-mehaj-572b5a3b0/",
 };
 
+export const CONTENTS = [
+  { number: "1", label: "Introduction", href: "#introduction" },
+  { number: "2", label: "Selected work", href: "#work" },
+  { number: "3", label: "Skills", href: "#skills" },
+  { number: "4", label: "About & contact", href: "#about" },
+];
+
 export const EVIDENCE_ITEMS = [
   {
     value: "6",
-    label: "documented systems",
-    detail: "Public code or bounded project notes for every case study.",
+    label: "selected systems",
+    detail: "Each one has public code or bounded project notes.",
   },
   {
     value: "102",
     label: "local tests",
-    detail: "API Contract Guard's current deterministic test suite.",
+    detail: "The current API Contract Guard test suite.",
   },
   {
-    value: "100%",
-    label: "Recall@5",
-    detail: "EvidenceDesk retrieval on 25 answerable synthetic v7 cases.",
-  },
-  {
-    value: "6/6",
-    label: "scope notes",
-    detail: "Every project publishes its present scope and limits.",
+    value: "Brussels",
+    label: "based in Belgium",
+    detail: "citizenship claim with EU work authorisation.",
   },
 ];
 
@@ -35,189 +37,98 @@ export const PROJECTS = [
     id: "evidencedesk",
     number: "01",
     name: "EvidenceDesk",
-    category: "Applied AI · Document review",
-    status: "Experimental",
-    tone: "amber",
+    category: "Document review",
     featured: true,
     summary:
-      "A research-oriented document review system that retrieves evidence, produces cited answers and abstains when support is missing.",
-    responsibility:
-      "Product framing, evaluation criteria, AI-agent direction, integration review, testing and final acceptance.",
-    highlights: [
-      "Hybrid retrieval reached 100% Recall@5 on 25/25 answerable synthetic v7 cases.",
-      "Answers connect to page-level evidence or return an explicit abstention.",
-      "Allowlisted ingestion, role checks and audit-oriented workflows are built into the public project.",
-    ],
-    outcome: "HONEST_NEGATIVE",
-    outcomeDetail: "36% answerable-case accuracy · 45.67% extraction F1",
-    limitation:
-      "The blind v7 evaluation did not meet the quality bar. This is evidence of a disciplined experiment, not a production-ready document service.",
-    stack: ["React", "FastAPI", "Redis", "PostgreSQL", "pgvector"],
+      "A document review prototype that finds supporting passages, links answers to their source pages and abstains when the evidence is missing.",
+    result: "100% Recall@5 on 25 of 25 answerable synthetic v7 cases.",
+    context:
+      "The wider answer evaluation did not pass: 36% answerable-case accuracy and 45.67% extraction F1.",
+    stack: "React · FastAPI · Redis · PostgreSQL · pgvector",
+    scope: "Experimental public project · Synthetic data only",
     url: "https://github.com/LuxuriantTech/evidencedesk",
-    linkLabel: "View public repository",
+    linkLabel: "Open EvidenceDesk",
+    visual: "document",
   },
   {
     id: "api-contract-guard",
     number: "02",
     name: "API Contract Guard",
-    category: "Developer tooling · API reliability",
-    status: "Public CLI",
-    tone: "blue",
+    category: "Developer tooling",
     featured: true,
     summary:
-      "A local TypeScript CLI that compares a defined OpenAPI subset and turns breaking changes into deterministic JSON and HTML reports.",
-    responsibility:
-      "Scope definition, failure policy, AI-assisted implementation review, test design, adversarial checks and release validation.",
-    highlights: [
-      "Detects five supported breaking-change categories with deterministic output.",
-      "Unsupported shapes, references and oversized inputs fail closed instead of guessing.",
-      "A 102-test suite and synthetic operation-removal demo make the behaviour reproducible.",
-    ],
-    outcome: "102 tests",
-    outcomeDetail: "98.67% lines · 88.72% branches in the current local suite",
-    limitation:
-      "It covers a deliberately bounded OpenAPI subset. It is not a hosted service, production-client validation or a universal compatibility verdict.",
-    stack: ["TypeScript", "OpenAPI", "Node.js", "JSON", "HTML reports"],
+      "A TypeScript command-line tool that compares a defined OpenAPI subset and reports supported breaking changes in JSON and static HTML.",
+    result: "102 tests across five supported breaking-change categories.",
+    context:
+      "Unsupported shapes, references and oversized inputs fail closed instead of producing a guess.",
+    stack: "TypeScript · Node.js · OpenAPI · JSON · HTML",
+    scope: "Local CLI · Deliberately bounded compatibility checks",
     url: "https://github.com/LuxuriantTech/api-contract-guard",
-    linkLabel: "View public repository",
+    linkLabel: "Open API Contract Guard",
+    visual: "contract",
   },
   {
     id: "synthevia",
     number: "03",
     name: "Synthevia",
-    category: "Full-stack product · Learning platform",
-    status: "Pre-launch",
-    tone: "blue",
+    category: "Full-stack product",
     featured: false,
-    summary:
-      "A private learning and research product, represented publicly by a smaller React-to-FastAPI path over fictional workspace data.",
-    responsibility:
-      "Product requirements, AI-agent workflows, integration, review, debugging and acceptance.",
-    highlights: [
-      "Deterministic retrieval over fictional documents.",
-      "A focused frontend and backend flow that can be run locally.",
-      "Synthetic workspace data keeps the public edition reviewable and private by design.",
-    ],
-    limitation:
-      "The public sample is not the complete private product and does not prove a current deployment.",
-    stack: ["React", "TypeScript", "FastAPI", "SQLite"],
+    summary: "A private learning and research product represented by a smaller runnable public path.",
+    stack: "React · TypeScript · FastAPI · SQLite",
+    scope: "Pre-launch · Public sample only",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/synthevia",
-    linkLabel: "Read project notes",
   },
   {
     id: "gargantua",
     number: "04",
     name: "Gargantua / GLXBot",
-    category: "Backend systems · Community operations",
-    status: "Runtime unverified",
-    tone: "amber",
+    category: "Community operations",
     featured: false,
-    summary:
-      "A private Discord administration platform represented by a bounded public moderation and audit sample.",
-    responsibility:
-      "Workflow design, permission boundaries, AI-assisted implementation direction, review and operational documentation.",
-    highlights: [
-      "Member actions fail before audit mutation.",
-      "Audit records deliberately exclude message content.",
-      "The public sample includes a fictional, read-only FastAPI dashboard response.",
-    ],
-    limitation:
-      "The sample does not reproduce Discord OAuth, persistence, live permission refresh or current service availability.",
-    stack: ["Python", "FastAPI", "React", "PostgreSQL"],
+    summary: "A bounded moderation and audit sample from a private Discord administration platform.",
+    stack: "Python · FastAPI · React · PostgreSQL",
+    scope: "Public sample · Current runtime unverified",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/gargantua",
-    linkLabel: "Read project notes",
   },
   {
     id: "strategy-lab",
     number: "05",
     name: "Synthevia Strategy Lab",
-    category: "Research tooling · Falsification",
-    status: "Internal R&D",
-    tone: "green",
+    category: "Research tooling",
     featured: false,
-    summary:
-      "Python research tooling designed to reject weak market hypotheses before they can reach capital.",
-    responsibility:
-      "Protocol definition, evidence requirements, AI-agent coordination, review and no-go decisions.",
-    highlights: [
-      "Benjamini-Hochberg and compact Newey-West checks.",
-      "One-use holdout, declared fill sanity and position controls.",
-      "Malformed AI output becomes ABSTAIN rather than an invented result.",
-    ],
-    limitation:
-      "These are synthetic research controls, not a trading strategy, market result or claim of profitability.",
-    stack: ["Python", "Statistics", "Evaluation", "AI guardrails"],
+    summary: "Python controls designed to reject weak market hypotheses before capital is involved.",
+    stack: "Python · Statistics · Evaluation",
+    scope: "Internal R&D · Synthetic research only",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/strategy-lab",
-    linkLabel: "Read project notes",
   },
   {
     id: "mytradingbot",
     number: "06",
     name: "MyTradingBot",
-    category: "Automation · Risk controls",
-    status: "Paper-only",
-    tone: "slate",
+    category: "Risk automation",
     featured: false,
-    summary:
-      "A paper-first Python automation prototype with explicit strategy, risk, execution and qualification gates.",
-    responsibility:
-      "System requirements, risk boundaries, AI-assisted delivery, test review and operational handoffs.",
-    highlights: [
-      "Live mode is rejected before execution.",
-      "Decimal-based absolute and equity-relative notional limits.",
-      "Synthetic qualification can return NO-GO when the evidence is insufficient.",
-    ],
-    limitation:
-      "Paper fills do not prove live readiness, realistic execution quality, production safety or profitability.",
-    stack: ["Python", "Async systems", "Risk gates", "Testing"],
+    summary: "A paper-first automation prototype with explicit risk, execution and qualification gates.",
+    stack: "Python · Async systems · Risk controls",
+    scope: "Paper-only · No profitability claim",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/mytradingbot",
-    linkLabel: "Read project notes",
-  },
-];
-
-export const PROCESS_STEPS = [
-  {
-    number: "01",
-    title: "Frame the real problem",
-    body: "Define the user, outcome, boundaries and evidence before implementation starts.",
-  },
-  {
-    number: "02",
-    title: "Direct the build",
-    body: "Use AI tools to accelerate implementation while keeping the architecture and acceptance criteria explicit.",
-  },
-  {
-    number: "03",
-    title: "Challenge the output",
-    body: "Read the result, reproduce failures, test edge cases and ask what could still be wrong.",
-  },
-  {
-    number: "04",
-    title: "Ship the evidence",
-    body: "Document what passed, what failed and where the current boundary really is.",
   },
 ];
 
 export const CAPABILITY_GROUPS = [
   {
-    title: "Backend & APIs",
-    description: "Building clear service boundaries and data flows.",
-    skills: ["Python", "FastAPI", "REST APIs", "PostgreSQL", "SQLAlchemy", "OpenAPI"],
+    title: "Languages",
+    items: ["Python", "TypeScript", "JavaScript", "SQL", "HTML & CSS"],
   },
   {
-    title: "Frontend & product",
-    description: "Turning requirements into usable, reviewable interfaces.",
-    skills: ["TypeScript", "JavaScript", "React", "HTML/CSS", "Responsive UI", "Accessibility"],
+    title: "Web & data",
+    items: ["FastAPI", "React", "REST APIs", "PostgreSQL", "OpenAPI", "pgvector"],
   },
   {
-    title: "Quality & delivery",
-    description: "Making behaviour reproducible instead of relying on screenshots.",
-    skills: ["pytest", "Vitest", "Playwright", "Ruff", "mypy", "GitHub Actions", "Docker", "Linux"],
+    title: "Quality",
+    items: ["pytest", "Vitest", "Playwright", "Ruff", "mypy", "GitHub Actions"],
   },
   {
-    title: "Applied AI",
-    description: "Using models inside systems with evaluation and traceability.",
-    skills: ["RAG", "pgvector", "Agent workflows", "Evaluation", "Abstention", "Audit trails"],
+    title: "Delivery",
+    items: ["Git", "Docker", "Linux", "Debugging", "Documentation", "Technical review"],
   },
 ];
 

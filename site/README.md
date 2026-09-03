@@ -1,25 +1,25 @@
 # Ardian Mehaj portfolio
 
-This static React portfolio introduces Ardian as an early-career full-stack
-developer focused on backend systems and applied AI. It is designed for a fast
-recruiter scan while keeping the project evidence and present limitations easy
-to inspect.
+This static React portfolio introduces Ardian as an early-career software
+developer focused on backend systems, full-stack products and applied AI. Its
+visual direction is light, square and editorial: large type, calm colour fields,
+strict lines and enough space for the work to breathe.
 
 The page includes:
 
 - a direct role, location and availability statement;
-- two detailed public case studies and four bounded project summaries;
-- an explicit explanation of Ardian's AI-assisted, human-reviewed workflow;
-- practical capability groups, background and direct contact links;
-- visible evaluation results, including failed quality gates.
+- a simple contents index inspired by long-form editorial publishing;
+- two visual public case studies and four compact project summaries;
+- practical skills, background and direct contact links;
+- visible evaluation context, including a failed wider quality gate.
 
 EvidenceDesk and API Contract Guard link to their dedicated public
 repositories. The other four stories link to selected public paths in this
 portfolio repository. Private source is not copied into the site.
 
-Claims, limitations and test totals come from the current verified public
-edition. The site does not add customer metrics, deployment claims, trading
-results or unconfirmed education.
+Claims and test totals come from the current verified public edition. The site
+does not add customer metrics, deployment claims, trading results or
+unconfirmed education.
 
 ## Run locally
 

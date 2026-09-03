@@ -41,6 +41,8 @@ build/
 .design-qa/
 design-qa.md
 site/AGENTS.md
+.playwright-cli/
+site/output/
 
 .DS_Store
 Thumbs.db

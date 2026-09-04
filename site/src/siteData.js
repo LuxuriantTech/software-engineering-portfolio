@@ -23,6 +23,69 @@ export const PROOF_LINE = {
   href: "#api-contract-guard",
 };
 
+export const EVIDENCE_SNAPSHOT = {
+  label: "Publication CI",
+  commit: "9ea2eea",
+  runUrl: "https://github.com/LuxuriantTech/api-contract-guard/actions/runs/33274063682",
+  tests: 102,
+  supportedChangeCategories: 5,
+  coverage: [
+    { label: "Statements", value: 94.12 },
+    { label: "Branches", value: 88.72 },
+    { label: "Functions", value: 100 },
+    { label: "Lines", value: 98.67 },
+  ],
+  scope:
+    "A bounded OpenAPI subset: five supported breaking-change categories, not a general compatibility verdict.",
+};
+
+export const EVIDENCE_LENS = [
+  {
+    id: "claim",
+    index: "01",
+    label: "Claim",
+    eyebrow: "What the tool says",
+    metric: "SUBSET",
+    unit: "OpenAPI subset",
+    title: "Compare the contract. Report only what is supported.",
+    detail:
+      "A local TypeScript CLI compares two OpenAPI documents and reports a defined subset of breaking changes as JSON and static HTML.",
+    note: "One concrete promise, kept deliberately narrow.",
+  },
+  {
+    id: "check",
+    index: "02",
+    label: "Check",
+    eyebrow: "What can be reproduced",
+    metric: "102",
+    unit: "local tests",
+    title: "The receipt sits beside the result.",
+    detail:
+      "Publication CI at commit 9ea2eea ran 102 tests: 94.12% statements, 88.72% branches, 100% functions and 98.67% lines.",
+    note: "A public CI snapshot, not a universal quality score.",
+  },
+  {
+    id: "limit",
+    index: "03",
+    label: "Limit",
+    eyebrow: "Where the claim stops",
+    metric: "5",
+    unit: "supported categories",
+    title: "Five rules are useful. They are not the whole spec.",
+    detail:
+      "Unsupported shapes, references outside the documented bounds and oversized inputs fail closed instead of producing a guess.",
+    note: "Local and synthetic only; no complete compatibility verdict.",
+  },
+];
+
+export const ITERATION_NOTE = {
+  eyebrow: "Work in progress",
+  title: "The work is meant to be revisited.",
+  detail:
+    "Some projects here are public review samples from work that is still evolving. I keep revisiting the boundaries, tests and documentation as I learn more. Each project separates what is verified today from what remains experimental, unverified or deliberately out of scope.",
+  caption: "No polished claim without a clear limit beside it.",
+};
+
 export const CAPABILITIES = [
   {
     number: "01",
@@ -47,6 +110,7 @@ export const PROJECTS = [
     number: "01",
     name: "EvidenceDesk",
     category: "Document review",
+    status: "Experimental",
     featured: true,
     summary:
       "A document review prototype that finds supporting passages, links answers to source pages and abstains when evidence is missing.",
@@ -63,12 +127,16 @@ export const PROJECTS = [
     scope: "Experimental public project · Synthetic data only",
     url: "https://github.com/LuxuriantTech/evidencedesk",
     linkLabel: "Inspect the repository",
+    repositorySignals: ["25/25 RECALL@5", "PAGE-LINKED", "LIMITS VISIBLE"],
+    repositoryEvidenceUrl:
+      "https://github.com/LuxuriantTech/evidencedesk/blob/main/docs/release-validation.md",
   },
   {
     id: "api-contract-guard",
     number: "02",
     name: "API Contract Guard",
     category: "Developer tooling",
+    status: "Reviewable sample",
     featured: true,
     summary:
       "A TypeScript command-line tool that compares a defined OpenAPI subset and reports supported breaking changes in JSON and static HTML.",
@@ -85,12 +153,16 @@ export const PROJECTS = [
     scope: "Local CLI · Deliberately bounded compatibility checks",
     url: "https://github.com/LuxuriantTech/api-contract-guard",
     linkLabel: "Inspect the repository",
+    repositorySignals: ["5 CHECKS", "102 TESTS", "FAILS CLOSED"],
+    repositoryEvidenceUrl:
+      "https://github.com/LuxuriantTech/api-contract-guard/blob/main/VALIDATION.md",
   },
   {
     id: "synthevia",
     number: "03",
     name: "Synthevia",
     category: "Full-stack product",
+    status: "In progress",
     featured: false,
     summary: "A private learning and research product represented by a smaller runnable public path.",
     stack: "React · TypeScript · FastAPI · SQLite",
@@ -102,6 +174,7 @@ export const PROJECTS = [
     number: "04",
     name: "Gargantua / GLXBot",
     category: "Community operations",
+    status: "Runtime unverified",
     featured: false,
     summary: "A bounded moderation and audit sample from a private Discord administration platform.",
     stack: "Python · FastAPI · React · PostgreSQL",
@@ -113,6 +186,7 @@ export const PROJECTS = [
     number: "05",
     name: "Synthevia Strategy Lab",
     category: "Research tooling",
+    status: "In progress",
     featured: false,
     summary: "Python controls designed to reject weak market hypotheses before capital is involved.",
     stack: "Python · Statistics · Evaluation",
@@ -124,6 +198,7 @@ export const PROJECTS = [
     number: "06",
     name: "MyTradingBot",
     category: "Risk automation",
+    status: "In progress",
     featured: false,
     summary: "A paper-first automation prototype with explicit risk, execution and qualification gates.",
     stack: "Python · Async systems · Risk controls",

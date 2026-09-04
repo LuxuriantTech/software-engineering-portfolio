@@ -17,6 +17,8 @@ The page includes:
 - skills, background and direct contact links;
 - an in-page document reader for a public CV and general motivation letter,
   with direct same-origin PDF downloads and no external viewer or account.
+- a short, project-specific source handoff in a new tab before the two featured
+  case files continue to their canonical public GitHub repositories.
 
 EvidenceDesk and API Contract Guard link to their dedicated public
 repositories. The other four stories link to selected public paths in this
@@ -57,7 +59,9 @@ The responsive layout is designed for 320px and wider viewports, includes a
 keyboard-visible 3px focus treatment, uses 44px minimum interactive targets and
 respects `prefers-reduced-motion`. The document reveal uses lightweight CSS 3D
 and transform-based motion, while the reader remains semantic HTML that works
-with keyboard navigation and assistive technology.
+with keyboard navigation and assistive technology. Repository handoffs remain
+skippable, and reduced-motion visitors continue to GitHub without the timed
+animation.
 
 ## Design provenance
 
@@ -71,6 +75,6 @@ portfolio.
 
 `vercel.json` publishes only `dist/client` and defines a restrictive content
 security policy, framing protection, referrer policy and permissions policy.
-Automatic Git deployments are disabled for this source-only publication. A
-separate explicit approval is required before re-enabling or performing a Vercel
-deployment.
+Git deployments are enabled for the reviewed public portfolio. Production must
+still be promoted only from the validated `main` branch, with the remote commit,
+CI result and live response checked after release.

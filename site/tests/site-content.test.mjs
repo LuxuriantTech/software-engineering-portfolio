@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { stat } from "node:fs/promises";
 import test from "node:test";
+import {
+  CV_CONTENT,
+  DOCUMENTS,
+  LETTER_CONTENT,
+  documentById,
+} from "../src/documentData.js";
 import {
   CAPABILITIES,
   CAPABILITY_GROUPS,
@@ -115,7 +122,7 @@ test("avoids unconfirmed education and inflated claims", async () => {
 
   for (const pattern of rejectedLanguage) assert.doesNotMatch(publicCopy, pattern);
   assert.match(appSource, /preparing to begin an online BSc/i);
-  assert.match(appSource, /professional English at B2 level/i);
+  assert.match(appSource, /self-assessed English at B2 level/i);
 });
 
 test("uses the original evidence-workshop identity", async () => {
@@ -145,7 +152,6 @@ test("uses the original evidence-workshop identity", async () => {
     /Mythos/i,
     /Anthropic/i,
     /benchmark tabs?/i,
-    /box-shadow\s*:/i,
     /backdrop-filter\s*:/i,
     /linear-gradient|radial-gradient/i,
     /\.intro\s*\{[\s\S]*?min-height:\s*100s?vh/i,
@@ -164,13 +170,22 @@ test("shows identity, target, contact and a real proof in the intro", async () =
   assert.equal(PROOF_LINE.value, "102 local tests");
   assert.match(PROOF_LINE.detail, /five supported breaking-change categories/i);
   assert.equal(PROOF_LINE.href, "#api-contract-guard");
-  assert.ok(appSource.indexOf("<Intro />") < appSource.indexOf("<Capabilities />"));
+  assert.ok(
+    appSource.indexOf("<Intro onOpenDocument={openDocument} />") <
+      appSource.indexOf("<Capabilities />"),
+  );
 });
 
 test("keeps navigation and capability copy concise", () => {
-  assert.deepEqual(NAV_ITEMS.map(({ label }) => label), ["Work", "Method", "Skills", "About"]);
+  assert.deepEqual(NAV_ITEMS.map(({ label }) => label), [
+    "Work",
+    "Method",
+    "Skills",
+    "Documents",
+    "About",
+  ]);
   assert.deepEqual(CAPABILITIES.map(({ title }) => title), ["Frame", "Direct", "Verify"]);
-  assert.equal(new Set(NAV_ITEMS.map(({ href }) => href)).size, 4);
+  assert.equal(new Set(NAV_ITEMS.map(({ href }) => href)).size, 5);
 });
 
 test("keeps recruiter-ready contact and skill information", () => {
@@ -193,7 +208,15 @@ test("resolves known hashes and safely falls back", () => {
 test("renders semantic core sections, direct links and one h1", async () => {
   const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
 
-  for (const id of ["main-content", "work", "method", "skills", "about", "contact"]) {
+  for (const id of [
+    "main-content",
+    "work",
+    "method",
+    "skills",
+    "documents",
+    "about",
+    "contact",
+  ]) {
     assert.match(appSource, new RegExp(`id="${id}"`));
   }
   assert.equal((appSource.match(/<h1/g) ?? []).length, 1);
@@ -209,6 +232,7 @@ test("keeps responsive, touch and keyboard-accessible rules", async () => {
   const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
 
   assert.match(styleSource, /a:focus-visible/);
+  assert.match(styleSource, /button:focus-visible/);
   assert.match(styleSource, /summary:focus-visible/);
   assert.match(styleSource, /outline:\s*3px solid var\(--focus\)/);
   assert.match(styleSource, /@media \(max-width: 900px\)/);
@@ -216,6 +240,7 @@ test("keeps responsive, touch and keyboard-accessible rules", async () => {
   assert.match(styleSource, /@media \(max-width: 680px\)/);
   assert.match(styleSource, /@media \(max-width: 380px\)/);
   assert.match(styleSource, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(styleSource, /animation:\s*none !important/);
   assert.doesNotMatch(styleSource, /min-width:\s*320px/);
   assert.doesNotMatch(styleSource, /scrollbar[^\n]*display:\s*none/);
   assert.doesNotMatch(styleSource, /\.mobile-panel\s*\{[\s\S]*?position:\s*fixed/);
@@ -274,4 +299,64 @@ test("publishes light-theme search and social metadata without tracking", async 
   assert.match(htmlSource, /rel="icon" href="\/favicon\.svg"/);
   assert.doesNotMatch(htmlSource, /google-analytics|googletagmanager|segment\.com/i);
   assert.match(ROOT_REPOSITORY_URL, /software-engineering-portfolio$/);
+});
+
+test("publishes two local, public-safe career documents", async () => {
+  assert.deepEqual(DOCUMENTS.map(({ id }) => id), ["cv", "letter"]);
+  assert.equal(documentById("letter").shortLabel, "Letter");
+  assert.equal(documentById("unknown").shortLabel, "CV");
+
+  const publicCopy = JSON.stringify({ DOCUMENTS, CV_CONTENT, LETTER_CONTENT });
+  for (const pattern of [
+    /\+32\s*\d/i,
+    /Avenue Franz Guillaume/i,
+    /\b1140\b/i,
+    /Belgian citizen/i,
+    /CPAS/i,
+    /financial aid/i,
+    /University of London student/i,
+    /currently enrolled/i,
+    /fluent English/i,
+  ]) {
+    assert.doesNotMatch(publicCopy, pattern);
+  }
+
+  assert.match(CV_CONTENT.profile, /coding assistants/i);
+  assert.match(CV_CONTENT.profile, /strengthen.*independent coding/i);
+  assert.match(CV_CONTENT.education[0].detail, /enrolment pending/i);
+  assert.match(CV_CONTENT.languages, /self-assessed/i);
+  assert.match(LETTER_CONTENT.paragraphs.join(" "), /not substitutes for professional experience/i);
+
+  for (const document of DOCUMENTS) {
+    assert.match(document.pdfPath, /^\/documents\/Ardian_Mehaj_.+\.pdf$/);
+    const pdf = await stat(new URL(`../public${document.pdfPath}`, import.meta.url));
+    assert.ok(pdf.size > 20_000, `${document.fileName} should be a real generated PDF`);
+  }
+});
+
+test("renders documents inside the portfolio with native accessible controls", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+
+  assert.match(appSource, /<dialog/);
+  assert.match(appSource, /aria-labelledby="document-viewer-title"/);
+  assert.match(appSource, /role="tablist"/);
+  assert.match(appSource, /role="tabpanel"/);
+  assert.match(appSource, /aria-selected=/);
+  assert.match(appSource, /download={activeDocument\.fileName}/);
+  assert.match(appSource, /prefers-reduced-motion: reduce/);
+  assert.match(appSource, /lastTriggerRef\.current\?\.focus/);
+  assert.doesNotMatch(appSource, /<iframe|<embed|<object/i);
+  assert.doesNotMatch(appSource, /adobe|docs\.google|drive\.google/i);
+});
+
+test("uses restrained CSS 3D and transform-only document motion", async () => {
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+
+  assert.match(styleSource, /\.document-deck[\s\S]*?perspective:\s*1200px/);
+  assert.match(styleSource, /transform-style:\s*preserve-3d/);
+  assert.match(styleSource, /@keyframes letter-drift/);
+  assert.match(styleSource, /@keyframes page-unfold/);
+  assert.match(styleSource, /\.document-viewer-canvas[\s\S]*?overflow-y:\s*auto/);
+  assert.match(styleSource, /@media \(max-width: 680px\)[\s\S]*?\.document-page-header[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\)/);
+  assert.doesNotMatch(styleSource, /animation[^;]*(left|right|top|bottom|width|height)/i);
 });

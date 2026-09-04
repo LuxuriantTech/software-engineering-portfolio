@@ -1,4 +1,18 @@
-import { ArrowRightIcon, MailIcon, MarkGithubIcon } from "@primer/octicons-react";
+import { useEffect, useRef, useState } from "react";
+import {
+  ArrowRightIcon,
+  DownloadIcon,
+  FileIcon,
+  MailIcon,
+  MarkGithubIcon,
+  XIcon,
+} from "@primer/octicons-react";
+import {
+  CV_CONTENT,
+  DOCUMENTS,
+  LETTER_CONTENT,
+  documentById,
+} from "./documentData.js";
 import {
   CAPABILITIES,
   CAPABILITY_GROUPS,
@@ -74,7 +88,7 @@ function EvidenceMark() {
   );
 }
 
-function Intro() {
+function Intro({ onOpenDocument }) {
   return (
     <section className="intro" aria-labelledby="intro-title">
       <div className="intro-grid page-grid">
@@ -95,6 +109,14 @@ function Intro() {
           </p>
           <p>Backend · Full-stack · Applied AI</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <button
+            className="availability-document"
+            type="button"
+            onClick={(event) => onOpenDocument("cv", event.currentTarget)}
+          >
+            <FileIcon size={15} aria-hidden="true" />
+            View my CV
+          </button>
         </aside>
 
         <a className="proof-line" href={PROOF_LINE.href}>
@@ -106,6 +128,273 @@ function Intro() {
         </a>
       </div>
     </section>
+  );
+}
+
+function DocumentDeck({ onOpenDocument }) {
+  return (
+    <button
+      className="document-deck"
+      type="button"
+      onClick={(event) => onOpenDocument("cv", event.currentTarget)}
+      aria-label="Open Ardian Mehaj's CV in the portfolio"
+    >
+      <span className="document-shadow" aria-hidden="true" />
+      <span className="document-paper document-paper--letter" aria-hidden="true">
+        <span>02</span>
+        <strong>LETTER</strong>
+        <i />
+        <i />
+        <i />
+      </span>
+      <span className="document-paper document-paper--cv" aria-hidden="true">
+        <span>01 · PUBLIC EDITION</span>
+        <strong>ARDIAN<br />MEHAJ</strong>
+        <em>CV / 2026</em>
+        <i />
+        <i />
+        <i />
+      </span>
+      <span className="document-deck-hint" aria-hidden="true">
+        Open the file
+        <ArrowRightIcon size={18} />
+      </span>
+    </button>
+  );
+}
+
+function Documents({ onOpenDocument }) {
+  return (
+    <section className="documents-section" id="documents" aria-labelledby="documents-title">
+      <div className="documents-layout page-grid">
+        <div className="documents-copy">
+          <p className="section-label">Documents</p>
+          <h2 id="documents-title">The useful files, without leaving the portfolio.</h2>
+          <p className="documents-lead">
+            Read them here with one smooth transition, or download the same public PDF. No viewer,
+            account or external service stands in the way.
+          </p>
+
+          <div className="document-list" aria-label="Career documents">
+            {DOCUMENTS.map((document) => (
+              <button
+                type="button"
+                key={document.id}
+                onClick={(event) => onOpenDocument(document.id, event.currentTarget)}
+              >
+                <span>{document.index}</span>
+                <span>
+                  <small>{document.eyebrow}</small>
+                  <strong>{document.title}</strong>
+                </span>
+                <ArrowRightIcon size={20} aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <DocumentDeck onOpenDocument={onOpenDocument} />
+      </div>
+    </section>
+  );
+}
+
+function CvDocument() {
+  return (
+    <article className="document-page document-page--cv" id="document-panel" role="tabpanel">
+      <header className="document-page-header">
+        <div>
+          <p className="document-page-kicker">Public CV · 2026</p>
+          <h2>Ardian Mehaj</h2>
+          <p>{CV_CONTENT.role}</p>
+        </div>
+        <address>
+          <span>{CV_CONTENT.location}</span>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <a href={CONTACT.github} target="_blank" rel="noopener noreferrer">
+            github.com/LuxuriantTech
+          </a>
+          <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer">
+            LinkedIn / Ardian Mehaj
+          </a>
+        </address>
+      </header>
+
+      <section className="document-block">
+        <h3>Profile</h3>
+        <p>{CV_CONTENT.profile}</p>
+      </section>
+
+      <section className="document-block">
+        <h3>Selected projects</h3>
+        <div className="document-projects">
+          {CV_CONTENT.projects.map((project) => (
+            <div key={project.name}>
+              <h4>{project.name}</h4>
+              <p className="document-meta">{project.meta}</p>
+              <p>{project.detail}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="document-block document-block--columns">
+        <div>
+          <h3>Experience</h3>
+          {CV_CONTENT.experience.map((experience) => (
+            <div className="document-compact-item" key={experience.name}>
+              <h4>{experience.name}</h4>
+              <p className="document-meta">{experience.meta}</p>
+              <p>{experience.detail}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h3>Education &amp; certification</h3>
+          {CV_CONTENT.education.map((education) => (
+            <div className="document-compact-item" key={education.name}>
+              <h4>{education.name}</h4>
+              <p>{education.detail}</p>
+            </div>
+          ))}
+          <p className="document-certificate">{CV_CONTENT.certification}</p>
+          <p className="document-languages">{CV_CONTENT.languages}</p>
+        </div>
+      </section>
+
+      <section className="document-block document-block--tools">
+        <h3>Working with</h3>
+        <p>{CV_CONTENT.tools}</p>
+      </section>
+    </article>
+  );
+}
+
+function LetterDocument() {
+  return (
+    <article className="document-page document-page--letter" id="document-panel" role="tabpanel">
+      <header className="document-page-header">
+        <div>
+          <p className="document-page-kicker">General motivation · 2026</p>
+          <h2>Ardian Mehaj</h2>
+        </div>
+        <address>
+          <span>Brussels, Belgium</span>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <a href={CONTACT.github} target="_blank" rel="noopener noreferrer">
+            github.com/LuxuriantTech
+          </a>
+        </address>
+      </header>
+
+      <div className="letter-copy">
+        <p className="letter-subject">{LETTER_CONTENT.subject}</p>
+        <p>{LETTER_CONTENT.salutation}</p>
+        {LETTER_CONTENT.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+        <p>{LETTER_CONTENT.closing}</p>
+        <p><strong>Ardian Mehaj</strong></p>
+      </div>
+    </article>
+  );
+}
+
+function DocumentViewer({ activeDocumentId, lastTriggerRef, onSelect, onDismiss }) {
+  const dialogRef = useRef(null);
+  const closeTimerRef = useRef(null);
+  const activeDocument = documentById(activeDocumentId);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!activeDocumentId || !dialog || dialog.open) return undefined;
+
+    dialog.showModal();
+    document.body.classList.add("document-viewer-open");
+  }, [activeDocumentId]);
+
+  useEffect(
+    () => () => {
+      document.body.classList.remove("document-viewer-open");
+      window.clearTimeout(closeTimerRef.current);
+    },
+    [],
+  );
+
+  if (!activeDocumentId) return null;
+
+  function finishClose() {
+    const dialog = dialogRef.current;
+    if (dialog?.open) dialog.close();
+    document.body.classList.remove("document-viewer-open");
+    onDismiss();
+    window.requestAnimationFrame(() => lastTriggerRef.current?.focus());
+  }
+
+  function requestClose() {
+    const dialog = dialogRef.current;
+    if (!dialog || dialog.classList.contains("is-closing")) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finishClose();
+      return;
+    }
+
+    dialog.classList.add("is-closing");
+    closeTimerRef.current = window.setTimeout(finishClose, 190);
+  }
+
+  return (
+    <dialog
+      className="document-viewer"
+      ref={dialogRef}
+      aria-labelledby="document-viewer-title"
+      onCancel={(event) => {
+        event.preventDefault();
+        requestClose();
+      }}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) requestClose();
+      }}
+    >
+      <div className="document-viewer-shell">
+        <header className="document-viewer-toolbar">
+          <div>
+            <p>AM / FILES</p>
+            <h2 id="document-viewer-title">{activeDocument.shortLabel}</h2>
+          </div>
+
+          <div className="document-tabs" role="tablist" aria-label="Choose a document">
+            {DOCUMENTS.map((document) => (
+              <button
+                type="button"
+                role="tab"
+                aria-controls="document-panel"
+                aria-selected={activeDocumentId === document.id}
+                key={document.id}
+                onClick={() => onSelect(document.id)}
+              >
+                {document.shortLabel}
+              </button>
+            ))}
+          </div>
+
+          <div className="document-viewer-actions">
+            <a href={activeDocument.pdfPath} download={activeDocument.fileName}>
+              <DownloadIcon size={17} aria-hidden="true" />
+              Download PDF
+            </a>
+            <button type="button" onClick={requestClose} aria-label="Close document viewer">
+              <XIcon size={20} aria-hidden="true" />
+            </button>
+          </div>
+        </header>
+
+        <div className="document-viewer-canvas">
+          {activeDocumentId === "letter" ? <LetterDocument /> : <CvDocument />}
+        </div>
+      </div>
+    </dialog>
   );
 }
 
@@ -314,8 +603,8 @@ function About() {
           </p>
           <p>
             I&apos;m preparing to begin an online BSc in Computer Science alongside work. I speak
-            French and Albanian, with professional English at B2 level. I&apos;m a Belgian citizen
-            and do not require a visa to work in the European Union.
+            French and Albanian, with self-assessed English at B2 level. I&apos;m based in Brussels
+            and open to local, hybrid or remote junior opportunities.
           </p>
         </div>
       </div>
@@ -353,16 +642,25 @@ function Contact() {
 }
 
 export function App() {
+  const [activeDocumentId, setActiveDocumentId] = useState(null);
+  const lastDocumentTriggerRef = useRef(null);
+
+  function openDocument(documentId, trigger) {
+    lastDocumentTriggerRef.current = trigger;
+    setActiveDocumentId(documentId);
+  }
+
   return (
     <div className="site-shell" id="top">
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <SiteHeader />
       <main id="main-content" tabIndex="-1">
-        <Intro />
+        <Intro onOpenDocument={openDocument} />
         <Capabilities />
         <Work />
         <Method />
         <Skills />
+        <Documents onOpenDocument={openDocument} />
         <About />
         <Contact />
       </main>
@@ -373,6 +671,12 @@ export function App() {
           Portfolio source
         </a>
       </footer>
+      <DocumentViewer
+        activeDocumentId={activeDocumentId}
+        lastTriggerRef={lastDocumentTriggerRef}
+        onSelect={setActiveDocumentId}
+        onDismiss={() => setActiveDocumentId(null)}
+      />
     </div>
   );
 }

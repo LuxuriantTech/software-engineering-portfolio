@@ -1,0 +1,122 @@
+/* Content-first layout, retaining the portfolio's Archivo / paper identity. */
+.intro { padding-block: clamp(40px, 5vw, 72px); }
+.intro-kicker { grid-column: 1 / -1; display: flex; justify-content: space-between; margin: 0 0 20px; }
+.intro-title { grid-column: 1 / 9; }
+.intro h1 { font-size: clamp(3.3rem, 6.6vw, 6.1rem); line-height: .95; max-width: none; }
+.intro-title > .intro-description { max-width: 49ch; margin: 26px 0; font-family: inherit; font-size: clamp(1rem, 1.5vw, 1.18rem); font-weight: 400; line-height: 1.6; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.intro-actions, .project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.primary-action, .secondary-action { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 12px; border: 1px solid var(--ink); padding: 13px 20px; font-size: .88rem; font-weight: 600; line-height: 1.4; text-decoration: none; cursor: pointer; transition: background-color 160ms, color 160ms; }
+.primary-action { background: var(--ink); color: var(--paper); }
+.secondary-action { background: var(--paper); color: var(--ink); }
+.primary-action:hover { background: var(--cobalt); }
+.secondary-action:hover { background: var(--acid); }
+.availability { grid-column: 10 / 13; align-self: end; background: var(--porcelain); }
+.site-content--ready .hero-motion { opacity: .22; }
+.hero-motion { top: 5%; right: -5%; width: 34%; }
+.work-section { padding-top: 52px; }
+.work-section > .section-heading { align-items: start; margin-bottom: 38px; }
+.section-heading > h2 { font-size: clamp(2.2rem, 4vw, 3.8rem); }
+.section-heading > p:last-child { font-size: .94rem; }
+.case-list { padding-top: 0; margin-top: 38px; }
+.case-file { padding-block: 0 44px; scroll-margin-top: calc(var(--header-height) + 28px); }
+.case-file + .case-file { margin-top: 44px; }
+.case-rule { margin-bottom: 26px; }
+.project-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.project-heading .section-label { margin-bottom: 12px; }
+.project-heading h3, .product-sample h3 { margin: 0; font-size: clamp(2rem, 4vw, 3.6rem); font-weight: 650; letter-spacing: -.05em; line-height: 1.08; }
+.project-summary { max-width: 75ch; margin-block: 20px 12px; font-size: 1.1rem; line-height: 1.55; }
+.project-stack { color: var(--muted); font-family: 'IBM Plex Mono', Consolas, monospace; font-size: .76rem; line-height: 1.75; }
+.project-body { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; gap: clamp(24px, 4vw, 56px); margin-top: 28px; }
+.project-preview { min-width: 0; margin: 0; border: 1px solid var(--soft-line); background: var(--paper); }
+.project-preview > a { display: block; padding: 14px; background: #e8e5db; }
+.project-preview img { display: block; width: 100%; height: auto; border: 1px solid var(--soft-line); }
+.project-preview figcaption { display: flex; justify-content: space-between; gap: 16px; padding: 12px 14px; color: var(--muted); font-family: 'IBM Plex Mono', Consolas, monospace; font-size: .64rem; line-height: 1.5; }
+.project-preview figcaption span:last-child { flex-shrink: 0; }
+.project-notes dl { margin: 0; }
+.project-notes dl > div { padding-bottom: 20px; }
+.project-notes dt { margin-bottom: 7px; font-size: .7rem; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+.project-notes dd { margin: 0; color: var(--muted); font-size: .94rem; line-height: 1.6; }
+.project-notes dl > .project-limit { padding: 16px 18px; border-left: 3px solid var(--orange); background: #ece8dd; }
+.project-links { margin-top: 22px; gap: 12px 22px; }
+.project-links > a:not(.primary-action) { display: inline-flex; align-items: center; min-height: 44px; gap: 6px; font-size: .84rem; text-underline-offset: 4px; }
+.contract-workflow { padding: clamp(22px, 3vw, 40px); background: var(--ink); color: var(--paper); }
+.contract-workflow > .section-label { color: var(--acid); }
+.contract-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-block: 32px; }
+.contract-inputs > span { padding: 18px; border: 1px solid #716d60; color: #cbc6ba; font-size: .8rem; line-height: 1.7; }
+.contract-inputs strong { color: var(--paper); font-size: clamp(1.2rem, 2vw, 2rem); font-weight: 500; }
+.contract-compare { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border-block: 1px solid #716d60; font-size: .94rem; }
+.contract-outputs { display: flex; gap: 10px; flex-wrap: wrap; margin-block: 24px; }
+.contract-outputs span { padding: 10px 14px; background: var(--acid); color: var(--ink); font-family: 'IBM Plex Mono', Consolas, monospace; font-size: .8rem; }
+.contract-workflow > p { margin-bottom: 0; max-width: 46ch; color: #cbc6ba; font-size: .84rem; line-height: 1.65; }
+.product-sample { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(28px, 5vw, 68px); align-items: center; padding-block: 56px; border-block: 1px solid var(--soft-line); }
+.product-sample h3 { margin-bottom: 24px; }
+.product-sample p:not(.section-label, .project-stack) { font-size: .98rem; line-height: 1.65; color: var(--muted); }
+.product-sample .sample-limit { border-left: 3px solid var(--orange); padding-left: 15px; }
+.project-index { padding-block: 56px 72px; }
+.index-heading h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
+.method-section, .skills-section, .documents-section, .about-section { padding-block: clamp(56px, 6vw, 86px); }
+.method-intro h2, .documents-copy h2, .about-layout h2 { font-size: clamp(2.2rem, 4vw, 3.8rem); }
+.method-intro > p { max-width: 56ch; line-height: 1.65; }
+.method-current { margin-top: 26px; }
+.method-steps li { padding-block: 18px; }
+.method-steps h3 { font-size: 1.5rem; }
+.skills-list { margin-top: 32px; }
+.contact-section { padding-block: clamp(60px, 8vw, 104px); }
+.legacy-repository { padding-top: 80px; }
+.document-viewer, .document-viewer.is-closing,
+.document-viewer[data-flight-ready='true'] .document-flight,
+.document-viewer[data-flight-ready='true'] .document-viewer-shell,
+.document-viewer[data-flight-ready='true'].is-closing .document-flight,
+.document-viewer[data-flight-ready='true'].is-closing .document-viewer-shell { animation-duration: 220ms; }
+@media (max-width: 1100px) {
+  .intro-title { grid-column: 1 / 9; }
+  .availability { grid-column: 9 / 13; }
+  .project-body { grid-template-columns: 1.1fr 1fr; gap: 26px; }
+}
+@media (max-width: 900px) {
+  .intro-title { grid-column: 1 / -1; }
+  .intro h1 { font-size: clamp(3.5rem, 9vw, 5.4rem); max-width: 14ch; }
+  .availability { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin-top: 10px; }
+  .availability p { margin: 0; }
+  .availability p:nth-of-type(3) { display: none; }
+  .hero-motion { width: 45%; right: -8%; top: 8%; }
+  .project-body { grid-template-columns: 1fr; gap: 26px; }
+  .project-notes dl { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .project-notes dl > div { padding: 0; }
+  .project-notes dl > .project-limit { grid-column: 1 / -1; }
+  .product-sample { grid-template-columns: 1fr; }
+  .product-sample .project-preview { max-width: 760px; }
+}
+@media (max-width: 680px) {
+  .intro { padding-block: 30px 40px; }
+  .intro-kicker { gap: 12px; margin-bottom: 14px; font-size: .66rem; }
+  .intro-title { grid-column: 1 / -1; }
+  .intro h1 { font-size: clamp(3rem, 10.3vw, 4.4rem); line-height: 1; }
+  .intro-title > p { font-size: .68rem; }
+  .intro-title > .intro-description { font-size: 1rem; margin-block: 20px; }
+  .intro-actions { gap: 10px; }
+  .primary-action, .secondary-action { font-size: .82rem; padding-inline: 14px; }
+  .availability { gap: 2px 16px; margin-top: 0; padding-top: 14px; }
+  .availability p { font-size: .78rem; }
+  .hero-motion { display: none; }
+  .work-section { padding-top: 36px; }
+  .section-heading { gap: 16px; }
+  .section-heading > h2 { font-size: 2.25rem; }
+  .section-heading > .section-label { padding-top: 0; }
+  .project-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .project-heading h3 { font-size: 2.5rem; }
+  .project-summary { font-size: 1rem; margin-top: 18px; }
+  .project-body { margin-top: 20px; }
+  .project-preview > a { padding: 8px; }
+  .project-preview figcaption { padding: 10px; font-size: .6rem; }
+  .project-notes dl { grid-template-columns: 1fr; gap: 20px; }
+  .project-notes dd { font-size: .94rem; }
+  .case-file { padding-bottom: 26px; }
+  .case-file + .case-file { margin-top: 26px; }
+  .product-sample { padding-block: 40px; }
+  .project-index { padding-block: 40px 50px; }
+  .method-section, .skills-section, .documents-section, .about-section { padding-block: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .document-viewer, .document-viewer *, .hero-motion, .hero-motion * { animation: none !important; transition: none !important; }
+}

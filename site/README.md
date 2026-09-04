@@ -7,18 +7,17 @@ around work that another person can inspect.
 
 The page includes:
 
-- a short recruiter scan with role, location, availability, contact and one
-  real project proof visible together;
-- three practical capabilities: frame, direct and verify;
-- two public project dossiers organised as intention, contribution, working
-  path, evidence and limit;
-- four smaller project samples with their current scope kept visible;
+- an immediately accessible introduction with role, location, availability,
+  project navigation and a CV button;
+- two featured projects with contribution, evidence, limits and direct source links;
+- real, expandable screenshots of EvidenceDesk and the Synthevia public demo;
+- three additional project samples with their current scope kept visible;
 - a plain account of how Ardian directs and checks AI-assisted work;
 - skills, background and direct contact links;
 - an in-page document reader for a public CV and general motivation letter,
   with direct same-origin PDF downloads and no external viewer or account.
-- a short, project-specific source handoff in a new tab before the two featured
-  case files continue to their canonical public GitHub repositories.
+- direct links to GitHub. Older `?repository=` links still resolve to the two
+  allowlisted repositories, without a timed handoff.
 
 EvidenceDesk and API Contract Guard link to their dedicated public
 repositories. The other four stories link to selected public paths in this
@@ -46,6 +45,13 @@ python -m pip install -r scripts/requirements-docs.txt
 python scripts/build_public_documents.py
 ~~~
 
+`src/careerContent.json` is the shared source for the in-page reader and both PDFs.
+Keep it factual: online computer science studies are planned, and the institution
+is not finalised. The profile explicitly explains the current need for AI assistance
+to write code. Project images are derived from the repository's original captures;
+see `public/images/README.md` for provenance. `src/recruiter.css` contains the
+current content and project layout, layered over the retained visual identity.
+
 Keep private contact details, identity documents, financial information and
 application-specific claims out of these public files. Anything under
 `public/` is intentionally downloadable by every visitor.
@@ -59,17 +65,17 @@ The responsive layout is designed for 320px and wider viewports, includes a
 keyboard-visible 3px focus treatment, uses 44px minimum interactive targets and
 respects `prefers-reduced-motion`. The document reveal uses lightweight CSS 3D
 and transform-based motion, while the reader remains semantic HTML that works
-with keyboard navigation and assistive technology. Repository handoffs remain
-skippable, and reduced-motion visitors continue to GitHub without the timed
-animation.
+with keyboard navigation and assistive technology. Project access has no blocking
+opening animation. Scroll reveals play once, and reduced-motion visitors see the
+content immediately.
 
 ## Design provenance
 
 The design was informed by a public reference study, then deliberately changed
 in layout, typography, palette, navigation, project presentation, media and
 motion. No reference code, copy, brand assets, images or composition are used.
-The site contains only original CSS graphics and project copy belonging to this
-portfolio.
+The site contains original CSS graphics, project copy and screenshots belonging
+to this portfolio.
 
 ## Deployment boundary
 

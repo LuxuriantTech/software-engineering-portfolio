@@ -14,26 +14,20 @@ import {
   documentById,
 } from "./documentData.js";
 import {
-  CAPABILITIES,
   CAPABILITY_GROUPS,
   CONTACT,
-  EVIDENCE_LENS,
-  EVIDENCE_SNAPSHOT,
-  ITERATION_NOTE,
   NAV_ITEMS,
   PROJECTS,
-  PROOF_LINE,
   ROOT_REPOSITORY_URL,
   WORKFLOW_STEPS,
 } from "./siteData.js";
 import {
   browserPrefersReducedMotion,
-  SESSION_INTRO_MAX_DURATION_MS,
-  shouldShowSessionIntro,
 } from "./sessionIntroState.js";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured);
-const additionalProjects = PROJECTS.filter((project) => !project.featured);
+const productSample = PROJECTS.find(({ id }) => id === "synthevia");
+const additionalProjects = PROJECTS.filter((project) => !project.featured && project.id !== "synthevia");
 
 function repositoryHandoffProject() {
   if (typeof window === "undefined") return null;
@@ -102,69 +96,7 @@ function SiteHeader() {
   );
 }
 
-function EvidenceMark() {
-  return (
-    <span className="evidence-mark" aria-hidden="true">
-      <i />
-      <i />
-      <i />
-    </span>
-  );
-}
 
-function SessionIntro({ onComplete }) {
-  useEffect(() => {
-    const fallbackTimer = window.setTimeout(onComplete, SESSION_INTRO_MAX_DURATION_MS);
-
-    return () => window.clearTimeout(fallbackTimer);
-  }, [onComplete]);
-
-  return (
-    <div
-      className="session-intro"
-      role="status"
-      aria-label="Opening Ardian Mehaj's portfolio"
-      aria-live="polite"
-      onAnimationEnd={(event) => {
-        if (
-          event.target === event.currentTarget &&
-          event.animationName === "session-intro-lifecycle"
-        ) {
-          onComplete();
-        }
-      }}
-    >
-      <div className="session-intro-meta session-intro-meta--top">
-        <span>Ardian Mehaj</span>
-        <span>Portfolio / 2026</span>
-      </div>
-
-      <button className="session-intro-skip" type="button" onClick={onComplete}>
-        Skip intro
-      </button>
-
-      <div className="session-intro-stage">
-        <span className="session-intro-rule" />
-        <div className="session-intro-object">
-          <span className="session-intro-sheet session-intro-sheet--cobalt" />
-          <span className="session-intro-sheet session-intro-sheet--orange" />
-          <span className="session-intro-sheet session-intro-sheet--paper">
-            <span className="session-intro-sheet-label">AM</span>
-            <span className="session-intro-sheet-folio">/ 26</span>
-            <span className="session-intro-sheet-line" />
-          </span>
-        </div>
-      </div>
-
-      <div className="session-intro-meta session-intro-meta--bottom">
-        <span>Junior software developer</span>
-        <span>Brussels, Belgium</span>
-      </div>
-
-      <span className="session-intro-progress" aria-hidden="true" />
-    </div>
-  );
-}
 
 function HeroMotion() {
   const stageRef = useRef(null);
@@ -248,222 +180,37 @@ function HeroMotion() {
   );
 }
 
-function Intro({ onOpenDocument, onReplayIntro }) {
+function Intro({ onOpenDocument }) {
   return (
     <section className="intro" aria-labelledby="intro-title">
       <HeroMotion />
       <div className="intro-grid page-grid">
-        <p className="intro-kicker">
-          <span>Ardian Mehaj</span>
-          <span>Brussels, Belgium</span>
-        </p>
-
+        <p className="intro-kicker"><span>Ardian Mehaj</span><span>Brussels, Belgium</span></p>
         <div className="intro-title">
           <p>Junior software developer</p>
-          <h1 id="intro-title">I turn unclear ideas into software you can inspect.</h1>
+          <h1 id="intro-title">Ideas into<br />working software.</h1>
+          <p className="intro-description">I build web tools and explore applied AI with coding assistants. I’m looking for my first software role, with a team I can learn from.</p>
+          <div className="intro-actions">
+            <a className="primary-action" href="#work">Explore my projects <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <button className="secondary-action" type="button" onClick={(event) => onOpenDocument("cv", event.currentTarget)}>
+              <FileIcon size={18} aria-hidden="true" /> View my CV
+            </button>
+          </div>
         </div>
-
         <aside className="availability" aria-label="Role and availability">
-          <p className="availability-status">
-            <span aria-hidden="true" />
-            Available for junior roles
-          </p>
+          <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
           <p>Backend · Full-stack · Applied AI</p>
+          <p>Full-time work<br />Online studies planned alongside</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-          <button
-            className="availability-document"
-            type="button"
-            onClick={(event) => onOpenDocument("cv", event.currentTarget)}
-          >
-            <FileIcon size={15} aria-hidden="true" />
-            View my CV
-          </button>
-          <button className="availability-replay" type="button" onClick={onReplayIntro}>
-            Replay opening
-          </button>
         </aside>
-
-        <a className="proof-line" href={PROOF_LINE.href}>
-          <EvidenceMark />
-          <span className="proof-label">{PROOF_LINE.label}</span>
-          <strong>{PROOF_LINE.value}</strong>
-          <span className="proof-detail">{PROOF_LINE.detail}</span>
-          <ArrowRightIcon size={22} aria-hidden="true" />
-        </a>
       </div>
     </section>
   );
 }
 
-function WorkPortal() {
-  return (
-    <div className="work-portal page-grid" data-reveal aria-hidden="true">
-      <div className="work-portal-stage">
-        <div className="work-portal-copy">
-          <span>Selected work</span>
-          <div className="work-portal-range">
-            <span className="work-portal-range-start">01</span>
-            <i className="work-portal-range-dash">—</i>
-            <span className="work-portal-range-end">06</span>
-          </div>
-        </div>
-        <span className="work-portal-line work-portal-line--one" />
-        <span className="work-portal-line work-portal-line--two" />
-        <div className="work-portal-stack">
-          <span className="work-portal-sheet work-portal-sheet--cobalt" />
-          <span className="work-portal-sheet work-portal-sheet--orange" />
-          <span className="work-portal-sheet work-portal-sheet--paper">WORK</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectTransition({ targetHash, onComplete }) {
-  const hasTravelledRef = useRef(false);
-  const skipTransitionRef = useRef(() => {});
-
-  useEffect(() => {
-    hasTravelledRef.current = false;
-
-    function travel() {
-      if (hasTravelledRef.current) return;
-      hasTravelledRef.current = true;
-
-      const target = document.getElementById(targetHash.slice(1));
-      if (!target) return;
-
-      window.history.pushState(null, "", targetHash);
-      target.scrollIntoView({ behavior: "auto", block: "start" });
-    }
-
-    const travelTimer = window.setTimeout(travel, 560);
-
-    function finishTransition() {
-      travel();
-      onComplete(targetHash);
-    }
-
-    skipTransitionRef.current = finishTransition;
-    const finishTimer = window.setTimeout(finishTransition, 1450);
-
-    function skipTransition(event) {
-      if (event.key !== "Escape") return;
-      finishTransition();
-    }
-
-    window.addEventListener("keydown", skipTransition);
-
-    return () => {
-      window.clearTimeout(travelTimer);
-      window.clearTimeout(finishTimer);
-      window.removeEventListener("keydown", skipTransition);
-    };
-  }, [onComplete, targetHash]);
-
-  return (
-    <div className="project-transition" role="status" aria-label="Opening selected work">
-      <span className="project-transition-panel project-transition-panel--ink" />
-      <span className="project-transition-panel project-transition-panel--cobalt" />
-      <span className="project-transition-panel project-transition-panel--orange" />
-      <button
-        className="project-transition-skip"
-        type="button"
-        onClick={() => skipTransitionRef.current()}
-      >
-        Skip transition
-      </button>
-      <div className="project-transition-copy" aria-hidden="true">
-        <span>AM / PROJECT FILES</span>
-        <strong>WORK</strong>
-        <small>ESC TO SKIP</small>
-      </div>
-    </div>
-  );
-}
-
 function RepositoryHandoff({ project }) {
-  const hasNavigatedRef = useRef(false);
-  const skipLinkRef = useRef(null);
-  const repositoryPath = new URL(project.url).pathname.slice(1);
-
-  useEffect(() => {
-    const cleanUrl = `${window.location.pathname}${window.location.hash}`;
-    window.history.replaceState(window.history.state, "", cleanUrl);
-    skipLinkRef.current?.focus({ preventScroll: true });
-
-    function openRepository() {
-      if (hasNavigatedRef.current) return;
-      hasNavigatedRef.current = true;
-      window.location.replace(project.url);
-    }
-
-    const reducedMotion = browserPrefersReducedMotion();
-    const navigationTimer = window.setTimeout(openRepository, reducedMotion ? 0 : 1700);
-
-    function skipHandoff(event) {
-      if (event.key === "Escape") openRepository();
-    }
-
-    window.addEventListener("keydown", skipHandoff);
-
-    return () => {
-      window.clearTimeout(navigationTimer);
-      window.removeEventListener("keydown", skipHandoff);
-    };
-  }, [project.url]);
-
-  return (
-    <main
-      className="repository-handoff"
-      aria-label={`Opening ${project.name} on GitHub`}
-    >
-      <a className="repository-handoff-skip" href={project.url} ref={skipLinkRef}>
-        Open GitHub now
-        <ArrowRightIcon size={18} aria-hidden="true" />
-      </a>
-
-      <div className="repository-handoff-grid" role="status" aria-live="polite">
-        <header className="repository-handoff-header">
-          <p>
-            <span>{project.number}</span>
-            Public repository
-          </p>
-          <h1>{project.name}</h1>
-          <span className="repository-handoff-status">Preparing the source handoff</span>
-        </header>
-
-        <div className="repository-handoff-rail">
-          <span className="repository-handoff-rule" aria-hidden="true" />
-          <div
-            className="repository-handoff-signals"
-            aria-label="Repository review signals"
-          >
-            {project.repositorySignals.map((signal) => (
-              <span className="repository-handoff-signal" key={signal}>
-                <i aria-hidden="true" />
-                {signal}
-              </span>
-            ))}
-          </div>
-          <span className="repository-handoff-github" aria-hidden="true">
-            <MarkGithubIcon size={30} />
-          </span>
-        </div>
-
-        <footer className="repository-handoff-footer">
-          <a className="repository-handoff-evidence" href={project.repositoryEvidenceUrl}>
-            Validation evidence
-            <ArrowRightIcon size={14} aria-hidden="true" />
-          </a>
-          <strong>{repositoryPath}</strong>
-          <span>GitHub opens in this tab</span>
-        </footer>
-      </div>
-
-      <span className="repository-handoff-scan" aria-hidden="true" />
-    </main>
-  );
+  useEffect(() => { window.location.replace(project.url); }, [project.url]);
+  return <main className="legacy-repository page-grid"><h1>{project.name}</h1><a href={project.url}>Open repository on GitHub</a></main>;
 }
 
 function usePageMotion(enabled) {
@@ -511,13 +258,13 @@ function usePageMotion(enabled) {
     const observer = new window.IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            entry.target.dataset.revealFrom = scrollDirection === "down" ? "top" : "bottom";
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
           }
-          entry.target.classList.toggle("is-revealed", entry.isIntersecting);
         });
       },
-      { threshold: 0.08, rootMargin: "-6% 0px -6% 0px" },
+      { threshold: 0.01, rootMargin: "0px" },
     );
 
     revealTargets.forEach((target) => observer.observe(target));
@@ -620,10 +367,9 @@ function Documents({ onOpenDocument }) {
       <div className="documents-layout page-grid">
         <div className="documents-copy">
           <p className="section-label">Documents</p>
-          <h2 id="documents-title">The useful files, without leaving the portfolio.</h2>
+          <h2 id="documents-title">My CV and motivation.</h2>
           <p className="documents-lead">
-            Read them here with one smooth transition, or download the same public PDF. No viewer,
-            account or external service stands in the way.
+            A closer look at my projects, experience and plans. Read here or download a PDF.
           </p>
 
           <div className="document-list" aria-label="Career documents">
@@ -868,7 +614,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
 
     updateFlightGeometry(originRect);
     dialog.classList.add("is-closing");
-    closeTimerRef.current = window.setTimeout(finishClose, 650);
+    closeTimerRef.current = window.setTimeout(finishClose, 240);
   }
 
   function selectDocument(nextDocumentId) {
@@ -970,266 +716,51 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   );
 }
 
-function EvidenceLens() {
-  const [activeLensId, setActiveLensId] = useState(EVIDENCE_LENS[0].id);
-  const instrumentRef = useRef(null);
-  const tabRefs = useRef([]);
-  const activeIndex = EVIDENCE_LENS.findIndex(({ id }) => id === activeLensId);
-  const activeLens = EVIDENCE_LENS[activeIndex] ?? EVIDENCE_LENS[0];
-
-  useEffect(() => {
-    const instrument = instrumentRef.current;
-    if (!instrument || typeof window.matchMedia !== "function") return undefined;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    let frame = null;
-    let pointerIsActive = false;
-
-    function resetLens() {
-      if (frame !== null) window.cancelAnimationFrame(frame);
-      frame = null;
-      instrument.style.removeProperty("--lens-rotate-x");
-      instrument.style.removeProperty("--lens-rotate-y");
-    }
-
-    function moveLens(event) {
-      if (frame !== null) window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const bounds = instrument.getBoundingClientRect();
-        const x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
-        const y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
-        instrument.style.setProperty("--lens-rotate-x", `${(0.5 - y) * 2.4}deg`);
-        instrument.style.setProperty("--lens-rotate-y", `${(x - 0.5) * 3.2}deg`);
-      });
-    }
-
-    function syncPointerMotion() {
-      const shouldMove = !reducedMotion.matches && finePointer.matches;
-      if (shouldMove && !pointerIsActive) {
-        pointerIsActive = true;
-        instrument.addEventListener("pointermove", moveLens);
-        instrument.addEventListener("pointerleave", resetLens);
-      } else if (!shouldMove && pointerIsActive) {
-        pointerIsActive = false;
-        instrument.removeEventListener("pointermove", moveLens);
-        instrument.removeEventListener("pointerleave", resetLens);
-        resetLens();
-      }
-    }
-
-    syncPointerMotion();
-    reducedMotion.addEventListener("change", syncPointerMotion);
-    finePointer.addEventListener("change", syncPointerMotion);
-
-    return () => {
-      reducedMotion.removeEventListener("change", syncPointerMotion);
-      finePointer.removeEventListener("change", syncPointerMotion);
-      instrument.removeEventListener("pointermove", moveLens);
-      instrument.removeEventListener("pointerleave", resetLens);
-      resetLens();
-    };
-  }, []);
-
-  function moveLensTab(event, currentIndex) {
-    const keyOffsets = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -1, ArrowDown: 1 };
-    let nextIndex = currentIndex;
-
-    if (event.key in keyOffsets) {
-      nextIndex = (currentIndex + keyOffsets[event.key] + EVIDENCE_LENS.length) % EVIDENCE_LENS.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = EVIDENCE_LENS.length - 1;
-    } else {
-      return;
-    }
-
-    event.preventDefault();
-    const nextLens = EVIDENCE_LENS[nextIndex];
-    setActiveLensId(nextLens.id);
-    tabRefs.current[nextIndex]?.focus();
-  }
-
+function ProjectImage({ name, alt, caption, width, height }) {
   return (
-    <section className="evidence-lens-section" aria-labelledby="evidence-lens-title">
-      <div className="evidence-lens-frame page-grid" data-reveal>
-        <header className="evidence-lens-intro">
-          <p className="section-label">Evidence lens</p>
-          <h2 id="evidence-lens-title">One claim. Three ways to inspect it.</h2>
-          <p>
-            Switch the same project from promise to proof to boundary. This is how I keep assisted
-            work reviewable instead of asking you to trust the polished version.
-          </p>
-        </header>
-
-        <div
-          className="evidence-lens-instrument"
-          data-state={activeLens.id}
-          ref={instrumentRef}
-        >
-          <div className="evidence-lens-tabs" role="tablist" aria-label="Inspect the project claim">
-            {EVIDENCE_LENS.map((lens, index) => (
-              <button
-                id={`evidence-lens-tab-${lens.id}`}
-                type="button"
-                role="tab"
-                aria-controls="evidence-lens-panel"
-                aria-selected={lens.id === activeLens.id}
-                tabIndex={lens.id === activeLens.id ? 0 : -1}
-                key={lens.id}
-                ref={(node) => {
-                  tabRefs.current[index] = node;
-                }}
-                onClick={() => setActiveLensId(lens.id)}
-                onKeyDown={(event) => moveLensTab(event, index)}
-              >
-                <span>{lens.index}</span>
-                {lens.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="evidence-lens-artifact">
-            <span className="evidence-lens-sheet evidence-lens-sheet--cobalt" aria-hidden="true" />
-            <span className="evidence-lens-sheet evidence-lens-sheet--orange" aria-hidden="true" />
-            <article
-              className="evidence-lens-paper"
-              id="evidence-lens-panel"
-              role="tabpanel"
-              aria-labelledby={`evidence-lens-tab-${activeLens.id}`}
-              tabIndex="0"
-              key={activeLens.id}
-            >
-              <header>
-                <span>{activeLens.eyebrow}</span>
-                <span>PROJECT 02 / API CONTRACT GUARD</span>
-              </header>
-              <div className="evidence-lens-paper-body">
-                <p className="evidence-lens-metric">
-                  <strong>{activeLens.metric}</strong>
-                  <span>{activeLens.unit}</span>
-                </p>
-                <div>
-                  <h3>{activeLens.title}</h3>
-                  <p>{activeLens.detail}</p>
-                </div>
-              </div>
-              <footer>
-                <span>{activeLens.note}</span>
-                <a href="#api-contract-guard">
-                  Open the case
-                  <ArrowRightIcon size={18} aria-hidden="true" />
-                </a>
-              </footer>
-            </article>
-          </div>
-
-          <div className="evidence-lens-register" aria-hidden="true">
-            {EVIDENCE_LENS.map((lens) => (
-              <span key={lens.id} data-active={lens.id === activeLens.id ? "true" : "false"} />
-            ))}
-          </div>
-
-          <a
-            className="evidence-lens-source"
-            href={EVIDENCE_SNAPSHOT.runUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Publication CI · commit {EVIDENCE_SNAPSHOT.commit}
-            <ArrowRightIcon size={18} aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-    </section>
+    <figure className="project-preview">
+      <a href={`/images/${name}.webp`} target="_blank" rel="noopener noreferrer" aria-label={`Enlarge ${caption}`}>
+        <img src={`/images/${name}.webp`} srcSet={`/images/${name}-720.webp 720w, /images/${name}.webp ${width}w`} sizes="(max-width: 900px) 90vw, 58vw" width={width} height={height} loading="lazy" decoding="async" alt={alt} />
+      </a>
+      <figcaption><span>{caption}</span><span>Enlarge ↗</span></figcaption>
+    </figure>
   );
 }
-
-function Capabilities() {
-  return (
-    <section
-      className="capabilities-section capabilities-section--compact"
-      aria-labelledby="capabilities-title"
-    >
-      <div className="section-heading page-grid">
-        <p className="section-label">What I bring</p>
-        <h2 id="capabilities-title">Clear direction. Visible checks. Honest limits.</h2>
-        <p>
-          I am early in my software career, but I already know how to make a complicated brief
-          concrete and keep the result reviewable.
-        </p>
-      </div>
-
-      <ol className="capability-list page-grid" data-reveal>
-        {CAPABILITIES.map((capability) => (
-          <li key={capability.number}>
-            <span>{capability.number}</span>
-            <h3>{capability.title}</h3>
-            <p>{capability.detail}</p>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
-const caseRows = [
-  ["intention", "Intention"],
-  ["contribution", "Contribution"],
-  ["works", "What works"],
-  ["proof", "Evidence"],
-  ["limit", "Limit / next"],
-];
 
 function ProjectCase({ project }) {
   return (
     <article className="case-file" id={project.id}>
-      <div className="case-rule" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
-
-      <header className="case-header">
-        <p className="case-number">{project.number}</p>
-        <div className="case-title">
-          <p>{project.category}</p>
-          <h3>{project.name}</h3>
-        </div>
-        <p className="case-summary">{project.summary}</p>
-        <div className="case-meta">
-          <ProjectStatus status={project.status} />
-          <p>{project.scope}</p>
-          <p>{project.stack}</p>
-        </div>
+      <div className="case-rule" aria-hidden="true"><span /><span /><span /></div>
+      <header className="project-heading">
+        <div><p className="section-label">{project.number} / {project.category}</p><h3>{project.name}</h3></div>
+        <ProjectStatus status={project.status} />
       </header>
-
-      <dl className="case-ledger">
-        {caseRows.map(([key, label], index) => (
-          <div
-            className={`case-row case-row--${key}`}
-            key={key}
-          >
-            <span className="case-row-number" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <dt>{label}</dt>
-            <dd>{project[key]}</dd>
+      <p className="project-summary">{project.summary}</p>
+      <p className="project-stack">{project.stack}</p>
+      <div className="project-body">
+        {project.id === "evidencedesk" ? (
+          <ProjectImage name="evidencedesk" width={1440} height={619} alt="EvidenceDesk showing a question, the extracted annual fee and the matching source page in a synthetic contract." caption="EvidenceDesk · Local prototype · Synthetic data" />
+        ) : (
+          <div className="contract-workflow" aria-label="Tool workflow: compare two supported OpenAPI documents, then produce JSON and HTML reports.">
+            <span className="section-label">Inside the tool</span>
+            <div className="contract-inputs"><span>Previous<br /><strong>OpenAPI</strong></span><span>Updated<br /><strong>OpenAPI</strong></span></div>
+            <div className="contract-compare">Compare supported changes <ArrowRightIcon size={22} aria-hidden="true" /></div>
+            <div className="contract-outputs"><span>JSON report</span><span>HTML report</span></div>
+            <p>A local command-line tool. The repository includes the examples and validation record.</p>
           </div>
-        ))}
-      </dl>
-
-      <a
-        className="case-link"
-        href={`?repository=${encodeURIComponent(project.id)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${project.linkLabel}: ${project.name}. Opens a short handoff, then GitHub in a new tab.`}
-      >
-        {project.linkLabel}
-        <ArrowRightIcon size={20} aria-hidden="true" />
-      </a>
+        )}
+        <div className="project-notes">
+          <dl>
+            <div><dt>My role</dt><dd>{project.contribution}</dd></div>
+            <div><dt>What I checked</dt><dd>{project.proof}</dd></div>
+            <div className="project-limit"><dt>Current limit</dt><dd>{project.limit}</dd></div>
+          </dl>
+          <div className="project-links">
+            <a className="primary-action" href={project.url} target="_blank" rel="noopener noreferrer">View code <MarkGithubIcon size={18} aria-hidden="true" /></a>
+            <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">Validation notes <ArrowRightIcon size={16} aria-hidden="true" /></a>
+          </div>
+        </div>
+      </div>
     </article>
   );
 }
@@ -1237,122 +768,36 @@ function ProjectCase({ project }) {
 function Work() {
   return (
     <section className="work-section" id="work" aria-labelledby="work-title">
-      <WorkPortal />
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
-        <h2 id="work-title">Two case files. Four more projects at different stages.</h2>
-        <p>
-          The result and the uncomfortable part sit together. That makes the work easier to judge
-          and easier to improve.
-        </p>
+        <h2 id="work-title">See what I’ve been building.</h2>
+        <p>Personal projects built with AI assistance. Code, screenshots and the checks behind them.</p>
       </div>
-
-      <div className="case-list page-grid">
-        {featuredProjects.map((project) => (
-          <ProjectCase project={project} key={project.id} />
-        ))}
-      </div>
-
-      <div className="project-index page-grid" aria-labelledby="project-index-title">
-        <div className="index-heading">
-          <p className="section-label">Project index</p>
-          <h3 id="project-index-title">Four more bounded samples.</h3>
+      <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
+      <article className="product-sample page-grid" id="synthevia" aria-labelledby="synthevia-title">
+        <div>
+          <p className="section-label">03 / Full-stack product</p>
+          <h3 id="synthevia-title">Synthevia</h3>
+          <p>A small public workspace from a larger learning and research project. A React interface connects to a local FastAPI backend and SQLite data.</p>
+          <p className="project-stack">{productSample.stack}</p>
+          <p className="sample-limit">Pre-launch public sample. Fictional data; external services are not connected.</p>
+          <a className="secondary-action" href={productSample.url} target="_blank" rel="noopener noreferrer">Explore the sample <ArrowRightIcon size={18} aria-hidden="true" /></a>
         </div>
-
+        <ProjectImage name="synthevia" width={1440} height={900} alt="Synthevia demo workspace with a fictional Northstar account, two knowledge documents and zero external services connected." caption="Synthevia · Local demo · Fictional data" />
+      </article>
+      <div className="project-index page-grid" aria-labelledby="project-index-title">
+        <div className="index-heading"><p className="section-label">Also exploring</p><h3 id="project-index-title">Three more projects.</h3></div>
         <div className="index-list">
           {additionalProjects.map((project) => (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={project.id}
-              id={project.id}
-            >
+            <a href={project.url} target="_blank" rel="noopener noreferrer" key={project.id} id={project.id}>
               <span className="index-number">{project.number}</span>
-              <span className="index-name">
-                <strong>{project.name}</strong>
-                <small>{project.category}</small>
-              </span>
+              <span className="index-name"><strong>{project.name}</strong><small>{project.category}</small></span>
               <span className="index-copy">{project.summary}</span>
-              <span className="index-scope">
-                <ProjectStatus status={project.status} />
-                <small>{project.scope}</small>
-              </span>
+              <span className="index-scope"><ProjectStatus status={project.status} /><small>{project.scope}</small></span>
               <ArrowRightIcon size={20} aria-hidden="true" />
             </a>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-function EvidenceSnapshot() {
-  const coverageLabel = EVIDENCE_SNAPSHOT.coverage
-    .map((metric) => `${metric.label} ${metric.value}%`)
-    .join(", ");
-
-  return (
-    <section className="evidence-section" aria-labelledby="evidence-title">
-      <div className="evidence-layout page-grid">
-        <div className="evidence-copy" data-reveal>
-          <p className="section-label">Measured work</p>
-          <h2 id="evidence-title">A number only matters when its boundary is visible.</h2>
-          <p>
-            This is one published CI snapshot from API Contract Guard. It is useful evidence for a
-            deliberately narrow tool, not a score for everything I build.
-          </p>
-          <div className="evidence-total" aria-label={`${EVIDENCE_SNAPSHOT.tests} tests`}>
-            <strong>{EVIDENCE_SNAPSHOT.tests}</strong>
-            <span>tests</span>
-          </div>
-        </div>
-
-        <figure className="evidence-chart" data-reveal aria-label={coverageLabel}>
-          <figcaption>
-            <span>{EVIDENCE_SNAPSHOT.label}</span>
-            <span>commit {EVIDENCE_SNAPSHOT.commit}</span>
-          </figcaption>
-          <dl>
-            {EVIDENCE_SNAPSHOT.coverage.map((metric) => (
-              <div className="evidence-metric" key={metric.label}>
-                <dt>{metric.label}</dt>
-                <dd>
-                  <svg viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true">
-                    <rect className="evidence-bar-track" x="0" y="0" width="100" height="4" />
-                    <rect
-                      className="evidence-bar-fill"
-                      x="0"
-                      y="0"
-                      width={metric.value}
-                      height="4"
-                    />
-                  </svg>
-                  <strong>{metric.value}%</strong>
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <p>{EVIDENCE_SNAPSHOT.scope}</p>
-        </figure>
-      </div>
-
-      <div className="iteration-note page-grid" data-reveal>
-        <div className="iteration-copy">
-          <p className="section-label">{ITERATION_NOTE.eyebrow}</p>
-          <h3>{ITERATION_NOTE.title}</h3>
-          <p>{ITERATION_NOTE.detail}</p>
-          <small>{ITERATION_NOTE.caption}</small>
-        </div>
-        <ol className="iteration-projects" aria-label="Current status of portfolio projects">
-          {PROJECTS.map((project) => (
-            <li key={project.id}>
-              <span>{project.number}</span>
-              <strong>{project.name}</strong>
-              <ProjectStatus status={project.status} />
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
   );
@@ -1364,17 +809,17 @@ function Method() {
       <div className="method-layout page-grid">
         <div className="method-intro">
           <p className="section-label">How I work with AI</p>
-          <h2 id="method-title">AI speeds up the work. It does not replace the judgment.</h2>
+          <h2 id="method-title">Building with AI. Learning as I go.</h2>
           <p>
-            I use coding assistants to explore and build faster. I still define the constraints,
-            direct the work, reproduce failures, check the evidence and explain what is actually
-            working.
+            I understand code, but I cannot yet write a complete application independently.
+            I use coding assistants to build my projects, then run the result, check its behaviour
+            and work through problems.
           </p>
           <aside className="method-current">
             <span>What I am improving now</span>
             <p>
-              I am learning to write more of the code myself, ask sharper questions and make every
-              check easier to reproduce.
+              I am improving my coding fundamentals and learning to use AI more effectively:
+              clearer instructions, better checks and a stronger understanding of the result.
             </p>
           </aside>
         </div>
@@ -1398,10 +843,9 @@ function Skills() {
     <section className="skills-section" id="skills" aria-labelledby="skills-title">
       <div className="section-heading page-grid">
         <p className="section-label">Working set</p>
-        <h2 id="skills-title">Tools I can work with and keep learning.</h2>
+        <h2 id="skills-title">Tools used in my projects.</h2>
         <p>
-          My strength is connecting the pieces: a useful brief, a working path, a testable result
-          and clear documentation.
+          I use these with AI assistance and continue to learn how the pieces fit together.
         </p>
       </div>
 
@@ -1437,9 +881,9 @@ function About() {
             unfamiliar.
           </p>
           <p>
-            I&apos;m preparing to begin an online BSc in Computer Science alongside work. I speak
+            I plan to study computer science online alongside full-time work; the institution is not yet finalised. I speak
             French and Albanian, with self-assessed English at B2 level. I&apos;m based in Brussels
-            and open to local, hybrid or remote junior opportunities.
+            and open to junior opportunities in Belgium or elsewhere in the EU, depending on the role and relocation conditions.
           </p>
         </div>
       </div>
@@ -1454,8 +898,8 @@ function Contact() {
         <p className="section-label">Next step</p>
         <h2 id="contact-title">Have a junior role with real problems to solve?</h2>
         <p>
-          I&apos;m open to software, backend, full-stack and applied AI opportunities in Brussels,
-          hybrid or remote.
+          I&apos;m looking for a first role in software, backend, full-stack or applied AI, with
+          guidance and code review. Based in Brussels; open to discussing EU relocation.
         </p>
         <a className="contact-email" href={`mailto:${CONTACT.email}`}>
           <MailIcon size={22} aria-hidden="true" />
@@ -1479,33 +923,10 @@ function Contact() {
 function PortfolioExperience() {
   const [activeDocumentId, setActiveDocumentId] = useState(null);
   const [documentOrigin, setDocumentOrigin] = useState(null);
-  const [isSessionIntroVisible, setIsSessionIntroVisible] = useState(shouldShowSessionIntro);
-  const [projectTransitionTarget, setProjectTransitionTarget] = useState(null);
   const lastDocumentTriggerRef = useRef(null);
-  const pendingProjectFocusRef = useRef(null);
 
-  usePageMotion(!isSessionIntroVisible);
+  usePageMotion(true);
   useControlPressFeedback();
-
-  useEffect(() => {
-    if (projectTransitionTarget || !pendingProjectFocusRef.current) return undefined;
-
-    const targetHash = pendingProjectFocusRef.current;
-    pendingProjectFocusRef.current = null;
-    const focusFrame = window.requestAnimationFrame(() => {
-      const target = document.getElementById(targetHash.slice(1));
-      if (!target) return;
-
-      const focusTarget = target.querySelector("h2, h3") ?? target;
-      focusTarget.setAttribute("tabindex", "-1");
-      focusTarget.focus({ preventScroll: true });
-      focusTarget.addEventListener("blur", () => focusTarget.removeAttribute("tabindex"), {
-        once: true,
-      });
-    });
-
-    return () => window.cancelAnimationFrame(focusFrame);
-  }, [projectTransitionTarget]);
 
   function openDocument(documentId, trigger) {
     lastDocumentTriggerRef.current = trigger;
@@ -1518,68 +939,14 @@ function PortfolioExperience() {
     setDocumentOrigin(null);
   }
 
-  function finishIntro() {
-    setIsSessionIntroVisible(false);
-  }
-
-  function replayIntro() {
-    if (browserPrefersReducedMotion()) return;
-    window.scrollTo({ top: 0, behavior: "auto" });
-    setIsSessionIntroVisible(true);
-  }
-
-  function handleCinematicNavigation(event) {
-    if (
-      event.defaultPrevented ||
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey ||
-      browserPrefersReducedMotion()
-    ) {
-      return;
-    }
-
-    const link = event.target.closest("a[href^='#']");
-    const targetHash = link?.getAttribute("href");
-    const projectHashes = new Set(["#work", ...PROJECTS.map(({ id }) => `#${id}`)]);
-
-    if (!targetHash || !projectHashes.has(targetHash)) return;
-
-    event.preventDefault();
-    setProjectTransitionTarget(targetHash);
-  }
-
-  function finishProjectTransition(targetHash) {
-    pendingProjectFocusRef.current = targetHash;
-    setProjectTransitionTarget(null);
-  }
-
   return (
     <div className="site-shell" id="top">
-      {isSessionIntroVisible && (
-        <SessionIntro onComplete={finishIntro} />
-      )}
-      {projectTransitionTarget && (
-        <ProjectTransition
-          targetHash={projectTransitionTarget}
-          onComplete={finishProjectTransition}
-        />
-      )}
-      <div
-        className={`site-content${isSessionIntroVisible ? "" : " site-content--ready"}`}
-        inert={isSessionIntroVisible || projectTransitionTarget ? true : undefined}
-        onClickCapture={handleCinematicNavigation}
-      >
+      <div className="site-content site-content--ready">
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader />
         <main id="main-content" tabIndex="-1">
-          <Intro onOpenDocument={openDocument} onReplayIntro={replayIntro} />
-          <Capabilities />
-          <EvidenceLens />
+          <Intro onOpenDocument={openDocument} />
           <Work />
-          <EvidenceSnapshot />
           <Method />
           <Skills />
           <Documents onOpenDocument={openDocument} />

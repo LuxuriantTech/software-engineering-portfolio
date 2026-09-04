@@ -14,7 +14,9 @@ The page includes:
   path, evidence and limit;
 - four smaller project samples with their current scope kept visible;
 - a plain account of how Ardian directs and checks AI-assisted work;
-- skills, background and direct contact links.
+- skills, background and direct contact links;
+- an in-page document reader for a public CV and general motivation letter,
+  with direct same-origin PDF downloads and no external viewer or account.
 
 EvidenceDesk and API Contract Guard link to their dedicated public
 repositories. The other four stories link to selected public paths in this
@@ -35,6 +37,17 @@ npm run build
 npm run dev -- --host 127.0.0.1
 ~~~
 
+The public documents can be regenerated from their reviewed source copy with:
+
+~~~bash
+python -m pip install -r scripts/requirements-docs.txt
+python scripts/build_public_documents.py
+~~~
+
+Keep private contact details, identity documents, financial information and
+application-specific claims out of these public files. Anything under
+`public/` is intentionally downloadable by every visitor.
+
 The site does not require an environment file or credential. Archivo and IBM
 Plex Mono are packaged locally under the OFL-1.1 licence, and Octicons remains
 the only icon set. There is no form, tracker, analytics script, backend request
@@ -42,7 +55,9 @@ or connection to a private project.
 
 The responsive layout is designed for 320px and wider viewports, includes a
 keyboard-visible 3px focus treatment, uses 44px minimum interactive targets and
-respects `prefers-reduced-motion`.
+respects `prefers-reduced-motion`. The document reveal uses lightweight CSS 3D
+and transform-based motion, while the reader remains semantic HTML that works
+with keyboard navigation and assistive technology.
 
 ## Design provenance
 

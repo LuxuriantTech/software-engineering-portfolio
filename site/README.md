@@ -1,15 +1,33 @@
-# Project Atlas
+# Ardian Mehaj portfolio
 
-Project Atlas is the static navigator for this portfolio. It keeps the six
-projects in one interface: choose a project, read its current status, inspect
-three reviewable boundaries and open the corresponding source directory.
+This static React portfolio introduces Ardian as an early-career software
+developer focused on backend systems, full-stack products and applied AI. Its
+visual direction is **Atelier de preuves**: bright, square, direct and organised
+around work that another person can inspect.
 
-EvidenceDesk and API Contract Guard link to their dedicated public repositories;
-their source trees are not copied into this portfolio.
+The page includes:
 
-The interface is deliberately smaller than the project README files. Claims,
-limitations and test totals come from the verified public edition; the site
-does not add product metrics, deployment claims or trading results.
+- a short recruiter scan with role, location, availability, contact and one
+  real project proof visible together;
+- three practical capabilities: frame, direct and verify;
+- two public project dossiers organised as intention, contribution, working
+  path, evidence and limit;
+- four smaller project samples with their current scope kept visible;
+- a plain account of how Ardian directs and checks AI-assisted work;
+- skills, background and direct contact links;
+- an in-page document reader for a public CV and general motivation letter,
+  with direct same-origin PDF downloads and no external viewer or account.
+- a short, project-specific source handoff in a new tab before the two featured
+  case files continue to their canonical public GitHub repositories.
+
+EvidenceDesk and API Contract Guard link to their dedicated public
+repositories. The other four stories link to selected public paths in this
+portfolio repository. Private source is not copied into the site.
+
+Claims and test totals come from the current verified public edition. The site
+does not add customer metrics, deployment claims, trading results or
+unconfirmed education. EvidenceDesk's positive retrieval result stays beside
+the wider evaluation that did not pass.
 
 ## Run locally
 
@@ -21,14 +39,42 @@ npm run build
 npm run dev -- --host 127.0.0.1
 ~~~
 
-The site does not require an environment file or credential. Fonts and icons
-are packaged locally. There is no form, tracker, analytics script, backend call
-or connection to one of the private projects.
+The public documents can be regenerated from their reviewed source copy with:
+
+~~~bash
+python -m pip install -r scripts/requirements-docs.txt
+python scripts/build_public_documents.py
+~~~
+
+Keep private contact details, identity documents, financial information and
+application-specific claims out of these public files. Anything under
+`public/` is intentionally downloadable by every visitor.
+
+The site does not require an environment file or credential. Archivo and IBM
+Plex Mono are packaged locally under the OFL-1.1 licence, and Octicons remains
+the only icon set. There is no form, tracker, analytics script, backend request
+or connection to a private project.
+
+The responsive layout is designed for 320px and wider viewports, includes a
+keyboard-visible 3px focus treatment, uses 44px minimum interactive targets and
+respects `prefers-reduced-motion`. The document reveal uses lightweight CSS 3D
+and transform-based motion, while the reader remains semantic HTML that works
+with keyboard navigation and assistive technology. Repository handoffs remain
+skippable, and reduced-motion visitors continue to GitHub without the timed
+animation.
+
+## Design provenance
+
+The design was informed by a public reference study, then deliberately changed
+in layout, typography, palette, navigation, project presentation, media and
+motion. No reference code, copy, brand assets, images or composition are used.
+The site contains only original CSS graphics and project copy belonging to this
+portfolio.
 
 ## Deployment boundary
 
 `vercel.json` publishes only `dist/client` and defines a restrictive content
 security policy, framing protection, referrer policy and permissions policy.
-Automatic Git deployments are disabled for this source-only publication. A
-separate explicit approval is required before re-enabling or performing a Vercel
-deployment.
+Git deployments are enabled for the reviewed public portfolio. Production must
+still be promoted only from the validated `main` branch, with the remote commit,
+CI result and live response checked after release.

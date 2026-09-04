@@ -1,144 +1,255 @@
 export const ROOT_REPOSITORY_URL =
   "https://github.com/LuxuriantTech/software-engineering-portfolio";
 
-export const EVIDENCE_ITEMS = [
+export const CONTACT = {
+  email: "mehajardian@gmail.com",
+  github: "https://github.com/LuxuriantTech",
+  linkedin: "https://www.linkedin.com/in/ardian-mehaj-572b5a3b0/",
+};
+
+export const NAV_ITEMS = [
+  { label: "Work", href: "#work" },
+  { label: "Method", href: "#method" },
+  { label: "Skills", href: "#skills" },
+  { label: "Documents", href: "#documents" },
+  { label: "About", href: "#about" },
+];
+
+export const PROOF_LINE = {
+  label: "A proof, not a promise",
+  value: "102 local tests",
+  detail:
+    "API Contract Guard checks five supported breaking-change categories and fails closed outside its declared scope.",
+  href: "#api-contract-guard",
+};
+
+export const EVIDENCE_SNAPSHOT = {
+  label: "Publication CI",
+  commit: "9ea2eea",
+  runUrl: "https://github.com/LuxuriantTech/api-contract-guard/actions/runs/33274063682",
+  tests: 102,
+  supportedChangeCategories: 5,
+  coverage: [
+    { label: "Statements", value: 94.12 },
+    { label: "Branches", value: 88.72 },
+    { label: "Functions", value: 100 },
+    { label: "Lines", value: 98.67 },
+  ],
+  scope:
+    "A bounded OpenAPI subset: five supported breaking-change categories, not a general compatibility verdict.",
+};
+
+export const EVIDENCE_LENS = [
   {
-    kind: "test-metric",
-    label: "33 focused Python tests",
-    detail: "Verified 21 August 2026 · four selected public Python samples only",
-    evidenceLinks: [
-      { label: "Synthevia", url: ROOT_REPOSITORY_URL + "/tree/main/projects/synthevia#testing-and-evidence" },
-      { label: "Gargantua", url: ROOT_REPOSITORY_URL + "/tree/main/projects/gargantua#evidence" },
-      { label: "Strategy Lab", url: ROOT_REPOSITORY_URL + "/tree/main/projects/strategy-lab#verified-checks" },
-      { label: "MyTradingBot", url: ROOT_REPOSITORY_URL + "/tree/main/projects/mytradingbot#targeted-checks" },
-    ],
+    id: "claim",
+    index: "01",
+    label: "Claim",
+    eyebrow: "What the tool says",
+    metric: "SUBSET",
+    unit: "OpenAPI subset",
+    title: "Compare the contract. Report only what is supported.",
+    detail:
+      "A local TypeScript CLI compares two OpenAPI documents and reports a defined subset of breaking changes as JSON and static HTML.",
+    note: "One concrete promise, kept deliberately narrow.",
   },
   {
-    kind: "test-metric",
-    label: "4 focused frontend tests",
-    detail: "Verified 21 August 2026 · selected public Synthevia frontend sample only",
-    evidenceLinks: [
-      { label: "Synthevia evidence", url: ROOT_REPOSITORY_URL + "/tree/main/projects/synthevia#testing-and-evidence" },
-    ],
+    id: "check",
+    index: "02",
+    label: "Check",
+    eyebrow: "What can be reproduced",
+    metric: "102",
+    unit: "local tests",
+    title: "The receipt sits beside the result.",
+    detail:
+      "Publication CI at commit 9ea2eea ran 102 tests: 94.12% statements, 88.72% branches, 100% functions and 98.67% lines.",
+    note: "A public CI snapshot, not a universal quality score.",
   },
   {
-    kind: "boundary",
-    label: "Synthetic data only",
-    detail: "No real user, community, market or operational data is included.",
+    id: "limit",
+    index: "03",
+    label: "Limit",
+    eyebrow: "Where the claim stops",
+    metric: "5",
+    unit: "supported categories",
+    title: "Five rules are useful. They are not the whole spec.",
+    detail:
+      "Unsupported shapes, references outside the documented bounds and oversized inputs fail closed instead of producing a guess.",
+    note: "Local and synthetic only; no complete compatibility verdict.",
+  },
+];
+
+export const ITERATION_NOTE = {
+  eyebrow: "Work in progress",
+  title: "The work is meant to be revisited.",
+  detail:
+    "Some projects here are public review samples from work that is still evolving. I keep revisiting the boundaries, tests and documentation as I learn more. Each project separates what is verified today from what remains experimental, unverified or deliberately out of scope.",
+  caption: "No polished claim without a clear limit beside it.",
+};
+
+export const CAPABILITIES = [
+  {
+    number: "01",
+    title: "Frame",
+    detail: "Turn a vague request into a clear target, constraints and acceptance checks.",
+  },
+  {
+    number: "02",
+    title: "Direct",
+    detail: "Break the work down, give coding assistants useful context and iterate deliberately.",
+  },
+  {
+    number: "03",
+    title: "Verify",
+    detail: "Run the product, reproduce failures and keep evidence beside every important claim.",
   },
 ];
 
 export const PROJECTS = [
   {
     id: "evidencedesk",
+    number: "01",
     name: "EvidenceDesk",
-    status: "Experimental · HONEST_NEGATIVE",
-    tone: "amber",
-    architecture: ["React + FastAPI", "Redis + ARQ", "PostgreSQL + pgvector"],
-    architectureLabel:
-      "React and FastAPI through Redis and ARQ to PostgreSQL and pgvector",
-    highlights: [
-      "Asynchronous ingestion of allowlisted synthetic documents",
-      "Hybrid retrieval reached 100% Recall@5 on 25/25 answerable v7 cases",
-      "Answers link to page-level evidence or explicitly abstain",
-    ],
-    limitation:
-      "blind v7 reached 36% answerable-case accuracy and 45.67% extraction F1, so it is not validated for production or real documents.",
+    category: "Document review",
+    status: "Experimental",
+    featured: true,
+    summary:
+      "A document review prototype that finds supporting passages, links answers to source pages and abstains when evidence is missing.",
+    intention:
+      "Help a reviewer find source-backed answers without asking them to trust generated text on its own.",
+    contribution:
+      "I framed the review workflow, defined the evidence and abstention rules, and iterated on the implementation with coding assistants.",
+    works:
+      "The prototype retrieves supporting passages, links an answer to its page and can abstain when it does not find enough evidence.",
+    proof: "Recall@5 reached 100% on 25 of 25 answerable synthetic v7 cases.",
+    limit:
+      "The wider answer evaluation did not pass: 36% answerable-case accuracy and 45.67% extraction F1. It remains experimental and uses synthetic data only.",
+    stack: "React · FastAPI · Redis · PostgreSQL · pgvector",
+    scope: "Experimental public project · Synthetic data only",
     url: "https://github.com/LuxuriantTech/evidencedesk",
+    linkLabel: "Inspect the repository",
+    repositorySignals: ["25/25 RECALL@5", "PAGE-LINKED", "LIMITS VISIBLE"],
+    repositoryEvidenceUrl:
+      "https://github.com/LuxuriantTech/evidencedesk/blob/main/docs/release-validation.md",
   },
   {
     id: "api-contract-guard",
+    number: "02",
     name: "API Contract Guard",
-    status: "Local CLI · bounded scope",
-    tone: "blue",
-    architecture: ["OpenAPI", "TypeScript CLI", "JSON + HTML"],
-    architectureLabel:
-      "OpenAPI documents through a local TypeScript CLI to deterministic JSON and HTML reports",
-    highlights: [
-      "Five supported breaking-change categories with deterministic output",
-      "Bounded local files and references; unsupported shapes fail closed",
-      "102 tests and a reproducible synthetic operation-removal demo",
-    ],
-    limitation:
-      "this is a local tool for a defined OpenAPI subset, not a hosted service, production-client validation or a general compatibility verdict.",
+    category: "Developer tooling",
+    status: "Reviewable sample",
+    featured: true,
+    summary:
+      "A TypeScript command-line tool that compares a defined OpenAPI subset and reports supported breaking changes in JSON and static HTML.",
+    intention:
+      "Make a deliberately bounded set of API changes reviewable before they reach another system.",
+    contribution:
+      "I defined the supported change categories, expected reports and failure boundaries, then reviewed the implementation and test cases.",
+    works:
+      "The local CLI compares its supported OpenAPI subset and produces machine-readable JSON plus a static HTML report.",
+    proof: "102 local tests cover five supported breaking-change categories.",
+    limit:
+      "It does not claim complete OpenAPI compatibility. Unsupported shapes, references and oversized inputs fail closed instead of producing a guess.",
+    stack: "TypeScript · Node.js · OpenAPI · JSON · HTML",
+    scope: "Local CLI · Deliberately bounded compatibility checks",
     url: "https://github.com/LuxuriantTech/api-contract-guard",
+    linkLabel: "Inspect the repository",
+    repositorySignals: ["5 CHECKS", "102 TESTS", "FAILS CLOSED"],
+    repositoryEvidenceUrl:
+      "https://github.com/LuxuriantTech/api-contract-guard/blob/main/VALIDATION.md",
   },
   {
     id: "synthevia",
+    number: "03",
     name: "Synthevia",
-    status: "Pre-launch",
-    tone: "blue",
-    architecture: ["React", "FastAPI", "in-memory SQLite"],
-    architectureLabel: "React to local FastAPI to in-memory SQLite",
-    highlights: [
-      "Deterministic retrieval over fictional documents",
-      "Synthetic workspace data generated locally",
-      "Focused frontend and backend checks",
-    ],
-    limitation:
-      "this is a selected public path, not the complete private product or proof of a current deployment.",
+    category: "Full-stack product",
+    status: "In progress",
+    featured: false,
+    summary: "A private learning and research product represented by a smaller runnable public path.",
+    stack: "React · TypeScript · FastAPI · SQLite",
+    scope: "Pre-launch · Public sample only",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/synthevia",
   },
   {
     id: "gargantua",
+    number: "04",
     name: "Gargantua / GLXBot",
-    status: "Historically deployed",
-    navStatus: "Historically deployed · runtime unverified",
-    statusDetail: "Current runtime unverified",
-    tone: "amber",
-    architecture: ["Async service", "role gate", "audit record"],
-    architectureLabel: "Asynchronous service through role gate to in-memory audit record",
-    highlights: [
-      "Member actions fail before audit mutation",
-      "Audit records deliberately exclude message content",
-      "Fictional read-only FastAPI dashboard response",
-    ],
-    limitation:
-      "the sample does not reproduce Discord OAuth, live permission refresh, persistence or current service availability.",
+    category: "Community operations",
+    status: "Runtime unverified",
+    featured: false,
+    summary: "A bounded moderation and audit sample from a private Discord administration platform.",
+    stack: "Python · FastAPI · React · PostgreSQL",
+    scope: "Public sample · Current runtime unverified",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/gargantua",
   },
   {
     id: "strategy-lab",
+    number: "05",
     name: "Synthevia Strategy Lab",
-    status: "Internal R&D",
-    tone: "green",
-    architecture: ["Synthetic input", "protocol gates", "verdict"],
-    architectureLabel: "Synthetic inputs through protocol gates to a documented verdict",
-    highlights: [
-      "Benjamini–Hochberg and compact Newey–West checks",
-      "One-use holdout and declared fill sanity gates",
-      "Malformed LLM output becomes ABSTAIN",
-    ],
-    limitation:
-      "these are generic synthetic controls, not a strategy, market result, complete statistics library or route to capital.",
+    category: "Research tooling",
+    status: "In progress",
+    featured: false,
+    summary: "Python controls designed to reject weak market hypotheses before capital is involved.",
+    stack: "Python · Statistics · Evaluation",
+    scope: "Internal R&D · Synthetic research only",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/strategy-lab",
   },
   {
     id: "mytradingbot",
+    number: "06",
     name: "MyTradingBot",
-    status: "Paper-only",
-    tone: "slate",
-    architecture: ["Risk gate", "paper exchange", "qualification"],
-    architectureLabel: "Risk gate to paper exchange to qualification result",
-    highlights: [
-      "Live mode is rejected before execution",
-      "Decimal-based absolute and equity-relative limits",
-      "Synthetic qualification can return NO-GO",
-    ],
-    limitation:
-      "paper fills do not prove live readiness, production safety, realistic execution quality or profitability.",
+    category: "Risk automation",
+    status: "In progress",
+    featured: false,
+    summary: "A paper-first automation prototype with explicit risk, execution and qualification gates.",
+    stack: "Python · Async systems · Risk controls",
+    scope: "Paper-only · No profitability claim",
     url: ROOT_REPOSITORY_URL + "/tree/main/projects/mytradingbot",
+  },
+];
+
+export const WORKFLOW_STEPS = [
+  {
+    number: "01",
+    title: "Frame",
+    detail: "Decide what good looks like, what can be proved and what stays out of scope.",
+  },
+  {
+    number: "02",
+    title: "Direct",
+    detail: "Split the problem into useful tasks, provide context and iterate with coding assistants.",
+  },
+  {
+    number: "03",
+    title: "Verify",
+    detail: "Run tests, inspect the actual behaviour and reproduce failures before calling anything done.",
+  },
+  {
+    number: "04",
+    title: "Explain",
+    detail: "Leave the result, evidence and remaining limits understandable to the next person.",
+  },
+];
+
+export const CAPABILITY_GROUPS = [
+  {
+    title: "Languages",
+    items: ["Python", "TypeScript", "JavaScript", "SQL", "HTML & CSS"],
+  },
+  {
+    title: "Web & data",
+    items: ["FastAPI", "React", "REST APIs", "PostgreSQL", "OpenAPI", "pgvector"],
+  },
+  {
+    title: "Quality",
+    items: ["pytest", "Vitest", "Playwright", "Ruff", "mypy", "GitHub Actions"],
+  },
+  {
+    title: "Delivery",
+    items: ["Git", "Docker", "Linux", "Debugging", "Documentation", "Technical review"],
   },
 ];
 
 export function projectFromHash(hash) {
   const id = hash.replace(/^#/, "");
   return PROJECTS.find((project) => project.id === id) ?? PROJECTS[0];
-}
-
-export function skipToProjectDetails(event, documentRef) {
-  event.preventDefault();
-  const detail = documentRef.getElementById("project-detail");
-  detail?.focus();
-  detail?.scrollIntoView({ block: "start" });
 }

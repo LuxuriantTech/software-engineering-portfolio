@@ -1,0 +1,61 @@
+{
+  "cv": {
+    "role": "Junior software developer",
+    "location": "Brussels, Belgium",
+    "profile": "I am looking for my first software role in a team where I can contribute and learn. I understand code, but I still need AI assistance to write it. I use coding assistants to build projects, then run the result, test its behaviour and work through problems. I am improving both my coding fundamentals and the way I use AI. I am available for full-time work, with online studies planned alongside.",
+    "projects": [
+      {
+        "name": "API Contract Guard",
+        "meta": "TypeScript · Node.js · OpenAPI · 102 local tests",
+        "detail": "A bounded command-line tool for comparing a defined OpenAPI subset. I set the supported change categories, expected reports and failure boundaries, then reviewed the AI-assisted implementation and test cases. It covers five documented breaking-change categories and fails closed outside scope."
+      },
+      {
+        "name": "EvidenceDesk",
+        "meta": "React · FastAPI · PostgreSQL · Redis · Synthetic data",
+        "detail": "A document-review prototype that links answers to supporting pages and can abstain when evidence is missing. Recall@5 reached 100% on 25 of 25 answerable synthetic cases; the wider answer evaluation did not pass (36% accuracy and 45.67% extraction F1), so the limit remains visible."
+      },
+      {
+        "name": "Synthevia",
+        "meta": "React · TypeScript · FastAPI · SQLite",
+        "detail": "A local learning and research workspace built with AI assistance. The public sample connects a React interface to a FastAPI backend and SQLite data. It uses fictional data; external services are not connected."
+      }
+    ],
+    "experience": [
+      {
+        "name": "Volunteer tutor",
+        "meta": "Brussels · 2020–present",
+        "detail": "Mathematics, science and business. I break unfamiliar topics into clear steps and adapt explanations to the learner."
+      },
+      {
+        "name": "Student retail assistant · Delhaize",
+        "meta": "Brussels · 2020–2022",
+        "detail": "Worked reliably with customers, procedures and a team during busy shifts while studying."
+      }
+    ],
+    "education": [
+      {
+        "name": "Planned online computer science studies",
+        "detail": "Planned alongside full-time work; institution not yet finalised."
+      },
+      {
+        "name": "ICHEC Brussels · Business Management",
+        "detail": "Completed part of first year in 2025–2026 before changing direction toward software."
+      }
+    ],
+    "certification": "Google AI Professional Certificate · Coursera · May 2026",
+    "languages": "French (main language) · Albanian (native) · English B2 (self-assessed)",
+    "tools": "Python · JavaScript · TypeScript · SQL · HTML/CSS · FastAPI · React · REST/OpenAPI · PostgreSQL · Redis · pytest · Vitest · Playwright · Ruff · mypy · Git/GitHub Actions · Docker · Linux · debugging · documentation"
+  },
+  "letter": {
+    "subject": "Open application · Junior software / backend / applied AI",
+    "salutation": "Dear Hiring Team,",
+    "paragraphs": [
+      "I am looking for my first role in software development or applied AI. I started in business studies, then became interested in building software through my own projects. I would like to take that work further in a team where I can learn from experienced developers.",
+      "I understand code, but I still need AI assistance to write it. I describe what I want to build, work through the implementation with coding assistants and check the result by running it and testing its behaviour. I am getting better at using these tools and working on my coding fundamentals at the same time.",
+      "My portfolio includes API Contract Guard, a TypeScript tool with 102 recorded local tests, and EvidenceDesk, a document-review prototype with source citations. EvidenceDesk also has an answer evaluation that did not pass, which is documented in the repository. Synthevia shows a smaller React and FastAPI workspace using fictional data. These personal projects give us something concrete to discuss.",
+      "I am available for full-time work and plan to study computer science online alongside it. The institution is not yet finalised. I would value clear expectations, regular code review and the chance to contribute while learning.",
+      "I would be glad to walk you through one of my projects, explain how I built it and discuss whether my current level fits what your team needs."
+    ],
+    "closing": "Thank you for your time,"
+  }
+}

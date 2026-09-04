@@ -221,6 +221,14 @@ test("keeps responsive, touch and keyboard-accessible rules", async () => {
   assert.doesNotMatch(styleSource, /\.mobile-panel\s*\{[\s\S]*?position:\s*fixed/);
 });
 
+test("keeps long desktop project titles clear of their summaries", async () => {
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+
+  assert.match(styleSource, /\.case-title\s*\{\s*grid-column:\s*2\s*\/\s*7;\s*min-width:\s*0;/);
+  assert.match(styleSource, /\.case-summary\s*\{\s*grid-column:\s*7\s*\/\s*11;\s*min-width:\s*0;/);
+  assert.match(styleSource, /\.case-meta\s*\{\s*grid-column:\s*11\s*\/\s*13;\s*min-width:\s*0;/);
+});
+
 test("bundles the two selected font families locally", async () => {
   const packageConfig = JSON.parse(
     await readFile(new URL("../package.json", import.meta.url), "utf8"),

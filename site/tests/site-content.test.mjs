@@ -114,9 +114,7 @@ test("avoids unconfirmed education and inflated claims", async () => {
   const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
   const publicCopy = JSON.stringify({ PROJECTS, appSource });
   const rejectedLanguage = [
-    /unconfirmed student claim/i,
-    /unconfirmed student claim/i,
-    /unconfirmed student claim/i,
+    /\bstudent\b/i,
     /currently enrolled/i,
     /production[- ]grade/i,
     /fully secure/i,
@@ -315,16 +313,18 @@ test("publishes two local, public-safe career documents", async () => {
   assert.equal(documentById("unknown").shortLabel, "CV");
 
   const publicCopy = JSON.stringify({ DOCUMENTS, CV_CONTENT, LETTER_CONTENT });
+  // Keep this list category-based. Never put a real address, benefit provider,
+  // school, phone number or other private value in a test committed publicly.
   for (const pattern of [
     /\+32\s*\d/i,
-    /private street address/i,
-    /\b0000\b/i,
-    /citizenship claim/i,
-    /benefit provider/i,
-    /private financial information/i,
-    /unconfirmed student claim/i,
-    /currently enrolled/i,
-    /fluent English/i,
+    /\b(?:street|avenue|road|boulevard|lane|rue|chaussée)\b.{0,80}\b\d{1,5}\b/iu,
+    /\b\d{1,5}\b.{0,80}\b(?:street|avenue|road|boulevard|lane|rue|chaussée)\b/iu,
+    /\b(?:EUR|USD|GBP)\s?\d+(?:[.,]\d{2})?\b/i,
+    /[€$£]\s?\d+(?:[.,]\d{2})?/u,
+    /\b(?:benefit|allowance|welfare|social assistance|income|savings|debt)\b/i,
+    /\b(?:citizen(?:ship)?|nationality|passport|national register)\b/i,
+    /\b(?:currently enrolled|current student)\b/i,
+    /\bfluent English\b/i,
   ]) {
     assert.doesNotMatch(publicCopy, pattern);
   }

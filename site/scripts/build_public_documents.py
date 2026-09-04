@@ -184,6 +184,9 @@ def document(path: Path, title: str, subject: str, story: list, footer: str) -> 
         title=title,
         author="Ardian Mehaj",
         subject=subject,
+        creator="",
+        producer="",
+        invariant=1,
     )
     frame = Frame(
         doc.leftMargin,

@@ -12,6 +12,8 @@ import {
   CAPABILITIES,
   CAPABILITY_GROUPS,
   CONTACT,
+  EVIDENCE_LENS,
+  EVIDENCE_SNAPSHOT,
   NAV_ITEMS,
   PROJECTS,
   PROOF_LINE,
@@ -19,6 +21,11 @@ import {
   WORKFLOW_STEPS,
   projectFromHash,
 } from "../src/siteData.js";
+import {
+  browserPrefersReducedMotion,
+  SESSION_INTRO_MAX_DURATION_MS,
+  shouldShowSessionIntro,
+} from "../src/sessionIntroState.js";
 
 test("publishes six bounded project stories", () => {
   assert.equal(PROJECTS.length, 6);
@@ -154,7 +161,7 @@ test("uses the original evidence-workshop identity", async () => {
     /benchmark tabs?/i,
     /backdrop-filter\s*:/i,
     /linear-gradient|radial-gradient/i,
-    /\.intro\s*\{[\s\S]*?min-height:\s*100s?vh/i,
+    /\.intro\s*\{[^}]*?min-height:\s*100s?vh/i,
   ]) {
     assert.doesNotMatch(visualSource, pattern);
   }
@@ -205,7 +212,7 @@ test("resolves known hashes and safely falls back", () => {
   assert.equal(projectFromHash("").id, "evidencedesk");
 });
 
-test("renders semantic core sections, direct links and one h1", async () => {
+test("renders semantic core sections, direct links and one h1 per rendered branch", async () => {
   const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
 
   for (const id of [
@@ -219,7 +226,8 @@ test("renders semantic core sections, direct links and one h1", async () => {
   ]) {
     assert.match(appSource, new RegExp(`id="${id}"`));
   }
-  assert.equal((appSource.match(/<h1/g) ?? []).length, 1);
+  assert.equal((appSource.match(/<h1/g) ?? []).length, 2);
+  assert.match(appSource, /handoffProject \? \([\s\S]*?<RepositoryHandoff[\s\S]*?: \([\s\S]*?<PortfolioExperience/);
   assert.match(appSource, /<main id="main-content" tabIndex="-1">/);
   assert.match(appSource, /className="skip-link" href="#main-content"/);
   assert.match(appSource, /label="Primary navigation"/);
@@ -277,7 +285,7 @@ test("Vercel serves only the static build with restrictive headers", async () =>
   assert.equal(packageConfig.scripts.build, "vite build");
   assert.equal(config.outputDirectory, "dist/client");
   assert.equal(config.framework, "vite");
-  assert.equal(config.git.deploymentEnabled, false);
+  assert.equal(config.git.deploymentEnabled, true);
 
   const headers = Object.fromEntries(
     config.headers[0].headers.map(({ key, value }) => [key.toLowerCase(), value]),
@@ -359,4 +367,198 @@ test("uses restrained CSS 3D and transform-only document motion", async () => {
   assert.match(styleSource, /\.document-viewer-canvas[\s\S]*?overflow-y:\s*auto/);
   assert.match(styleSource, /@media \(max-width: 680px\)[\s\S]*?\.document-page-header[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\)/);
   assert.doesNotMatch(styleSource, /animation[^;]*(left|right|top|bottom|width|height)/i);
+});
+
+test("plays the opening sequence on every full load unless motion is reduced", () => {
+  assert.equal(shouldShowSessionIntro({ reducedMotion: false }), true);
+  assert.equal(shouldShowSessionIntro({ reducedMotion: false }), true);
+  assert.equal(shouldShowSessionIntro({ reducedMotion: true }), false);
+  assert.equal(browserPrefersReducedMotion({}), true);
+  assert.equal(
+    browserPrefersReducedMotion({ matchMedia: () => ({ matches: false }) }),
+    false,
+  );
+  assert.ok(SESSION_INTRO_MAX_DURATION_MS >= 2500);
+  assert.ok(SESSION_INTRO_MAX_DURATION_MS <= 3000);
+});
+
+test("keeps the 3D opening sequence bounded, accessible and dependency-free", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+  const packageConfig = JSON.parse(
+    await readFile(new URL("../package.json", import.meta.url), "utf8"),
+  );
+
+  assert.match(appSource, /function SessionIntro/);
+  assert.match(appSource, /className="session-intro"/);
+  assert.match(appSource, /role="status"/);
+  assert.match(appSource, /aria-label="Opening Ardian Mehaj's portfolio"/);
+  assert.match(appSource, />\s*Skip intro\s*</);
+  assert.match(appSource, />\s*Replay opening\s*</);
+  assert.match(appSource, /onAnimationEnd=/);
+  assert.match(appSource, /SESSION_INTRO_MAX_DURATION_MS/);
+  assert.match(styleSource, /perspective:\s*1100px/);
+  assert.match(styleSource, /transform-style:\s*preserve-3d/);
+  assert.match(styleSource, /@keyframes session-intro-register/);
+  assert.match(styleSource, /\.session-intro\s*\{[\s\S]*?pointer-events:\s*auto/);
+  assert.match(
+    styleSource,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.session-intro\s*\{[\s\S]*?display:\s*none !important/,
+  );
+  assert.doesNotMatch(styleSource, /session-intro[^}]*animation:[^;}]*infinite/i);
+  assert.equal(packageConfig.dependencies?.three, undefined);
+  assert.equal(packageConfig.dependencies?.["@react-three/fiber"], undefined);
+  assert.match(appSource, /className=\{`site-content[\s\S]{0,180}?inert=/);
+  assert.doesNotMatch(appSource, /<main[^>]*(?:inert|aria-hidden)/i);
+});
+
+test("adds bounded cinematic motion for project navigation and scroll reveals", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+
+  assert.match(appSource, /function ProjectTransition/);
+  assert.match(appSource, /function WorkPortal/);
+  assert.match(appSource, /IntersectionObserver/);
+  assert.match(appSource, /handleCinematicNavigation/);
+  assert.match(appSource, /window\.history\.pushState/);
+  assert.match(appSource, /focus\(\{ preventScroll: true \}\)/);
+  assert.match(appSource, />\s*Skip transition\s*</);
+  assert.match(appSource, /inert=\{isSessionIntroVisible \|\| projectTransitionTarget/);
+  assert.match(appSource, /motionPreference\.addEventListener\("change"/);
+  assert.match(appSource, /motionPreference\.removeEventListener\("change"/);
+  assert.match(styleSource, /@keyframes project-camera-zoom/);
+  assert.match(styleSource, /\.work-portal-stage\s*\{[\s\S]*?perspective:\s*1300px/);
+  assert.match(styleSource, /\.project-transition\s*\{[\s\S]*?pointer-events:\s*auto/);
+  assert.match(
+    styleSource,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.project-transition\s*\{[\s\S]*?display:\s*none !important/,
+  );
+});
+
+test("uses a distinct, skippable handoff before opening featured GitHub repositories", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+
+  for (const project of PROJECTS.filter(({ featured }) => featured)) {
+    assert.equal(project.repositorySignals.length, 3);
+    assert.equal(new Set(project.repositorySignals).size, 3);
+    assert.match(project.url, /^https:\/\/github\.com\/LuxuriantTech\//);
+    assert.match(
+      project.repositoryEvidenceUrl,
+      new RegExp(`^${project.url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/blob/main/`),
+    );
+  }
+
+  assert.match(appSource, /function RepositoryHandoff/);
+  assert.match(appSource, /\?repository=\$\{encodeURIComponent\(project\.id\)\}/);
+  assert.match(appSource, /target="_blank"/);
+  assert.match(appSource, /rel="noopener noreferrer"/);
+  assert.match(appSource, /window\.location\.replace\(project\.url\)/);
+  assert.match(appSource, /reducedMotion \? 0 : 1700/);
+  assert.match(appSource, />\s*Open GitHub now\s*</);
+  assert.match(appSource, /skipLinkRef\.current\?\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(appSource, /href=\{project\.url\} ref=\{skipLinkRef\}/);
+  assert.match(appSource, /aria-label="Repository review signals"/);
+  assert.match(appSource, /href=\{project\.repositoryEvidenceUrl\}/);
+  assert.match(appSource, /event\.key === "Escape"/);
+  assert.match(styleSource, /@keyframes repository-scan-cross/);
+  assert.match(styleSource, /@keyframes repository-signal-lock/);
+  assert.match(
+    styleSource,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.repository-handoff[\s\S]*?animation:\s*none !important/,
+  );
+  assert.doesNotMatch(appSource, /<iframe|<video/i);
+  assert.match(styleSource, /\.repository-handoff\s*\{[^}]*overflow-y:\s*auto/);
+});
+
+test("keeps the portfolio's evidence and motion honest as sections replay", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+  const dataSource = await readFile(new URL("../src/siteData.js", import.meta.url), "utf8");
+
+  // A reveal must be reversible: visitors who scroll back through a section should
+  // see its entrance motion again, rather than only seeing it on first arrival.
+  assert.match(
+    appSource,
+    /classList\.toggle\("is-revealed",\s*entry\.isIntersecting\)/,
+  );
+  assert.doesNotMatch(appSource, /observer\.unobserve\(/);
+
+  // Keep the range legible when the paper stack overlaps the portal: the two
+  // numbers and separator need independent elements that CSS can position.
+  assert.match(appSource, /className="work-portal-range"/);
+  assert.match(appSource, /className="work-portal-range-start"[^>]*>\s*01\s*</);
+  assert.match(appSource, /className="work-portal-range-dash"[^>]*>\s*[—-]\s*</);
+  assert.match(appSource, /className="work-portal-range-end"[^>]*>\s*06\s*</);
+
+  // The progress panel must make its status and its Contract Guard evidence
+  // inspectable. The numbers are intentionally asserted as displayed values,
+  // not converted into an inflated success claim.
+  assert.match(dataSource, /In progress/);
+  for (const value of ["102", "94.12", "88.72", "100", "98.67"]) {
+    assert.ok(dataSource.includes(value), `missing visible evidence value ${value}`);
+  }
+
+  // The capabilities section should have its own compact rhythm and the portal
+  // range needs an explicit small-screen treatment, rather than relying on
+  // incidental overlap from the desktop composition.
+  assert.match(styleSource, /\.capabilities-section--compact\s*\{[\s\S]*?padding:/);
+  assert.match(styleSource, /\.work-portal-range\s*\{/);
+  assert.match(styleSource, /\.work-portal-range-start\s*\{/);
+  assert.match(styleSource, /\.work-portal-range-end\s*\{/);
+  assert.match(
+    styleSource,
+    /@media \(max-width: 680px\)[\s\S]*?\.work-portal-range\s*\{/,
+  );
+});
+
+test("turns one supported project claim into an accessible three-state evidence lens", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+
+  assert.deepEqual(EVIDENCE_LENS.map(({ id }) => id), ["claim", "check", "limit"]);
+  assert.match(JSON.stringify(EVIDENCE_LENS), /102/);
+  assert.match(JSON.stringify(EVIDENCE_LENS), /five rules/i);
+  assert.match(JSON.stringify(EVIDENCE_LENS), /fail closed/i);
+  assert.match(EVIDENCE_SNAPSHOT.runUrl, /actions\/runs\/33274063682$/);
+  assert.match(appSource, /function EvidenceLens/);
+  assert.match(appSource, /role="tablist" aria-label="Inspect the project claim"/);
+  assert.match(appSource, /role="tabpanel"/);
+  assert.match(appSource, /aria-selected=/);
+  assert.match(appSource, /tabIndex=\{lens\.id === activeLens\.id \? 0 : -1\}/);
+  assert.match(appSource, /ArrowLeft/);
+  assert.match(appSource, /ArrowRight/);
+  assert.match(appSource, /Home/);
+  assert.match(appSource, /End/);
+  assert.match(styleSource, /\.evidence-lens-artifact[\s\S]*?perspective:\s*1500px/);
+  assert.match(styleSource, /@keyframes lens-paper-register/);
+  assert.doesNotMatch(appSource + styleSource, /<canvas|\bWebGL\b|\bparticles?\b/i);
+});
+
+test("gives controls tactile feedback and returns documents to their trigger", async () => {
+  const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
+  const styleSource = await readFile(new URL("../src/styles.css", import.meta.url), "utf8");
+
+  assert.match(appSource, /function useControlPressFeedback/);
+  assert.match(appSource, /pointerdown/);
+  assert.match(appSource, /event\.key !== "Enter" && event\.key !== " "/);
+  assert.match(appSource, /classList\.add\("is-pressing"\)/);
+  assert.match(styleSource, /@keyframes control-register/);
+  assert.match(styleSource, /box-shadow:\s*inset 7px 0 0 var\(--press-color/);
+
+  assert.match(appSource, /data-direction=\{slideDirection\}/);
+  assert.match(appSource, /setSlideDirection\(nextIndex >= currentIndex \? "forward" : "back"\)/);
+  assert.match(appSource, /moveBetweenTabs/);
+  assert.match(appSource, /function readDocumentOrigin/);
+  assert.match(appSource, /originElement = trigger\.querySelector\("svg"\) \?\? trigger/);
+  assert.match(appSource, /--document-flight-x/);
+  assert.match(appSource, /--document-flight-scale/);
+  assert.match(appSource, /className="document-flight"/);
+  assert.match(styleSource, /@keyframes document-flight-arrive/);
+  assert.match(styleSource, /@keyframes document-flight-return/);
+  assert.match(styleSource, /var\(--document-flight-x\)/);
+  assert.match(styleSource, /scale\(var\(--document-flight-scale\)\)/);
+  assert.match(styleSource, /@keyframes page-unfold-back/);
+  assert.match(styleSource, /\.document-viewer-shell[\s\S]*?transform-origin:\s*center/);
+  assert.doesNotMatch(styleSource, /translate3d\(102%, 0, 0\)/);
 });

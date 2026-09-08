@@ -771,7 +771,7 @@ function Work() {
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
         <h2 id="work-title">See what I’ve been building.</h2>
-        <p>Personal projects built with AI assistance. Code, screenshots and the checks behind them.</p>
+        <p>Personal projects built with AI assistance. Code, screenshots and the checks behind them. <a href="/projects/">Explore five tool walkthroughs</a>.</p>
       </div>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <article className="product-sample page-grid" id="synthevia" aria-labelledby="synthevia-title">

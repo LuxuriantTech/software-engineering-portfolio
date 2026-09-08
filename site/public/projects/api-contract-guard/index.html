@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API Contract Guard</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="guard">
+<a class="skip" href="#main">Skip to change report</a>
+<header class="site-head">
+<a href="../">← five local studies</a>
+<nav aria-label="Project navigation">
+<a href="../toolcall-replay/">ToolCall</a>
+<a href="../entity-resolution-workbench/">Entity</a>
+<a href="../postgres-migration-rehearsal/">PMR</a>
+<a aria-current="page" href="./">API Contract Guard</a>
+<a href="../evidencedesk/">EvidenceDesk</a>
+</nav>
+</header>
+<main class="wrap" id="main" tabindex="-1">
+<p class="eyebrow">Local TypeScript OpenAPI subset comparator</p>
+<p class="quiet">Static walkthrough • synthetic examples • application runs locally.</p>
+<h1>Make a supported breaking change plain.</h1>
+<p class="lede">API Contract Guard compares a defined subset of two OpenAPI documents and produces JSON plus static HTML. It is a local CLI, not a hosted compatibility service or a general OpenAPI verdict.</p>
+<p><a href="https://github.com/LuxuriantTech/api-contract-guard/tree/098062cad4f63954ccf0cd184c18a112a122dad7">Source and local setup on GitHub</a></p>
+<section class="panel finding">
+<p class="eyebrow">Recorded synthetic report</p>
+<h2>
+<code>OPERATION_REMOVED</code>
+</h2>
+<p>
+<strong>GET /orders</strong> is removed in the local synthetic comparison. The label <code>synthetic-shop-web</code> is a synthetic consumer annotation, not an observed client or usage record.</p>
+
+</section>
+<hr class="rule">
+<div class="grid two">
+<section>
+<h2>Three distinct outcomes</h2>
+<ul>
+<li>
+<strong>Exit 0:</strong> no supported breaking change found.</li>
+<li>
+<strong>Exit 2:</strong> a supported breaking change was found. In this recorded demo, that outcome is expected and the demo wrapper exits 0 after checking it.</li>
+<li>
+<strong>Exit 3:</strong> invalid input or unsupported capability. No report artefact is produced.</li>
+</ul>
+</section>
+<section class="panel">
+<h2>Bounded rules</h2>
+<p>The comparator supports exactly five categories: operation removal, required parameter added, required request property added, required response property removed, and enum value removed. Unsupported document shapes fail closed.</p>
+</section>
+</div>
+<details>
+<summary>Local quick start</summary>
+<pre class="command">
+<code>npm ci
+npm run demo</code>
+</pre>
+<p>Use Node 24.15.0 and npm 11.18.0 from the prepared checkout. The demo compares local synthetic fixtures and makes no network, traffic, customer-data, or hosted-service claim.</p>
+</details>
+<section class="notice">
+<strong>Limit</strong>A change outside the supported document subset is deliberately an input/unsupported outcome, not evidence that an API is compatible. The result applies only to the compared local documents.</section>
+</main>
+<footer class="site-foot">
+<p>I use AI extensively to build these projects. I understand and review the code, and I am still learning to write it independently.</p>
+</footer>
+</body>
+</html>

@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EvidenceDesk</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:,">
 </head>
-<body class="notebook">
+<body class="notebook" data-demo="evidence">
 <a class="skip" href="#main">Skip to evaluation record</a>
 <header class="site-head">
 <a href="../">← five local studies</a>
@@ -23,7 +24,18 @@
 <p class="quiet">Static walkthrough • synthetic examples • application runs locally.</p>
 <h1>The answer must carry its evidence.</h1>
 <p class="lede">EvidenceDesk combines asynchronous document processing, page-level citations, extraction, explicit abstention, and local evaluation for synthetic supplier-operation documents. It is a release-candidate prototype, not a validated service for production, legal, medical, financial, or compliance decisions.</p>
-<p><a href="https://github.com/LuxuriantTech/evidencedesk/tree/7f283fd81bc0fb6015c051d242a563d3197a945e">Source and local setup on GitHub</a></p>
+<p><a href="https://github.com/LuxuriantTech/evidencedesk/tree/main">Source and local setup on GitHub</a></p>
+<div class="actions" aria-label="EvidenceDesk actions">
+<a class="action primary" href="#interactive-demo">Try the prepared examples</a>
+<a class="action" href="https://github.com/LuxuriantTech/evidencedesk/tree/main">GitHub</a>
+<a class="action" href="mailto:mehajardian@gmail.com?subject=EvidenceDesk">Contact me</a>
+</div>
+<section class="demo" id="interactive-demo" aria-labelledby="evidence-demo-title">
+<div class="demo-head"><div><p class="eyebrow">Interactive prepared illustration</p><h2 id="evidence-demo-title">Read the answer with its source</h2></div><button class="action" type="button" id="evidence-reset">Reset examples</button></div>
+<p>The examples are prepared from fictional document excerpts and render entirely in this page. They do not query the prototype or make a new model-quality claim.</p>
+<div class="demo-controls"><label>Example<select id="evidence-select" data-initial="answer"><option value="answer">Answer with source passage</option><option value="abstain">Abstention when evidence is absent</option><option value="limitation">Known frozen v7 limitation</option></select></label></div>
+<p id="evidence-live" class="sr-status" aria-live="polite"></p><div id="evidence-output" class="demo-output" aria-live="polite"></div>
+</section>
 <section class="negative">
 <strong>HONEST_NEGATIVE</strong>
 <p>The frozen v7 holdout is a historical FAIL. It remains the recorded result and was not rescored after later fixes.</p>
@@ -97,7 +109,8 @@ docker compose down</code>
 
 </main>
 <footer class="site-foot">
-<p>I use AI extensively to build these projects. I understand and review the code, and I am still learning to write it independently.</p>
+<p>I define the needs, organize AI-assisted work, review the code with AI support, test the journeys, and improve the result. AI contributes strongly to implementation; I am still developing my ability to write code independently. <a href="mailto:mehajardian@gmail.com?subject=EvidenceDesk">mehajardian@gmail.com</a></p>
 </footer>
+<script src="../demo.js"></script>
 </body>
 </html>

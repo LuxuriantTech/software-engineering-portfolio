@@ -18,17 +18,17 @@ import {
   projectFromHash,
 } from "../src/siteData.js";
 
-test("publishes six bounded project stories", () => {
-  assert.equal(PROJECTS.length, 6);
-  assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 6);
+test("publishes nine bounded project stories", () => {
+  assert.equal(PROJECTS.length, 9);
+  assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 9);
   assert.equal(PROJECTS.filter(({ featured }) => featured).length, 2);
 
   for (const project of PROJECTS) {
-    assert.match(project.number, /^0[1-6]$/);
+    assert.match(project.number, /^0[1-9]$/);
     assert.ok(project.summary.length > 70);
     assert.ok(project.stack.length > 15);
     assert.ok(project.scope.length > 15);
-    assert.ok(project.url.startsWith("https://github.com/LuxuriantTech/"));
+    assert.ok(project.url.startsWith("https://github.com/LuxuriantTech/") || project.url.startsWith("/projects/"));
   }
 });
 
@@ -49,6 +49,8 @@ test("uses dedicated public repositories for the featured projects", () => {
 
   assert.equal(evidenceDesk.url, "https://github.com/LuxuriantTech/evidencedesk");
   assert.equal(contractGuard.url, "https://github.com/LuxuriantTech/api-contract-guard");
+  assert.equal(evidenceDesk.demoUrl, "/projects/evidencedesk/");
+  assert.equal(contractGuard.demoUrl, "/projects/api-contract-guard/");
 });
 
 test("keeps EvidenceDesk's positive and negative evaluation together", () => {
@@ -80,10 +82,36 @@ test("keeps all secondary project limits visible", () => {
     .map(({ scope }) => scope)
     .join(" ");
 
-  assert.match(secondaryCopy, /Pre-launch · Public sample only/);
+  assert.match(secondaryCopy, /Public sample only · Separate from the product site/);
   assert.match(secondaryCopy, /Current runtime unverified/);
   assert.match(secondaryCopy, /Internal R&D · Synthetic research only/);
   assert.match(secondaryCopy, /Paper-only · No profitability claim/);
+});
+
+test("links the three CPL walkthroughs directly from the portfolio", () => {
+  for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
+    const project = PROJECTS.find((candidate) => candidate.id === id);
+    assert.ok(project);
+    assert.match(project.url, /^\/projects\//);
+    assert.match(project.scope, /Synthetic browser walkthrough/);
+    assert.match(project.scope, /Local application/);
+  }
+});
+
+test("keeps the published walkthrough package interactive and preserves its existing reel assets", async () => {
+  const index = await readFile(new URL("../public/projects/index.html", import.meta.url), "utf8");
+  const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
+  const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");
+
+  assert.match(index, /Interactive synthetic walkthroughs/);
+  assert.match(demo, /Hand-authored synthetic illustration/);
+  assert.match(index, /portfolio-reel\.mp4/);
+  assert.match(index, /portfolio-reel-poster\.png/);
+  assert.match(css, /\.reel\s+video/);
+  for (const asset of ["portfolio-reel.mp4", "portfolio-reel-poster.png", "portfolio-reel-source.zip", "portfolio-reel-transcript.md"]) {
+    const file = await stat(new URL(`../public/projects/assets/${asset}`, import.meta.url));
+    assert.ok(file.size > 1_000, `${asset} should be preserved with the walkthrough`);
+  }
 });
 
 test("describes AI-assisted work without pretending manual authorship", async () => {

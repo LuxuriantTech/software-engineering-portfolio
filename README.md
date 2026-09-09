@@ -22,10 +22,14 @@ their limitations visible, so the work can be inspected without access to privat
 | [Gargantua / GLXBot](projects/gargantua/README.md) | Asynchronous moderation logic, a rejected member action, a record type without a message-content field and a local API | Historically deployed; current runtime is unverified |
 | [Synthevia Strategy Lab](projects/strategy-lab/README.md) | Benjamini–Hochberg p-value adjustment, a compact HAC check, one-use holdout, a declared fill/position sanity gate and deterministic LLM abstention | Internal R&D; synthetic examples only |
 | [MyTradingBot](projects/mytradingbot/README.md) | Additional paper-execution sample: live-mode rejection, absolute and configurable equity-relative notional limits and synthetic NO-GO qualification | Paper-only prototype; no live-readiness or profitability claim |
+| [ToolCall Replay](site/public/projects/toolcall-replay/index.html) | Browser walkthrough of a synthetic trace, including an expected rejection that is explicitly distinguished from an application error | Prepared synthetic demo; original application runs locally |
+| [Entity Resolution Workbench](site/public/projects/entity-resolution-workbench/index.html) | Browser walkthrough of synthetic record comparisons with exposed matching signals and uncertainty | Prepared synthetic demo; original application runs locally |
+| [PostgreSQL Migration Rehearsal](site/public/projects/postgres-migration-rehearsal/index.html) | Guided migration evidence with an explicit local runtime reconstruction limit | Prepared synthetic demo; original application runs locally |
 
-The four bundled samples keep their own README, decisions, limitations, source
-and tests. EvidenceDesk and API Contract Guard remain in dedicated repositories;
-this portfolio contains concise review cards and two authentic EvidenceDesk screenshots.
+The bundled samples keep their own README, decisions, limitations, source
+and tests. EvidenceDesk and API Contract Guard remain in dedicated repositories.
+The three browser walkthroughs use prepared synthetic data and do not contain an
+application runtime or private project material.
 
 ## Project Atlas navigator
 

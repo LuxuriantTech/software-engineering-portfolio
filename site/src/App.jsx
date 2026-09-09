@@ -756,6 +756,7 @@ function ProjectCase({ project }) {
             <div className="project-limit"><dt>Current limit</dt><dd>{project.limit}</dd></div>
           </dl>
           <div className="project-links">
+            {project.demoUrl ? <a className="secondary-action" href={project.demoUrl}>Try the prepared demo <ArrowRightIcon size={18} aria-hidden="true" /></a> : null}
             <a className="primary-action" href={project.url} target="_blank" rel="noopener noreferrer">View code <MarkGithubIcon size={18} aria-hidden="true" /></a>
             <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">Validation notes <ArrowRightIcon size={16} aria-hidden="true" /></a>
           </div>
@@ -771,25 +772,28 @@ function Work() {
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
         <h2 id="work-title">See what I’ve been building.</h2>
-        <p>Personal projects built with AI assistance. Code, screenshots and the checks behind them. <a href="/projects/">Explore five tool walkthroughs</a>.</p>
+        <p>Personal projects built with AI assistance. Code, screenshots and the checks behind them. <a href="/projects/">Explore five synthetic tool walkthroughs</a>.</p>
       </div>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <article className="product-sample page-grid" id="synthevia" aria-labelledby="synthevia-title">
         <div>
           <p className="section-label">03 / Full-stack product</p>
           <h3 id="synthevia-title">Synthevia</h3>
-          <p>A small public workspace from a larger learning and research project. A React interface connects to a local FastAPI backend and SQLite data.</p>
+          <p>A smaller public code sample from a wider learning and research product. The sample uses a React interface, a local FastAPI backend and SQLite data.</p>
           <p className="project-stack">{productSample.stack}</p>
-          <p className="sample-limit">Pre-launch public sample. Fictional data; external services are not connected.</p>
-          <a className="secondary-action" href={productSample.url} target="_blank" rel="noopener noreferrer">Explore the sample <ArrowRightIcon size={18} aria-hidden="true" /></a>
+          <p className="sample-limit">This portfolio sample uses fictional data and does not represent the wider public product site.</p>
+          <div className="project-links">
+            <a className="secondary-action" href={productSample.url} target="_blank" rel="noopener noreferrer">Explore the sample <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <a href={productSample.liveUrl} target="_blank" rel="noopener noreferrer">Visit the product site <ArrowRightIcon size={16} aria-hidden="true" /></a>
+          </div>
         </div>
         <ProjectImage name="synthevia" width={1440} height={900} alt="Synthevia demo workspace with a fictional Northstar account, two knowledge documents and zero external services connected." caption="Synthevia · Local demo · Fictional data" />
       </article>
       <div className="project-index page-grid" aria-labelledby="project-index-title">
-        <div className="index-heading"><p className="section-label">Also exploring</p><h3 id="project-index-title">Three more projects.</h3></div>
+        <div className="index-heading"><p className="section-label">More to inspect</p><h3 id="project-index-title">Six more projects.</h3></div>
         <div className="index-list">
           {additionalProjects.map((project) => (
-            <a href={project.url} target="_blank" rel="noopener noreferrer" key={project.id} id={project.id}>
+            <a href={project.url} target={project.url.startsWith("http") ? "_blank" : undefined} rel={project.url.startsWith("http") ? "noopener noreferrer" : undefined} key={project.id} id={project.id}>
               <span className="index-number">{project.number}</span>
               <span className="index-name"><strong>{project.name}</strong><small>{project.category}</small></span>
               <span className="index-copy">{project.summary}</span>

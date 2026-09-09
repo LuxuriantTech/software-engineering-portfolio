@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Entity Resolution Workbench</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:,">
 </head>
-<body class="desk">
+<body class="desk" data-demo="entity">
 <a class="skip" href="#main">Skip to comparison desk</a>
 <header class="site-head">
 <a href="../">← five local studies</a>
@@ -23,7 +24,18 @@
 <p class="quiet">Static walkthrough • synthetic examples • application runs locally.</p>
 <h1>Keep the evidence beside the decision.</h1>
 <p class="lede">Entity Resolution Workbench compares two synthetic supplier catalogues with a deterministic matcher. Its labels are MATCH, REVIEW, and NO_MATCH; its similarities explain the matcher and are never probabilities.</p>
-<p><a href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/fdc385b72da1b97109794c7e154fd802c8e37bcd">Source and local setup on GitHub</a></p>
+<p><a href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/main">Source and local setup on GitHub</a></p>
+<div class="actions" aria-label="Entity Resolution actions">
+<a class="action primary" href="#interactive-demo">Try the demo</a>
+<a class="action" href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/main">GitHub</a>
+<a class="action" href="mailto:mehajardian@gmail.com?subject=Entity%20Resolution%20Workbench">Contact me</a>
+</div>
+<section class="demo" id="interactive-demo" aria-labelledby="entity-demo-title">
+<div class="demo-head"><div><p class="eyebrow">Interactive prepared comparison</p><h2 id="entity-demo-title">Put two records beside the reasons</h2></div><button class="action" type="button" id="entity-reset">Reset demo</button></div>
+<p>These are fictional catalogues. Selecting a pair renders a prepared, deterministic example in the browser; it does not call the local matcher.</p>
+<div class="demo-controls"><label>Pair<select id="entity-select" data-initial="review"><option value="review">Harbor Desk Lamp: review</option><option value="match">Lumen Task Chair: match illustration</option><option value="noMatch">Stoneware Mug: no-match illustration</option></select></label><label>Explanation threshold<input id="threshold" data-initial="0.75" type="number" min="0" max="1" step="0.01" value="0.75" required aria-describedby="threshold-help threshold-error"><span id="threshold-help" class="quiet">Enter a number from 0.00 to 1.00. It changes only the explanation.</span><span id="threshold-error" class="demo-status fail" aria-live="polite" hidden></span></label></div>
+<p id="entity-live" class="sr-status" aria-live="polite"></p><div id="entity-output" class="demo-output" aria-live="polite"></div>
+</section>
 <section class="grid two">
 <article class="panel record">
 <h2>Catalogue A</h2>
@@ -96,7 +108,8 @@
 <strong>Limit</strong>This local workbench is not validated on customer data. It does not claim a hosted service, public code, deployment, real users, a human-comprehension study, WCAG certification, or production security.</section>
 </main>
 <footer class="site-foot">
-<p>I use AI extensively to build these projects. I understand and review the code, and I am still learning to write it independently.</p>
+<p>I define the needs, organize AI-assisted work, review the code with AI support, test the journeys, and improve the result. AI contributes strongly to implementation; I am still developing my ability to write code independently. <a href="mailto:mehajardian@gmail.com?subject=Entity%20Resolution%20Workbench">mehajardian@gmail.com</a></p>
 </footer>
+<script src="../demo.js"></script>
 </body>
 </html>

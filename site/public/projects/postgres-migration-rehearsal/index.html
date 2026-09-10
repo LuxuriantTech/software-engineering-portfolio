@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PostgreSQL Migration Rehearsal</title>
 <link rel="stylesheet" href="../site.css">
-<link rel="icon" href="data:,">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body class="sheet" data-demo="pmr">
 <a class="skip" href="#main">Skip to the migration sheet</a>
 <header class="site-head">
-<a href="../">← five local studies</a>
+<a class="author-link" href="/"><strong>Ardian Mehaj</strong><span>Back to portfolio ↗</span></a>
 <nav aria-label="Project navigation">
 <a href="../toolcall-replay/">ToolCall</a>
 <a href="../entity-resolution-workbench/">Entity</a>
@@ -18,15 +18,17 @@
 <a href="../api-contract-guard/">ACG</a>
 <a href="../evidencedesk/">EvidenceDesk</a>
 </nav>
+<nav class="profile-nav" aria-label="Ardian Mehaj profile">
+<a href="/">Portfolio</a><a href="/documents/Ardian_Mehaj_Public_CV_EN.pdf">CV (EN)</a><a href="/documents/Ardian_Mehaj_Public_CV_FR.pdf" lang="fr">CV (FR)</a><a href="mailto:mehajardian@gmail.com">Contact</a>
+</nav>
 </header>
 <main class="wrap" id="main" tabindex="-1">
-<p class="eyebrow">Local synthetic PostgreSQL rehearsal</p>
-<p class="quiet">Static walkthrough • synthetic examples • local interface available; engine setup currently blocked.</p>
-<h1>Change an invoice shape without hiding the route back.</h1>
-<p class="lede">PostgreSQL Migration Rehearsal makes a small disposable migration observable: the source shape, target shape, five stages, checks, cleanup, and rollback route sit in one local control room.</p>
-<p><a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/main">Source and local setup on GitHub</a></p>
+<p class="eyebrow">PostgreSQL Migration Rehearsal · Database changes</p>
+<p class="quiet demo-disclosure">Interactive demo · Fictional data · Full tool runs locally</p>
+<h1>Change the data. Keep a route back.</h1>
+<p class="lede">Follow an invoice migration through five stages, inspect the checks and see the rollback route. The demo shows a prepared report, without changing a database.</p>
 <div class="actions" aria-label="PostgreSQL Migration Rehearsal actions">
-<a class="action primary" href="#interactive-demo">Try the prepared preview</a>
+<a class="action primary" href="#interactive-demo">Try the demo</a>
 <a class="action" href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/main">GitHub</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=PostgreSQL%20Migration%20Rehearsal">Contact me</a>
 </div>
@@ -36,7 +38,7 @@
 <div class="demo-controls"><label>Stage<select id="pmr-stage" data-initial="0"><option value="0">1. Expand</option><option value="1">2. Compatibility</option><option value="2">3. Backfill</option><option value="3">4. Switch</option><option value="4">5. Contract</option></select></label></div>
 <p id="pmr-live" class="sr-status" aria-live="polite"></p><div id="pmr-output" class="demo-output" aria-live="polite"></div>
 </section>
-<section class="panel"><h2>A separate local baseline now runs</h2><p>The opt-in <code>PMR-DEMO-20260908-v1</code> CLI completed a new six-invoice rehearsal, rollback and cleanup after two matching image builds. It preserves the frozen browser reference and does not replay Phase B. <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/main/runtime-baselines/demo-20260908">Baseline source and instructions</a>.</p><p>This hosted preview still uses prepared data. LOW02 remains open for browser binaries and supporting system libraries.</p></section>
+<section class="panel"><h2>A separate local baseline now runs</h2><p>The opt-in <code>PMR-DEMO-20260908-v1</code> CLI completed a new six-invoice rehearsal, rollback and cleanup after two matching image builds. It preserves the frozen browser reference and does not replay Phase B. <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/main/runtime-baselines/demo-20260908">Baseline source and instructions</a>.</p><p>The original browser environment is not yet fully reproducible. The new CLI baseline does not resolve that historical limitation. Technical reference: LOW02 remains open for browser binaries and supporting system libraries.</p></section>
 <section class="notice"><strong>Frozen browser reproducibility limit</strong><p>The interface starts, but a fresh PostgreSQL image build is rejected by the runtime integrity check. The recorded successful rehearsal below is historical evidence from the prepared local environment; it is not proof that a fresh clone can run the engine. The required image identity and browser-dependency provenance remain open.</p></section>
 <section class="grid two">
 <article class="panel">
@@ -99,7 +101,7 @@ npm run control-room:stop</code>
 <strong>LOW02 remains incomplete</strong>Browser producer provenance records observed executables and dependency snapshots, but it retains same-user and host-administrator trust assumptions. It is explicitly incomplete provenance, not a supply-chain attestation.</section>
 </main>
 <footer class="site-foot">
-<p>I define the needs, organize AI-assisted work, review the code with AI support, test the journeys, and improve the result. AI contributes strongly to implementation; I am still developing my ability to write code independently. <a href="mailto:mehajardian@gmail.com?subject=PostgreSQL%20Migration%20Rehearsal">mehajardian@gmail.com</a></p>
+<p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
 </footer>
 <script src="../demo.js"></script>
 </body>

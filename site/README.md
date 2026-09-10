@@ -1,91 +1,48 @@
 # Ardian Mehaj portfolio
 
-This static React portfolio introduces Ardian as an early-career software
-developer focused on backend systems, full-stack products and applied AI. Its
-visual direction is **Atelier de preuves**: bright, square, direct and organised
-around work that another person can inspect.
+Static React portfolio for a junior software candidate working with AI coding assistants. It retains the existing Archivo typography, paper surfaces, orange and cobalt accents, keyboard navigation and restrained motion.
 
-The page includes:
+## Reading order
 
-- an immediately accessible introduction with role, location, availability,
-  project navigation and a CV button;
-- two featured projects with contribution, evidence, limits and direct source links;
-- real, expandable screenshots of EvidenceDesk and the Synthevia public demo;
-- three additional project samples with their current scope kept visible;
-- a plain account of how Ardian directs and checks AI-assisted work;
-- skills, background and direct contact links;
-- an in-page document reader for a public CV and general motivation letter,
-  with direct same-origin PDF downloads and no external viewer or account.
-- direct links to GitHub. Older `?repository=` links still resolve to the two
-  allowlisted repositories, without a timed handoff.
+API Contract Guard, Synthévia and EvidenceDesk are the three primary examples. Each explains the user problem, an observable example, a design choice, the contribution with AI assistance and the current limitation. Technical validation details remain accessible in native disclosure controls.
 
-EvidenceDesk and API Contract Guard link to their dedicated public
-repositories. The other four stories link to selected public paths in this
-portfolio repository. Private source is not copied into the site.
+All nine projects remain accessible. The five engineering demos use prepared fictional examples in the browser; full applications run locally with setup limits documented per project. Synthévia's public product demo is separate from its smaller React/FastAPI/SQLite code sample.
 
-Claims and test totals come from the current verified public edition. The site
-does not add customer metrics, deployment claims, trading results or
-unconfirmed education. EvidenceDesk's positive retrieval result stays beside
-the wider evaluation that did not pass.
+EvidenceDesk's failed answer evaluation remains visible. Historical metrics have not been changed or rerun. PMR's separate CLI baseline does not resolve its historical browser reproducibility limits. MyTradingBot has no demonstrated profitability.
 
-## Run locally
+Every demo and the collection link back to the author, the English and French CVs, and public contact. Preview images link to demos instead of raw image files.
 
-~~~bash
+## Career content
+
+The profile states that Ardian understands code but does not yet write it independently. Implementation, review and testing use AI assistance. The suggested first team task is an aspiration with mentoring and review, not a newly verified claim of independent competence.
+
+OPIT admission is confirmed for the online September 2026 BSc intake, starting 21 September. No completed degree is claimed. The user confirmed a flexible study schedule on 10 September. Full-time work is sought remotely from Belgium or with employer-funded relocation; exact hours are to be agreed with the employer.
+
+The English/French CVs and English motivation letter share src/careerContent.json with the HTML document reader. They omit private address, phone, finances and application-specific identifiers. Never replace previously submitted application evidence with these newer files.
+
+A personal narrated demonstration still requires Ardian's own recording. No synthetic voice or unverified personal demonstration is displayed. The rejected promotional reel is not promoted; historical media assets are preserved.
+
+## Run and verify
+
+~~~sh
 npm ci --ignore-scripts
-npm audit --audit-level=high
-npm test
-npm run build
+npm run check
 npm run dev -- --host 127.0.0.1
 ~~~
 
-The public documents can be regenerated from their reviewed source copy with:
+Regenerate all three documents with:
 
-~~~bash
+~~~sh
 python -m pip install -r scripts/requirements-docs.txt
 python scripts/build_public_documents.py
 ~~~
 
-`src/careerContent.json` is the shared source for the in-page reader and both PDFs.
-Keep it factual: OPIT admission is confirmed for the September 2026 online BSc intake;
-classes start on 21 September and no completed degree is claimed. The profile explains the need for AI assistance
-to write code. Project images are derived from the repository's original captures;
-see `public/images/README.md` for provenance. `src/recruiter.css` contains the
-current content and project layout, layered over the retained visual identity.
+Review PDF text extraction and page rendering after edits. The reader supports English/French CV tabs, a letter tab, arrow keys, Escape, focus restoration and same-origin downloads. A no-JavaScript fallback links directly to the demo collection, CVs and contact.
 
-Keep private contact details, identity documents, financial information and
-application-specific claims out of these public files. Anything under
-`public/` is intentionally downloadable by every visitor.
+## Delivery and provenance
 
-The site does not require an environment file or credential. Archivo and IBM
-Plex Mono are packaged locally under the OFL-1.1 licence, and Octicons remains
-the only icon set. There is no form, tracker, analytics script, backend request
-or connection to a private project.
+vercel.json publishes only dist/client with restrictive headers. No environment file, credentials, analytics, remote font service or private backend connection is needed. Public code samples and demo engines are unchanged by the September 10 editorial update.
 
-The responsive layout is designed for 320px and wider viewports, includes a
-keyboard-visible 3px focus treatment, uses 44px minimum interactive targets and
-respects `prefers-reduced-motion`. The document reveal uses lightweight CSS 3D
-and transform-based motion, while the reader remains semantic HTML that works
-with keyboard navigation and assistive technology. Project access has no blocking
-opening animation. Scroll reveals play once, and reduced-motion visitors see the
-content immediately.
+Publish through reviewed Git changes, verify CI, then verify actual public HTML, JavaScript, styles and PDFs. Local validation alone is not production verification.
 
-## Design provenance
-
-The design was informed by a public reference study, then deliberately changed
-in layout, typography, palette, navigation, project presentation, media and
-motion. No reference code, copy, brand assets, images or composition are used.
-The site contains original CSS graphics, project copy and screenshots belonging
-to this portfolio.
-
-## Deployment boundary
-
-The September 2026 refresh adds direct links to the five CPL demonstrations and
-Synthévia's public project story and synthetic product demo. The local SQLite code
-sample stays separate. OPIT admission is included in the reader and both PDFs.
-The rejected video is no longer promoted; its existing source assets are retained.
-
-`vercel.json` publishes only `dist/client` and defines a restrictive content
-security policy, framing protection, referrer policy and permissions policy.
-Git deployments are enabled for the reviewed public portfolio. Production must
-still be promoted only from the validated `main` branch, with the remote commit,
-CI result and live response checked after release.
+See public/images/README.md for screenshot provenance. The design is original, without copying another site's code, branding or assets. Archivo and IBM Plex Mono are bundled under OFL-1.1; Octicons is the icon set.

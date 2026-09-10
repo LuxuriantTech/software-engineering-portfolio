@@ -11,3 +11,7 @@ p,code,a,strong{overflow-wrap:anywhere}@media(prefers-reduced-motion:reduce){htm
 
 .reel { margin: 2rem 0; }
 .reel video { display:block; width:100%; max-height:70vh; aspect-ratio:16/9; background:#080b13; }
+
+/* A shared route back to the author, with compact demo introductions. */
+.site-head{align-items:center;gap:.7rem 1.5rem;padding-block:.75rem}.author-link{display:flex;flex-direction:column;min-height:44px;justify-content:center}.author-link strong{font-size:1rem}.author-link span{font-size:.74rem;color:var(--muted)}.profile-nav{flex-basis:100%;border-top:1px solid var(--line);padding-top:.3rem}.site-head nav a{display:inline-flex;align-items:center;min-height:44px}.site-head .profile-nav{font-size:.8rem;gap:1.5rem}.wrap{padding-top:1.7rem}body:not(.index) h1{font-size:clamp(2rem,4.2vw,3.5rem);max-width:25ch}.lede{font-size:1.1rem;max-width:78ch}.demo-disclosure{font-size:.8rem}.site-foot a{display:inline-flex;align-items:center;min-height:44px}.demo{scroll-margin-top:1rem}
+@media(max-width:600px){.site-head{gap:.25rem}.site-head>nav{width:100%;gap:.25rem .8rem;font-size:.8rem}.site-head .profile-nav{gap:.25rem 1.1rem}.wrap{padding-top:1.25rem}body:not(.index) h1{font-size:2.1rem}.lede{font-size:1rem}.site-head .author-link{margin-bottom:.2rem}}

@@ -3,7 +3,7 @@ import careerContent from "./careerContent.json" with { type: "json" };
 export const DOCUMENTS = [
   {
     id: "cv",
-    shortLabel: "CV",
+    shortLabel: "CV (EN)",
     index: "01",
     eyebrow: "Public CV · English",
     title: "My projects, experience and studies.",
@@ -13,9 +13,19 @@ export const DOCUMENTS = [
     fileName: "Ardian_Mehaj_Public_CV_EN.pdf",
   },
   {
+    id: "cv-fr",
+    shortLabel: "CV (FR)",
+    index: "02",
+    eyebrow: "CV public · Français",
+    title: "Mes projets, mon parcours et mes études.",
+    summary: "Mon profil et mes projets en une page, en français.",
+    pdfPath: "/documents/Ardian_Mehaj_Public_CV_FR.pdf",
+    fileName: "Ardian_Mehaj_Public_CV_FR.pdf",
+  },
+  {
     id: "letter",
     shortLabel: "Letter",
-    index: "02",
+    index: "03",
     eyebrow: "General motivation · English",
     title: "Why I’m looking for my first software role.",
     summary:
@@ -26,6 +36,7 @@ export const DOCUMENTS = [
 ];
 
 export const CV_CONTENT = careerContent.cv;
+export const CV_FR_CONTENT = careerContent.cv_fr;
 export const LETTER_CONTENT = careerContent.letter;
 
 export function documentById(id) {

@@ -2,7 +2,7 @@
   "cv": {
     "role": "Junior software developer",
     "location": "Brussels, Belgium",
-    "profile": "I am looking for my first software role in a team where I can contribute and learn. I understand code, but I still need AI assistance to write it. I use coding assistants to build projects, then run the result, test its behaviour and work through problems. I am improving both my coding fundamentals and the way I use AI. I am available for full-time work, with online studies planned alongside.",
+    "profile": "I am looking for my first software role in a team where I can contribute and learn. I understand code, but I do not yet write it independently. I use Claude, Cursor, ChatGPT and Codex to turn scoped tasks into working implementations, then run the result, test its behaviour and work through problems. I have used Claude for around 18 months and continue to improve both my coding fundamentals and my use of AI. I am available for full-time work alongside online studies.",
     "projects": [
       {
         "name": "API Contract Guard",
@@ -16,8 +16,8 @@
       },
       {
         "name": "Synthevia",
-        "meta": "React · TypeScript · FastAPI · SQLite",
-        "detail": "A local learning and research workspace built with AI assistance. The public sample connects a React interface to a FastAPI backend and SQLite data. It uses fictional data; external services are not connected."
+        "meta": "React · TypeScript · FastAPI · SQLite · Public project page",
+        "detail": "A learning and research workspace built with AI assistance. Its public project page presents the product and synthetic examples. The separate local code sample connects a React interface to a FastAPI backend and SQLite data; it uses fictional data and external services are not connected."
       }
     ],
     "experience": [
@@ -34,8 +34,8 @@
     ],
     "education": [
       {
-        "name": "Planned online computer science studies",
-        "detail": "Planned alongside full-time work; institution not yet finalised."
+        "name": "OPIT · BSc (Hons) Computer Science, online",
+        "detail": "Admitted for the September 2026 intake. Classes begin on 21 September 2026 and are planned alongside full-time work."
       },
       {
         "name": "ICHEC Brussels · Business Management",
@@ -51,9 +51,9 @@
     "salutation": "Dear Hiring Team,",
     "paragraphs": [
       "I am looking for my first role in software development or applied AI. I started in business studies, then became interested in building software through my own projects. I would like to take that work further in a team where I can learn from experienced developers.",
-      "I understand code, but I still need AI assistance to write it. I describe what I want to build, work through the implementation with coding assistants and check the result by running it and testing its behaviour. I am getting better at using these tools and working on my coding fundamentals at the same time.",
-      "My portfolio includes API Contract Guard, a TypeScript tool with 102 recorded local tests, and EvidenceDesk, a document-review prototype with source citations. EvidenceDesk also has an answer evaluation that did not pass, which is documented in the repository. Synthevia shows a smaller React and FastAPI workspace using fictional data. These personal projects give us something concrete to discuss.",
-      "I am available for full-time work and plan to study computer science online alongside it. The institution is not yet finalised. I would value clear expectations, regular code review and the chance to contribute while learning.",
+      "I understand code, but I do not yet write it independently. I use Claude, Cursor, ChatGPT and Codex to work through scoped implementation tasks, then run the result and test its behaviour. I have used Claude for around 18 months and keep improving my coding fundamentals alongside my use of AI.",
+      "My portfolio includes API Contract Guard, a TypeScript tool with 102 recorded local tests, and EvidenceDesk, a document-review prototype with source citations. EvidenceDesk also has an answer evaluation that did not pass, which is documented in the repository. Synthevia has a public project page and a separate local React, FastAPI and SQLite sample using fictional data. The portfolio also presents five public project demos. These personal projects give us something concrete to discuss.",
+      "I am available for full-time work and have been admitted to OPIT's online BSc (Hons) Computer Science, September 2026 intake. Classes begin on 21 September, and I plan to study alongside work. I would value clear expectations, regular code review and the chance to contribute while learning.",
       "I would be glad to walk you through one of my projects, explain how I built it and discuss whether my current level fits what your team needs."
     ],
     "closing": "Thank you for your time,"

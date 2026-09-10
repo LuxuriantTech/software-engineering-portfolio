@@ -259,7 +259,7 @@ def build_cv() -> Path:
 
 def build_letter() -> Path:
     letter = CONTENT["letter"]
-    story=[header(), Spacer(1, 5*mm), rule(), Spacer(1,12*mm), p(escape(letter["subject"]),"role"),
+    story=[header("Junior software developer"), Spacer(1, 5*mm), rule(), Spacer(1,12*mm), p(escape(letter["subject"]),"role"),
         Spacer(1,8*mm), p(escape(letter["salutation"]),"letter_body")]
     story.extend(p(escape(text),"letter_body") for text in letter["paragraphs"])
     story += [Spacer(1,2*mm), p(escape(letter["closing"]),"letter_body"), p("<b>Ardian Mehaj</b>","letter_body")]

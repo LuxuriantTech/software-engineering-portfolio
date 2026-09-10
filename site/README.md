@@ -46,8 +46,8 @@ python scripts/build_public_documents.py
 ~~~
 
 `src/careerContent.json` is the shared source for the in-page reader and both PDFs.
-Keep it factual: online computer science studies are planned, and the institution
-is not finalised. The profile explicitly explains the current need for AI assistance
+Keep it factual: OPIT admission is confirmed for the September 2026 online BSc intake;
+classes start on 21 September and no completed degree is claimed. The profile explains the need for AI assistance
 to write code. Project images are derived from the repository's original captures;
 see `public/images/README.md` for provenance. `src/recruiter.css` contains the
 current content and project layout, layered over the retained visual identity.
@@ -78,6 +78,11 @@ The site contains original CSS graphics, project copy and screenshots belonging
 to this portfolio.
 
 ## Deployment boundary
+
+The September 2026 refresh adds direct links to the five CPL demonstrations and
+Synthévia's public project story and synthetic product demo. The local SQLite code
+sample stays separate. OPIT admission is included in the reader and both PDFs.
+The rejected video is no longer promoted; its existing source assets are retained.
 
 `vercel.json` publishes only `dist/client` and defines a restrictive content
 security policy, framing protection, referrer policy and permissions policy.

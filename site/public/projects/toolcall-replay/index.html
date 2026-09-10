@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ToolCall Replay</title>
 <link rel="stylesheet" href="../site.css">
-<link rel="icon" href="data:,">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body class="terminal" data-demo="toolcall">
 <a class="skip" href="#main">Skip to recorded trace</a>
 <header class="site-head">
-<a href="../">← five local studies</a>
+<a class="author-link" href="/"><strong>Ardian Mehaj</strong><span>Back to portfolio ↗</span></a>
 <nav aria-label="Project navigation">
 <a aria-current="page" href="./">ToolCall Replay</a>
 <a href="../entity-resolution-workbench/">Entity</a>
@@ -18,13 +18,15 @@
 <a href="../api-contract-guard/">ACG</a>
 <a href="../evidencedesk/">EvidenceDesk</a>
 </nav>
+<nav class="profile-nav" aria-label="Ardian Mehaj profile">
+<a href="/">Portfolio</a><a href="/documents/Ardian_Mehaj_Public_CV_EN.pdf">CV (EN)</a><a href="/documents/Ardian_Mehaj_Public_CV_FR.pdf" lang="fr">CV (FR)</a><a href="mailto:mehajardian@gmail.com">Contact</a>
+</nav>
 </header>
 <main class="wrap" id="main" tabindex="-1">
-<p class="eyebrow">Local deterministic trace evaluator</p>
-<p class="quiet">Static walkthrough • synthetic examples • application runs locally.</p>
-<h1>Read the trace. Then read the verdict.</h1>
-<p class="lede">ToolCall Replay checks whether a small synthetic tool-call trace followed a versioned rule set. It evaluates data locally; it does not run an agent, a tool, a model, or a network request.</p>
-<p><a href="https://github.com/LuxuriantTech/toolcall-replay/tree/main">Source and local setup on GitHub</a></p>
+<p class="eyebrow">ToolCall Replay · Workflow review</p>
+<p class="quiet demo-disclosure">Interactive demo · Fictional data · Full tool runs locally</p>
+<h1>Understand why a tool call was rejected.</h1>
+<p class="lede">Follow an automated workflow step by step and inspect the rule behind each verdict. An expected rejection is a useful result, not an application crash.</p>
 <div class="actions" aria-label="ToolCall Replay actions">
 <a class="action primary" href="#interactive-demo">Try the demo</a>
 <a class="action" href="https://github.com/LuxuriantTech/toolcall-replay/tree/main">GitHub</a>
@@ -84,7 +86,7 @@ scripts/lab.sh stop</code>
 <strong>Limit</strong>The published adapter limits trace bytes, events, JSON nodes, and nesting. Those fixed limits do not establish production scale, multi-user safety, real-data suitability, general accessibility, or security certification.</section>
 </main>
 <footer class="site-foot">
-<p>I define the needs, organize AI-assisted work, review the code with AI support, test the journeys, and improve the result. AI contributes strongly to implementation; I am still developing my ability to write code independently. <a href="mailto:mehajardian@gmail.com?subject=ToolCall%20Replay">mehajardian@gmail.com</a></p>
+<p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
 </footer>
 <script src="../demo.js"></script>
 </body>

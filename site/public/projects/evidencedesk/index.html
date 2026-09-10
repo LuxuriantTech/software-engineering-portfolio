@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EvidenceDesk</title>
 <link rel="stylesheet" href="../site.css">
-<link rel="icon" href="data:,">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body class="notebook" data-demo="evidence">
 <a class="skip" href="#main">Skip to evaluation record</a>
 <header class="site-head">
-<a href="../">← five local studies</a>
+<a class="author-link" href="/"><strong>Ardian Mehaj</strong><span>Back to portfolio ↗</span></a>
 <nav aria-label="Project navigation">
 <a href="../toolcall-replay/">ToolCall</a>
 <a href="../entity-resolution-workbench/">Entity</a>
@@ -18,15 +18,17 @@
 <a href="../api-contract-guard/">ACG</a>
 <a aria-current="page" href="./">EvidenceDesk</a>
 </nav>
+<nav class="profile-nav" aria-label="Ardian Mehaj profile">
+<a href="/">Portfolio</a><a href="/documents/Ardian_Mehaj_Public_CV_EN.pdf">CV (EN)</a><a href="/documents/Ardian_Mehaj_Public_CV_FR.pdf" lang="fr">CV (FR)</a><a href="mailto:mehajardian@gmail.com">Contact</a>
+</nav>
 </header>
 <main class="wrap" id="main" tabindex="-1">
-<p class="eyebrow">Local synthetic evidence-grounded document review prototype</p>
-<p class="quiet">Static walkthrough • synthetic examples • application runs locally.</p>
-<h1>The answer must carry its evidence.</h1>
-<p class="lede">EvidenceDesk combines asynchronous document processing, page-level citations, extraction, explicit abstention, and local evaluation for synthetic supplier-operation documents. It is a release-candidate prototype, not a validated service for production, legal, medical, financial, or compliance decisions.</p>
-<p><a href="https://github.com/LuxuriantTech/evidencedesk/tree/main">Source and local setup on GitHub</a></p>
+<p class="eyebrow">EvidenceDesk · Document review</p>
+<p class="quiet demo-disclosure">Interactive demo · Fictional data · Full tool runs locally</p>
+<h1>An answer you can trace to its source.</h1>
+<p class="lede">Look up an annual fee, open the supporting passage and see what happens when the document cannot answer. The wider answer evaluation did not pass.</p>
 <div class="actions" aria-label="EvidenceDesk actions">
-<a class="action primary" href="#interactive-demo">Try the prepared examples</a>
+<a class="action primary" href="#interactive-demo">Try the examples</a>
 <a class="action" href="https://github.com/LuxuriantTech/evidencedesk/tree/main">GitHub</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=EvidenceDesk">Contact me</a>
 </div>
@@ -37,8 +39,8 @@
 <p id="evidence-live" class="sr-status" aria-live="polite"></p><div id="evidence-output" class="demo-output" aria-live="polite"></div>
 </section>
 <section class="negative">
-<strong>HONEST_NEGATIVE</strong>
-<p>The frozen v7 holdout is a historical FAIL. It remains the recorded result and was not rescored after later fixes.</p>
+<strong>Relevant passages, unreliable answers</strong>
+<p>The recorded evaluation found the right passage in all 25 answerable examples, but answered only 9 correctly (36%). That evaluation failed and has not been rerun. The technical record calls this HONEST_NEGATIVE.</p>
 </section>
 <hr class="rule">
 <section class="grid three">
@@ -109,7 +111,7 @@ docker compose down</code>
 
 </main>
 <footer class="site-foot">
-<p>I define the needs, organize AI-assisted work, review the code with AI support, test the journeys, and improve the result. AI contributes strongly to implementation; I am still developing my ability to write code independently. <a href="mailto:mehajardian@gmail.com?subject=EvidenceDesk">mehajardian@gmail.com</a></p>
+<p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
 </footer>
 <script src="../demo.js"></script>
 </body>

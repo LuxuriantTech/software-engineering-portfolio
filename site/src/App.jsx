@@ -9,6 +9,7 @@ import {
 } from "@primer/octicons-react";
 import {
   CV_CONTENT,
+  CV_FR_CONTENT,
   DOCUMENTS,
   LETTER_CONTENT,
   documentById,
@@ -25,8 +26,7 @@ import {
   browserPrefersReducedMotion,
 } from "./sessionIntroState.js";
 
-const featuredProjects = PROJECTS.filter((project) => project.featured);
-const productSample = PROJECTS.find(({ id }) => id === "synthevia");
+const featuredProjects = PROJECTS.filter((project) => project.featured).sort((a, b) => a.number.localeCompare(b.number));
 const additionalProjects = PROJECTS.filter((project) => !project.featured && project.id !== "synthevia");
 const browserProjects = PROJECTS.filter((project) => project.demoUrl?.startsWith("/projects/") || project.url.startsWith("/projects/"));
 
@@ -34,7 +34,7 @@ function repositoryHandoffProject() {
   if (typeof window === "undefined") return null;
 
   const projectId = new URLSearchParams(window.location.search).get("repository");
-  return featuredProjects.find(({ id }) => id === projectId) ?? null;
+  return featuredProjects.find(({ id }) => id === projectId && ["evidencedesk", "api-contract-guard"].includes(id)) ?? null;
 }
 
 function ProjectStatus({ status }) {
@@ -188,9 +188,9 @@ function Intro({ onOpenDocument }) {
       <div className="intro-grid page-grid">
         <p className="intro-kicker"><span>Ardian Mehaj</span><span>Brussels, Belgium</span></p>
         <div className="intro-title">
-          <p>Junior software developer</p>
+          <p>Junior software developer · AI-assisted development</p>
           <h1 id="intro-title">Ideas into<br />working software.</h1>
-          <p className="intro-description">I build web tools and explore applied AI with coding assistants. I’m looking for my first software role, with a team I can learn from.</p>
+          <p className="intro-description">I build tools for API checks, document review and web products with AI coding assistants. I’m looking for a junior development role with mentoring and code review.</p>
           <div className="intro-actions">
             <a className="primary-action" href="#work">Explore my projects <ArrowRightIcon size={18} aria-hidden="true" /></a>
             <button className="secondary-action" type="button" onClick={(event) => onOpenDocument("cv", event.currentTarget)}>
@@ -200,8 +200,8 @@ function Intro({ onOpenDocument }) {
         </div>
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
-          <p>Backend · Full-stack · Applied AI</p>
-          <p>Full-time work<br />OPIT online BSc intake · September 2026</p>
+          <p>Developer tools &amp; web applications</p>
+          <p>Full-time work · Flexible study schedule<br />OPIT online BSc · September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
       </div>
@@ -397,17 +397,19 @@ function Documents({ onOpenDocument }) {
   );
 }
 
-function CvDocument() {
+function CvDocument({ language = "en" }) {
+  const cv = language === "fr" ? CV_FR_CONTENT : CV_CONTENT;
+  const labels = language === "fr" ? { edition: "CV public · 2026", profile: "Profil", projects: "Projets sélectionnés", experience: "Expérience", education: "Formation et certification", tools: "Outils utilisés avec l’IA" } : { edition: "Public CV · 2026", profile: "Profile", projects: "Selected projects", experience: "Experience", education: "Education & certification", tools: "Tools used with AI assistance" };
   return (
-    <article className="document-page document-page--cv" id="document-panel" role="tabpanel">
+    <article className="document-page document-page--cv" id="document-panel" role="tabpanel" lang={language} aria-labelledby={language === "fr" ? "document-tab-cv-fr" : "document-tab-cv"}>
       <header className="document-page-header">
         <div>
-          <p className="document-page-kicker">Public CV · 2026</p>
+          <p className="document-page-kicker">{labels.edition}</p>
           <h2>Ardian Mehaj</h2>
-          <p>{CV_CONTENT.role}</p>
+          <p>{cv.role}</p>
         </div>
         <address>
-          <span>{CV_CONTENT.location}</span>
+          <span>{cv.location}</span>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           <a href={CONTACT.github} target="_blank" rel="noopener noreferrer">
             github.com/LuxuriantTech
@@ -419,14 +421,14 @@ function CvDocument() {
       </header>
 
       <section className="document-block">
-        <h3>Profile</h3>
-        <p>{CV_CONTENT.profile}</p>
+        <h3>{labels.profile}</h3>
+        <p>{cv.profile}</p>
       </section>
 
       <section className="document-block">
-        <h3>Selected projects</h3>
+        <h3>{labels.projects}</h3>
         <div className="document-projects">
-          {CV_CONTENT.projects.map((project) => (
+          {cv.projects.map((project) => (
             <div key={project.name}>
               <h4>{project.name}</h4>
               <p className="document-meta">{project.meta}</p>
@@ -438,8 +440,8 @@ function CvDocument() {
 
       <section className="document-block document-block--columns">
         <div>
-          <h3>Experience</h3>
-          {CV_CONTENT.experience.map((experience) => (
+          <h3>{labels.experience}</h3>
+          {cv.experience.map((experience) => (
             <div className="document-compact-item" key={experience.name}>
               <h4>{experience.name}</h4>
               <p className="document-meta">{experience.meta}</p>
@@ -448,21 +450,21 @@ function CvDocument() {
           ))}
         </div>
         <div>
-          <h3>Education &amp; certification</h3>
-          {CV_CONTENT.education.map((education) => (
+          <h3>{labels.education}</h3>
+          {cv.education.map((education) => (
             <div className="document-compact-item" key={education.name}>
               <h4>{education.name}</h4>
               <p>{education.detail}</p>
             </div>
           ))}
-          <p className="document-certificate">{CV_CONTENT.certification}</p>
-          <p className="document-languages">{CV_CONTENT.languages}</p>
+          <p className="document-certificate">{cv.certification}</p>
+          <p className="document-languages">{cv.languages}</p>
         </div>
       </section>
 
       <section className="document-block document-block--tools">
-        <h3>Working with</h3>
-        <p>{CV_CONTENT.tools}</p>
+        <h3>{labels.tools}</h3>
+        <p>{cv.tools}</p>
       </section>
     </article>
   );
@@ -470,7 +472,7 @@ function CvDocument() {
 
 function LetterDocument() {
   return (
-    <article className="document-page document-page--letter" id="document-panel" role="tabpanel">
+    <article className="document-page document-page--letter" id="document-panel" role="tabpanel" aria-labelledby="document-tab-letter">
       <header className="document-page-header">
         <div>
           <p className="document-page-kicker">General motivation · 2026</p>
@@ -679,6 +681,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
               <button
                 type="button"
                 role="tab"
+                id={"document-tab-" + document.id}
                 aria-controls="document-panel"
                 aria-selected={activeDocumentId === document.id}
                 tabIndex={activeDocumentId === document.id ? 0 : -1}
@@ -709,7 +712,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
           {activeDocumentId === "letter" ? (
             <LetterDocument key="letter" />
           ) : (
-            <CvDocument key="cv" />
+            <CvDocument key={activeDocumentId} language={activeDocumentId === "cv-fr" ? "fr" : "en"} />
           )}
         </div>
       </div>
@@ -741,26 +744,34 @@ function ProjectCase({ project }) {
       <div className="project-body">
         {project.id === "evidencedesk" ? (
           <ProjectImage project={project} name="evidencedesk" width={1440} height={619} alt="EvidenceDesk showing a question, the extracted annual fee and the matching source page in a synthetic contract." caption="EvidenceDesk · Local prototype · Synthetic data" />
+        ) : project.id === "synthevia" ? (
+          <figure className="project-preview"><a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label="Explore the Synthévia public demo"><img src="/images/synthevia-product.png" width="1440" height="900" loading="lazy" decoding="async" alt="Synthévia's market overview and learning workspace, using fictional data." /></a><figcaption><span>Synthévia · Product demo</span><span>Explore ↗</span></figcaption></figure>
         ) : (
-          <div className="contract-workflow" aria-label="Tool workflow: compare two supported OpenAPI documents, then produce JSON and HTML reports.">
-            <span className="section-label">Inside the tool</span>
-            <div className="contract-inputs"><span>Previous<br /><strong>OpenAPI</strong></span><span>Updated<br /><strong>OpenAPI</strong></span></div>
-            <div className="contract-compare">Compare supported changes <ArrowRightIcon size={22} aria-hidden="true" /></div>
+          <a href={project.demoUrl} className="contract-workflow" aria-label="Try API Contract Guard: compare a change to an API contract">
+            <span className="section-label">One change. An existing client.</span>
+            <div className="contract-inputs"><span>Before<br /><strong>GET /invoices</strong><br />No query parameter</span><span>After<br /><strong>+ region</strong><br />Required parameter</span></div>
+            <div className="contract-compare">Could an existing request break? <ArrowRightIcon size={22} aria-hidden="true" /></div>
             <div className="contract-outputs"><span>JSON report</span><span>HTML report</span></div>
-            <p>A local command-line tool. The repository includes the examples and validation record.</p>
-          </div>
+            <p>Open the example and inspect the reported change.</p>
+          </a>
         )}
         <div className="project-notes">
           <dl>
-            <div><dt>My role</dt><dd>{project.contribution}</dd></div>
-            <div><dt>What I checked</dt><dd>{project.proof}</dd></div>
-            <div className="project-limit"><dt>Current limit</dt><dd>{project.limit}</dd></div>
+            <div><dt>Try this</dt><dd>{project.example}</dd></div>
+            <div><dt>The choice behind it</dt><dd>{project.decision}</dd></div>
+            <div><dt>My role, with AI assistance</dt><dd>{project.contribution}</dd></div>
+            <div className="project-limit"><dt>Current limit</dt><dd>{project.shortLimit}</dd></div>
           </dl>
           <div className="project-links">
-            {project.demoUrl ? <a className="secondary-action" href={project.demoUrl}>Try the prepared demo <ArrowRightIcon size={18} aria-hidden="true" /></a> : null}
-            <a className="primary-action" href={project.url} target="_blank" rel="noopener noreferrer">View code <MarkGithubIcon size={18} aria-hidden="true" /></a>
-            <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">Validation notes <ArrowRightIcon size={16} aria-hidden="true" /></a>
+            <a className="primary-action" href={project.demoUrl}>Try {project.name} <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <a href={project.url} target="_blank" rel="noopener noreferrer">{project.id === "synthevia" ? "Local code sample" : "View code"} <MarkGithubIcon size={18} aria-hidden="true" /></a>
+            {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Project story <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}
           </div>
+          <details className="project-checks">
+            <summary>Technical notes and checks</summary>
+            <p>{project.proof}</p><p>{project.limit}</p>
+            {project.repositoryEvidenceUrl ? <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">Read the validation record</a> : null}
+          </details>
         </div>
       </div>
     </article>
@@ -772,31 +783,20 @@ function Work() {
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
-        <h2 id="work-title">See what I’ve been building.</h2>
-        <p>Personal projects built with AI assistance. Try the public demos, inspect the code and see what each project can demonstrate.</p>
+        <h2 id="work-title">Three projects. Three concrete problems.</h2>
+        <p>Personal projects built with AI assistance. Start with an example, then explore the choices and the code.</p>
       </div>
+      <nav className="selected-project-nav page-grid" aria-label="Selected projects">
+        {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
+      </nav>
+      <p className="demo-context page-grid">The public demos use fictional examples. The five engineering tools run in full locally.</p>
+      <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the five engineering demos">
-        <div className="demo-launchpad-heading"><strong>Open a demo</strong><span>Prepared examples using synthetic data. The full tools run locally.</span></div>
+        <div className="demo-launchpad-heading"><strong>Explore all five engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
         <div className="demo-launchpad-links">
           {browserProjects.map(project => <a key={project.id} href={project.demoUrl || project.url}><span>{project.name}</span><ArrowRightIcon size={18} aria-hidden="true" /></a>)}
         </div>
       </nav>
-      <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
-      <article className="product-sample page-grid" id="synthevia" aria-labelledby="synthevia-title">
-        <div>
-          <p className="section-label">03 / Full-stack product</p>
-          <h3 id="synthevia-title">Synthévia</h3>
-          <p>A web platform bringing together market analysis, risk management and learning. Its public demo lets you explore prepared product journeys without an account or access to real trading data.</p>
-          <p className="project-stack">{productSample.stack}</p>
-          <p className="sample-limit">The demo uses synthetic data. The trading application remains restricted, and the project does not establish financial performance. A smaller local code sample is available separately.</p>
-          <div className="project-links">
-            <a className="primary-action" href={productSample.demoUrl} target="_blank" rel="noopener noreferrer">Try Synthévia <ArrowRightIcon size={18} aria-hidden="true" /></a>
-            <a href={productSample.liveUrl} target="_blank" rel="noopener noreferrer">Read the project story <ArrowRightIcon size={16} aria-hidden="true" /></a>
-            <a href={productSample.url} target="_blank" rel="noopener noreferrer">Review the local code sample <MarkGithubIcon size={16} aria-hidden="true" /></a>
-          </div>
-        </div>
-        <figure className="project-preview"><a href={productSample.demoUrl} target="_blank" rel="noopener noreferrer" aria-label="Explore the Synthévia public demo"><img src="/images/synthevia-product.png" width="1440" height="900" loading="lazy" decoding="async" alt="The Synthévia public demo, with prepared market analysis and synthetic examples." /></a><figcaption><span>Synthévia · Public demonstration · Synthetic data</span><span>Explore ↗</span></figcaption></figure>
-      </article>
       <div className="project-index page-grid" aria-labelledby="project-index-title">
         <div className="index-heading"><p className="section-label">More to inspect</p><h3 id="project-index-title">Tools, data and research.</h3></div>
         <div className="index-list">
@@ -823,18 +823,12 @@ function Method() {
           <p className="section-label">How I work with AI</p>
           <h2 id="method-title">Building with AI. Learning as I go.</h2>
           <p>
-            I understand code, but I cannot yet write a complete application independently.
+            I understand code, but I do not yet write it independently.
             I use coding assistants to build my projects, then run the result, check its behaviour
             and work through problems.
           </p>
           <p>I have used Claude for a year and a half, as well as Cursor, ChatGPT and Codex. I organise work into focused tasks, create reusable skills and use separate reviews to question the result.</p>
-          <aside className="method-current">
-            <span>What I am improving now</span>
-            <p>
-              I am improving my coding fundamentals and learning to use AI more effectively:
-              clearer instructions, better checks and a stronger understanding of the result.
-            </p>
-          </aside>
+
         </div>
 
         <ol className="method-steps" data-reveal>
@@ -846,6 +840,15 @@ function Method() {
             </li>
           ))}
         </ol>
+          <dl className="contribution-boundaries">
+            <div><dt>What I bring</dt><dd>Breaking a project into focused tasks, describing the expected result and following up on what needs to change.</dd></div>
+            <div><dt>What I do with AI</dt><dd>Implementation, code review, test preparation and investigation. I use the assistants to work through the code and check its behaviour.</dd></div>
+            <div><dt>Where I need guidance</dt><dd>Writing code independently, choosing the right technical approach and deciding whether a change is ready for a team to ship.</dd></div>
+          </dl>
+          <aside className="method-current">
+            <span>A starting point in a team</span>
+            <p>I would like to start with a scoped task: reproduce a documented issue, explain the expected behaviour and work on a small fix with AI assistance and code review.</p>
+          </aside>
       </div>
     </section>
   );
@@ -896,7 +899,7 @@ function About() {
           <p>
             I am admitted to OPIT’s online BSc (Hons) Computer Science, starting on 21 September 2026. I plan to study computer science online alongside work. I speak
             French and Albanian, with self-assessed English at B2 level. I&apos;m based in Brussels
-            and looking for remote work from Belgium or an employer-funded move. Study and work schedules need to fit together.
+            and looking for remote work from Belgium or an employer-funded move. My study schedule is flexible, and I am available for full-time work. I can discuss the exact working hours with the team.
           </p>
         </div>
       </div>
@@ -911,7 +914,7 @@ function Contact() {
         <p className="section-label">Next step</p>
         <h2 id="contact-title">Have a junior role with real problems to solve?</h2>
         <p>
-          I&apos;m looking for a first role in software, backend, full-stack or applied AI, with
+          I&apos;m looking for a junior software development role building tools and web applications, with
           guidance and code review. Remote from Belgium or with employer-funded relocation.
         </p>
         <a className="contact-email" href={`mailto:${CONTACT.email}`}>

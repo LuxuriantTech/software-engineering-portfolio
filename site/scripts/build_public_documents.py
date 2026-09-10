@@ -1,4 +1,4 @@
-"""Build the two public, portfolio-safe career documents.
+"""Build the public English/French CVs and English motivation letter.
 
 The generated PDFs deliberately omit a phone number, street address, financial
 information, and application-specific identifiers. Both PDFs and the in-page reader use ``src/careerContent.json``.
@@ -101,8 +101,8 @@ def styles():
             "Body",
             parent=base["Normal"],
             fontName=FONT,
-            fontSize=8.55,
-            leading=11.7,
+            fontSize=9.2,
+            leading=12.6,
             textColor=INK,
             spaceAfter=1.7 * mm,
         ),
@@ -119,8 +119,8 @@ def styles():
             "ItemMeta",
             parent=base["Normal"],
             fontName=FONT,
-            fontSize=7.5,
-            leading=9.5,
+            fontSize=8.2,
+            leading=10.5,
             textColor=MUTED,
             spaceAfter=0.8 * mm,
         ),
@@ -128,8 +128,8 @@ def styles():
             "Small",
             parent=base["Normal"],
             fontName=FONT,
-            fontSize=7.6,
-            leading=10.2,
+            fontSize=8.1,
+            leading=11.1,
             textColor=INK,
         ),
         "letter_body": ParagraphStyle(
@@ -221,8 +221,8 @@ def document(path: Path, title: str, subject: str, story: list, footer: str) -> 
     doc.build(story)
 
 
-def header(role=""):
-    contact = ('Brussels, Belgium<br/>'
+def header(role="", location="Brussels, Belgium"):
+    contact = (escape(location) + '<br/>'
         '<link href="mailto:mehajardian@gmail.com">mehajardian@gmail.com</link><br/>'
         '<link href="https://github.com/LuxuriantTech">github.com/LuxuriantTech</link><br/>'
         '<link href="https://www.linkedin.com/in/ardian-mehaj-572b5a3b0/">LinkedIn / Ardian Mehaj</link><br/>'
@@ -244,16 +244,16 @@ def item(entry):
     return KeepTogether(lines)
 
 
-def build_cv() -> Path:
-    cv = CONTENT["cv"]
-    story = [header(cv["role"]), Spacer(1, 5*mm), rule(), p("PROFILE","section"), p(escape(cv["profile"]))]
-    for title, entries in [("SELECTED PROJECTS",cv["projects"]),("EXPERIENCE",cv["experience"]),("EDUCATION &amp; CERTIFICATION",cv["education"])]:
-        story.append(p(title,"section"))
+def build_cv(language="en") -> Path:
+    cv = CONTENT["cv_fr" if language == "fr" else "cv"]
+    labels = (["PROFIL", "PROJETS", "EXPÉRIENCE", "FORMATION ET CERTIFICATION", "OUTILS UTILISÉS AVEC L'IA"] if language == "fr" else ["PROFILE", "SELECTED PROJECTS", "EXPERIENCE", "EDUCATION &amp; CERTIFICATION", "TOOLS USED WITH AI ASSISTANCE"])
+    story = [header(cv["role"], cv["location"]), Spacer(1, 5*mm), rule(), p(labels[0], "section"), p(escape(cv["profile"]))]
+    for title, entries in [(labels[1], cv["projects"]), (labels[2], cv["experience"]), (labels[3], cv["education"])]:
+        story.append(p(title, "section"))
         story.extend(item(entry) for entry in entries)
-    story += [p(escape(cv["certification"]),"small"), p(escape(cv["languages"]),"small"),
-        p("TOOLS USED WITH AI ASSISTANCE","section"), p(escape(cv["tools"]),"small")]
-    path=OUTPUT_DIR / "Ardian_Mehaj_Public_CV_EN.pdf"
-    document(path,"Ardian Mehaj — Public CV","Public portfolio CV",story,"ARDIAN MEHAJ · CV")
+    story += [p(escape(cv["certification"]), "small"), p(escape(cv["languages"]), "small"), p(labels[4], "section"), p(escape(cv["tools"]), "small")]
+    path = OUTPUT_DIR / f"Ardian_Mehaj_Public_CV_{language.upper()}.pdf"
+    document(path, "Ardian Mehaj - Public CV", "Public portfolio CV", story, "ARDIAN MEHAJ · CV " + language.upper())
     return path
 
 
@@ -264,10 +264,10 @@ def build_letter() -> Path:
     story.extend(p(escape(text),"letter_body") for text in letter["paragraphs"])
     story += [Spacer(1,2*mm), p(escape(letter["closing"]),"letter_body"), p("<b>Ardian Mehaj</b>","letter_body")]
     path=OUTPUT_DIR / "Ardian_Mehaj_General_Motivation_Letter_EN.pdf"
-    document(path,"Ardian Mehaj — General Motivation Letter","Open application for junior software, backend, and applied AI roles",story,"ARDIAN MEHAJ · MOTIVATION LETTER")
+    document(path,"Ardian Mehaj - General Motivation Letter","Open application for junior software, backend, and applied AI roles",story,"ARDIAN MEHAJ · MOTIVATION LETTER")
     return path
 
 
 if __name__ == "__main__":
-    for generated_path in (build_cv(), build_letter()):
+    for generated_path in (build_cv(), build_cv("fr"), build_letter()):
         print(generated_path)

@@ -4,6 +4,7 @@ import { stat } from "node:fs/promises";
 import test from "node:test";
 import {
   CV_CONTENT,
+  CV_FR_CONTENT,
   DOCUMENTS,
   LETTER_CONTENT,
   documentById,
@@ -21,7 +22,7 @@ import {
 test("publishes nine bounded project stories", () => {
   assert.equal(PROJECTS.length, 9);
   assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 9);
-  assert.equal(PROJECTS.filter(({ featured }) => featured).length, 2);
+  assert.equal(PROJECTS.filter(({ featured }) => featured).length, 3);
 
   for (const project of PROJECTS) {
     assert.match(project.number, /^0[1-9]$/);
@@ -78,7 +79,7 @@ test("keeps API Contract Guard bounded and reproducible", () => {
 });
 
 test("keeps all secondary project limits visible", () => {
-  const secondaryCopy = PROJECTS.filter(({ featured }) => !featured)
+  const secondaryCopy = PROJECTS
     .map(({ scope }) => scope)
     .join(" ");
 
@@ -124,7 +125,7 @@ test("describes AI-assisted work without pretending manual authorship", async ()
   ]);
   assert.match(appSource, /Building with AI\. Learning as I go\./);
   assert.match(appSource, /use coding assistants to build my projects/i);
-  assert.match(appSource, /cannot yet write a complete application independently/i);
+  assert.match(appSource, /do not yet write it independently/i);
   assert.match(appSource, /check its behaviour/i);
 });
 
@@ -268,12 +269,12 @@ test("publishes light-theme search and social metadata without tracking", async 
   assert.match(ROOT_REPOSITORY_URL, /software-engineering-portfolio$/);
 });
 
-test("publishes two local, public-safe career documents", async () => {
-  assert.deepEqual(DOCUMENTS.map(({ id }) => id), ["cv", "letter"]);
+test("publishes three local, public-safe career documents", async () => {
+  assert.deepEqual(DOCUMENTS.map(({ id }) => id), ["cv", "cv-fr", "letter"]);
   assert.equal(documentById("letter").shortLabel, "Letter");
-  assert.equal(documentById("unknown").shortLabel, "CV");
+  assert.equal(documentById("unknown").shortLabel, "CV (EN)");
 
-  const publicCopy = JSON.stringify({ DOCUMENTS, CV_CONTENT, LETTER_CONTENT });
+  const publicCopy = JSON.stringify({ DOCUMENTS, CV_CONTENT, CV_FR_CONTENT, LETTER_CONTENT });
   // Keep this list category-based. Never put a real address, benefit provider,
   // school, phone number or other private value in a test committed publicly.
   for (const pattern of [
@@ -361,6 +362,7 @@ test("ships actual project previews in full and mobile sizes", async () => {
 test("PDF generator and reader share the same career content", async () => {
   const shared = JSON.parse(await readFile(new URL("../src/careerContent.json", import.meta.url), "utf8"));
   assert.deepEqual(CV_CONTENT, shared.cv);
+  assert.deepEqual(CV_FR_CONTENT, shared.cv_fr);
   assert.deepEqual(LETTER_CONTENT, shared.letter);
   const generator = await readFile(new URL("../scripts/build_public_documents.py", import.meta.url), "utf8");
   assert.match(generator, /careerContent.json/);

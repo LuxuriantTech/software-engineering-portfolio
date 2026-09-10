@@ -28,6 +28,7 @@ import {
 const featuredProjects = PROJECTS.filter((project) => project.featured);
 const productSample = PROJECTS.find(({ id }) => id === "synthevia");
 const additionalProjects = PROJECTS.filter((project) => !project.featured && project.id !== "synthevia");
+const browserProjects = PROJECTS.filter((project) => project.demoUrl?.startsWith("/projects/") || project.url.startsWith("/projects/"));
 
 function repositoryHandoffProject() {
   if (typeof window === "undefined") return null;
@@ -200,7 +201,7 @@ function Intro({ onOpenDocument }) {
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
           <p>Backend · Full-stack · Applied AI</p>
-          <p>Full-time work<br />Online studies planned alongside</p>
+          <p>Full-time work<br />OPIT online BSc intake · September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
       </div>
@@ -772,25 +773,32 @@ function Work() {
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
         <h2 id="work-title">See what I’ve been building.</h2>
-        <p>Personal projects built with AI assistance. Code, screenshots and the checks behind them. <a href="/projects/">Explore five synthetic tool walkthroughs</a>.</p>
+        <p>Personal projects built with AI assistance. Try the public demos, inspect the code and see what each project can demonstrate.</p>
       </div>
+      <nav className="demo-launchpad page-grid" aria-label="Try the five engineering demos">
+        <div className="demo-launchpad-heading"><strong>Open a demo</strong><span>Prepared examples using synthetic data. The full tools run locally.</span></div>
+        <div className="demo-launchpad-links">
+          {browserProjects.map(project => <a key={project.id} href={project.demoUrl || project.url}><span>{project.name}</span><ArrowRightIcon size={18} aria-hidden="true" /></a>)}
+        </div>
+      </nav>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <article className="product-sample page-grid" id="synthevia" aria-labelledby="synthevia-title">
         <div>
           <p className="section-label">03 / Full-stack product</p>
-          <h3 id="synthevia-title">Synthevia</h3>
-          <p>A smaller public code sample from a wider learning and research product. The sample uses a React interface, a local FastAPI backend and SQLite data.</p>
+          <h3 id="synthevia-title">Synthévia</h3>
+          <p>A web platform bringing together market analysis, risk management and learning. Its public demo lets you explore prepared product journeys without an account or access to real trading data.</p>
           <p className="project-stack">{productSample.stack}</p>
-          <p className="sample-limit">This portfolio sample uses fictional data and does not represent the wider public product site.</p>
+          <p className="sample-limit">The demo uses synthetic data. The trading application remains restricted, and the project does not establish financial performance. A smaller local code sample is available separately.</p>
           <div className="project-links">
-            <a className="secondary-action" href={productSample.url} target="_blank" rel="noopener noreferrer">Explore the sample <ArrowRightIcon size={18} aria-hidden="true" /></a>
-            <a href={productSample.liveUrl} target="_blank" rel="noopener noreferrer">Visit the product site <ArrowRightIcon size={16} aria-hidden="true" /></a>
+            <a className="primary-action" href={productSample.demoUrl} target="_blank" rel="noopener noreferrer">Try Synthévia <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <a href={productSample.liveUrl} target="_blank" rel="noopener noreferrer">Read the project story <ArrowRightIcon size={16} aria-hidden="true" /></a>
+            <a href={productSample.url} target="_blank" rel="noopener noreferrer">Review the local code sample <MarkGithubIcon size={16} aria-hidden="true" /></a>
           </div>
         </div>
-        <ProjectImage name="synthevia" width={1440} height={900} alt="Synthevia demo workspace with a fictional Northstar account, two knowledge documents and zero external services connected." caption="Synthevia · Local demo · Fictional data" />
+        <figure className="project-preview"><a href={productSample.demoUrl} target="_blank" rel="noopener noreferrer" aria-label="Explore the Synthévia public demo"><img src="/images/synthevia-product.png" width="1440" height="900" loading="lazy" decoding="async" alt="The Synthévia public demo, with prepared market analysis and synthetic examples." /></a><figcaption><span>Synthévia · Public demonstration · Synthetic data</span><span>Explore ↗</span></figcaption></figure>
       </article>
       <div className="project-index page-grid" aria-labelledby="project-index-title">
-        <div className="index-heading"><p className="section-label">More to inspect</p><h3 id="project-index-title">Six more projects.</h3></div>
+        <div className="index-heading"><p className="section-label">More to inspect</p><h3 id="project-index-title">Tools, data and research.</h3></div>
         <div className="index-list">
           {additionalProjects.map((project) => (
             <a href={project.url} target={project.url.startsWith("http") ? "_blank" : undefined} rel={project.url.startsWith("http") ? "noopener noreferrer" : undefined} key={project.id} id={project.id}>
@@ -819,6 +827,7 @@ function Method() {
             I use coding assistants to build my projects, then run the result, check its behaviour
             and work through problems.
           </p>
+          <p>I have used Claude for a year and a half, as well as Cursor, ChatGPT and Codex. I organise work into focused tasks, create reusable skills and use separate reviews to question the result.</p>
           <aside className="method-current">
             <span>What I am improving now</span>
             <p>
@@ -885,9 +894,9 @@ function About() {
             unfamiliar.
           </p>
           <p>
-            I plan to study computer science online alongside full-time work; the institution is not yet finalised. I speak
+            I am admitted to OPIT’s online BSc (Hons) Computer Science, starting on 21 September 2026. I plan to study computer science online alongside work. I speak
             French and Albanian, with self-assessed English at B2 level. I&apos;m based in Brussels
-            and open to junior opportunities in Belgium or elsewhere in the EU, depending on the role and relocation conditions.
+            and looking for remote work from Belgium or an employer-funded move. Study and work schedules need to fit together.
           </p>
         </div>
       </div>
@@ -903,7 +912,7 @@ function Contact() {
         <h2 id="contact-title">Have a junior role with real problems to solve?</h2>
         <p>
           I&apos;m looking for a first role in software, backend, full-stack or applied AI, with
-          guidance and code review. Based in Brussels; open to discussing EU relocation.
+          guidance and code review. Remote from Belgium or with employer-funded relocation.
         </p>
         <a className="contact-email" href={`mailto:${CONTACT.email}`}>
           <MailIcon size={22} aria-hidden="true" />

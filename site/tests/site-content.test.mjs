@@ -98,15 +98,14 @@ test("links the three CPL walkthroughs directly from the portfolio", () => {
   }
 });
 
-test("keeps the published walkthrough package interactive and preserves its existing reel assets", async () => {
+test("keeps walkthroughs interactive without promoting the rejected reel", async () => {
   const index = await readFile(new URL("../public/projects/index.html", import.meta.url), "utf8");
   const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
   const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");
 
   assert.match(index, /Interactive synthetic walkthroughs/);
   assert.match(demo, /Hand-authored synthetic illustration/);
-  assert.match(index, /portfolio-reel\.mp4/);
-  assert.match(index, /portfolio-reel-poster\.png/);
+  assert.doesNotMatch(index, /<video|portfolio-reel\.mp4/);
   assert.match(css, /\.reel\s+video/);
   for (const asset of ["portfolio-reel.mp4", "portfolio-reel-poster.png", "portfolio-reel-source.zip", "portfolio-reel-transcript.md"]) {
     const file = await stat(new URL(`../public/projects/assets/${asset}`, import.meta.url));
@@ -291,9 +290,10 @@ test("publishes two local, public-safe career documents", async () => {
     assert.doesNotMatch(publicCopy, pattern);
   }
 
-  assert.match(CV_CONTENT.profile, /coding assistants/i);
-  assert.match(CV_CONTENT.profile, /still need AI assistance to write it/i);
-  assert.match(CV_CONTENT.education[0].detail, /institution not yet finalised/i);
+  assert.match(CV_CONTENT.profile, /Claude, Cursor, ChatGPT and Codex/i);
+  assert.match(CV_CONTENT.profile, /do not yet write it independently/i);
+  assert.match(JSON.stringify(CV_CONTENT.education[0]), /OPIT/);
+  assert.match(JSON.stringify(CV_CONTENT.education[0]), /September 2026/);
   assert.match(CV_CONTENT.languages, /self-assessed/i);
   assert.match(LETTER_CONTENT.paragraphs.join(" "), /These personal projects/i);
 
@@ -364,5 +364,6 @@ test("PDF generator and reader share the same career content", async () => {
   assert.deepEqual(LETTER_CONTENT, shared.letter);
   const generator = await readFile(new URL("../scripts/build_public_documents.py", import.meta.url), "utf8");
   assert.match(generator, /careerContent.json/);
-  assert.doesNotMatch(JSON.stringify(shared), /admitted for the September|enrolment pending|OPIT/);
+  assert.match(JSON.stringify(shared), /OPIT/);
+  assert.doesNotMatch(JSON.stringify(shared), /institution not yet finalised|enrolment pending/);
 });

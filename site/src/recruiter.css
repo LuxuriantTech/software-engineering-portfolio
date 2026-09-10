@@ -18,6 +18,13 @@
 .section-heading > h2 { font-size: clamp(2.2rem, 4vw, 3.8rem); }
 .section-heading > p:last-child { font-size: .94rem; }
 .case-list { padding-top: 0; margin-top: 38px; }
+.demo-launchpad{padding-block:24px 32px;border-block:1px solid var(--soft-line)}
+.demo-launchpad-heading{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.demo-launchpad-heading strong{font-size:1rem}.demo-launchpad-heading span{font-size:.84rem;color:var(--muted)}
+.demo-launchpad-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.demo-launchpad-links a{display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:60px;padding:14px 18px;border:1px solid var(--soft-line);font-size:.92rem;text-decoration:none;background:var(--porcelain)}
+.demo-launchpad-links a:hover{background:var(--acid)}.demo-launchpad-links svg{flex:none}
+@media(max-width:680px){.demo-launchpad-links{grid-template-columns:1fr}.demo-launchpad-links a{min-height:48px}.demo-launchpad-heading{gap:8px}}
 .case-file { padding-block: 0 44px; scroll-margin-top: calc(var(--header-height) + 28px); }
 .case-file + .case-file { margin-top: 44px; }
 .case-rule { margin-bottom: 26px; }

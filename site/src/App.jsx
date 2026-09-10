@@ -717,13 +717,13 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   );
 }
 
-function ProjectImage({ name, alt, caption, width, height }) {
+function ProjectImage({ project, name, alt, caption, width, height }) {
   return (
     <figure className="project-preview">
-      <a href={`/images/${name}.webp`} target="_blank" rel="noopener noreferrer" aria-label={`Enlarge ${caption}`}>
+      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Try the ${project.name} demo`}>
         <img src={`/images/${name}.webp`} srcSet={`/images/${name}-720.webp 720w, /images/${name}.webp ${width}w`} sizes="(max-width: 900px) 90vw, 58vw" width={width} height={height} loading="lazy" decoding="async" alt={alt} />
       </a>
-      <figcaption><span>{caption}</span><span>Enlarge ↗</span></figcaption>
+      <figcaption><span>{caption}</span><span>Try the demo ↗</span></figcaption>
     </figure>
   );
 }
@@ -740,7 +740,7 @@ function ProjectCase({ project }) {
       <p className="project-stack">{project.stack}</p>
       <div className="project-body">
         {project.id === "evidencedesk" ? (
-          <ProjectImage name="evidencedesk" width={1440} height={619} alt="EvidenceDesk showing a question, the extracted annual fee and the matching source page in a synthetic contract." caption="EvidenceDesk · Local prototype · Synthetic data" />
+          <ProjectImage project={project} name="evidencedesk" width={1440} height={619} alt="EvidenceDesk showing a question, the extracted annual fee and the matching source page in a synthetic contract." caption="EvidenceDesk · Local prototype · Synthetic data" />
         ) : (
           <div className="contract-workflow" aria-label="Tool workflow: compare two supported OpenAPI documents, then produce JSON and HTML reports.">
             <span className="section-label">Inside the tool</span>

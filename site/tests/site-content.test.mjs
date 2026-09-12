@@ -19,13 +19,13 @@ import {
   projectFromHash,
 } from "../src/siteData.js";
 
-test("publishes nine bounded project stories", () => {
-  assert.equal(PROJECTS.length, 9);
-  assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 9);
-  assert.equal(PROJECTS.filter(({ featured }) => featured).length, 3);
+test("publishes ten bounded project stories", () => {
+  assert.equal(PROJECTS.length, 10);
+  assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 10);
+  assert.equal(PROJECTS.filter(({ featured }) => featured).length, 4);
 
   for (const project of PROJECTS) {
-    assert.match(project.number, /^0[1-9]$/);
+    assert.match(project.number, /^(0[1-9]|10)$/);
     assert.ok(project.summary.length > 70);
     assert.ok(project.stack.length > 15);
     assert.ok(project.scope.length > 15);

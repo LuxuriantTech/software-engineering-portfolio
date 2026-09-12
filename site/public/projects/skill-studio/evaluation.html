@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Measured results of a separate, preregistered Skill Studio evaluation on nine synthetic tasks."><title>Measured evaluation | Skill Studio</title><link rel="stylesheet" href="style.css"></head>
+<body class="evidence-page"><a class="skip" href="#evaluation">Skip to results</a><header class="site-header"><a class="wordmark" href="index.html">Skill <span>Studio</span></a><nav aria-label="Evaluation navigation"><a href="/">Portfolio</a><a href="/projects/">All projects</a><a href="index.html#demo">Static demo</a><a href="guide.html">5-minute guide</a></nav></header>
+<main id="evaluation" class="evidence-main"><section class="evidence-hero"><p class="kicker">Separate evaluation · 12 September 2026 · Synthetic only</p><h1>Nine tasks. Three ways to prompt.</h1><p>The competent base scored 6/9, the explicit reference 5/9, and Qwen-generated skills 2/9 strict successes. These are descriptive results from one pass, with no general benefit established.</p></section>
+<p class="evidence-notice"><strong>Software operation and generation quality are separate.</strong> A valid package or completed inference does not prove that an instruction helps. The historical evaluation remains HONEST_NEGATIVE: 4/6 for the base, 1/6 with a skill. Its data and scores were preserved. Different cases, runtime and temperature prevent a direct improvement claim between the two series.</p>
+<section class="evidence-section"><div><p class="kicker">Predeclared criteria</p><h2>Results, including failures.</h2></div><div><p>A strict success requires a valid package (not applicable to the base), all requested instructions, correct task content and completion within operational limits. The instruction and task axes below remain separate. Ratios use all nine planned cases; the invalid candidate has three unattempted uses, counted as strict failures. Their instruction and task quality were not observed. An independent reviewer scored masked outputs against the frozen references; the coordinator checked the deterministic criteria and totals.</p><div class="table-scroll" role="region" aria-label="Evaluation scores" tabindex="0"><table><thead><tr><th>Method</th><th>Strict</th><th>Instructions</th><th>Task</th></tr></thead><tbody><tr><th scope='row'>Competent base</th><td>6/9</td><td>9/9</td><td>6/9</td></tr><tr><th scope='row'>Explicit reference (AI-assisted)</th><td>5/9</td><td>5/9</td><td>6/9</td></tr><tr><th scope='row'>Qwen-generated skill</th><td>2/9</td><td>4/9</td><td>3/9</td></tr></tbody></table></div><p>The reference templates were written explicitly with AI assistance. Their authoring time and tokens were not measured. They are not unaided human work, and the owner’s exercises remain pending.</p></div></section>
+<section class="evidence-section"><div><p class="kicker">Package creation</p><h2>Keep an invalid result visible.</h2></div><div><p>Qwen was called once per family, without repair or selection. It returned a Python test instead of reusable skill instructions for regression. That candidate stayed invalid; its three reserved uses count as failures without an inference call. The other two Qwen candidates and all three references passed package checks.</p><div class="table-scroll" role="region" aria-label="Candidate package validation" tabindex="0"><table><thead><tr><th>Candidate</th><th>Body words</th><th>Package</th></tr></thead><tbody><tr><th scope='row'>acg · Qwen-generated skill</th><td>136</td><td>Valid</td></tr><tr><th scope='row'>acg · Explicit reference (AI-assisted)</th><td>92</td><td>Valid</td></tr><tr><th scope='row'>regression · Qwen-generated skill</th><td>43</td><td>Invalid</td></tr><tr><th scope='row'>regression · Explicit reference (AI-assisted)</th><td>113</td><td>Valid</td></tr><tr><th scope='row'>release · Qwen-generated skill</th><td>156</td><td>Valid</td></tr><tr><th scope='row'>release · Explicit reference (AI-assisted)</th><td>109</td><td>Valid</td></tr></tbody></table></div><details class='evaluation-case'><summary>acg · Qwen-generated skill · valid</summary><pre lang='fr'>---
+name: evaluation-acg
+description: Instructions pour la tâche acg fournie.
+---
+
+Règle REQUIRED_PARAMETER_ADDED : le paramètre `tenantId` est désormais requis dans la requête GET /invoices, précédemment absent. Cela oblige le consommateur à fournir un identifiant de tenant pour accéder aux factures, risquant une erreur 400 si omis. Règle RESPONSE_PROPERTY_REMOVED : la propriété `total` dans la réponse 200 est supprimée, précédemment présente comme nombre. Cela peut faire manquer une information critique dans le traitement des factures.  
+
+Conséquence hypothétique : un logiciel de gestion financière pourrait ignorer le montant total des factures, entraînant des erreurs de calcul ou de reporting.  
+
+Vérification proposée : vérifier que les appels GET /invoices avec un `tenantId` valide retournent une réponse 200 contenant les champs attendus, sans `total`, et que les appels sans `tenantId` génèrent une erreur 400.  
+
+Cette vérification permet de confirmer la conformité des changements sans recourir à un appel client réel.
+</pre></details><details class='evaluation-case'><summary>acg · Explicit reference (AI-assisted) · valid</summary><pre lang='fr'>---
+name: evaluation-acg
+description: Instructions pour la tâche acg fournie.
+---
+
+Pour chaque changement fourni, cite l&#x27;identifiant de règle, l&#x27;opération et le chemin exacts. Décris séparément l&#x27;état précédent et l&#x27;état suivant. Ne complète pas un rapport manquant par une supposition.
+
+Explique une conséquence possible pour le consommateur et distingue cette hypothèse du changement observé. Pour une convention de sérialisation, utilise la référence normative fournie ; si elle manque, indique que l&#x27;interprétation reste à vérifier.
+
+Propose une vérification concrète sans dire qu&#x27;elle a été exécutée. N&#x27;invente ni appel consommateur, ni validation, ni garantie de compatibilité. Respecte le format et la langue de la tâche.
+</pre></details><details class='evaluation-case'><summary>regression · Qwen-generated skill · invalid</summary><pre lang='fr'>---
+name: evaluation-regression
+description: Instructions pour la tâche regression fournie.
+---
+
+```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_discounted_total_normal_case(self):
+        self.assertEqual(discounted_total(100, 0.2), 80.0)
+
+    def test_discounted_total_boundary(self):
+        self.assertEqual(discounted_total(0, 0.5), 0.0)
+
+    def test_invalid_discount_negative(self):
+        with self.assertRaises(ValueError):
+            discounted_total(100, -0.1)
+
+    def test_invalid_discount_greater_than_one(self):
+        with self.assertRaises(ValueError):
+            discounted_total(100, 1.1)
+
+    def test_invalid_amount_negative(self):
+        with self.assertRaises(ValueError):
+            discounted_total(-50, 0.1)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```
+</pre></details><details class='evaluation-case'><summary>regression · Explicit reference (AI-assisted) · valid</summary><pre lang='fr'>---
+name: evaluation-regression
+description: Instructions pour la tâche regression fournie.
+---
+
+Lis le contrat fourni et calcule les valeurs attendues avant d&#x27;écrire les assertions. Ne modifie pas le module calcul. Couvre une réduction non nulle et au moins une frontière ou une entrée invalide.
+
+Retourne uniquement un bloc Python contenant import unittest et from calcul import discounted_total. Crée une classe héritant de unittest.TestCase, avec deux à quatre méthodes test_. Utilise des constantes littérales dans les assertions et assertRaises pour les erreurs attendues. Pas d&#x27;assignations, boucles, sous-tests, décorateurs ou imports supplémentaires.
+
+Termine par unittest.main() sans argument sous la garde __name__. Le test doit réussir sur l&#x27;implémentation correcte et échouer sur le mutant qui ignore la réduction. La réussite du runner n&#x27;établit pas une couverture exhaustive.
+</pre></details><details class='evaluation-case'><summary>release · Qwen-generated skill · valid</summary><pre lang='fr'>---
+name: evaluation-release
+description: Instructions pour la tâche release fournie.
+---
+
+Changement : la valeur de `timeout_seconds` passe de 5 à 15 secondes dans le fichier `client.py`.  
+Résultats fournis : 12 tests unitaires réussis, 0 échoué. Les tests d&#x27;intégration sont NON EXÉCUTÉS. Le déploiement est NON EFFECTUÉ.  
+Vérifications restantes : l&#x27;absence d&#x27;exécution des tests d&#x27;intégration et du déploiement doit être confirmée par un processus de validation séparé.  
+
+Les données sur les tests sont synthétiques et ne reflètent pas une exécution réelle. Le passage de 5 à 15 secondes est un changement de configuration, pas une amélioration de performance. Aucun gain ou impact sur l&#x27;usage n&#x27;est inféré.  
+
+Contradiction : le fait que des tests soient réussis sans validation d&#x27;intégration soulève un manque de couverture globale. Aucune source n&#x27;est privilégiée, les données sont présentées comme fournies.  
+
+Les valeurs de timeout, de tests et d&#x27;état de déploiement sont conservées telles qu&#x27;indiquées. Aucune déduction sur l&#x27;efficacité ou l&#x27;impact utilisateur n&#x27;est faite.  
+
+La note de livraison reste factuelle, sans interprétation ou projection.
+</pre></details><details class='evaluation-case'><summary>release · Explicit reference (AI-assisted) · valid</summary><pre lang='fr'>---
+name: evaluation-release
+description: Instructions pour la tâche release fournie.
+---
+
+Lis le diff et les résultats fournis. Décris exactement le changement, ses unités et ses valeurs précédentes et suivantes. Sépare « Changement », « Résultats fournis » et « Vérifications restantes ».
+
+Conserve les nombres et statuts de tests tels qu&#x27;ils sont fournis. Une intégration non exécutée reste non exécutée ; un échec reste un échec. Ne présente pas des données synthétiques comme une CI réalisée par l&#x27;atelier. Si deux sources se contredisent, nomme la contradiction sans choisir silencieusement un résultat.
+
+Ne déduis ni gain de performance, ni utilisateur, ni déploiement depuis un diff seul. Respecte les contraintes explicites de langue, longueur et dernière phrase demandées par la tâche.
+</pre></details></div></section>
+<section class="evidence-section"><div><p class="kicker">Cost and duration</p><h2>Measured on the local CPU.</h2></div><div><div class="table-scroll" role="region" aria-label="Measured tokens and time" tabindex="0"><table><thead><tr><th>Stage</th><th>Calls</th><th>Input / output tokens</th><th>Sum of job times</th></tr></thead><tbody><tr><th scope='row'>Create Qwen candidates</th><td>3</td><td>1746 / 725</td><td>79.7 s</td></tr><tr><th scope='row'>Runtime probes</th><td>6</td><td>5247 / 2063</td><td>225.6 s</td></tr><tr><th scope='row'>Reserved-case usage</th><td>24</td><td>15143 / 4737</td><td>559.0 s</td></tr></tbody></table></div><p>Preparation took 305.3 s; the final stage took 559.5 s. The predeclared ceilings were 18 and 54 minutes respectively, at most 120 seconds per call. All six runtime probes passed before the reserved cases were created. The long probes approached 6000 rendered bytes; they did not test the 6144-token ceiling.</p><p>Qwen3-4B-Instruct-2507 Q4_K_M, llama.cpp b10930 CPU, six threads, temperature 0, seed 42, context 8192, output limit 1024 and one concurrent inference. Peak native process RSS across usage calls: 5.22 GiB. The runtime’s token accounting is retained as measured.</p><p>Model API spend: €0. Electricity, reference authoring effort and AI-assistance/review cost were not measured. Fewer Qwen usage calls reflect an invalid package, not an efficiency gain. Per-case durations below are local observations, not a hardware benchmark.</p></div></section>
+<section class="evidence-section"><div><p class="kicker">Audit the comparison</p><h2>Inputs, outputs and reasons.</h2></div><div><p>Nine new cases were authored independently after the six candidates were frozen. Each case supplied the same user message to all three methods, with Latin-order execution and a fresh context. No prompt, candidate, parameter or scoring rule was tuned on these results. Synthetic report paths identify supplied examples; they are not private files or reports generated by another product.</p><p><a href="evaluation-results.json" download>Download all synthetic results and candidates as JSON</a></p><details class='evaluation-case'><summary>acg-query-labels-serialization</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Analyse le diff OpenAPI fourni. Cite exactement la règle, l’opération, le chemin d’API, le chemin du rapport et les états précédent et suivant. Sépare constat, hypothèse consommateur et vérification concrète non exécutée. N’invente aucun client, test ou résultat.
+
+Rapport synthétique : reports/synthetic/acg/query-labels-diff.json. Ancien GET /catalog/items : le paramètre query labels est un tableau de chaînes, required=false, style=form, explode=true. Nouveau : même type et required=false, mais style=spaceDelimited, explode=false. Règle : QUERY_PARAMETER_SERIALIZATION_CHANGED. Selon OpenAPI 3.1.1, form avec explode=true répète les paires query; spaceDelimited avec explode=false place les éléments dans une valeur délimitée par des espaces. Source : OpenAPI Specification 3.1.1, 24 octobre 2024, sections 4.8.12.3-4, https://spec.openapis.org/oas/v3.1.1.html. Aucun inventaire client, trafic ou test n’est fourni.
+
+Sections `## Changement constaté`, `## Hypothèse consommateur`, `## Vérification proposée`, dans cet ordre. Reproduis la règle, GET /catalog/items, reports/synthetic/acg/query-labels-diff.json et les deux configurations exactes. Explique la sérialisation d’après le résumé normatif. Qualifie l’effet de possible et la vérification de non exécutée.
+
+180 mots maximum. Français uniquement, sauf libellés techniques anglais fournis à citer verbatim. Corps Markdown seul, sans YAML, lien ajouté, fichier externe ni commande arbitraire. Termine exactement par : `Compatibilité réelle des clients : à vérifier.`</pre><h3>Frozen reference</h3><p lang='fr'>Citer reports/synthetic/acg/query-labels-diff.json. QUERY_PARAMETER_SERIALIZATION_CHANGED affecte GET /catalog/items : labels passe de style=form, explode=true à style=spaceDelimited, explode=false; type et required restent identiques. La première forme répète les paires, la seconde délimite les éléments par espaces. Un ancien client pourrait être mal interprété, sans preuve. Vérification recevable : comparer le décodage des deux formes sur un validateur ou serveur de test, sans prétendre l’avoir exécutée. Provenance normative : OAS 3.1.1, 24 octobre 2024, sections 4.8.12.3-4, URL fournie.</p><article class='evaluation-arm'><h3>Competent base · FAIL</h3><p>27.3 s · 528 input / 274 output tokens</p><p>Instructions: met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Le format et les identifiants sont conformes, mais « Non exécutée. Aucun trafic, test ou inventaire client fourni » ne propose aucune vérification concrète.</p><pre lang='fr'>## Changement constaté  
+Règle : `QUERY_PARAMETER_SERIALIZATION_CHANGED`.  
+Opération : `GET /catalog/items`.  
+Fichier rapport : `reports/synthetic/acg/query-labels-diff.json`.  
+Ancien : paramètre `query labels`, type tableau de chaînes, `required=false`, `style=form`, `explode=true`.  
+Nouveau : même type, `required=false`, `style=spaceDelimited`, `explode=false`.  
+
+## Hypothèse consommateur  
+Les clients supposent que les valeurs sont séparées par des espaces ou répétées selon `explode=true`.  
+
+## Vérification proposée  
+Non exécutée. Aucun trafic, test ou inventaire client fourni.  
+
+Sérialisation selon OpenAPI 3.1.1, §4.8.12.3-4 : `form` avec `explode=true` répète les paires query ; `spaceDelimited` avec `explode=false` place les éléments dans une chaîne espacée.  
+Effet : possible rupture de compatibilité si les clients dépendent de la répétition ou de la syntaxe formelle.  
+Compatibilité réelle des clients : à vérifier.</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · FAIL</h3><p>29.2 s · 726 input / 266 output tokens</p><p>Instructions: not met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: required_fragments.</p><p lang='fr' data-exact-evidence>Le fragment exact `GET /catalog/items` est scindé entre opération et chemin, et la vérification proposée n’est jamais explicitement qualifiée de non exécutée.</p><pre lang='fr'>## Changement constaté  
+Règle : `QUERY_PARAMETER_SERIALIZATION_CHANGED`  
+Opération : `GET`  
+Chemin d’API : `/catalog/items`  
+Rapport : `reports/synthetic/acg/query-labels-diff.json`  
+État précédent : `query labels` est un tableau de chaînes, `required=false`, `style=form`, `explode=true`  
+État suivant : même type et `required=false`, `style=spaceDelimited`, `explode=false`  
+
+## Hypothèse consommateur  
+Un client envoyant un tableau comme `[&quot;label1&quot;, &quot;label2&quot;]` avec `form` et `explode=true` (répétition des paires) pourrait interpréter le nouveau format comme une chaîne espacée `label1 label2`, ce qui modifie la sérialisation et peut entraîner une mauvaise lecture des données.  
+
+## Vérification proposée  
+Analyser les requêtes clients existantes pour détecter des appels avec `query labels` en tableau, et vérifier leur comportement avec les deux styles de sérialisation (form/explode vs spaceDelimited/explode=false).  
+
+Compatibilité réelle des clients : à vérifier.</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>25.3 s · 799 input / 214 output tokens</p><p>Instructions: met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Sections, identifiants et phrase finale sont conformes, mais la sortie n’explique pas que `form` répète les paires tandis que `spaceDelimited` délimite les éléments par des espaces.</p><pre lang='fr'>## Changement constaté  
+Règle : QUERY_PARAMETER_SERIALIZATION_CHANGED. Opération : GET /catalog/items. Chemin du rapport : reports/synthetic/acg/query-labels-diff.json.  
+Ancien : `query labels` est un tableau de chaînes, `required=false`, `style=form`, `explode=true`.  
+Nouveau : même type, `required=false`, `style=spaceDelimited`, `explode=false`.  
+
+## Hypothèse consommateur  
+Les clients pourraient interpréter les valeurs de `query labels` comme une chaîne espacée au lieu d’un tableau séparé, entraînant une mauvaise filtration des items.  
+
+## Vérification proposée  
+Vérifier que les appels GET /catalog/items avec un tableau de `query labels` sont correctement sérialisés selon le nouveau style `spaceDelimited` sans explosion, sans test réel.  
+
+Compatibilité réelle des clients : à vérifier.</pre></article></details><details class='evaluation-case'><summary>acg-required-shipment-service</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Analyse le changement de schéma. Cite exactement la règle, l’opération, le chemin d’API, le chemin du rapport, la propriété et les états précédent et suivant. Ne complète aucune donnée absente. Sépare fait, hypothèse consommateur et vérification concrète non exécutée.
+
+Rapport synthétique : reports/synthetic/acg/shipment-required-diff.json. Ancien POST /shipments, corps application/json : required=[address]. service_level existe avec type=string et enum=[standard, express], mais reste facultative. Nouveau : required=[address, service_level]; sa définition ne change pas. Règle : REQUIRED_REQUEST_PROPERTY_ADDED. Aucun default, appelant, exemple, test ou journal n’est fourni.
+
+Sections `## Changement constaté`, `## Hypothèse consommateur`, `## Vérification proposée`, dans cet ordre. Reproduis REQUIRED_REQUEST_PROPERTY_ADDED, POST /shipments, reports/synthetic/acg/shipment-required-diff.json et les deux listes required. Signale l’absence de default. Qualifie l’impact de possible et la vérification de non exécutée.
+
+170 mots maximum. Français uniquement, sauf libellés techniques anglais fournis à citer verbatim. Corps Markdown seul, sans YAML, lien, fichier externe ni commande arbitraire. Termine exactement par : `Impact sur les appelants : hypothèse non vérifiée.`</pre><h3>Frozen reference</h3><p lang='fr'>Citer reports/synthetic/acg/shipment-required-diff.json. REQUIRED_REQUEST_PROPERTY_ADDED concerne POST /shipments : service_level, déjà définie et facultative avec required=[address], devient obligatoire avec required=[address, service_level]. Aucun default ne peut être déduit. Une requête sans service_level pourrait être rejetée. Vérification recevable : soumettre un corps ne contenant que address au nouveau validateur, en disant qu’elle n’a pas été exécutée.</p><article class='evaluation-arm'><h3>Competent base · FAIL</h3><p>17.2 s · 433 input / 151 output tokens</p><p>Instructions: met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>La sortie appelle à tort `service_level` « Propriété ajoutée » alors qu’elle existait déjà, invente son usage pour « garantir un service express » et ne propose aucune vérification concrète.</p><pre lang='fr'>## Changement constaté  
+Règle : REQUIRED_REQUEST_PROPERTY_ADDED  
+Opération : POST /shipments  
+Chemin du rapport : reports/synthetic/acg/shipment-required-diff.json  
+Propriété ajoutée : service_level  
+États précédent : required=[address]  
+États suivant : required=[address, service_level]  
+Absence de default pour service_level.  
+
+## Hypothèse consommateur  
+Les appelants utilisent service_level comme propriété obligatoire pour garantir un service express.  
+
+## Vérification proposée  
+Aucune vérification concrète non exécutée.  
+
+Impact sur les appelants : hypothèse non vérifiée.</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · FAIL</h3><p>21.9 s · 631 input / 187 output tokens</p><p>Instructions: not met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: required_fragments.</p><p lang='fr' data-exact-evidence>Les formes exactes `required=[address]`, `required=[address, service_level]` et `default` manquent; la sortie omet que `service_level` existait déjà et invente « une erreur 400 ».</p><pre lang='fr'>## Changement constaté  
+Règle : REQUIRED_REQUEST_PROPERTY_ADDED  
+Opération : POST /shipments  
+Chemin du rapport : reports/synthetic/acg/shipment-required-diff.json  
+Propriété : required  
+État précédent : [address]  
+État suivant : [address, service_level]  
+
+## Hypothèse consommateur  
+Les appelants pourraient ne pas fournir `service_level`, ce qui entraînerait un refus de traitement ou une erreur 400. Cela pourrait nuire à la fiabilité des livraisons express.  
+
+## Vérification proposée  
+Vérifier si des appelants existants transmettent `service_level` dans les requêtes POST /shipments, en particulier dans des scénarios de livraison standard.  
+
+Impact sur les appelants : hypothèse non vérifiée.</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>24.4 s · 704 input / 198 output tokens</p><p>Instructions: not met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: required_fragments.</p><p lang='fr' data-exact-evidence>Les listes ne reproduisent pas les fragments exacts `required=[...]`; la sortie omet le caractère déjà existant et facultatif de `service_level` et affirme sans preuve « retournent une erreur 400 ».</p><pre lang='fr'>## Changement constaté  
+Règle : REQUIRED_REQUEST_PROPERTY_ADDED. Opération : POST /shipments. Chemin du rapport : reports/synthetic/acg/shipment-required-diff.json.  
+Ancien required : [address].  
+Nouveau required : [address, service_level].  
+
+## Hypothèse consommateur  
+Les appelants pourraient ignorer `service_level`, entraînant des erreurs de traitement ou de validation. L’absence de `default` augmente le risque d’erreurs de configuration.  
+
+## Vérification proposée  
+Vérifier que les appels POST /shipments avec `address` seul retournent une erreur 400, et que les appels avec `address` et `service_level` sont acceptés. Cette vérification est **non exécutée**.  
+
+Impact sur les appelants : hypothèse non vérifiée.</pre></article></details><details class='evaluation-case'><summary>acg-report-timestamp-representation</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Analyse le diff de réponse OpenAPI. Cite exactement la règle, l’opération, le chemin d’API, le chemin du rapport, la propriété et les états précédent et suivant. Exprime l’incertitude sur la nouvelle représentation. Ajoute une hypothèse consommateur et une vérification concrète non exécutée.
+
+Rapport synthétique : reports/synthetic/acg/report-timestamp-diff.json. Ancien GET /reports/{report_id}, réponse 200 application/json : generated_at a type=string et format=date-time. Nouveau : generated_at a type=integer et aucun format. Règle : RESPONSE_PROPERTY_TYPE_CHANGED. Aucune unité, convention epoch, référence de sérialisation, valeur d’exemple, trace consommateur ou exécution de test n’est fournie.
+
+Sections `## Changement constaté`, `## Hypothèse consommateur`, `## Vérification proposée`, dans cet ordre. Reproduis RESPONSE_PROPERTY_TYPE_CHANGED, GET /reports/{report_id}, reports/synthetic/acg/report-timestamp-diff.json et les états exacts. Dis que l’unité et la convention du nouvel entier sont inconnues. Qualifie la vérification de non exécutée.
+
+170 mots maximum. Français uniquement, sauf libellés techniques anglais fournis à citer verbatim. Corps Markdown seul, sans YAML, lien, fichier externe ni commande arbitraire. Termine exactement par : `Convention du nouvel entier : non spécifiée.`</pre><h3>Frozen reference</h3><p lang='fr'>Citer reports/synthetic/acg/report-timestamp-diff.json. RESPONSE_PROPERTY_TYPE_CHANGED affecte generated_at dans la réponse 200 application/json de GET /reports/{report_id}. L’ancien état est type=string, format=date-time; le nouveau est type=integer, sans format. Ne déduire ni unité ni epoch. Un parseur de date-time pourrait échouer face à l’entier. Vérification recevable : obtenir un exemple contractuel puis tester sa désérialisation, sans prétendre l’avoir fait.</p><article class='evaluation-arm'><h3>Competent base · FAIL</h3><p>21.7 s · 443 input / 211 output tokens</p><p>Instructions: met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Les contraintes formelles sont respectées, mais « timestamp UNIX en secondes » invente une unité et une convention que les données déclarent inconnues.</p><pre lang='fr'>## Changement constaté  
+Règle : `RESPONSE_PROPERTY_TYPE_CHANGED`  
+Opération : `GET /reports/{report_id}`  
+Chemin d’API : `/reports/{report_id}`  
+Chemin du rapport : `reports/synthetic/acg/report-timestamp-diff.json`  
+Propriété : `generated_at`  
+État précédent : type=string, format=date-time  
+État suivant : type=integer, aucun format  
+
+## Hypothèse consommateur  
+Les consommateurs attendent une date en format ISO 8601, interprétée comme un timestamp UNIX en secondes.  
+
+## Vérification proposée  
+Vérifier que les valeurs de `generated_at` sont cohérentes avec une représentation en secondes UNIX, en comparant avec des exemples d’anciennes valeurs en format date-time. Cette vérification n’a pas été exécutée.  
+
+Convention du nouvel entier : non spécifiée.</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · FAIL</h3><p>26.3 s · 641 input / 233 output tokens</p><p>Instructions: not met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: required_fragments.</p><p lang='fr' data-exact-evidence>Le fragment exact `GET /reports/{report_id}` manque, « timestamp en millisecondes depuis le début de l’époque » invente unité et convention, et la vérification n’est pas qualifiée de non exécutée.</p><pre lang='fr'>## Changement constaté  
+Règle : RESPONSE_PROPERTY_TYPE_CHANGED  
+Opération : GET  
+Chemin d’API : /reports/{report_id}  
+Chemin du rapport : reports/synthetic/acg/report-timestamp-diff.json  
+Propriété : generated_at  
+État précédent : type=string, format=date-time  
+État suivant : type=integer, aucun format  
+
+## Hypothèse consommateur  
+Le consommateur suppose que generated_at représente un timestamp en millisecondes depuis le début de l’époque (epoch), ce qui pourrait entraîner une erreur de lecture si le format attendu est une date humide.  
+
+## Vérification proposée  
+Vérifier que les valeurs de generated_at dans les réponses sont cohérentes avec une représentation en millisecondes depuis l’époque Unix (1970-01-01T00:00:00Z), en comparant avec des exemples de données d’entrée ou des valeurs de référence connues.  
+
+Convention du nouvel entier : non spécifiée.</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · SUCCESS</h3><p>25.9 s · 714 input / 214 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Les états sont exacts, l’incertitude est conservée par « millisecondes ou secondes sans unité claire » et la vérification est dite « non exécutée ».</p><pre lang='fr'>## Changement constaté  
+Règle : RESPONSE_PROPERTY_TYPE_CHANGED  
+Opération : GET /reports/{report_id}  
+Chemin du rapport : reports/synthetic/acg/report-timestamp-diff.json  
+Propriété : generated_at  
+État précédent : type=string, format=date-time  
+État suivant : type=integer, aucun format  
+
+## Hypothèse consommateur  
+Un logiciel de traitement de rapports suppose que generated_at est une date en format ISO 8601, et pourrait mal interpréter un entier en millisecondes ou secondes sans unité claire.  
+
+## Vérification proposée  
+Vérifier que les appels GET /reports/{report_id} retournent un entier pour generated_at, sans format, et que les consommateurs ne subissent pas de décalage de temps ou d’erreur de parsing. Cette vérification est **non exécutée**.  
+
+Convention du nouvel entier : non spécifiée.</pre></article></details><details class='evaluation-case'><summary>regression-discount-zero-amount</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Écris les tests unittest de discounted_total. Appelle exactement discounted_total(19.99, 0.15), discounted_total(0, 0.5) et discounted_total(-0.01, 0.2). Vérifie respectivement 16.99, 0.0 et ValueError. Le premier cas doit détecter une implémentation qui ignore discount.
+
+Contrat : discounted_total(amount, discount) = round(amount * (1-discount), 2). amount &gt;= 0; discount dans [0,1]; sinon ValueError. Module : calcul.
+
+Un seul bloc Python. Utilise uniquement `import unittest` et `from calcul import discounted_total`. Définis une classe unittest.TestCase avec exactement 3 méthodes test_. Assertions directes sur les constantes littérales demandées et assertRaises uniquement. Termine par unittest.main() sans argument sous la garde __name__.
+
+180 mots maximum. Aucun texte hors du bloc Python. La syntaxe Python et les identifiants techniques anglais sont exemptés de l’exigence de français. Aucune assignation, boucle, subTest, décoration, paramétrisation ni import supplémentaire. Ne prétends pas à une couverture exhaustive.</pre><h3>Frozen reference</h3><p lang='fr'>Attendu : égalité directe pour (19.99, 0.15) vers 16.99, égalité directe pour (0, 0.5) vers 0.0 et assertRaises(ValueError, discounted_total, -0.01, 0.2). Exactement trois méthodes test_, deux imports autorisés et unittest.main() sous la garde __name__. Le premier appel échoue sur le mutant ignorant discount.</p><article class='evaluation-arm'><h3>Competent base · SUCCESS</h3><p>15.5 s · 481 input / 123 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Le bloc contient exactement trois tests directs, dont `self.assertEqual(discounted_total(19.99, 0.15), 16.99)`, sans construction interdite.</p><pre lang='fr'>```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_positive_amount(self):
+        self.assertEqual(discounted_total(19.99, 0.15), 16.99)
+
+    def test_zero_amount(self):
+        self.assertEqual(discounted_total(0, 0.5), 0.0)
+
+    def test_negative_amount(self):
+        with self.assertRaises(ValueError):
+            discounted_total(-0.01, 0.2)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```</pre><pre>{
+  &quot;runner&quot;: [
+    {
+      &quot;criterion&quot;: &quot;instruction.test_count&quot;,
+      &quot;name&quot;: &quot;Consigne : 2 à 4 méthodes de test&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;3 méthodes proposées dans les classes de test, 3 tests exécutés ; la consigne exige 2 à 4 dans les deux cas.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tests réellement exécutés&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;unittest rapporte au moins un test.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Implémentation correcte&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit réussir sur le contrat fourni.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Régression détectée&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit échouer quand la réduction est ignorée.&quot;
+    }
+  ],
+  &quot;coverage&quot;: {
+    &quot;required&quot;: [
+      [
+        19.99,
+        0.15
+      ],
+      [
+        0,
+        0.5
+      ],
+      [
+        -0.01,
+        0.2
+      ]
+    ],
+    &quot;found&quot;: [
+      [
+        19.99,
+        0.15
+      ],
+      [
+        0,
+        0.5
+      ],
+      [
+        -0.01,
+        0.2
+      ]
+    ],
+    &quot;passed&quot;: true
+  }
+}</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · SUCCESS</h3><p>18.9 s · 696 input / 125 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Construction conforme et trois comportements corrects, notamment `discounted_total(-0.01, 0.2)` sous `assertRaises(ValueError)`.</p><pre lang='fr'>```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_positive_amount_with_discount(self):
+        self.assertEqual(discounted_total(19.99, 0.15), 16.99)
+
+    def test_zero_amount(self):
+        self.assertEqual(discounted_total(0, 0.5), 0.0)
+
+    def test_negative_amount(self):
+        with self.assertRaises(ValueError):
+            discounted_total(-0.01, 0.2)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```</pre><pre>{
+  &quot;runner&quot;: [
+    {
+      &quot;criterion&quot;: &quot;instruction.test_count&quot;,
+      &quot;name&quot;: &quot;Consigne : 2 à 4 méthodes de test&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;3 méthodes proposées dans les classes de test, 3 tests exécutés ; la consigne exige 2 à 4 dans les deux cas.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tests réellement exécutés&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;unittest rapporte au moins un test.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Implémentation correcte&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit réussir sur le contrat fourni.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Régression détectée&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit échouer quand la réduction est ignorée.&quot;
+    }
+  ],
+  &quot;coverage&quot;: {
+    &quot;required&quot;: [
+      [
+        19.99,
+        0.15
+      ],
+      [
+        0,
+        0.5
+      ],
+      [
+        -0.01,
+        0.2
+      ]
+    ],
+    &quot;found&quot;: [
+      [
+        19.99,
+        0.15
+      ],
+      [
+        0,
+        0.5
+      ],
+      [
+        -0.01,
+        0.2
+      ]
+    ],
+    &quot;passed&quot;: true
+  }
+}</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>Not called: invalid candidate package. Time and tokens are not a success measurement.</p><p>Instruction, task and inference quality were not observed for this invalid candidate.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Candidate package invalid; usage not attempted, as preregistered.</p></article></details><details class='evaluation-case'><summary>regression-full-discount-upper-bound</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Écris les tests unittest de discounted_total. Appelle exactement discounted_total(80, 0.25), discounted_total(125, 1) et discounted_total(80, 1.01). Vérifie respectivement 60.0, 0.0 et ValueError. Le premier cas doit détecter une implémentation qui ignore discount.
+
+Contrat : discounted_total(amount, discount) = round(amount * (1-discount), 2). amount &gt;= 0; discount dans [0,1]; sinon ValueError. Module : calcul.
+
+Un seul bloc Python. Utilise uniquement `import unittest` et `from calcul import discounted_total`. Définis une classe unittest.TestCase avec 2 à 4 méthodes test_. Assertions directes sur les constantes littérales demandées et assertRaises uniquement. Termine par unittest.main() sans argument sous la garde __name__.
+
+180 mots maximum. Aucun texte hors du bloc Python. La syntaxe Python et les identifiants techniques anglais sont exemptés de l’exigence de français. Aucune assignation, boucle, subTest, décoration, paramétrisation ni import supplémentaire. Ne prétends pas à une couverture exhaustive.</pre><h3>Frozen reference</h3><p lang='fr'>Attendu : égalité directe pour (80, 0.25) vers 60.0, égalité directe pour (125, 1) vers 0.0 et assertRaises pour (80, 1.01). Deux à quatre méthodes test_, deux imports autorisés et unittest.main() sous la garde __name__. Le premier appel échoue sur le mutant ignorant discount.</p><article class='evaluation-arm'><h3>Competent base · SUCCESS</h3><p>16.6 s · 477 input / 125 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Imports, nombre de méthodes, assertions directes, garde `__name__` et cas invalide sont tous conformes.</p><pre lang='fr'>```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_discount_0_25(self):
+        self.assertEqual(discounted_total(80, 0.25), 60.0)
+
+    def test_full_discount(self):
+        self.assertEqual(discounted_total(125, 1), 0.0)
+
+    def test_invalid_discount_over_1(self):
+        with self.assertRaises(ValueError):
+            discounted_total(80, 1.01)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```</pre><pre>{
+  &quot;runner&quot;: [
+    {
+      &quot;criterion&quot;: &quot;instruction.test_count&quot;,
+      &quot;name&quot;: &quot;Consigne : 2 à 4 méthodes de test&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;3 méthodes proposées dans les classes de test, 3 tests exécutés ; la consigne exige 2 à 4 dans les deux cas.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tests réellement exécutés&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;unittest rapporte au moins un test.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Implémentation correcte&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit réussir sur le contrat fourni.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Régression détectée&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit échouer quand la réduction est ignorée.&quot;
+    }
+  ],
+  &quot;coverage&quot;: {
+    &quot;required&quot;: [
+      [
+        80,
+        0.25
+      ],
+      [
+        125,
+        1
+      ],
+      [
+        80,
+        1.01
+      ]
+    ],
+    &quot;found&quot;: [
+      [
+        80,
+        0.25
+      ],
+      [
+        125,
+        1
+      ],
+      [
+        80,
+        1.01
+      ]
+    ],
+    &quot;passed&quot;: true
+  }
+}</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · SUCCESS</h3><p>18.3 s · 692 input / 122 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Les trois appels littéraux sont correctement testés, notamment `discounted_total(80, 1.01)` sous `assertRaises(ValueError)`.</p><pre lang='fr'>```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_normal_discount(self):
+        self.assertEqual(discounted_total(80, 0.25), 60.0)
+
+    def test_full_discount(self):
+        self.assertEqual(discounted_total(125, 1), 0.0)
+
+    def test_invalid_discount_greater_than_1(self):
+        with self.assertRaises(ValueError):
+            discounted_total(80, 1.01)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```</pre><pre>{
+  &quot;runner&quot;: [
+    {
+      &quot;criterion&quot;: &quot;instruction.test_count&quot;,
+      &quot;name&quot;: &quot;Consigne : 2 à 4 méthodes de test&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;3 méthodes proposées dans les classes de test, 3 tests exécutés ; la consigne exige 2 à 4 dans les deux cas.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tests réellement exécutés&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;unittest rapporte au moins un test.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Implémentation correcte&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit réussir sur le contrat fourni.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Régression détectée&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit échouer quand la réduction est ignorée.&quot;
+    }
+  ],
+  &quot;coverage&quot;: {
+    &quot;required&quot;: [
+      [
+        80,
+        0.25
+      ],
+      [
+        125,
+        1
+      ],
+      [
+        80,
+        1.01
+      ]
+    ],
+    &quot;found&quot;: [
+      [
+        80,
+        0.25
+      ],
+      [
+        125,
+        1
+      ],
+      [
+        80,
+        1.01
+      ]
+    ],
+    &quot;passed&quot;: true
+  }
+}</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>Not called: invalid candidate package. Time and tokens are not a success measurement.</p><p>Instruction, task and inference quality were not observed for this invalid candidate.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Candidate package invalid; usage not attempted, as preregistered.</p></article></details><details class='evaluation-case'><summary>regression-rounding-lower-bound</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Écris les tests unittest de discounted_total. Appelle exactement discounted_total(37.46, 0.3), discounted_total(12.34, 0) et discounted_total(10, -0.01). Vérifie respectivement 26.22, 12.34 et ValueError. Le premier cas doit contrôler l’arrondi et détecter une implémentation qui ignore discount.
+
+Contrat : discounted_total(amount, discount) = round(amount * (1-discount), 2). amount &gt;= 0; discount dans [0,1]; sinon ValueError. Module : calcul.
+
+Un seul bloc Python. Utilise uniquement `import unittest` et `from calcul import discounted_total`. Définis une classe unittest.TestCase avec exactement 3 méthodes test_. Assertions directes sur les constantes littérales demandées et assertRaises uniquement. Termine par unittest.main() sans argument sous la garde __name__.
+
+180 mots maximum. Aucun texte hors du bloc Python. La syntaxe Python et les identifiants techniques anglais sont exemptés de l’exigence de français. Aucune assignation, boucle, subTest, décoration, paramétrisation ni import supplémentaire. Ne prétends pas à une couverture exhaustive.</pre><h3>Frozen reference</h3><p lang='fr'>Attendu : égalité directe pour (37.46, 0.3) vers 26.22, égalité directe pour (12.34, 0) vers 12.34 et assertRaises pour (10, -0.01). Exactement trois méthodes test_, deux imports autorisés et unittest.main() sous la garde __name__. Le premier appel vérifie l’arrondi et échoue sur le mutant ignorant discount.</p><article class='evaluation-arm'><h3>Competent base · SUCCESS</h3><p>17.0 s · 492 input / 134 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Les trois méthodes utilisent directement les appels et résultats exigés, dont `discounted_total(37.46, 0.3), 26.22`, sans construction interdite.</p><pre lang='fr'>```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_discount_37_46_0_3(self):
+        self.assertEqual(discounted_total(37.46, 0.3), 26.22)
+
+    def test_no_discount(self):
+        self.assertEqual(discounted_total(12.34, 0), 12.34)
+
+    def test_negative_discount(self):
+        with self.assertRaises(ValueError):
+            discounted_total(10, -0.01)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```</pre><pre>{
+  &quot;runner&quot;: [
+    {
+      &quot;criterion&quot;: &quot;instruction.test_count&quot;,
+      &quot;name&quot;: &quot;Consigne : 2 à 4 méthodes de test&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;3 méthodes proposées dans les classes de test, 3 tests exécutés ; la consigne exige 2 à 4 dans les deux cas.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tests réellement exécutés&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;unittest rapporte au moins un test.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Implémentation correcte&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit réussir sur le contrat fourni.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Régression détectée&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit échouer quand la réduction est ignorée.&quot;
+    }
+  ],
+  &quot;coverage&quot;: {
+    &quot;required&quot;: [
+      [
+        37.46,
+        0.3
+      ],
+      [
+        12.34,
+        0
+      ],
+      [
+        10,
+        -0.01
+      ]
+    ],
+    &quot;found&quot;: [
+      [
+        37.46,
+        0.3
+      ],
+      [
+        12.34,
+        0
+      ],
+      [
+        10,
+        -0.01
+      ]
+    ],
+    &quot;passed&quot;: true
+  }
+}</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · SUCCESS</h3><p>19.0 s · 707 input / 125 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Le bloc respecte les imports, les trois méthodes et les appels littéraux, dont `self.assertEqual(discounted_total(37.46, 0.3), 26.22)`.</p><pre lang='fr'>```python
+import unittest
+from calcul import discounted_total
+
+class TestDiscountedTotal(unittest.TestCase):
+    def test_normal_discount(self):
+        self.assertEqual(discounted_total(37.46, 0.3), 26.22)
+
+    def test_no_discount(self):
+        self.assertEqual(discounted_total(12.34, 0), 12.34)
+
+    def test_negative_discount(self):
+        with self.assertRaises(ValueError):
+            discounted_total(10, -0.01)
+
+if __name__ == &#x27;__main__&#x27;:
+    unittest.main()
+```</pre><pre>{
+  &quot;runner&quot;: [
+    {
+      &quot;criterion&quot;: &quot;instruction.test_count&quot;,
+      &quot;name&quot;: &quot;Consigne : 2 à 4 méthodes de test&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;3 méthodes proposées dans les classes de test, 3 tests exécutés ; la consigne exige 2 à 4 dans les deux cas.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tests réellement exécutés&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;unittest rapporte au moins un test.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Implémentation correcte&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit réussir sur le contrat fourni.&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Régression détectée&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Le test doit échouer quand la réduction est ignorée.&quot;
+    }
+  ],
+  &quot;coverage&quot;: {
+    &quot;required&quot;: [
+      [
+        37.46,
+        0.3
+      ],
+      [
+        12.34,
+        0
+      ],
+      [
+        10,
+        -0.01
+      ]
+    ],
+    &quot;found&quot;: [
+      [
+        37.46,
+        0.3
+      ],
+      [
+        12.34,
+        0
+      ],
+      [
+        10,
+        -0.01
+      ]
+    ],
+    &quot;passed&quot;: true
+  }
+}</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>Not called: invalid candidate package. Time and tokens are not a success measurement.</p><p>Instruction, task and inference quality were not observed for this invalid candidate.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Candidate package invalid; usage not attempted, as preregistered.</p></article></details><details class='evaluation-case'><summary>release-retry-delay-contradiction</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Rédige une note de livraison à partir des seules preuves fournies. Conserve exactement valeurs, unités et statuts. Nomme la contradiction sans choisir une source. Identifie les données synthétiques, les échecs, la non-exécution et l’absence de déploiement. Ne déduis ni performance réelle ni usage.
+
+Diff : retry_delay_ms passe de 800 ms à 1200 ms. Tests unitaires : 42 passed, 1 failed. Tests d’intégration : non exécutés. Déploiement : non effectué. Benchmark synthétique : p95 avant 240 ms; tableau brut, p95 après 205 ms; résumé, p95 après 198 ms. Aucune mesure de production ni donnée utilisateur.
+
+Sections `## Changement`, `## Résultats fournis`, `## Vérifications restantes`, dans cet ordre. Reproduis exactement `800 ms`, `1200 ms`, `42 passed`, `1 failed`, `240 ms`, `205 ms` et `198 ms`. Mentionne sémantiquement l’intégration non exécutée, le déploiement non effectué et la nature synthétique. Nomme la contradiction 205 ms contre 198 ms.
+
+160 mots maximum. Français uniquement, sauf libellés techniques anglais fournis à citer verbatim. Corps Markdown seul, sans YAML, lien, fichier externe ni commande arbitraire. Termine exactement par : `Aucun déploiement n’a été effectué.`</pre><h3>Frozen reference</h3><p lang='fr'>Conserver retry_delay_ms de 800 ms à 1200 ms; 42 passed, 1 failed; intégration non exécutée; déploiement non effectué. Qualifier le benchmark de synthétique et rapporter 240 ms avant, puis 205 ms dans le tableau et 198 ms dans le résumé. Nommer la contradiction sans arbitrage ni conclusion réelle.</p><article class='evaluation-arm'><h3>Competent base · SUCCESS</h3><p>19.8 s · 473 input / 172 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Tous les nombres et états sont exacts; « La contradiction 205 ms contre 198 ms est notée » conserve le conflit sans arbitrage.</p><pre lang='fr'>## Changement  
+retry_delay_ms passe de 800 ms à 1200 ms.
+
+## Résultats fournis  
+Tests unitaires : 42 passed, 1 failed.  
+Benchmark synthétique : p95 avant 240 ms; tableau brut, p95 après 205 ms; résumé, p95 après 198 ms.  
+
+## Vérifications restantes  
+Tests d’intégration : non exécutés.  
+Déploiement : non effectué.  
+La contradiction 205 ms contre 198 ms est notée.  
+Les données sont synthétiques.  
+Aucune mesure de production ni donnée utilisateur n’est disponible.  
+
+Aucun déploiement n’a été effectué.</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · SUCCESS</h3><p>25.6 s · 684 input / 224 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>La note conserve tous les statuts et précise « Contradiction : 205 ms (tableau brut) contre 198 ms (résumé) » sans conclusion réelle.</p><pre lang='fr'>## Changement  
+Le paramètre `retry_delay_ms` passe de `800 ms` à `1200 ms`.
+
+## Résultats fournis  
+- Tests unitaires : `42 passed`, `1 failed`.  
+- Benchmark synthétique : p95 avant `240 ms`, p95 après `205 ms` (tableau brut), p95 après `198 ms` (résumé).  
+- Tests d’intégration : non exécutés.  
+- Aucune mesure de production ni donnée utilisateur.
+
+## Vérifications restantes  
+- Les tests d’intégration n’ont pas été exécutés.  
+- Aucun déploiement n’a été effectué.  
+- Contradiction : `205 ms` (tableau brut) contre `198 ms` (résumé) pour la p95.  
+- Les résultats de benchmark sont synthétiques.  
+
+Aucun déploiement n’a été effectué.</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>25.0 s · 804 input / 187 output tokens</p><p>Instructions: not met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: required_fragments.</p><p lang='fr' data-exact-evidence>Les fragments exacts `42 passed` et `1 failed` sont remplacés par « 42 tests unitaires passés, 1 échoué », mais les comptes, l’échec, la contradiction et les limites restent sémantiquement corrects.</p><pre lang='fr'>## Changement  
+La valeur de `retry_delay_ms` passe de `800 ms` à `1200 ms`.
+
+## Résultats fournis  
+42 tests unitaires passés, 1 échoué. Benchmark synthétique : p95 avant `240 ms`, p95 après `205 ms` (tableau brut), `198 ms` (résumé).  
+
+## Vérifications restantes  
+Les tests d’intégration sont non exécutés. Le déploiement est non effectué. Les données de benchmark sont synthétiques.  
+Contradiction : `205 ms` contre `198 ms` dans les mesures de p95. Aucune mesure de production ni donnée utilisateur n’est disponible.  
+
+Aucun déploiement n’a été effectué.</pre></article></details><details class='evaluation-case'><summary>release-batch-rows-integration-conflict</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Rédige une note de livraison fondée uniquement sur les éléments fournis. Conserve exactement nombres, unités et statuts. Signale la contradiction sur l’intégration sans la résoudre. Préserve les échecs, la non-exécution et l’absence de déploiement. Identifie les mesures synthétiques sans revendiquer de gain réel.
+
+Diff : worker_batch_rows passe de 100 lignes à 250 lignes. Tests unitaires : 18 passed, 0 failed. Journal CI d’intégration : 9 passed, 3 failed. Fiche de livraison : intégration « réussie ». Tests de bout en bout : non exécutés. Déploiement : non effectué. Jeu synthétique : débit avant 960 lignes/s, après 1180 lignes/s. Aucune observation de production.
+
+Sections `## Changement`, `## Résultats fournis`, `## Vérifications restantes`, dans cet ordre. Reproduis exactement `100 lignes`, `250 lignes`, `18 passed`, `0 failed`, `9 passed`, `3 failed`, `réussie`, `960 lignes/s` et `1180 lignes/s`. Mentionne sémantiquement la non-exécution, l’absence de déploiement et la nature synthétique. Cite séparément le journal CI et la fiche.
+
+170 mots maximum. Français uniquement, sauf libellés techniques anglais fournis à citer verbatim. Corps Markdown seul, sans YAML, lien, fichier externe ni commande arbitraire. Termine exactement par : `La validation d’intégration reste contradictoire.`</pre><h3>Frozen reference</h3><p lang='fr'>Conserver worker_batch_rows de 100 lignes à 250 lignes; unitaires 18 passed, 0 failed; intégration CI 9 passed, 3 failed; fiche « réussie »; bout en bout non exécutés; déploiement non effectué. Nommer la contradiction sans choisir. Identifier le jeu synthétique et rapporter 960 puis 1180 lignes/s sans conclure à un gain réel.</p><article class='evaluation-arm'><h3>Competent base · SUCCESS</h3><p>24.6 s · 494 input / 238 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>La sortie conserve les preuves, nomme précisément la contradiction et précise que « Les mesures synthétiques ne reflètent pas la réalité de production ».</p><pre lang='fr'>## Changement  
+Diff : worker_batch_rows passe de **100 lignes** à **250 lignes**.
+
+## Résultats fournis  
+Tests unitaires : **18 passed**, **0 failed**.  
+Journal CI d’intégration : **9 passed**, **3 failed**.  
+Fiche de livraison : intégration **« réussie »**.  
+Jeu synthétique : débit avant **960 lignes/s**, après **1180 lignes/s**.  
+
+## Vérifications restantes  
+Tests de bout en bout : **non exécutés**.  
+Déploiement : **non effectué**.  
+Aucune observation de production.  
+La performance du jeu est **synthétique**.  
+
+Le journal CI rapporte **3 échecs**, tandis que la fiche de livraison affirme une **intégration réussie**. Cette contradiction n’est pas résolue.  
+Les mesures synthétiques ne reflètent pas la réalité de production.  
+
+La validation d’intégration reste contradictoire.</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · FAIL</h3><p>25.7 s · 705 input / 222 output tokens</p><p>Instructions: not met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: required_fragments.</p><p lang='fr' data-exact-evidence>L’identifiant requis `worker_batch_rows` manque, mais « Le nombre de lignes traitées par batch passe de 100 lignes à 250 lignes » conserve correctement le changement et les autres preuves.</p><pre lang='fr'>## Changement  
+Le nombre de lignes traitées par batch passe de **100 lignes** à **250 lignes**.
+
+## Résultats fournis  
+- Tests unitaires : **18 passed**, **0 failed**.  
+- Journal CI d’intégration : **9 passed**, **3 failed**.  
+- Fiche de livraison : intégration **« réussie »**.  
+- Débit synthétique avant : **960 lignes/s**, après : **1180 lignes/s**.  
+- Aucune observation de production.
+
+## Vérifications restantes  
+- Les tests de bout en bout sont **non exécutés**.  
+- Le déploiement est **non effectué**.  
+- La mesure de débit est **synthétique**.  
+- Contradiction entre le journal CI (3 échecs) et la fiche de livraison (intégration « réussie »).  
+
+La validation d’intégration reste contradictoire.</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · SUCCESS</h3><p>30.1 s · 825 input / 249 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Toutes les preuves sont conservées et « la fiche de livraison indique une “réussie” alors que le journal CI rapporte 3 échecs » expose la contradiction sans arbitrage.</p><pre lang='fr'>## Changement  
+worker_batch_rows passe de 100 lignes à 250 lignes.
+
+## Résultats fournis  
+Tests unitaires : 18 passed, 0 failed. Journal CI d’intégration : 9 passed, 3 failed. Fiche de livraison : intégration « réussie ». Tests de bout en bout : non exécutés. Déploiement : non effectué. Jeu synthétique : débit avant 960 lignes/s, après 1180 lignes/s. Aucune observation de production.
+
+## Vérifications restantes  
+L’absence d’exécution des tests de bout en bout et du déploiement doit être confirmée par un processus de validation séparé. La fiche de livraison indique une « réussie » alors que le journal CI rapporte 3 échecs, créant une contradiction. Les données de débit sont synthétiques et ne reflètent pas une amélioration réelle. Aucun gain ou impact sur l’usage n’est inféré.  
+
+La validation d’intégration reste contradictoire.</pre></article></details><details class='evaluation-case'><summary>release-cache-ttl-security-conflict</summary><h3>Synthetic task and supplied evidence</h3><pre lang='fr'>Rédige une note de livraison à partir des preuves fournies. Conserve exactement valeurs, unités, nombres et statuts. Nomme la contradiction de sécurité sans l’arbitrer. Préserve l’échec, la non-exécution et le déploiement non effectué. Identifie les données synthétiques et ne déduis aucun effet réel.
+
+Diff : cache_ttl_s passe de 300 secondes à 45 secondes. Tests unitaires : non exécutés. Tests d’intégration : 27 passed, 0 failed. Tests de bout en bout : 6 passed, 4 failed. Scan : 0 critical, 2 high. Résumé : « aucun problème de sécurité ». Charge synthétique : taux d’erreur avant 1,8 %, après 1,1 %. Déploiement : non effectué.
+
+Sections `## Changement`, `## Résultats fournis`, `## Vérifications restantes`, dans cet ordre. Reproduis exactement `300 secondes`, `45 secondes`, `27 passed`, `0 failed`, `6 passed`, `4 failed`, `0 critical`, `2 high`, `aucun problème de sécurité`, `1,8 %` et `1,1 %`. Mentionne sémantiquement la non-exécution, le déploiement non effectué et la charge synthétique. Cite séparément scan et résumé.
+
+180 mots maximum. Français uniquement, sauf libellés techniques anglais fournis à citer verbatim. Corps Markdown seul, sans YAML, lien, fichier externe ni commande arbitraire. Termine exactement par : `Le déploiement reste à effectuer.`</pre><h3>Frozen reference</h3><p lang='fr'>Conserver cache_ttl_s de 300 à 45 secondes; unitaires non exécutés; intégration 27 passed, 0 failed; bout en bout 6 passed, 4 failed; scan 0 critical, 2 high; résumé « aucun problème de sécurité »; déploiement non effectué. Nommer la contradiction sans arbitrage. Identifier la charge synthétique et rapporter 1,8 % puis 1,1 % sans effet réel déduit.</p><article class='evaluation-arm'><h3>Competent base · SUCCESS</h3><p>24.6 s · 484 input / 241 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Valeurs, sections et phrase finale sont conformes; « Scan : 0 critical, 2 high » et « Résumé : “aucun problème de sécurité” » préservent les sources contradictoires.</p><pre lang='fr'>## Changement  
+cache_ttl_s passe de 300 secondes à 45 secondes.
+
+## Résultats fournis  
+Tests unitaires : non exécutés.  
+Tests d’intégration : 27 passed, 0 failed.  
+Tests de bout en bout : 6 passed, 4 failed.  
+Scan : 0 critical, 2 high.  
+Résumé : « aucun problème de sécurité ».  
+Charge synthétique : taux d’erreur avant 1,8 %, après 1,1 %.  
+
+## Vérifications restantes  
+Les tests unitaires n’ont pas été exécutés.  
+Le déploiement est non effectué.  
+Les données de charge synthétique sont fournies, mais sans validation réelle.  
+La mention « aucun problème de sécurité » est fournie sans preuve de vérification de sécurité.  
+La contradiction de sécurité est identifiée sans arbitrage.  
+L’échec des tests de bout en bout (4 failed) est documenté.  
+Le déploiement reste à effectuer.  
+
+Le déploiement reste à effectuer.</pre></article><article class='evaluation-arm'><h3>Explicit reference (AI-assisted) · SUCCESS</h3><p>28.3 s · 695 input / 255 output tokens</p><p>Instructions: met; task: succeeded; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>La contradiction est explicitée par « le scan identifie 2 high, tandis que le résumé affirme “aucun problème de sécurité” » et l’effet réel n’est pas revendiqué.</p><pre lang='fr'>## Changement  
+cache_ttl_s passe de 300 secondes à 45 secondes.
+
+## Résultats fournis  
+Tests unitaires : non exécutés.  
+Tests d’intégration : 27 passed, 0 failed.  
+Tests de bout en bout : 6 passed, 4 failed.  
+Scan : 0 critical, 2 high.  
+Résumé : « aucun problème de sécurité ».  
+Charge synthétique : taux d’erreur avant 1,8 %, après 1,1 %.  
+
+## Vérifications restantes  
+Les tests unitaires restent non exécutés.  
+Le déploiement est non effectué.  
+Contradiction de sécurité : le scan identifie 2 high, tandis que le résumé affirme « aucun problème de sécurité ».  
+Les données sur la charge synthétique sont fournies, mais ne permettent pas de déduire d’effet réel.  
+Le taux d’erreur diminue de 1,8 % à 1,1 %, mais ce changement n’est pas confirmé par une analyse de cause.  
+
+Le déploiement reste à effectuer.</pre></article><article class='evaluation-arm'><h3>Qwen-generated skill · FAIL</h3><p>30.8 s · 815 input / 247 output tokens</p><p>Instructions: met; task: failed; inference: completed.</p><p>Failed deterministic instruction checks: none.</p><p lang='fr' data-exact-evidence>Format et valeurs requis présents, mais « Les données sur les tests d’intégration et de bout en bout sont synthétiques » invente une nature synthétique réservée à la charge.</p><pre lang='fr'>## Changement  
+cache_ttl_s passe de 300 secondes à 45 secondes.  
+
+## Résultats fournis  
+Tests unitaires : non exécutés. Tests d’intégration : 27 passed, 0 failed. Tests de bout en bout : 6 passed, 4 failed. Scan : 0 critical, 2 high. Résumé : « aucun problème de sécurité ». Charge synthétique : taux d’erreur avant 1,8 %, après 1,1 %. Déploiement : non effectué.  
+
+## Vérifications restantes  
+L’absence d’exécution des tests unitaires et du déploiement doit être confirmée. La charge synthétique est fournie sans validation réelle. Les données sur les tests d’intégration et de bout en bout sont synthétiques. Le scan rapporte 2 high, sans indication de vulnérabilité. Le résumé « aucun problème de sécurité » ne remplace une analyse complète. La non-exécution des tests unitaires et du déploiement est documentée.  
+
+Le déploiement reste à effectuer.</pre></article></details></div></section>
+<section class="evidence-section"><div><p class="kicker">Failure analysis</p><h2>What this run diagnoses.</h2></div><div><p>All 24 attempted reserved inferences completed within the operational limits. No reproducible product runtime failure was observed in this run. The package validator rejected the generated regression solution as specified; it did not turn it into a usable skill.</p><p>The model invented missing timestamp conventions, confused an existing property becoming required with an added property, and sometimes failed to propose a concrete unexecuted check. Some strict failures were narrower: a semantically preserved result lost an explicitly requested identifier or exact status string. The separate task column makes that distinction visible.</p><p>The protocol gives exact-format constraints substantial weight and tests only three narrow families. It does not isolate model, prompt and runtime effects. The next useful development work is to distinguish reusable instructions from solved examples and improve evidence preservation on public development cases, then freeze a fresh evaluation. These reserved cases will not be used to tune this score.</p></div></section>
+<section class="evidence-section"><div><p class="kicker">Reproducibility limits</p><h2>What remains unknown.</h2></div><div><p>Nine synthetic cases, one model, one CPU profile and one deterministic pass cannot establish general superiority, statistical significance, adoption or production readiness. Regression cases supplied expected numeric values: they test faithful test construction, not independent arithmetic discovery. The masked reviewer was also an AI assistant. Semantic judgments remain reviewable; raw outputs are preserved. The public page is static and gives no access to the model, private workshop, files or execution.</p><dl class="evaluation-hashes"><dt>PREEXECUTION.json</dt><dd>0d6615477f925505445152f96b85a5809d56a65d13b8708289d73054246974a2</dd><dt>CANDIDATES_FROZEN.json</dt><dd>0916659052eb59638e800889cdb1bb2899779b43f8dd5b9ade5db0f509e8e4a4</dd><dt>HOLDOUT_FROZEN.json</dt><dd>3ebc7ad93a5ded4ec70abb32a4f78d98552ea8b793552ea809c29930450845ae</dd><dt>BLIND_REVIEW.json</dt><dd>53d2dc3081885d95f2ff8f627bfd18ef629cd0b9069ce8e5e79469bccb3d2243</dd></dl><p><a href="evidence.html">Earlier recorded software example</a> · <a href="guide.html">Personal guide and three exercises</a></p></div></section></main><footer><span>Skill Studio 0.1.1 · Static public edition</span><a href="index.html">Back to presentation</a><span>Synthetic evidence</span></footer></body></html>

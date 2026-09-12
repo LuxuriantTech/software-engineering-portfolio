@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5b58" />
+    <meta name="description" content="Guide personnel préparé pour prendre en main l’atelier local Skill Studio." />
+    <title>Guide personnel | Skill Studio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="evidence-page">
+    <a class="skip" href="#guide">Aller au guide</a>
+    <header class="site-header"><a class="wordmark" href="index.html">Skill <span>Studio</span></a><nav aria-label="Navigation du guide"><a href="/">Retour portfolio</a><a href="/projects/">Tous les projets</a><a href="index.html#demo">Démo préparée</a></nav></header>
+    <main id="guide" class="evidence-main">
+      <section class="evidence-hero" aria-labelledby="guide-title"><p class="kicker">Guide personnel préparé</p><h1 id="guide-title">Prendre en main l’atelier en cinq minutes.</h1><p>Ce parcours et les trois exercices sont préparés pour le propriétaire. Ils ne sont pas déclarés accomplis.</p></section>
+      <section class="evidence-section" aria-labelledby="five-title"><div><p class="kicker">Parcours</p><h2 id="five-title">Cinq minutes</h2></div><ol class="guide-timeline"><li><strong>0:00-1:00</strong><span>Choisir la note de livraison synthétique, lire le brief puis générer une skill. Repérer la version initiale <code>v1</code> et son hash.</span></li><li><strong>1:00-2:15</strong><span>Dans <code>SKILL.md</code>, ajouter exactement : « Termine par : Vérifications à compléter. », lire le diff et enregistrer <code>v2</code> avec une note.</span></li><li><strong>2:15-3:45</strong><span>Ouvrir <code>v1</code>, revenir à <code>v2</code>, puis lire le diff. Comparer <code>v2</code> avec sorties, tokens, durée, paramètres et erreurs éventuelles.</span></li><li><strong>3:45-5:00</strong><span>Exporter <code>v2</code>, la réimporter avec son type de tâche, puis vérifier fichiers et hash, même si l’identifiant local change.</span></li></ol></section>
+      <section class="evidence-section" aria-labelledby="exercises-title"><div><p class="kicker">À faire personnellement</p><h2 id="exercises-title">Trois exercices</h2></div><div class="guide-exercises"><article><h3>1. Suivre une génération, 3 à 5 minutes</h3><p>En 60 secondes, expliquer le trajet du formulaire : navigateur, API locale, job, runtime puis SQLite. Relever le brief, la version créée et son hash. Expliquer où le snapshot est conservé et pourquoi annuler doit atteindre le job réel.</p></article><article><h3>2. Modifier sans effacer l’historique, 3 à 5 minutes</h3><p>Dans <code>SKILL.md</code>, ajouter exactement : « Termine par : Vérifications à compléter. ». Enregistrer <code>v2</code>, retrouver <code>v1</code>, ouvrir le diff puis revenir à <code>v2</code>. Vérifier que <code>v1</code> reste lisible, que <code>v2</code> a un hash distinct et que le diff ne contient que l’ajout voulu. Option : retrouver un libellé dans <code>frontend/src/App.tsx</code>, le reformuler localement, puis vérifier où il apparaît.</p></article><article><h3>3. Lire une comparaison avec prudence, 3 à 5 minutes</h3><p>Relever paramètres, tokens, durée, erreurs et provenance. Distinguer l’inclusion d’une consigne dans un bras d’une comparaison équitable : pour tester cette dernière, la consigne finale doit être identique dans le besoin des deux bras. Décrire une observation sans en déduire un bénéfice général, puis noter ce qui resterait à tester.</p></article></div><p class="muted">Temps indicatifs : l’inférence locale peut varier. Aucun exercice n’est déclaré accompli par ce guide.</p></section>
+    </main>
+    <footer><span>Guide préparé · exercices non accomplis</span><a href="index.html">Retour à la démo préparée</a><a href="evaluation.html">Measured evaluation</a><span>Static public edition</span></footer>
+  </body>
+</html>

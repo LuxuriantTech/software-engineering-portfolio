@@ -746,6 +746,8 @@ function ProjectCase({ project }) {
           <ProjectImage project={project} name="evidencedesk" width={1440} height={619} alt="EvidenceDesk showing a question, the extracted annual fee and the matching source page in a synthetic contract." caption="EvidenceDesk · Local prototype · Synthetic data" />
         ) : project.id === "synthevia" ? (
           <figure className="project-preview"><a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label="Explore the Synthévia public demo"><img src="/images/synthevia-product.png" width="1440" height="900" loading="lazy" decoding="async" alt="Synthévia's market overview and learning workspace, using fictional data." /></a><figcaption><span>Synthévia · Product demo</span><span>Explore ↗</span></figcaption></figure>
+        ) : project.id === "skill-studio" ? (
+          <figure className="project-preview"><a href={project.preview.href} aria-label={project.preview.label}><img src={project.preview.src} width="964" height="529" loading="lazy" decoding="async" alt={project.preview.alt} /></a><figcaption><span>Skill Studio · Static demo · Synthetic inputs</span><span>Open the demo ↗</span></figcaption></figure>
         ) : (
           <a href={project.demoUrl} className="contract-workflow" aria-label="Try API Contract Guard: compare a change to an API contract">
             <span className="section-label">One change. An existing client.</span>
@@ -759,12 +761,12 @@ function ProjectCase({ project }) {
           <dl>
             <div><dt>Try this</dt><dd>{project.example}</dd></div>
             <div><dt>The choice behind it</dt><dd>{project.decision}</dd></div>
-            <div><dt>My role, with AI assistance</dt><dd>{project.contribution}</dd></div>
+            <div><dt>{project.contributionLabel ?? "My role, with AI assistance"}</dt><dd>{project.contribution}</dd></div>
             <div className="project-limit"><dt>Current limit</dt><dd>{project.shortLimit}</dd></div>
           </dl>
           <div className="project-links">
             <a className="primary-action" href={project.demoUrl}>Try {project.name} <ArrowRightIcon size={18} aria-hidden="true" /></a>
-            <a href={project.url} target="_blank" rel="noopener noreferrer">{project.id === "synthevia" ? "Local code sample" : "View code"} <MarkGithubIcon size={18} aria-hidden="true" /></a>
+            <a href={project.url} target={project.id === "skill-studio" ? undefined : "_blank"} rel="noopener noreferrer">{project.id === "skill-studio" ? "Recorded example" : project.id === "synthevia" ? "Local code sample" : "View code"} {project.id === "skill-studio" ? <ArrowRightIcon size={18} aria-hidden="true" /> : <MarkGithubIcon size={18} aria-hidden="true" />}</a>
             {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Project story <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}
           </div>
           <details className="project-checks">
@@ -783,16 +785,16 @@ function Work() {
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
-        <h2 id="work-title">Three projects. Three concrete problems.</h2>
+        <h2 id="work-title">Four projects. Four concrete problems.</h2>
         <p>Personal projects built with AI assistance. Start with an example, then explore the choices and the code.</p>
       </div>
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
         {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">The public demos use fictional examples. The five engineering tools run in full locally.</p>
+      <p className="demo-context page-grid">The public demos use fictional examples. The complete engineering tools run locally.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
-      <nav className="demo-launchpad page-grid" aria-label="Try the five engineering demos">
-        <div className="demo-launchpad-heading"><strong>Explore all five engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
+      <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
+        <div className="demo-launchpad-heading"><strong>Explore the engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
         <div className="demo-launchpad-links">
           {browserProjects.map(project => <a key={project.id} href={project.demoUrl || project.url}><span>{project.name}</span><ArrowRightIcon size={18} aria-hidden="true" /></a>)}
         </div>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d5b58" />
+    <meta name="description" content="Static transcription of one recorded local Skill Studio development example." />
+    <title>Recorded example | Skill Studio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="evidence-page">
+    <a class="skip" href="#record">Skip to recorded example</a>
+    <header class="site-header"><a class="wordmark" href="index.html">Skill <span>Studio</span></a><nav aria-label="Evidence navigation"><a href="/">Back to portfolio</a><a href="/projects/">All projects</a><a href="index.html#demo">Prepared demo</a><a href="guide.html">5-minute guide</a></nav></header>
+    <main id="record" class="evidence-main">
+      <section class="evidence-hero" aria-labelledby="evidence-title"><p class="kicker">Recorded local development example</p><h1 id="evidence-title">One synthetic delivery note, fully transcribed.</h1><p>This static page embeds escaped data from <code>recorded-example.json</code>. It makes no API request and does not rerun inference.</p></section>
+
+      <section class="evidence-notice"><strong>Scope of this record:</strong> one recorded local comparison example on a synthetic input, using two comparison calls during development, not a new evaluation. It does not establish a general effect, user benefit, skill superiority, quality, or security.</section>
+
+      <figure class="evidence-capture"><img src="assets/local-workshop.png" alt="Scrubbed partial viewport of the local comparison component on synthetic delivery inputs" loading="lazy" /><figcaption>This partial viewport captures the local comparison component. The longer outputs are transcribed in full below.</figcaption></figure>
+
+      <section class="evidence-section" aria-labelledby="input-title"><div><p class="kicker">Recorded synthetic input</p><h2 id="input-title">Inputs and added instruction</h2></div><div><p class="label">Task</p><p lang="fr">Prépare une note de livraison factuelle en français à partir du diff et des résultats fournis.</p><p class="label">Added instruction</p><p lang="fr">Termine exactement par « Vérifications à compléter. ».</p><pre lang="fr">Exemple synthétique créé pour Skill Studio.
+Diff fourni :
+--- a/retry_policy.py
++++ b/retry_policy.py
+@@
+-retry_limit = 2
++retry_limit = 4
+Résultats fournis : 8 tests unitaires réussis, 0 échoué. Intégration : NON EXÉCUTÉE. Déploiement : NON EFFECTUÉ.</pre></div></section>
+
+      <section class="evidence-section" aria-labelledby="provenance-title"><div><p class="kicker">Recorded provenance</p><h2 id="provenance-title">Same runtime, retained parameters</h2></div><div class="evidence-data"><dl><div><dt>Model</dt><dd>Qwen3-4B-Instruct-2507-Q4_K_M</dd></div><div><dt>Runtime</dt><dd>llama.cpp b10930 / native CPU</dd></div><div><dt>Temperature</dt><dd>0.7</dd></div><div><dt>Top p / top k / min p</dt><dd>0.8 / 20 / 0</dd></div><div><dt>Seed</dt><dd>42</dd></div><div><dt>Max tokens / context</dt><dd>1024 / 8192</dd></div><div><dt>GPU layers / threads</dt><dd>0 / 6</dd></div><div><dt>Batch / micro-batch</dt><dd>512 / 512</dd></div><div><dt>Chat template</dt><dd>qwen-chatml-v1</dd></div></dl><p><strong>Export and re-import:</strong> reported identical for this record.</p></div></section>
+
+      <section class="evidence-section outputs" aria-labelledby="outputs-title"><div><p class="kicker">Full recorded outputs</p><h2 id="outputs-title">Baseline and with-skill paths</h2></div><div class="output-stack">
+        <article class="output-card"><header><div><p class="kicker">Baseline</p><h3>Recorded output</h3></div><dl><div><dt>Duration</dt><dd>22,774 ms</dd></div><div><dt>Tokens</dt><dd>280 in · 212 out</dd></div><div><dt>Finish</dt><dd>stop</dd></div></dl></header><pre lang="fr">**Note de livraison factuelle**
+
+Le fichier `retry_policy.py` a été modifié : la valeur de `retry_limit` est passée de 2 à 4 tentatives. Cette modification reflète une augmentation de la limite de réessai dans la politique de retentatifs.
+
+Résultats fournis :  
+- 8 tests unitaires réussis  
+- 0 test échoué  
+
+L'intégration n'a pas été exécutée.  
+Le déploiement n'a pas été effectué.
+
+**Observations** :  
+La mise à jour du paramètre `retry_limit` est clairement documentée dans le diff. Les résultats de tests indiquent une réussite partielle des vérifications unitaires, mais aucune validation d'intégration ou de déploiement n'a été réalisée. Ainsi, bien que le code soit modifié de manière factuelle, les étapes de validation et de déploiement restent inachevées.</pre></article>
+        <article class="output-card"><header><div><p class="kicker">With skill</p><h3>Recorded output</h3></div><dl><div><dt>Duration</dt><dd>18,524 ms</dd></div><div><dt>Tokens</dt><dd>773 in · 81 out</dd></div><div><dt>Finish</dt><dd>stop</dd></div></dl></header><pre lang="fr">&gt;
+Le passage de 2 à 4 tentatives a été effectué dans retry_policy.py. Les résultats indiquent 8 tests unitaires réussis, 0 échoué. Les actions suivantes sont encore nécessaires : Intégration : NON EXÉCUTÉE. Déploiement : NON EFFECTUÉ. Vérifications à compléter.</pre></article>
+      </div></section>
+
+      <section class="evidence-observation" aria-labelledby="observation-title"><p class="kicker">Recorded observation</p><h2 id="observation-title">The requested closing sentence was absent in the baseline and present with the skill.</h2><p>The recorded criterion was “ends with requested phrase after Markdown punctuation”. Only the with-skill path received the added sentence, so this is not a fair performance benchmark. It verifies that the edited instruction enters that prompt. This is one development example only. No general conclusion follows from it.</p><p class="muted">Owner exercises are prepared and not completed by the owner.</p></section>
+    </main>
+    <footer><span>Static evidence transcription · synthetic input</span><a href="evaluation.html">Measured evaluation</a><span>Static public edition</span></footer>
+  </body>
+</html>

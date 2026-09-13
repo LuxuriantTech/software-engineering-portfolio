@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0d5b58" />
-    <meta name="description" content="A prepared portfolio presentation for Skill Studio, a local skill authoring workshop." />
+    <meta name="description" content="Skill Studio: an instruction workshop in development, with a static public demo and documented limits." />
     <title>Skill Studio | Local skill workshop</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -16,21 +16,21 @@
     </header>
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <p class="kicker">Local AI-assisted workshop · public demonstration</p>
-        <h1 id="hero-title">Make an instruction<br /><em>worth keeping.</em></h1>
-        <div class="hero-copy"><p>Skill Studio is a locally implemented workshop for generating skill files, editing and versioning them, then comparing real outputs from the same local engine.</p><a class="button" href="#demo">Explore the prepared demo <span aria-hidden="true">↓</span></a></div>
+        <p class="kicker">In development · static public demo</p>
+        <h1 id="hero-title">Write and compare<br /><em>AI instructions.</em></h1>
+        <div class="hero-copy"><p>Skill Studio is a workshop for writing, editing and comparing instructions for AI models. The project is in development. Saved versions, response comparisons and ZIP export belong to the private workshop; the public demo shows a limited part of that workflow.</p><a class="button" href="#demo">Explore the prepared demo <span aria-hidden="true">↓</span></a></div>
         <dl class="hero-facts"><div><dt>Built with</dt><dd>React · FastAPI · SQLite</dd></div><div><dt>Runtime</dt><dd>Native llama.cpp on CPU</dd></div><div><dt>Scope</dt><dd>Three bounded task families</dd></div></dl>
       </section>
 
       <section class="problem section-grid" aria-labelledby="problem-title">
-        <div><p class="kicker">The practical question</p><h2 id="problem-title">Does this instruction help on this task?</h2></div>
-        <div class="body-copy"><p>Reusable instructions often become a folder of untested text. Skill Studio gives one local place to write them, preserve exact versions, and inspect a bounded comparison without turning a prepared result into a performance claim.</p><p>Its cases are deliberately narrow: a cited ACG report, an isolated <code>discounted_total</code> unittest, and a delivery note based on supplied results.</p></div>
+        <div><p class="kicker">The practical question</p><h2 id="problem-title">Do additional instructions help?</h2></div>
+        <div class="body-copy"><p>Tests so far do not show a systematic improvement over using a model without additional instructions. The recorded results and their limits, including failures, are documented.</p><p>Its cases are deliberately narrow: a cited ACG report, an isolated <code>discounted_total</code> unittest, and a delivery note based on supplied results.</p></div>
       </section>
 
       <section class="workflow" id="how-it-works" aria-labelledby="workflow-title">
-        <div class="section-heading"><p class="kicker">Workshop flow</p><h2 id="workflow-title">A small, inspectable loop.</h2></div>
+        <div class="section-heading"><p class="kicker">Workshop flow</p><h2 id="workflow-title">The private workshop workflow.</h2></div>
         <ol>
-          <li><span>01</span><h3>Generate</h3><p>The private local workshop generates a skill for a bounded brief.</p></li>
+          <li><span>01</span><h3>Write</h3><p>Write a draft or try experimental generation. A generated draft can fail the package checks.</p></li>
           <li><span>02</span><h3>Edit</h3><p>Modify its files, review the draft diff, and save immutable versions.</p></li>
           <li><span>03</span><h3>Compare</h3><p>Compare two execution paths from the same local engine with provenance visible.</p></li>
           <li><span>04</span><h3>Export</h3><p>Export or re-import an exact UTF-8 ZIP for the selected version.</p></li>
@@ -40,20 +40,20 @@
       <figure class="recorded-workshop"><img src="assets/local-workshop.png" alt="Scrubbed local Skill Studio workshop on synthetic delivery inputs" loading="lazy" /><figcaption>Local application captured on synthetic delivery inputs. Real inference recorded separately; editing this static demo does not run a model.</figcaption><a href="evidence.html">Read the recorded example</a></figure>
 
       <section class="architecture" aria-labelledby="architecture-title">
-        <div><p class="kicker">Local by design</p><h2 id="architecture-title">Clear boundaries around each step.</h2></div>
+        <div><p class="kicker">Local by design</p><h2 id="architecture-title">Private workshop components.</h2></div>
         <div class="architecture-map" aria-label="Skill Studio architecture">
           <div class="arch-card accent"><span>1</span><strong>Workshop UI</strong><small>React and TypeScript</small></div>
           <div class="arch-arrow" aria-hidden="true">→</div>
           <div class="arch-card"><span>2</span><strong>Local service</strong><small>FastAPI and SQLite</small></div>
           <div class="arch-arrow" aria-hidden="true">→</div>
-          <div class="arch-card"><span>3</span><strong>Native runtime</strong><small>llama.cpp with Qwen 4B on CPU</small></div>
+          <div class="arch-card"><span>3</span><strong>Native runtime</strong><small>Local models through llama.cpp on CPU</small></div>
         </div>
         <p class="architecture-note">The isolated regression case uses a disposable repository and bubblewrap without network access. Imported scripts are retained but are not executed as arbitrary code.</p>
       </section>
 
       <section class="demo-section" id="demo" aria-labelledby="demo-title">
         <div class="section-heading"><div><p class="kicker">Prepared static demonstration</p><h2 id="demo-title">Edit a delivery-note instruction.</h2></div><span class="prepared-badge">SYNTHETIC / PREPARED</span></div>
-        <p class="demo-intro">This browser-only illustration has no model, backend, code execution, upload, or requests beyond its static page assets. The private local workshop performs generation, file editing, versioning, comparison and ZIP export or re-import. This prepared demo only supports a local instruction edit, text diff and Markdown export. The reference template and illustration were drafted with AI assistance; no generation runs in this demo.</p>
+        <p class="demo-intro">This browser-only illustration has no model, backend, code execution, upload, or requests beyond its static page assets. The private local workshop performs file editing, versioning, response comparison and ZIP export or re-import; automatic generation remains experimental. This prepared demo only supports a local instruction edit, text diff and Markdown export. The reference template and illustration were drafted with AI assistance; no generation runs in this demo. Edits are not saved between sessions, and the recorded responses do not recalculate.</p>
         <div class="demo-shell">
           <div class="demo-toolbar"><span><strong>delivery-note</strong> · AI-assisted template</span><div><button id="load-example" class="text-button" type="button">Reload original</button><button id="export-example" class="button small" type="button">Export .md</button></div></div>
           <div class="demo-grid">
@@ -67,10 +67,10 @@
 
       <section class="limits section-grid" id="limits" aria-labelledby="limits-title">
         <div><p class="kicker">What this does not establish</p><h2 id="limits-title">Evidence and remaining limits.</h2></div>
-        <div class="limit-list"><p><strong>No training, paid API, adoption, or production-use claim.</strong></p><p>A frozen historical run was small and confounded by failed Python inference, so it establishes no gain or skill superiority.</p><p>Format validation is separate from usefulness, AI quality, and security. Universal compatibility with Codex, Claude, or Cursor is not claimed.</p><p>AI assisted the project’s construction. The owner’s exercises are prepared and remain unfinished.</p></div>
+        <div class="limit-list"><p><strong>No training, paid API, adoption, or production-use claim.</strong></p><p>A frozen historical run was small and confounded by failed Python inference, so it establishes no gain or skill superiority.</p><p>Format validation is separate from usefulness, AI quality, and security. Universal compatibility with Codex, Claude, or Cursor is not claimed.</p><p>AI assistance contributed to the code, tests and documentation. The project remains in development.</p></div>
       </section>
     </main>
-    <footer><span>Skill Studio 0.1.1 · prepared public demonstration</span><a href="guide.html">Prepared 5-minute guide</a><a href="evaluation.html">Measured evaluation</a><span>Static public edition</span></footer>
+    <footer><span>Skill Studio · in development · public demo</span><a href="guide.html">Prepared 5-minute guide</a><a href="evaluation.html">Measured evaluation</a><span>Static public edition</span></footer>
     <script src="demo.js"></script>
   </body>
 </html>

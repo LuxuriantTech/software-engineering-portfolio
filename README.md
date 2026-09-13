@@ -25,6 +25,7 @@ their limitations visible, so the work can be inspected without access to privat
 | [ToolCall Replay](site/public/projects/toolcall-replay/index.html) | Browser walkthrough of a synthetic trace, including an expected rejection that is explicitly distinguished from an application error | Prepared synthetic demo; original application runs locally |
 | [Entity Resolution Workbench](site/public/projects/entity-resolution-workbench/index.html) | Browser walkthrough of synthetic record comparisons with exposed matching signals and uncertainty | Prepared synthetic demo; original application runs locally |
 | [PostgreSQL Migration Rehearsal](site/public/projects/postgres-migration-rehearsal/index.html) | Guided migration evidence with an explicit local runtime reconstruction limit | Prepared synthetic demo; original application runs locally |
+| [Skill Studio](projects/skill-studio/README.md) | Static instruction editor, text diff, Markdown export and documented synthetic evaluation results; model execution remains private | In development; no systematic benefit from additional instructions demonstrated |
 
 The bundled samples keep their own README, decisions, limitations, source
 and tests. EvidenceDesk and API Contract Guard remain in dedicated repositories.

@@ -175,30 +175,30 @@ export const PROJECTS = [
   number: "10",
   name: "Skill Studio",
   category: "Local developer tooling",
-  status: "Prepared public demo",
+  status: "In development",
   featured: true,
   summary:
-    "A local workshop for generating a skill, editing its files and versions, comparing two recorded execution paths, and exporting an exact package.",
+    "A workshop for writing and editing AI instructions, keeping versions and comparing responses. Model execution remains in the private workshop.",
   example:
-    "Start from a synthetic delivery note, adjust a skill instruction, inspect the draft diff, then compare the two paths before exporting the selected version.",
+    "In the public demo, edit a prepared instruction, inspect the text diff and export Markdown. The displayed response does not rerun.",
   decision:
-    "Keep generation, file edits, version identity, comparison provenance and export as separate visible steps.",
+    "Keep the response without additional instructions as the reference, and record the limits of each comparison.",
   shortLimit:
     "The public demo is static and synthetic. It does not run a model, API or private workshop.",
   intention:
-    "Make a reusable instruction concrete enough to inspect before treating it as a useful tool.",
+    "Check whether additional instructions help on the supplied task.",
   contribution:
-    "Project direction comes from the owner; implementation and checks use AI assistance. Owner exercises remain pending.",
-  contributionLabel: "Project direction and exercises",
+    "AI assistance contributed to implementation, tests and documentation.",
+  contributionLabel: "AI assistance",
   works:
-    "The local workshop can generate a skill, edit and version its files, compare two executions from the same local engine, and export or re-import an exact UTF-8 ZIP.",
+    "The private workshop supports file editing, saved versions, response comparison and ZIP export or re-import. Automatic generation remains experimental and can be rejected.",
   proof:
-    "The prepared public demo keeps its synthetic inputs, static behaviour and recorded-example boundary visible for review.",
+    "The public sources support instruction editing, a text diff and Markdown export, with synthetic examples and recorded results clearly labelled.",
   limit:
     "The historical evaluation remains HONEST_NEGATIVE. A separate nine-case synthetic run scored 6/9 for the base, 5/9 for AI-assisted reference templates and 2/9 for Qwen-generated skills. No general benefit or production use is established.",
   stack: "React · TypeScript · FastAPI · SQLite",
   scope: "Local workshop · Prepared static public demo · Synthetic inputs",
-  url: "/projects/skill-studio/evidence.html",
+  url: "/projects/skill-studio/",
   demoUrl: "/projects/skill-studio/",
   linkLabel: "Open the prepared demo",
   repositorySignals: ["LOCAL WORKSHOP", "STATIC DEMO", "LIMITS VISIBLE"],

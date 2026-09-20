@@ -201,7 +201,7 @@ function Intro({ onOpenDocument }) {
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
           <p>Developer tools &amp; web applications</p>
-          <p>Full-time work · Flexible study schedule<br />OPIT online BSc · September 2026</p>
+          <p>Seeking full-time work · Hours to discuss<br />OPIT online BSc · September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
       </div>
@@ -791,7 +791,7 @@ function Work() {
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
         {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">The public demos use fictional examples. The complete engineering tools run locally.</p>
+      <p className="demo-context page-grid">Start with fictional examples. API Contract Guard also computes reports from contracts you edit in the browser; other demos state their limits.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
         <div className="demo-launchpad-heading"><strong>Explore the engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>

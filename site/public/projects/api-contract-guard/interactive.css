@@ -1,0 +1,6 @@
+.contract-editors{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;margin:1rem 0}
+.contract-editors textarea{box-sizing:border-box;width:100%;min-height:20rem;resize:vertical;font:13px/1.55 ui-monospace,Consolas,monospace;background:#142523;color:#f1f6f5;border:1px solid #78948b;padding:.85rem;tab-size:2;border-radius:3px}
+.contract-editors textarea:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+#contract-output pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:28rem;overflow:auto}
+#contract-output h4{margin-bottom:.4rem}.action:disabled{opacity:.55;cursor:default}
+@media(max-width:700px){.contract-editors{grid-template-columns:minmax(0,1fr)}.contract-editors textarea{min-height:15rem}}

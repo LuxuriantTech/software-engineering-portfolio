@@ -63,7 +63,7 @@ export const PROJECTS = [
     contribution:
       "I defined the supported change categories, expected reports and failure boundaries, then reviewed the implementation and test cases.",
     works:
-      "The local CLI compares its supported OpenAPI subset and produces machine-readable JSON plus a static HTML report.",
+      "The local CLI produces JSON and HTML reports. The browser demo now runs the same comparison rules on editable JSON/YAML inputs, with explicit input and reference limits.",
     proof: "102 local tests cover five supported breaking-change categories.",
     limit:
       "It does not claim complete OpenAPI compatibility. Unsupported shapes, references and oversized inputs fail closed instead of producing a guess.",

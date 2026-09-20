@@ -176,7 +176,7 @@ export const PROJECTS = [
   name: "Skill Studio",
   category: "Local developer tooling",
   status: "In development",
-  featured: true,
+  featured: false,
   summary:
     "A workshop for writing and editing AI instructions, keeping versions and comparing responses. Model execution remains in the private workshop.",
   example:

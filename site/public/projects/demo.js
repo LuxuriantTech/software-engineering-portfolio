@@ -63,17 +63,17 @@ const pmrStages = [
 ];
 function renderPmr() {
   const selected = Number(byId("pmr-stage").value); const output = byId("pmr-output"); output.replaceChildren();
-  output.append(element("p", "demo-status fail", "Prepared preview only: current local engine is BLOCKED by the frozen image identity check."));
+  output.append(element("p", "demo-status fail", "Prepared historical preview: the original engine is BLOCKED by its frozen image identity check. A separate CLI baseline is documented below."));
   output.append(element("p", "quiet", "Changing a stage explains the prepared six-invoice report. It does not start PostgreSQL, Docker, or a migration."));
   const list = element("div", ""); pmrStages.forEach(([name, description], index) => { const step = element("div", "stage-step"); if (index === selected) step.setAttribute("aria-current", "step"); step.append(element("span", "stage-number", String(index + 1)), element("div", "", `${name}: ${description}`)); list.append(step); }); output.append(list);
   const report = element("section", "panel spaced"); report.append(element("h3", "", "Prepared report excerpt")); report.append(element("p", "", selected < 4 ? `Selected stage: ${pmrStages[selected][0]}. The example retains invoice IDs 101 to 106 and records validation before a later switch.` : "Selected stage: Contract. The prepared report separates a completed migration from confirmed cleanup.")); report.append(element("p", "quiet", "Historical Phase B remains closed and is not represented by this control.")); output.append(report);
-  byId("pmr-live").textContent = `Prepared PMR stage ${selected + 1}: ${pmrStages[selected][0]}; engine remains blocked.`;
+  byId("pmr-live").textContent = `Prepared PMR stage ${selected + 1}: ${pmrStages[selected][0]}; historical engine remains blocked; separate CLI baseline documented.`;
 }
 
 const contracts = {
   removed: { title: "GET /orders removed", category: "OPERATION_REMOVED", before: "GET /orders\n200 -> Order[]", after: "No /orders path", report: "Hand-authored illustration: GET /orders is removed." },
   parameter: { title: "Required query parameter added", category: "REQUIRED_PARAMETER_ADDED", before: "GET /invoices\nquery: none", after: "GET /invoices\nquery: region (required)", report: "Hand-authored illustration: required parameter region is added." },
-  response: { title: "Required response property removed", category: "REQUIRED_RESPONSE_PROPERTY_REMOVED", before: "GET /profile\n200: { id, email }", after: "GET /profile\n200: { id }", report: "Hand-authored illustration: required response property email is removed." }
+  response: { title: "Required response property removed", category: "RESPONSE_REQUIRED_PROPERTY_REMOVED", before: "GET /profile\n200: { id, email }", after: "GET /profile\n200: { id }", report: "Hand-authored illustration: required response property email is removed." }
 };
 function renderContract() {
   const item = contracts[byId("contract-select").value]; const output = byId("contract-output"); output.replaceChildren(); output.append(element("p", "demo-status fail", `${item.category}: ${item.report}`));

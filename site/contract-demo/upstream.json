@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/LuxuriantTech/api-contract-guard",
+  "commit": "6ee1e569bbe751748a96e52aa0eee86864f20d69",
+  "files": {
+    "context.ts": "cca5de5d7929531ec2db1dae15b16aa4b81d03e053a1959bf29642d974e511d7",
+    "documents.ts": "d0fa687ef986ad0cf6be85ce4a899ccaa49e860757fa2bd34ba561eb5d04541f",
+    "engine.ts": "1f045079449efdecd9e14af16b65e949b0920f848ff88b34d7bd4f334abcc948",
+    "files.ts": "84efa0a00659a0edc704d87a8c45fa5f528fff2909598eff19e7f02bd44163ba",
+    "model.ts": "5bb845dbbc5fdcf03acc266a6fded528510d89413c784ebeaaf4410420a18edf",
+    "report.ts": "2bf89b08ac6995111633758eb0da5dc23da3bf6a0e705fbaab88268d32a996de",
+    "resolver.ts": "7242591f387c2d2323faa525454c8c911b0654557a61ce934966e77bc0e35d8b"
+  }
+}

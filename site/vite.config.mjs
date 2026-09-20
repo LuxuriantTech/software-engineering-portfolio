@@ -15,5 +15,15 @@ export default defineConfig({
       clientFiles: ["./src/main.jsx"],
     },
   },
-  plugins: [react()],
+  plugins: [react(), {
+    name: 'contract-demo-index',
+    configureServer(server) {
+      server.middlewares.use((request, _response, next) => {
+        if (request.url?.split('?')[0] === '/projects/api-contract-guard/') {
+          request.url = request.url.replace('/api-contract-guard/', '/api-contract-guard/index.html');
+        }
+        next();
+      });
+    },
+  }],
 });

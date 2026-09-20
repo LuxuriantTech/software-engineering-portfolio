@@ -201,7 +201,7 @@ function Intro({ onOpenDocument }) {
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
           <p>Developer tools &amp; web applications</p>
-          <p>Full-time work · Flexible study schedule<br />OPIT online BSc · September 2026</p>
+          <p>Seeking full-time work · Hours to discuss<br />OPIT online BSc · September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
       </div>
@@ -785,13 +785,13 @@ function Work() {
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
-        <h2 id="work-title">Four projects. Four concrete problems.</h2>
+        <h2 id="work-title">Three projects. Three concrete problems.</h2>
         <p>Personal projects built with AI assistance. Start with an example, then explore the choices and the code.</p>
       </div>
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
         {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">The public demos use fictional examples. The complete engineering tools run locally.</p>
+      <p className="demo-context page-grid">Start with fictional examples. API Contract Guard also computes reports from contracts you edit in the browser; other demos state their limits.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
         <div className="demo-launchpad-heading"><strong>Explore the engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
@@ -825,7 +825,7 @@ function Method() {
           <p className="section-label">How I work with AI</p>
           <h2 id="method-title">Building with AI. Learning as I go.</h2>
           <p>
-            I understand code, but I do not yet write it independently.
+            I use AI for implementation and am developing programming independence.
             I use coding assistants to build my projects, then run the result, check its behaviour
             and work through problems.
           </p>
@@ -900,8 +900,8 @@ function About() {
           </p>
           <p>
             I am admitted to OPIT’s online BSc (Hons) Computer Science, starting on 21 September 2026. I plan to study computer science online alongside work. I speak
-            French and Albanian, with self-assessed English at B2 level. I&apos;m based in Brussels
-            and looking for remote work from Belgium or an employer-funded move. My study schedule is flexible, and I am available for full-time work. I can discuss the exact working hours with the team.
+            French and Albanian, with English certified at EF SET C2 overall (77/100, 18 September 2026). I&apos;m based in Brussels
+            and looking for remote work from Belgium or an employer-funded move. I plan to combine my studies with full-time work and can discuss the exact working hours with the team.
           </p>
         </div>
       </div>

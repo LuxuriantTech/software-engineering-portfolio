@@ -1,108 +1,107 @@
 {
   "cv": {
-    "role": "Junior software developer | AI-assisted development",
+    "role": "Junior software developer | Python & TypeScript",
     "location": "Brussels, Belgium",
-    "profile": "I build developer tools and web projects with AI assistance and am looking for my first software role with mentoring and code review. I understand code, but I do not yet write it independently. I use Claude, Cursor, ChatGPT and Codex to work through scoped tasks, review the result and check its behaviour. Full-time availability; remote from Belgium or employer-funded relocation.",
+    "profile": "My personal projects focus on API checks, document review and web applications. I use AI coding assistants for implementation, define expected behaviour and review the results. I am looking for my first development role with code review and practical feedback.",
     "projects": [
       {
         "name": "API Contract Guard",
-        "meta": "TypeScript · Node.js · OpenAPI · 102 local tests",
-        "detail": "Help developers identify API changes that could break an existing integration. I defined the supported checks and expected reports, then reviewed the implementation and tests with AI assistance. The local tool covers five change categories with 102 recorded tests; other OpenAPI features are outside scope."
-      },
-      {
-        "name": "Synthévia",
-        "meta": "React · TypeScript · FastAPI · PostgreSQL · Public demo",
-        "detail": "A web workspace for market information, risk tools and learning. I define the product needs and coordinate the AI-assisted implementation and reviews. Visitors can explore a demo with fictional data. The separate local code sample uses SQLite; no trading profitability is established."
+        "meta": "TypeScript, Node.js, OpenAPI",
+        "detail": "Local CLI comparing five categories of API contract changes, with JSON/HTML reports and explicit rejection of unsupported inputs. Defined the supported checks and expected reports; reviewed the assisted implementation and test cases. Published validation records 102 local tests."
       },
       {
         "name": "EvidenceDesk",
-        "meta": "React · FastAPI · PostgreSQL · Redis · Synthetic data",
-        "detail": "Help a reviewer check an answer against its source document. I framed the citation and abstention workflow and iterated with coding assistants. The evaluation retrieved a relevant passage in 25/25 answerable examples, but only 9/25 answers were correct (36%). The failed evaluation remains documented."
+        "meta": "Python, FastAPI, React, PostgreSQL, Redis",
+        "detail": "Local document-review prototype with background processing, source citations and access controls. Framed the citation and abstention workflow and iterated with coding assistants. The published evaluation fell short; limitations remain documented."
+      },
+      {
+        "name": "Synthévia",
+        "meta": "React, TypeScript, FastAPI",
+        "detail": "Web workspace for market information and learning, with a public demo using fictional data. Define product needs and coordinate implementation and reviews. The separate public code sample connects React, FastAPI and SQLite."
       }
     ],
     "experience": [
       {
-        "name": "Volunteer tutor",
-        "meta": "Brussels · 2020-present",
-        "detail": "Mathematics, science and business. I break unfamiliar topics into clear steps and adapt explanations to the learner."
+        "name": "Delhaize, Brussels",
+        "meta": "Student employee | 2020 - 2022",
+        "detail": "Coordinated daily tasks with colleagues and helped organise the team when the manager was absent."
       },
       {
-        "name": "Student retail assistant · Delhaize",
-        "meta": "Brussels · 2020-2022",
-        "detail": "Worked reliably with customers, procedures and a team during busy shifts while studying."
+        "name": "Volunteer tutor",
+        "meta": "2020 - present",
+        "detail": "Explain mathematics, science and business topics in clear steps, adapting to the learner."
       }
     ],
     "education": [
       {
-        "name": "OPIT · BSc (Hons) Computer Science, online",
-        "detail": "Admitted for September 2026; classes start on 21 September. Online studies planned alongside full-time work, with a flexible study schedule and working hours to agree with the team."
+        "name": "OPIT | BSc (Hons) Computer Science, online",
+        "detail": "Admitted; classes start 21 September 2026. Studies planned alongside work."
       },
       {
-        "name": "ICHEC Brussels · Business Management",
-        "detail": "Completed part of first year in 2025-2026 before changing direction toward software."
+        "name": "Institut Technique René Cartigny | CESS | June 2025",
+        "detail": "Completed Belgian upper-secondary education, polyvalent mechanics."
       }
     ],
-    "certification": "Google AI Professional Certificate · Coursera · May 2026",
-    "languages": "French (main language) · Albanian (native) · English B2 (self-assessed)",
-    "tools": "AI assistants: Claude (around 18 months), Cursor, ChatGPT, Codex. Used with AI assistance: Python, TypeScript/JavaScript, SQL, React, FastAPI, PostgreSQL, Git, Docker, Linux, pytest, Playwright, GitHub Actions. Introductory n8n."
+    "certification": "HackerRank: SQL Advanced and Python Basic, September 2026.",
+    "languages": "French: main language | Albanian: native | English: EF SET 77/100, C2 overall (18 September 2026).",
+    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, REST APIs, PostgreSQL, Git, Docker, pytest, Playwright and GitHub Actions. Programming independence is still developing."
   },
   "letter": {
     "subject": "Open application | Junior software developer",
     "salutation": "Dear Hiring Team,",
     "paragraphs": [
-      "I am looking for my first software development role, working on developer tools or web applications. My route started in business studies, then shifted toward software through personal projects. I would like to join a team where I can contribute to well-scoped tasks and learn from experienced developers.",
-      "I understand code, but I do not yet write it independently. I use Claude, Cursor, ChatGPT and Codex to work through implementation, review and testing. I organise work into focused tasks and follow up on the result. I have used Claude for around 18 months and am continuing to develop my coding fundamentals.",
-      "API Contract Guard helps identify API changes that could break an integration. Synthévia brings market information and learning into a web workspace with a public demo. EvidenceDesk links document answers to source passages; its answer evaluation did not pass, and that result remains documented. These personal projects give us concrete examples to discuss, including the assistance used and their current limitations.",
-      "I am available for full-time work, remotely from Belgium or with employer-funded relocation. I have been admitted to OPIT's online BSc (Hons) Computer Science, starting on 21 September 2026. My study schedule is flexible, and I can discuss the exact working hours with your team.",
-      "I would welcome the chance to walk you through a project and discuss a suitable first task, with mentoring and code review. Thank you for considering my application."
+      "I am applying for a junior software development role. My personal projects focus on API checks, document review and web applications. I am looking for a team where I can work on scoped development tasks with code review and practical feedback.",
+      "API Contract Guard compares a defined subset of OpenAPI contracts. I defined its supported checks and expected reports, then reviewed the AI-assisted implementation and test cases. These personal projects give us concrete examples to discuss, including the assistance used and the limits of each result.",
+      "I use coding assistants for implementation and continue to develop programming independence. I would be glad to walk through a project, explain its decisions and work through a suitable technical exercise. My earlier retail work and volunteer tutoring also gave me experience coordinating tasks and explaining unfamiliar topics.",
+      "I am based in Brussels and looking for full-time remote work from Belgium. I have been admitted to OPIT’s online BSc (Hons) Computer Science, starting on 21 September 2026, and plan to study alongside work. My English is certified at EF SET C2 overall (77/100). I can discuss the working hours and support needed for a first role."
     ],
     "closing": "Thank you for your time,"
   },
   "cv_fr": {
-    "role": "Développeur logiciel junior | Développement assisté par IA",
+    "role": "Développeur logiciel junior | Python & TypeScript",
     "location": "Bruxelles, Belgique",
-    "profile": "Je réalise des outils et des projets web avec l'aide de l'IA et recherche un premier poste avec accompagnement et revue de code. Je comprends le code, mais je ne sais pas encore l'écrire seul. J'utilise Claude, Cursor, ChatGPT et Codex pour avancer sur des tâches précises, examiner le résultat et vérifier son comportement. Disponible à temps plein, à distance depuis la Belgique ou avec déménagement financé par l'employeur.",
+    "profile": "Mes projets personnels portent sur les contrôles d’API, la revue de documents et les applications web. Je m’appuie sur des assistants IA pour l’implémentation, définis les comportements attendus et examine les résultats. Je cherche un premier poste en développement avec revue de code et retours réguliers.",
     "projects": [
       {
         "name": "API Contract Guard",
-        "meta": "TypeScript · Node.js · OpenAPI · 102 tests locaux",
-        "detail": "Repérer les changements d'API qui peuvent casser une intégration existante. J'ai défini les contrôles et les rapports attendus, puis examiné l'implémentation et les tests avec l'IA. L'outil local couvre cinq catégories de changements ; les autres fonctionnalités OpenAPI restent hors périmètre."
-      },
-      {
-        "name": "Synthévia",
-        "meta": "React · TypeScript · FastAPI · PostgreSQL · Démo publique",
-        "detail": "Un espace web réunissant informations de marché, outils de risque et apprentissage. Je définis les besoins du produit et coordonne l'implémentation et les revues assistées par IA. La démo utilise des données fictives. L'extrait de code local utilise SQLite ; aucune rentabilité de trading n'est démontrée."
+        "meta": "TypeScript, Node.js, OpenAPI",
+        "detail": "Outil CLI local comparant cinq catégories de changements de contrats API, avec rapports JSON/HTML et rejet des entrées non prises en charge. Définition des contrôles et rapports attendus ; revue de l’implémentation assistée et des tests. La validation publiée recense 102 tests locaux."
       },
       {
         "name": "EvidenceDesk",
-        "meta": "React · FastAPI · PostgreSQL · Redis · Données fictives",
-        "detail": "Vérifier une réponse à partir du document source. J'ai cadré le parcours de citation et d'abstention, puis travaillé avec les assistants de code. L'évaluation retrouve un passage pertinent dans 25/25 exemples, mais seulement 9/25 réponses sont correctes (36 %). Cet échec reste documenté."
+        "meta": "Python, FastAPI, React, PostgreSQL, Redis",
+        "detail": "Prototype local de revue de documents : traitement en arrière-plan, citations des sources et contrôle des accès. Définition du parcours de citation et d’abstention, puis itérations avec les assistants. L’évaluation n’a pas atteint ses objectifs ; les limites restent documentées."
+      },
+      {
+        "name": "Synthévia",
+        "meta": "React, TypeScript, FastAPI",
+        "detail": "Espace web d’information de marché et d’apprentissage, avec une démo publique sur données fictives. Définition des besoins et coordination de l’implémentation et des revues. L’extrait de code public distinct relie React, FastAPI et SQLite."
       }
     ],
     "experience": [
       {
-        "name": "Tutorat bénévole",
-        "meta": "Bruxelles · Depuis 2020",
-        "detail": "Mathématiques, sciences et gestion. Décomposer les sujets en étapes claires et adapter les explications à la personne."
+        "name": "Delhaize, Bruxelles",
+        "meta": "Employé étudiant | 2020 - 2022",
+        "detail": "Coordination des tâches quotidiennes avec les collègues et aide à l’organisation de l’équipe en l’absence du responsable."
       },
       {
-        "name": "Employé étudiant · Delhaize",
-        "meta": "Bruxelles · 2020-2022",
-        "detail": "Accueil des clients, respect des procédures et travail en équipe pendant les études."
+        "name": "Tutorat bénévole",
+        "meta": "2020 - aujourd’hui",
+        "detail": "Explication progressive de notions de mathématiques, sciences et gestion, adaptée à chaque élève."
       }
     ],
     "education": [
       {
-        "name": "OPIT · BSc (Hons) Computer Science, en ligne",
-        "detail": "Admission pour septembre 2026 ; début des cours le 21 septembre. Études prévues en parallèle d'un emploi à temps plein, avec une organisation flexible et des horaires à convenir avec l'équipe."
+        "name": "OPIT | BSc (Hons) Computer Science, en ligne",
+        "detail": "Admis ; début des cours le 21 septembre 2026. Études prévues en parallèle du travail."
       },
       {
-        "name": "ICHEC Bruxelles · Gestion des entreprises",
-        "detail": "Une partie de la première année suivie en 2025-2026 avant une réorientation vers le développement logiciel."
+        "name": "Institut Technique René Cartigny | CESS | Juin 2025",
+        "detail": "Enseignement secondaire supérieur terminé, option mécanicien polyvalent."
       }
     ],
-    "certification": "Google AI Professional Certificate · Coursera · Mai 2026",
-    "languages": "Français (langue principale) · Albanais (langue maternelle) · Anglais B2 (autoévalué)",
-    "tools": "Assistants IA : Claude (environ 18 mois), Cursor, ChatGPT, Codex. Outils utilisés avec l'IA : Python, TypeScript/JavaScript, SQL, React, FastAPI, PostgreSQL, Git, Docker, Linux, pytest, Playwright, GitHub Actions. Notions de n8n."
+    "certification": "HackerRank : SQL Advanced et Python Basic, septembre 2026.",
+    "languages": "Français : langue principale | Albanais : langue maternelle | Anglais : EF SET 77/100, C2 global (18 septembre 2026).",
+    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, API REST, PostgreSQL, Git, Docker, pytest, Playwright et GitHub Actions. Autonomie en programmation en cours d’acquisition."
   }
 }

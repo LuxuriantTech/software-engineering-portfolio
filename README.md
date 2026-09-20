@@ -35,7 +35,7 @@ application runtime or private project material.
 ## Project Atlas navigator
 
 The [Project Atlas site](site/README.md) adds a single-page interface for
-moving between the six summaries. It uses the same bounded claims as these
+moving between the project summaries. It uses the same bounded claims as these
 README files and links back to the reviewable source. It contains no form,
 analytics, private API call or runtime secret.
 

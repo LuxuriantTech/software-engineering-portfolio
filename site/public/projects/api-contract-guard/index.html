@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>API Contract Guard</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="./interactive.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body class="guard" data-demo="contract">
@@ -24,7 +25,7 @@
 </header>
 <main class="wrap" id="main" tabindex="-1">
 <p class="eyebrow">API Contract Guard · Developer tooling</p>
-<p class="quiet demo-disclosure">Interactive demo · Fictional data · Full tool runs locally</p>
+<p class="quiet demo-disclosure">Computed comparison · Editable examples · Runs in your browser</p>
 <h1>Would this API change break a client?</h1>
 <p class="lede">Compare two versions of an API contract and inspect the change that could break an existing integration. Try making a region parameter required.</p>
 <div class="actions" aria-label="API Contract Guard actions">
@@ -33,19 +34,14 @@
 <a class="action" href="mailto:mehajardian@gmail.com?subject=API%20Contract%20Guard">Contact me</a>
 </div>
 <section class="demo" id="interactive-demo" aria-labelledby="contract-demo-title">
-<div class="demo-head"><div><p class="eyebrow">Interactive prepared illustration</p><h2 id="contract-demo-title">Compare a supported contract change</h2></div><button class="action" type="button" id="contract-reset">Reset demo</button></div>
-<p>These compact OpenAPI-like snippets are fictional. The browser swaps prepared reports; it does not execute the TypeScript comparator.</p>
-<div class="demo-controls"><label>Contract pair<select id="contract-select" data-initial="parameter"><option value="parameter">Required region parameter added</option><option value="removed">Removed GET /orders</option><option value="response">Required response email removed</option></select></label></div>
-<p id="contract-live" class="sr-status" aria-live="polite"></p><div id="contract-output" class="demo-output" aria-live="polite"></div>
-</section>
-<section class="panel finding">
-<p class="eyebrow">Prepared synthetic illustration</p>
-<h2>
-<code>OPERATION_REMOVED</code>
-</h2>
-<p>
-<strong>GET /orders</strong> is removed in the local synthetic comparison. The label <code>synthetic-shop-web</code> is a synthetic consumer annotation, not an observed client or usage record.</p>
-
+<div class="demo-head"><div><p class="eyebrow">Run the real comparison rules</p><h2 id="contract-demo-title">Compare your two API contracts</h2></div><button class="action" type="button" id="contract-reset">Reset example</button></div>
+<p>Edit the examples or paste two OpenAPI JSON/YAML documents. The TypeScript engine computes the report locally in a browser worker. Your input is not uploaded or stored.</p>
+<p class="quiet">Two documents, up to 200 KB each. Internal references only; no file or network references, consumer manifests or disk operations. Five-second time limit. Use non-confidential samples.</p>
+<div class="demo-controls"><label for="contract-select">Starting example</label><select id="contract-select"><option value="parameter">Required region parameter added</option><option value="removed">GET /orders removed</option><option value="response">Required response email removed</option><option value="request">Required request property added</option><option value="enum">Request enum value removed</option><option value="same">Identical contracts</option></select></div>
+<div class="contract-editors"><label for="contract-baseline">Baseline contract<textarea id="contract-baseline" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="200000"></textarea></label><label for="contract-candidate">Candidate contract<textarea id="contract-candidate" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="200000"></textarea></label></div>
+<div class="actions"><button class="action primary" type="button" id="contract-run">Compare contracts</button><button class="action" type="button" id="contract-download" disabled>Download JSON report</button></div>
+<p id="contract-live" role="status" aria-live="polite"></p><div id="contract-output" class="demo-output"></div>
+<noscript><p>JavaScript is needed to run the comparison. The source and local CLI remain available on GitHub.</p></noscript>
 </section>
 <hr class="rule">
 <div class="grid two">
@@ -55,9 +51,9 @@
 <li>
 <strong>Exit 0:</strong> no supported breaking change found.</li>
 <li>
-<strong>Exit 2:</strong> the local CLI uses this code for a supported breaking category. This browser illustration does not execute the CLI.</li>
+<strong>Exit 2:</strong> a supported breaking change was detected. The browser uses the same comparison rules with memory-only input/output adapters.</li>
 <li>
-<strong>Exit 3:</strong> invalid input or unsupported capability. No report artefact is produced.</li>
+<strong>Exit 3:</strong> invalid input or unsupported capability. No report is produced.</li>
 </ul>
 </section>
 <section class="panel">
@@ -66,7 +62,8 @@
 </section>
 </div>
 <details>
-<summary>Local quick start</summary>
+<summary>Source and local quick start</summary>
+<p>Comparison engine pinned to <a href="https://github.com/LuxuriantTech/api-contract-guard/tree/6ee1e569bbe751748a96e52aa0eee86864f20d69">6ee1e569</a>. Browser adapters replace file access and hashing, not the comparison rules. <a href="https://github.com/LuxuriantTech/software-engineering-portfolio/tree/main/site/contract-demo">Adapter source and validation</a>.</p>
 <pre class="command">
 <code>npm ci
 npm run demo</code>
@@ -79,6 +76,6 @@ npm run demo</code>
 <footer class="site-foot">
 <p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
 </footer>
-<script src="../demo.js"></script>
+<script type="module" src="./interactive.js"></script>
 </body>
 </html>

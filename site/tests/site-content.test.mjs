@@ -22,7 +22,7 @@ import {
 test("publishes ten bounded project stories", () => {
   assert.equal(PROJECTS.length, 10);
   assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 10);
-  assert.equal(PROJECTS.filter(({ featured }) => featured).length, 4);
+  assert.equal(PROJECTS.filter(({ featured }) => featured).length, 3);
 
   for (const project of PROJECTS) {
     assert.match(project.number, /^(0[1-9]|10)$/);
@@ -125,7 +125,7 @@ test("describes AI-assisted work without pretending manual authorship", async ()
   ]);
   assert.match(appSource, /Building with AI\. Learning as I go\./);
   assert.match(appSource, /use coding assistants to build my projects/i);
-  assert.match(appSource, /do not yet write it independently/i);
+  assert.match(appSource, /use AI for implementation and am developing programming independence/i);
   assert.match(appSource, /check its behaviour/i);
 });
 
@@ -146,7 +146,8 @@ test("avoids unconfirmed education and inflated claims", async () => {
 
   for (const pattern of rejectedLanguage) assert.doesNotMatch(publicCopy, pattern);
   assert.match(appSource, /plan to study computer science online/i);
-  assert.match(appSource, /self-assessed English at B2 level/i);
+  assert.match(appSource, /EF SET C2 overall \(77\/100, 18 September 2026\)/i);
+  assert.doesNotMatch(appSource, /self-assessed English at B2 level/i);
 });
 
 
@@ -291,11 +292,15 @@ test("publishes three local, public-safe career documents", async () => {
     assert.doesNotMatch(publicCopy, pattern);
   }
 
-  assert.match(CV_CONTENT.profile, /Claude, Cursor, ChatGPT and Codex/i);
-  assert.match(CV_CONTENT.profile, /do not yet write it independently/i);
+  assert.match(CV_CONTENT.profile, /AI coding assistants for implementation/i);
+  assert.match(CV_CONTENT.tools, /Programming independence is still developing/i);
   assert.match(JSON.stringify(CV_CONTENT.education[0]), /OPIT/);
   assert.match(JSON.stringify(CV_CONTENT.education[0]), /September 2026/);
-  assert.match(CV_CONTENT.languages, /self-assessed/i);
+  assert.match(JSON.stringify(CV_CONTENT.education), /CESS/);
+  assert.match(JSON.stringify(CV_FR_CONTENT.education), /CESS/);
+  assert.match(CV_CONTENT.languages, /EF SET 77\/100, C2 overall/);
+  assert.match(CV_FR_CONTENT.languages, /EF SET 77\/100, C2 global/);
+  assert.doesNotMatch(CV_CONTENT.languages + CV_FR_CONTENT.languages, /B2/);
   assert.match(LETTER_CONTENT.paragraphs.join(" "), /These personal projects/i);
 
   for (const document of DOCUMENTS) {

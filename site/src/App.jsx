@@ -25,6 +25,7 @@ import {
 import {
   browserPrefersReducedMotion,
 } from "./sessionIntroState.js";
+import { PortfolioIntro, usePortfolioIntro } from "./PortfolioIntro.jsx";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured).sort((a, b) => a.number.localeCompare(b.number));
 const additionalProjects = PROJECTS.filter((project) => !project.featured && project.id !== "synthevia");
@@ -942,6 +943,7 @@ function PortfolioExperience() {
   const [activeDocumentId, setActiveDocumentId] = useState(null);
   const [documentOrigin, setDocumentOrigin] = useState(null);
   const lastDocumentTriggerRef = useRef(null);
+  const intro = usePortfolioIntro();
 
   usePageMotion(true);
   useControlPressFeedback();
@@ -959,7 +961,8 @@ function PortfolioExperience() {
 
   return (
     <div className="site-shell" id="top">
-      <div className="site-content site-content--ready">
+      <PortfolioIntro phase={intro.phase} introRef={intro.introRef} onSkip={intro.skip} />
+      <div className="site-content site-content--ready" inert={intro.phase !== "done"}>
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader />
         <main id="main-content" tabIndex="-1">

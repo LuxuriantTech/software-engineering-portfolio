@@ -2,6 +2,8 @@
 
 Static React portfolio for a junior software candidate working with AI coding assistants. It retains the existing Archivo typography, paper surfaces, orange and cobalt accents, keyboard navigation and restrained motion.
 
+The home page opens with a short, skippable motion sequence on a first visit in each tab session. It waits briefly for local fonts, has a firm timeout, and is omitted for reduced-motion preferences and direct section links. The underlying portfolio and its no-JavaScript links remain available.
+
 ## Reading order
 
 API Contract Guard, Synthévia and EvidenceDesk are the three primary examples. Each explains the user problem, an observable example, a design choice, the contribution with AI assistance and the current limitation. Technical validation details remain accessible in native disclosure controls.

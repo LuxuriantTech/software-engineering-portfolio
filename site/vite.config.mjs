@@ -16,11 +16,12 @@ export default defineConfig({
     },
   },
   plugins: [react(), {
-    name: 'contract-demo-index',
+    name: 'project-demo-indexes',
     configureServer(server) {
       server.middlewares.use((request, _response, next) => {
-        if (request.url?.split('?')[0] === '/projects/api-contract-guard/') {
-          request.url = request.url.replace('/api-contract-guard/', '/api-contract-guard/index.html');
+        const path = request.url?.split('?')[0];
+        if (path === '/projects/' || path === '/projects/api-contract-guard/') {
+          request.url = request.url.replace(path, `${path}index.html`);
         }
         next();
       });

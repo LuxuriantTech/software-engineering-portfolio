@@ -99,12 +99,13 @@ test("links the three CPL walkthroughs directly from the portfolio", () => {
   }
 });
 
-test("keeps walkthroughs interactive without promoting the rejected reel", async () => {
+test("distinguishes prepared walkthroughs from the live API demo without promoting the rejected reel", async () => {
   const index = await readFile(new URL("../public/projects/index.html", import.meta.url), "utf8");
   const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
   const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");
 
-  assert.match(index, /Interactive synthetic walkthroughs/);
+  assert.match(index, /Prepared walkthroughs and a live API comparison/);
+  assert.match(index, /API Contract Guard also computes reports from contracts you edit in the browser/);
   assert.match(demo, /Hand-authored synthetic illustration/);
   assert.doesNotMatch(index, /<video|portfolio-reel\.mp4/);
   assert.match(css, /\.reel\s+video/);

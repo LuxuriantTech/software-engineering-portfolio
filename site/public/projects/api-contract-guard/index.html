@@ -62,13 +62,14 @@
 </section>
 </div>
 <details>
-<summary>Source and local quick start</summary>
+<summary>Source and local quick starts</summary>
 <p>Comparison engine pinned to <a href="https://github.com/LuxuriantTech/api-contract-guard/tree/6ee1e569bbe751748a96e52aa0eee86864f20d69">6ee1e569</a>. Browser adapters replace file access and hashing, not the comparison rules. <a href="https://github.com/LuxuriantTech/software-engineering-portfolio/tree/main/site/contract-demo">Adapter source and validation</a>.</p>
+<p>To run this browser demo, clone the portfolio repository. From its <code>site/</code> directory, run:</p>
 <pre class="command">
 <code>npm ci
-npm run demo</code>
+npm run dev</code>
 </pre>
-<p>Use Node 24.15.0 and npm 11.18.0 from the prepared checkout. The demo compares local synthetic fixtures and makes no network, traffic, customer-data, or hosted-service claim.</p>
+<p>Use Node 24 and npm 11. The separate <a href="https://github.com/LuxuriantTech/api-contract-guard/tree/6ee1e569bbe751748a96e52aa0eee86864f20d69">API Contract Guard CLI repository</a> has its own <code>npm run demo</code> command for local synthetic fixtures; that command is not part of this portfolio site. The browser comparison processes pasted inputs locally. Neither run demonstrates production traffic, customer data or a hosted service.</p>
 </details>
 <section class="notice">
 <strong>Limit</strong>A change outside the supported document subset is deliberately an input/unsupported outcome, not evidence that an API is compatible. The result applies only to the compared local documents.</section>

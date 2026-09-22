@@ -6,7 +6,7 @@ Static React portfolio for a junior software candidate working with AI coding as
 
 API Contract Guard, Synthévia and EvidenceDesk are the three primary examples. Each explains the user problem, an observable example, a design choice, the contribution with AI assistance and the current limitation. Technical validation details remain accessible in native disclosure controls.
 
-All ten projects remain accessible. The five engineering demos use prepared fictional examples in the browser; full applications run locally with setup limits documented per project. Synthévia's public product demo is separate from its smaller React/FastAPI/SQLite code sample.
+All ten projects remain accessible. Four engineering walkthroughs use prepared fictional examples. API Contract Guard starts with fictional examples but computes reports from editable contracts in the browser. The full applications run locally with setup limits documented per project. Synthévia's public product demo is separate from its smaller React/FastAPI/SQLite code sample.
 
 EvidenceDesk's failed answer evaluation remains visible. Historical metrics have not been changed or rerun. PMR's separate CLI baseline does not resolve its historical browser reproducibility limits. MyTradingBot has no demonstrated profitability.
 

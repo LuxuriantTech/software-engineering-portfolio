@@ -25,7 +25,8 @@ import {
 import {
   browserPrefersReducedMotion,
 } from "./sessionIntroState.js";
-import { PortfolioIntro, usePortfolioIntro } from "./PortfolioIntro.jsx";
+import { PortfolioIntro } from "./PortfolioIntro.jsx";
+import { usePortfolioIntro } from "./usePortfolioIntro.js";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured).sort((a, b) => a.number.localeCompare(b.number));
 const additionalProjects = PROJECTS.filter((project) => !project.featured && project.id !== "synthevia");

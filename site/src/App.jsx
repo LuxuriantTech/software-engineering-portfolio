@@ -767,7 +767,7 @@ function ProjectCase({ project }) {
             <div className="project-limit"><dt>Current limit</dt><dd>{project.shortLimit}</dd></div>
           </dl>
           <div className="project-links">
-            <a className="primary-action" href={project.demoUrl}>Try {project.name} <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <a className="primary-action" href={project.demoUrl} data-project-transition={project.name}>Try {project.name} <ArrowRightIcon size={18} aria-hidden="true" /></a>
             <a href={project.url} target={project.id === "skill-studio" ? undefined : "_blank"} rel="noopener noreferrer">{project.id === "skill-studio" ? "Recorded example" : project.id === "synthevia" ? "Local code sample" : "View code"} {project.id === "skill-studio" ? <ArrowRightIcon size={18} aria-hidden="true" /> : <MarkGithubIcon size={18} aria-hidden="true" />}</a>
             {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Project story <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}
           </div>

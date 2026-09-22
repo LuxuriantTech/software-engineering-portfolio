@@ -133,6 +133,67 @@
 @media(max-width:900px){.project-body{grid-template-columns:1fr}.selected-project-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.selected-project-nav a{font-size:.83rem}}
 @media(max-width:680px){.selected-project-nav{grid-template-columns:1fr;gap:0;padding-block:8px}.selected-project-nav a{min-height:48px}.project-preview figcaption{flex-wrap:wrap}.document-viewer-toolbar .document-tabs{flex-wrap:wrap}.availability p:nth-of-type(3){display:block}.availability{align-items:flex-start;gap:8px}}
 
+/* Project links preview the direction of the page transition. */
+.project-links .primary-action,
+.demo-launchpad-links a,
+.contract-workflow,
+.project-preview > a {
+  transition: transform 220ms cubic-bezier(.16, 1, .3, 1), box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease;
+}
+
+.project-links .primary-action:hover,
+.project-links .primary-action:focus-visible,
+.demo-launchpad-links a:hover,
+.demo-launchpad-links a:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 0 #1515121c;
+}
+
+.project-links .primary-action svg,
+.demo-launchpad-links a svg,
+.selected-project-nav a svg,
+.contract-compare svg {
+  transition: transform 240ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.project-links .primary-action:hover svg,
+.project-links .primary-action:focus-visible svg,
+.demo-launchpad-links a:hover svg,
+.demo-launchpad-links a:focus-visible svg,
+.selected-project-nav a:hover svg,
+.selected-project-nav a:focus-visible svg,
+.contract-workflow:hover .contract-compare svg,
+.contract-workflow:focus-visible .contract-compare svg { transform: translateX(5px); }
+
+.contract-workflow:hover,
+.contract-workflow:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 0 #15151222; }
+.project-preview > a { overflow: hidden; }
+.project-preview > a:hover,
+.project-preview > a:focus-visible { background-color: #dbd6c9; }
+.project-preview img { transition: transform 350ms cubic-bezier(.16, 1, .3, 1); }
+.project-preview > a:hover img,
+.project-preview > a:focus-visible img { transform: scale(1.025); }
+
+@media (prefers-reduced-motion: reduce) {
+  .project-links .primary-action,
+  .demo-launchpad-links a,
+  .contract-workflow,
+  .project-preview > a,
+  .project-preview img,
+  .project-links .primary-action svg,
+  .demo-launchpad-links a svg,
+  .selected-project-nav a svg,
+  .contract-compare svg { transition: none; }
+  .project-links .primary-action:hover,
+  .project-links .primary-action:focus-visible,
+  .demo-launchpad-links a:hover,
+  .demo-launchpad-links a:focus-visible,
+  .contract-workflow:hover,
+  .contract-workflow:focus-visible,
+  .project-preview > a:hover img,
+  .project-preview > a:focus-visible img { transform: none; }
+}
+
 .method-layout>.contribution-boundaries{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-block:0}.method-section .contribution-boundaries dd{color:#d5d1c7}.method-layout>.method-current{grid-column:1/-1;margin-top:0;max-width:none}.method-layout>.method-current p{max-width:85ch}
 .documents-copy>.section-label,.documents-lead{color:#fff}
 @media(max-width:900px){.method-layout>.contribution-boundaries{grid-template-columns:1fr;gap:0}}

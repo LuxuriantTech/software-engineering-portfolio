@@ -3,34 +3,37 @@
 I am a junior software developer based in Brussels. I work mainly with Python,
 FastAPI, TypeScript, React and PostgreSQL.
 
-This repository brings together four runnable samples from larger private projects and direct
-review paths for EvidenceDesk and API Contract Guard. The examples use synthetic data and keep
-their limitations visible, so the work can be inspected without access to private systems.
+This repository brings together ten bounded project stories. Four local samples live here;
+five projects link to dedicated public repositories, including clean source snapshots for
+ToolCall Replay, Entity Resolution Workbench and PostgreSQL Migration Rehearsal. Examples use
+synthetic data and keep their limitations visible.
 
 - [Browse the live portfolio](https://ardian-mehaj-portfolio.vercel.app)
 - [Review the complete EvidenceDesk repository](https://github.com/LuxuriantTech/evidencedesk)
 - [Review API Contract Guard](https://github.com/LuxuriantTech/api-contract-guard)
+- [Review ToolCall Replay](https://github.com/LuxuriantTech/toolcall-replay)
+- [Review Entity Resolution Workbench](https://github.com/LuxuriantTech/entity-resolution-workbench)
 - [Run the full local verification](scripts/verify_all.sh)
 
 ## Projects
 
 | Project | What is reviewable here | Status |
 |---|---|---|
-| [EvidenceDesk](projects/evidencedesk/README.md) | Dedicated full-source repository: React/FastAPI application, asynchronous ingestion, hybrid retrieval, pgvector, RBAC, PII masking, audit trail and reproducible evaluation | Experimental local prototype; blind v7 is `HONEST_NEGATIVE` |
 | [API Contract Guard](projects/api-contract-guard/README.md) | Dedicated TypeScript CLI repository: five bounded OpenAPI compatibility checks, local reference handling, deterministic JSON/HTML reports and a synthetic demo | Public repository; local-only tool with a defined subset, not a general compatibility verdict |
+| [ToolCall Replay](https://github.com/LuxuriantTech/toolcall-replay) | Public source snapshot with local evaluator, synthetic traces and selected tests; browser walkthrough of an expected rejection | Prepared browser result; evaluator runs locally without executing tools |
+| [Entity Resolution Workbench](https://github.com/LuxuriantTech/entity-resolution-workbench) | Public source snapshot with local matcher, synthetic catalogues and selected tests; browser explanation of uncertain results | Prepared browser result; similarity is not a probability |
+| [EvidenceDesk](projects/evidencedesk/README.md) | Dedicated full-source repository: React/FastAPI application, asynchronous ingestion, hybrid retrieval, pgvector, RBAC, PII masking, audit trail and reproducible evaluation | Experimental local prototype; blind v7 is `HONEST_NEGATIVE` |
 | [Synthevia](projects/synthevia/README.md) | React → local FastAPI → in-memory SQLite synthetic record, deterministic retrieval and focused frontend/backend tests | Private product is pre-launch; this edition is offline and not production-ready |
+| [PostgreSQL Migration Rehearsal](https://github.com/LuxuriantTech/postgres-migration-rehearsal) | Public source snapshot and guided browser walkthrough of migration checks and rollback evidence | Prepared browser result; local runtime reconstruction is limited |
 | [Gargantua / GLXBot](projects/gargantua/README.md) | Asynchronous moderation logic, a rejected member action, a record type without a message-content field and a local API | Historically deployed; current runtime is unverified |
 | [Synthevia Strategy Lab](projects/strategy-lab/README.md) | Benjamini–Hochberg p-value adjustment, a compact HAC check, one-use holdout, a declared fill/position sanity gate and deterministic LLM abstention | Internal R&D; synthetic examples only |
 | [MyTradingBot](projects/mytradingbot/README.md) | Additional paper-execution sample: live-mode rejection, absolute and configurable equity-relative notional limits and synthetic NO-GO qualification | Paper-only prototype; no live-readiness or profitability claim |
-| [ToolCall Replay](site/public/projects/toolcall-replay/index.html) | Browser walkthrough of a synthetic trace, including an expected rejection that is explicitly distinguished from an application error | Prepared synthetic demo; original application runs locally |
-| [Entity Resolution Workbench](site/public/projects/entity-resolution-workbench/index.html) | Browser walkthrough of synthetic record comparisons with exposed matching signals and uncertainty | Prepared synthetic demo; original application runs locally |
-| [PostgreSQL Migration Rehearsal](site/public/projects/postgres-migration-rehearsal/index.html) | Guided migration evidence with an explicit local runtime reconstruction limit | Prepared synthetic demo; original application runs locally |
 | [Skill Studio](projects/skill-studio/README.md) | Static instruction editor, text diff, Markdown export and documented synthetic evaluation results; model execution remains private | In development; no systematic benefit from additional instructions demonstrated |
 
-The bundled samples keep their own README, decisions, limitations, source
-and tests. EvidenceDesk and API Contract Guard remain in dedicated repositories.
-The three browser walkthroughs use prepared synthetic data and do not contain an
-application runtime or private project material.
+The bundled samples keep their own README, decisions, limitations, source and tests.
+API Contract Guard also computes a bounded comparison from editable inputs in the browser.
+The ToolCall, Entity Resolution and migration browser walkthroughs show prepared synthetic
+results; their dedicated public repositories contain reviewable local source and tests.
 
 ## Project Atlas navigator
 
@@ -47,6 +50,10 @@ flowchart LR
     P --> G[Gargantua\nmoderation service sample]
     P --> L[Strategy Lab\nresearch guard samples]
     P --> M[MyTradingBot\nadditional paper-execution sample]
+    P --> T[ToolCall Replay\npublic source snapshot]
+    P --> R[Entity Resolution\npublic source snapshot]
+    P --> Q[PostgreSQL Migration\npublic source snapshot]
+    P --> K[Skill Studio\npublic sample]
 
     D[Synthetic local data] --> S
     D --> E
@@ -54,6 +61,10 @@ flowchart LR
     D --> G
     D --> L
     D --> M
+    D --> T
+    D --> R
+    D --> Q
+    D --> K
 
     O[Private original repositories] -. excluded .-> P
 ```
@@ -78,9 +89,10 @@ For a shorter review, open a project README and run only its documented demo.
 
 ## Boundaries of this public edition
 
-This repository was rebuilt with a new Git history. Apart from the linked
-EvidenceDesk and API Contract Guard repositories, it does not contain complete
-source trees of the projects. Credentials, real
+This repository was rebuilt with a new Git history. Complete source trees for
+EvidenceDesk and API Contract Guard are linked separately. ToolCall Replay,
+Entity Resolution Workbench and PostgreSQL Migration Rehearsal provide bounded
+public source snapshots in their own repositories. Credentials, real
 user or community data, private infrastructure, deployment configuration,
 live execution paths, proprietary strategies and parameters, logs, dumps and
 operational findings are excluded.
@@ -99,9 +111,13 @@ claiming results they do not prove.
 
 The complete repositories behind the four bundled samples remain private because
 they include proprietary implementation and operational configuration.
-EvidenceDesk and API Contract Guard are the exceptions: their source and evidence
-are published separately at [LuxuriantTech/evidencedesk](https://github.com/LuxuriantTech/evidencedesk)
-and [LuxuriantTech/api-contract-guard](https://github.com/LuxuriantTech/api-contract-guard).
+EvidenceDesk and API Contract Guard publish complete source and evidence separately at
+[LuxuriantTech/evidencedesk](https://github.com/LuxuriantTech/evidencedesk) and
+[LuxuriantTech/api-contract-guard](https://github.com/LuxuriantTech/api-contract-guard).
+The [ToolCall Replay](https://github.com/LuxuriantTech/toolcall-replay),
+[Entity Resolution Workbench](https://github.com/LuxuriantTech/entity-resolution-workbench)
+and [PostgreSQL Migration Rehearsal](https://github.com/LuxuriantTech/postgres-migration-rehearsal)
+repositories publish bounded clean source snapshots with local run instructions.
 
 ## Contact
 

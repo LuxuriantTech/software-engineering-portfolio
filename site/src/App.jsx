@@ -24,7 +24,7 @@ import {
 } from "./siteData.js";
 import {
   browserPrefersReducedMotion,
-} from "./sessionIntroState.js";
+} from "./portfolioIntroState.js";
 import { PortfolioIntro } from "./PortfolioIntro.jsx";
 import { usePortfolioIntro } from "./usePortfolioIntro.js";
 

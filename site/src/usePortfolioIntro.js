@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  markSessionIntroSeen,
-  SESSION_INTRO_EXIT_DURATION_MS,
-  SESSION_INTRO_MAX_DURATION_MS,
-  SESSION_INTRO_MIN_DURATION_MS,
-  shouldShowSessionIntro,
-} from "./sessionIntroState.js";
+  PORTFOLIO_INTRO_EXIT_DURATION_MS,
+  PORTFOLIO_INTRO_MAX_DURATION_MS,
+  PORTFOLIO_INTRO_MIN_DURATION_MS,
+  shouldShowPortfolioIntro,
+} from "./portfolioIntroState.js";
 
 export function usePortfolioIntro() {
-  const [phase, setPhase] = useState(() => shouldShowSessionIntro() ? "active" : "done");
+  const [phase, setPhase] = useState(() => shouldShowPortfolioIntro() ? "active" : "done");
   const introRef = useRef(null);
   const restoreFocusRef = useRef(false);
   const introVisible = phase !== "done";
@@ -28,7 +27,6 @@ export function usePortfolioIntro() {
   useEffect(() => {
     if (phase !== "active") return undefined;
 
-    markSessionIntroSeen();
     introRef.current?.querySelector("button")?.focus({ preventScroll: true });
 
     let active = true;
@@ -40,8 +38,8 @@ export function usePortfolioIntro() {
     const minimumTimer = window.setTimeout(() => {
       minimumDone = true;
       finishWhenReady();
-    }, SESSION_INTRO_MIN_DURATION_MS);
-    const maximumTimer = window.setTimeout(() => setPhase("leaving"), SESSION_INTRO_MAX_DURATION_MS);
+    }, PORTFOLIO_INTRO_MIN_DURATION_MS);
+    const maximumTimer = window.setTimeout(() => setPhase("leaving"), PORTFOLIO_INTRO_MAX_DURATION_MS);
 
     Promise.resolve(document.fonts?.ready).catch(() => undefined).then(() => {
       fontsDone = true;
@@ -69,7 +67,7 @@ export function usePortfolioIntro() {
 
   useEffect(() => {
     if (phase !== "leaving") return undefined;
-    const exitTimer = window.setTimeout(finishNow, SESSION_INTRO_EXIT_DURATION_MS);
+    const exitTimer = window.setTimeout(finishNow, PORTFOLIO_INTRO_EXIT_DURATION_MS);
     return () => window.clearTimeout(exitTimer);
   }, [phase]);
 

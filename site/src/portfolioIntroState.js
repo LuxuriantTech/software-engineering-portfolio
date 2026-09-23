@@ -1,4 +1,6 @@
-export const SESSION_INTRO_MAX_DURATION_MS = 2900;
+export const PORTFOLIO_INTRO_MIN_DURATION_MS = 2450;
+export const PORTFOLIO_INTRO_MAX_DURATION_MS = 3300;
+export const PORTFOLIO_INTRO_EXIT_DURATION_MS = 640;
 
 export function browserPrefersReducedMotion(
   browserWindow = typeof window === "undefined" ? null : window,
@@ -12,8 +14,9 @@ export function browserPrefersReducedMotion(
   }
 }
 
-export function shouldShowSessionIntro({
+export function shouldShowPortfolioIntro({
   reducedMotion = browserPrefersReducedMotion(),
+  browserWindow = typeof window === "undefined" ? null : window,
 } = {}) {
-  return !reducedMotion;
+  return Boolean(browserWindow && !reducedMotion);
 }

@@ -24,7 +24,9 @@ import {
 } from "./siteData.js";
 import {
   browserPrefersReducedMotion,
-} from "./sessionIntroState.js";
+} from "./portfolioIntroState.js";
+import { PortfolioIntro } from "./PortfolioIntro.jsx";
+import { usePortfolioIntro } from "./usePortfolioIntro.js";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured).sort((a, b) => a.number.localeCompare(b.number));
 const additionalProjects = PROJECTS.filter((project) => !project.featured).sort((a, b) => a.number.localeCompare(b.number));
@@ -188,11 +190,11 @@ function Intro({ onOpenDocument }) {
       <div className="intro-grid page-grid">
         <p className="intro-kicker"><span>Ardian Mehaj</span><span>Brussels, Belgium</span></p>
         <div className="intro-title">
-          <p>Junior software developer · AI-assisted development</p>
-          <h1 id="intro-title">Ideas into<br />working software.</h1>
-          <p className="intro-description">I build tools for API checks, document review and web products with AI coding assistants. I’m looking for a junior development role with mentoring and code review.</p>
+          <p>Junior software developer · Python &amp; TypeScript</p>
+          <h1 id="intro-title">Working software.<br />Visible proof.</h1>
+          <p className="intro-description">I build developer tools for API changes, workflow rules and data quality. Try the examples, inspect the public code and see where each result stops. I use AI coding assistants and review the work they help implement.</p>
           <div className="intro-actions">
-            <a className="primary-action" href="#work">Explore my projects <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <a className="primary-action" href="#work">Explore three projects <ArrowRightIcon size={18} aria-hidden="true" /></a>
             <button className="secondary-action" type="button" onClick={(event) => onOpenDocument("cv", event.currentTarget)}>
               <FileIcon size={18} aria-hidden="true" /> View my CV
             </button>
@@ -200,8 +202,8 @@ function Intro({ onOpenDocument }) {
         </div>
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
-          <p>Developer tools &amp; web applications</p>
-          <p>Seeking full-time work · Hours to discuss<br />OPIT online BSc · September 2026</p>
+          <p>Developer tools · Backend · Data quality</p>
+          <p>Seeking full-time work · Hours to discuss<br />OPIT online BSc · Began September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
       </div>
@@ -430,7 +432,7 @@ function CvDocument({ language = "en" }) {
         <div className="document-projects">
           {cv.projects.map((project) => (
             <div key={project.name}>
-              <h4>{project.name}</h4>
+              <h4><a href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${language === "fr" ? "Voir le code public de" : "View public source for"} ${project.name}`}>{project.name} <ArrowRightIcon size={14} aria-hidden="true" /></a></h4>
               <p className="document-meta">{project.meta}</p>
               <p>{project.detail}</p>
             </div>
@@ -720,14 +722,37 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   );
 }
 
-function ProjectImage({ project, name, alt, caption, width, height }) {
-  return (
-    <figure className="project-preview">
-      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Try the ${project.name} demo`}>
-        <img src={`/images/${name}.webp`} srcSet={`/images/${name}-720.webp 720w, /images/${name}.webp ${width}w`} sizes="(max-width: 900px) 90vw, 58vw" width={width} height={height} loading="lazy" decoding="async" alt={alt} />
+function ProjectVisual({ project }) {
+  if (project.id === "toolcall-replay") {
+    return (
+      <a href={project.demoUrl} className="case-visual case-visual--toolcall" aria-label="Open the prepared ToolCall Replay walkthrough">
+        <span className="case-visual__eyebrow">PREPARED TRACE / EXPECTED REJECTION</span>
+        <span className="trace-path"><span>01 / EXPORT</span><span>02 / LOOKUP</span><span>03 / UPDATE</span></span>
+        <span className="trace-verdict"><strong>FAIL</strong><span>Three rule violations<br />No tools executed</span></span>
+        <span className="case-visual__footer">Inspect the rejected trace <ArrowRightIcon size={19} aria-hidden="true" /></span>
       </a>
-      <figcaption><span>{caption}</span><span>Try the demo ↗</span></figcaption>
-    </figure>
+    );
+  }
+
+  if (project.id === "entity-resolution-workbench") {
+    return (
+      <a href={project.demoUrl} className="case-visual case-visual--entity" aria-label="Open the prepared Entity Resolution Workbench comparison">
+        <span className="case-visual__eyebrow">RECORDED COMPARISON / SYNTHETIC DATA</span>
+        <span className="record-pair"><span><small>CATALOGUE A</small><strong>Harbor Desk Lamp</strong><em>SKU / HBL8</em></span><span><small>CATALOGUE B</small><strong>Harbor Desk Lamp</strong><em>SKU / HBL9</em></span></span>
+        <span className="record-verdict"><strong>REVIEW</strong><span>Same name. Conflicting identifier.</span></span>
+        <span className="case-visual__footer">Inspect the decision reasons <ArrowRightIcon size={19} aria-hidden="true" /></span>
+      </a>
+    );
+  }
+
+  return (
+    <a href={project.demoUrl} className="contract-workflow" aria-label="Try API Contract Guard: compare a change to an API contract">
+      <span className="section-label">One change. An existing client.</span>
+      <span className="contract-inputs"><span>Before<br /><strong>GET /invoices</strong><br />No query parameter</span><span>After<br /><strong>+ region</strong><br />Required parameter</span></span>
+      <span className="contract-compare">Could an existing request break? <ArrowRightIcon size={22} aria-hidden="true" /></span>
+      <span className="contract-outputs"><span>JSON report</span><span>HTML report</span></span>
+      <span className="contract-footnote">Run the comparison and inspect the reported change.</span>
+    </a>
   );
 }
 
@@ -741,46 +766,25 @@ function ProjectCase({ project }) {
       </header>
       <p className="project-summary">{project.summary}</p>
       <p className="project-stack">{project.stack}</p>
+      <p className="project-demo-mode">{project.demoMode}</p>
       <div className="project-body">
-        {project.id === "evidencedesk" ? (
-          <ProjectImage project={project} name="evidencedesk" width={1440} height={619} alt="EvidenceDesk showing a question, the extracted annual fee and the matching source page in a synthetic contract." caption="EvidenceDesk · Local prototype · Synthetic data" />
-        ) : project.id === "synthevia" ? (
-          <figure className="project-preview"><a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label="Explore the Synthévia public demo"><img src="/images/synthevia-product.png" width="1440" height="900" loading="lazy" decoding="async" alt="Synthévia's market overview and learning workspace, using fictional data." /></a><figcaption><span>Synthévia · Product demo</span><span>Explore ↗</span></figcaption></figure>
-        ) : project.id === "skill-studio" ? (
-          <figure className="project-preview"><a href={project.preview.href} aria-label={project.preview.label}><img src={project.preview.src} width="964" height="529" loading="lazy" decoding="async" alt={project.preview.alt} /></a><figcaption><span>Skill Studio · Static demo · Synthetic inputs</span><span>Open the demo ↗</span></figcaption></figure>
-        ) : project.id === "api-contract-guard" ? (
-          <a href={project.demoUrl} className="contract-workflow" aria-label="Try API Contract Guard: compare a change to an API contract">
-            <span className="section-label">One change. An existing client.</span>
-            <div className="contract-inputs"><span>Before<br /><strong>GET /invoices</strong><br />No query parameter</span><span>After<br /><strong>+ region</strong><br />Required parameter</span></div>
-            <div className="contract-compare">Could an existing request break? <ArrowRightIcon size={22} aria-hidden="true" /></div>
-            <div className="contract-outputs"><span>JSON report</span><span>HTML report</span></div>
-            <p>Open the example and inspect the reported change.</p>
-          </a>
-        ) : (
-          <a href={project.demoUrl} className="contract-workflow" aria-label={`Open the prepared ${project.name} walkthrough`}>
-            <span className="section-label">Prepared synthetic walkthrough</span>
-            <div className="contract-inputs"><span>{project.id === "toolcall-replay" ? "Safe trace" : "Two catalogue records"}<br /><strong>{project.id === "toolcall-replay" ? "PASS" : "Harbor Desk Lamp"}</strong></span><span>{project.id === "toolcall-replay" ? "Risky update" : "Conflicting SKU"}<br /><strong>{project.id === "toolcall-replay" ? "Expected FAIL" : "Engine REVIEW"}</strong></span></div>
-            <div className="contract-compare">Inspect the rule and public local source <ArrowRightIcon size={22} aria-hidden="true" /></div>
-            <p>This page displays prepared data. The public repository contains the local evaluator and selected tests.</p>
-          </a>
-        )}
+        <ProjectVisual project={project} />
         <div className="project-notes">
           <dl>
-            <div><dt>Try this</dt><dd>{project.example}</dd></div>
-            <div><dt>The choice behind it</dt><dd>{project.decision}</dd></div>
+            <div><dt>Start here</dt><dd>{project.example}</dd></div>
+            <div><dt>Design choice</dt><dd>{project.decision}</dd></div>
             <div><dt>{project.contributionLabel ?? "My role, with AI assistance"}</dt><dd>{project.contribution}</dd></div>
             <div className="project-limit"><dt>Current limit</dt><dd>{project.shortLimit}</dd></div>
           </dl>
+          <div className="project-proof"><strong>What you can inspect</strong><p>{project.proof}</p>{project.repositoryEvidenceUrl ? <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">{project.evidenceLinkLabel ?? "Read the validation record"} <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}</div>
           <div className="project-links">
-            <a className="primary-action" href={project.demoUrl}>Try {project.name} <ArrowRightIcon size={18} aria-hidden="true" /></a>
-            <a href={project.url} target={project.id === "skill-studio" ? undefined : "_blank"} rel="noopener noreferrer">{project.id === "skill-studio" ? "Recorded example" : project.id === "synthevia" ? "Local code sample" : "View public code"} {project.id === "skill-studio" ? <ArrowRightIcon size={18} aria-hidden="true" /> : <MarkGithubIcon size={18} aria-hidden="true" />}</a>
-            {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Project story <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}
+            <a className="primary-action" href={project.demoUrl} data-project-transition={project.name}>{project.actionLabel ?? `Try ${project.name}`} <ArrowRightIcon size={18} aria-hidden="true" /></a>
+            <a href={project.url} target="_blank" rel="noopener noreferrer">View public source <MarkGithubIcon size={18} aria-hidden="true" /></a>
           </div>
           <details className="project-checks">
-            <summary>Technical notes and checks</summary>
-            <p>{project.proof}</p><p>{project.limit}</p>
+            <summary>What runs, and what remains unproven</summary>
+            <p>{project.works}</p><p>{project.limit}</p>
             {project.repositorySourceUrl ? <p>Follow the <a href={project.repositorySourceUrl} target="_blank" rel="noopener noreferrer">decision code</a>, <a href={project.repositoryTestUrl} target="_blank" rel="noopener noreferrer">focused test</a>, then run <code>{project.localCommand}</code> from the public repository.</p> : null}
-            {project.repositoryEvidenceUrl ? <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">Read the validation record</a> : null}
           </details>
         </div>
       </div>
@@ -793,31 +797,30 @@ function Work() {
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
-        <h2 id="work-title">An API change. A rejected tool call. An ambiguous record.</h2>
-        <p>Three inspectable engineering problems built with AI assistance. Try each example, then follow its rule, test and local command in the public source.</p>
+        <h2 id="work-title">Three projects. Three ways to verify.</h2>
+        <p>Run an API comparison, inspect a rejected workflow, then review an uncertain record match. Each case links to public source, tests and a stated limit.</p>
       </div>
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
         {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">API Contract Guard computes on contracts you edit in the browser. ToolCall Replay and Entity Resolution show prepared fictional examples; their public repositories contain local engines and selected tests.</p>
+      <p className="demo-context page-grid">API Contract Guard computes a report from editable contracts in the browser. ToolCall Replay and Entity Resolution show prepared synthetic outcomes; their source snapshots and local run instructions are public.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
-        <div className="demo-launchpad-heading"><strong>Explore the engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
+        <div className="demo-launchpad-heading"><strong>Explore more demonstrations</strong><a href="/projects/">All demo notes <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
         <div className="demo-launchpad-links">
           {browserProjects.map(project => <a key={project.id} href={project.demoUrl || project.url}><span>{project.name}</span><ArrowRightIcon size={18} aria-hidden="true" /></a>)}
         </div>
       </nav>
       <div className="project-index page-grid" aria-labelledby="project-index-title">
-        <div className="index-heading"><p className="section-label">Supporting work and annexes</p><h3 id="project-index-title">Evaluation, full-stack work and research.</h3></div>
+        <div className="index-heading"><p className="section-label">Further work</p><h3 id="project-index-title">Seven more projects, with their limits.</h3></div>
         <div className="index-list">
           {additionalProjects.map((project) => (
-            <a href={project.url} target={project.url.startsWith("http") ? "_blank" : undefined} rel={project.url.startsWith("http") ? "noopener noreferrer" : undefined} key={project.id} id={project.id}>
+            <article className="index-entry" key={project.id} id={project.id}>
               <span className="index-number">{project.number}</span>
-              <span className="index-name"><strong>{project.name}</strong><small>{project.category}</small></span>
-              <span className="index-copy">{project.summary}</span>
-              <span className="index-scope"><ProjectStatus status={project.status} /><small>{project.scope}</small></span>
-              <ArrowRightIcon size={20} aria-hidden="true" />
-            </a>
+              <span className="index-name"><a href={project.demoUrl || project.url} target={(project.demoUrl || project.url).startsWith("http") ? "_blank" : undefined} rel={(project.demoUrl || project.url).startsWith("http") ? "noopener noreferrer" : undefined}>{project.name} <ArrowRightIcon size={16} aria-hidden="true" /></a><small>{project.category}</small><ProjectStatus status={project.status} /></span>
+              <span className="index-copy">{project.summary}<small>{project.scope}</small></span>
+              <span className="index-actions"><a href={project.demoUrl || project.url} target={(project.demoUrl || project.url).startsWith("http") ? "_blank" : undefined} rel={(project.demoUrl || project.url).startsWith("http") ? "noopener noreferrer" : undefined}>{project.demoUrl ? "Open demo" : "Read case"}</a>{project.demoUrl && project.url !== project.demoUrl && project.url.startsWith("https://github.com/") ? <a href={project.url} target="_blank" rel="noopener noreferrer">View source</a> : null}</span>
+            </article>
           ))}
         </div>
       </div>
@@ -830,14 +833,13 @@ function Method() {
     <section className="method-section" id="method" aria-labelledby="method-title">
       <div className="method-layout page-grid">
         <div className="method-intro">
-          <p className="section-label">How I work with AI</p>
-          <h2 id="method-title">Building with AI. Learning as I go.</h2>
+          <p className="section-label">How I work</p>
+          <h2 id="method-title">Frame the problem. Check the result.</h2>
           <p>
-            I use AI for implementation and am developing programming independence.
-            I use coding assistants to build my projects, then run the result, check its behaviour
-            and work through problems.
+            I use coding assistants for implementation. I define the expected behaviour,
+            inspect what changed, run the result and record what remains uncertain.
           </p>
-          <p>I have used Claude for a year and a half, as well as Cursor, ChatGPT and Codex. I organise work into focused tasks, create reusable skills and use separate reviews to question the result.</p>
+          <p>These are personal projects, not commercial deployments. I am continuing to develop independent programming skills and want code review and practical feedback in my first team.</p>
 
         </div>
 
@@ -851,13 +853,13 @@ function Method() {
           ))}
         </ol>
           <dl className="contribution-boundaries">
-            <div><dt>What I bring</dt><dd>Breaking a project into focused tasks, describing the expected result and following up on what needs to change.</dd></div>
-            <div><dt>What I do with AI</dt><dd>Implementation, code review, test preparation and investigation. I use the assistants to work through the code and check its behaviour.</dd></div>
-            <div><dt>Where I need guidance</dt><dd>Writing code independently, choosing the right technical approach and deciding whether a change is ready for a team to ship.</dd></div>
+            <div><dt>My responsibility</dt><dd>Scope the task, state the expected result, inspect the behaviour and make the final publication decision.</dd></div>
+            <div><dt>AI assistance</dt><dd>Implementation, test preparation, code review and investigation. Each case above explains my contribution and its limits.</dd></div>
+            <div><dt>What I am learning</dt><dd>Writing more code independently and weighing technical options with feedback from experienced developers.</dd></div>
           </dl>
           <aside className="method-current">
             <span>A starting point in a team</span>
-            <p>I would like to start with a scoped task: reproduce a documented issue, explain the expected behaviour and work on a small fix with AI assistance and code review.</p>
+            <p>Give me a scoped issue, an expected result and code review. I can reproduce the problem, work through a fix and explain what I checked.</p>
           </aside>
       </div>
     </section>
@@ -869,9 +871,9 @@ function Skills() {
     <section className="skills-section" id="skills" aria-labelledby="skills-title">
       <div className="section-heading page-grid">
         <p className="section-label">Working set</p>
-        <h2 id="skills-title">Tools used in my projects.</h2>
+        <h2 id="skills-title">Tools behind the work.</h2>
         <p>
-          I use these with AI assistance and continue to learn how the pieces fit together.
+          These are tools I have used in personal projects and can discuss through the examples above.
         </p>
       </div>
 
@@ -907,7 +909,7 @@ function About() {
             unfamiliar.
           </p>
           <p>
-            I am admitted to OPIT’s online BSc (Hons) Computer Science, starting on 21 September 2026. I plan to study computer science online alongside work. I speak
+            My online BSc (Hons) Computer Science at OPIT began in September 2026. I study alongside my search for full-time work. I speak
             French and Albanian, with English certified at EF SET C2 overall (77/100, 18 September 2026). I&apos;m based in Brussels
             and looking for remote work from Belgium or an employer-funded move. I plan to combine my studies with full-time work and can discuss the exact working hours with the team.
           </p>
@@ -950,6 +952,7 @@ function PortfolioExperience() {
   const [activeDocumentId, setActiveDocumentId] = useState(null);
   const [documentOrigin, setDocumentOrigin] = useState(null);
   const lastDocumentTriggerRef = useRef(null);
+  const intro = usePortfolioIntro();
 
   usePageMotion(true);
   useControlPressFeedback();
@@ -967,7 +970,8 @@ function PortfolioExperience() {
 
   return (
     <div className="site-shell" id="top">
-      <div className="site-content site-content--ready">
+      <PortfolioIntro phase={intro.phase} introRef={intro.introRef} onSkip={intro.skip} />
+      <div className="site-content site-content--ready" inert={intro.phase !== "done"}>
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader />
         <main id="main-content" tabIndex="-1">

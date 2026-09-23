@@ -6,6 +6,7 @@ import "@fontsource/ibm-plex-mono/latin-500.css";
 import { App } from "./App.jsx";
 import "./styles.css";
 import "./recruiter.css";
+import "./portfolioIntro.css";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>

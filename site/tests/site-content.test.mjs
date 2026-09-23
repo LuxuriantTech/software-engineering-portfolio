@@ -22,6 +22,7 @@ import {
 test("publishes ten bounded project stories", () => {
   assert.equal(PROJECTS.length, 10);
   assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 10);
+  assert.equal(new Set(PROJECTS.map(({ number }) => number)).size, 10);
   assert.equal(PROJECTS.filter(({ featured }) => featured).length, 3);
   assert.deepEqual(PROJECTS.filter(({ featured }) => featured).sort((a, b) => a.number.localeCompare(b.number)).map(({ id }) => id), ["api-contract-guard", "toolcall-replay", "entity-resolution-workbench"]);
 
@@ -45,25 +46,14 @@ test("gives every featured project a complete decision dossier", () => {
   }
 });
 
-test("links all five public source repositories and selected local test paths", () => {
-  const evidenceDesk = PROJECTS.find(({ id }) => id === "evidencedesk");
-  const contractGuard = PROJECTS.find(({ id }) => id === "api-contract-guard");
-
-  assert.equal(evidenceDesk.url, "https://github.com/LuxuriantTech/evidencedesk");
-  assert.equal(contractGuard.url, "https://github.com/LuxuriantTech/api-contract-guard");
-  assert.equal(evidenceDesk.demoUrl, "/projects/evidencedesk/");
-  assert.equal(contractGuard.demoUrl, "/projects/api-contract-guard/");
-  for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
-    const project = PROJECTS.find((candidate) => candidate.id === id);
-    assert.equal(project.url, `https://github.com/LuxuriantTech/${id}`);
-    assert.equal(project.demoUrl, `/projects/${id}/`);
-    assert.match(project.scope, /Public source snapshot/);
-  }
-  for (const id of ["api-contract-guard", "toolcall-replay", "entity-resolution-workbench"]) {
-    const project = PROJECTS.find((candidate) => candidate.id === id);
-    assert.match(project.repositorySourceUrl, /github.com\/LuxuriantTech\/.+\/blob\/.+\/src\//);
-    assert.match(project.repositoryTestUrl, /github.com\/LuxuriantTech\/.+\/blob\/.+\/tests\//);
-    assert.ok(project.localCommand.length > 15);
+test("uses dedicated public repositories for the featured projects", () => {
+  for (const project of PROJECTS.filter(({ featured }) => featured)) {
+    assert.equal(project.url, `https://github.com/LuxuriantTech/${project.id}`);
+    assert.equal(project.demoUrl, `/projects/${project.id}/`);
+    assert.ok(project.repositoryEvidenceUrl?.startsWith(project.url));
+    assert.ok(project.repositorySourceUrl?.startsWith(project.url));
+    assert.ok(project.repositoryTestUrl?.startsWith(project.url));
+    assert.ok(project.localCommand?.length > 10);
   }
 });
 
@@ -106,9 +96,9 @@ test("distinguishes the three public snapshots from browser walkthroughs", () =>
   for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
     const project = PROJECTS.find((candidate) => candidate.id === id);
     assert.ok(project);
-    assert.match(project.url, /^https:\/\/github.com\/LuxuriantTech\//);
-    assert.match(project.demoUrl, /^\/projects\//);
-    assert.match(project.scope, /Public source snapshot/);
+    assert.equal(project.demoUrl, `/projects/${id}/`);
+    assert.equal(project.url, `https://github.com/LuxuriantTech/${id}`);
+    assert.match(project.scope, /browser walkthrough/i);
   }
 });
 
@@ -117,8 +107,8 @@ test("distinguishes prepared walkthroughs from the live API demo without promoti
   const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
   const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");
 
-  assert.match(index, /One computed browser comparison/);
-  assert.match(index, /API Contract Guard computes reports on contracts you edit in the browser/);
+  assert.match(index, /prepared synthetic walkthroughs/);
+  assert.match(index, /API Contract Guard computes a comparison from editable inputs/);
   assert.match(demo, /Hand-authored synthetic illustration/);
   assert.doesNotMatch(index, /<video|portfolio-reel\.mp4/);
   assert.match(css, /\.reel\s+video/);
@@ -137,18 +127,17 @@ test("describes AI-assisted work without pretending manual authorship", async ()
     "Verify",
     "Explain",
   ]);
-  assert.match(appSource, /Building with AI\. Learning as I go\./);
-  assert.match(appSource, /use coding assistants to build my projects/i);
-  assert.match(appSource, /use AI for implementation and am developing programming independence/i);
-  assert.match(appSource, /check its behaviour/i);
+  assert.match(appSource, /Working software\.<br \/>Visible proof\./);
+  assert.match(appSource, /I use coding assistants for implementation/i);
+  assert.match(appSource, /continuing to develop independent programming skills/i);
+  assert.match(appSource, /inspect what changed, run the result/i);
 });
 
 test("avoids unconfirmed education and inflated claims", async () => {
   const appSource = await readFile(new URL("../src/App.jsx", import.meta.url), "utf8");
   const publicCopy = JSON.stringify({ PROJECTS, appSource });
   const rejectedLanguage = [
-    /\bstudent\b/i,
-    /currently enrolled/i,
+    /degree completed/i,
     /production[- ]grade/i,
     /fully secure/i,
     /profitable trading system/i,
@@ -159,7 +148,7 @@ test("avoids unconfirmed education and inflated claims", async () => {
   ];
 
   for (const pattern of rejectedLanguage) assert.doesNotMatch(publicCopy, pattern);
-  assert.match(appSource, /plan to study computer science online/i);
+  assert.match(appSource, /BSc \(Hons\) Computer Science at OPIT began in September 2026/i);
   assert.match(appSource, /EF SET C2 overall \(77\/100, 18 September 2026\)/i);
   assert.doesNotMatch(appSource, /self-assessed English at B2 level/i);
 });
@@ -190,8 +179,8 @@ test("keeps recruiter-ready contact and skill information", () => {
 test("resolves known hashes and safely falls back", () => {
   assert.equal(projectFromHash("#strategy-lab").id, "strategy-lab");
   assert.equal(projectFromHash("#api-contract-guard").id, "api-contract-guard");
-  assert.equal(projectFromHash("#unknown").id, "evidencedesk");
-  assert.equal(projectFromHash("").id, "evidencedesk");
+  assert.equal(projectFromHash("#unknown").id, "api-contract-guard");
+  assert.equal(projectFromHash("").id, "api-contract-guard");
 });
 
 test("renders semantic core sections, direct links and one h1 per rendered branch", async () => {
@@ -307,9 +296,14 @@ test("publishes three local, public-safe career documents", async () => {
   }
 
   assert.match(CV_CONTENT.profile, /AI coding assistants for implementation/i);
-  assert.match(CV_CONTENT.tools, /Programming independence is still developing/i);
+  assert.deepEqual(CV_CONTENT.projects.map(({ name }) => name), ["API Contract Guard", "ToolCall Replay", "Entity Resolution Workbench"]);
+  for (const cv of [CV_CONTENT, CV_FR_CONTENT]) {
+    for (const project of cv.projects) assert.match(project.url, /^https:\/\/github\.com\/LuxuriantTech\/[a-z-]+$/);
+  }
   assert.match(JSON.stringify(CV_CONTENT.education[0]), /OPIT/);
-  assert.match(JSON.stringify(CV_CONTENT.education[0]), /September 2026/);
+  assert.match(JSON.stringify(CV_CONTENT.education[0]), /began in September 2026/);
+  assert.match(JSON.stringify(CV_FR_CONTENT.education[0]), /commencé en septembre 2026/);
+  assert.doesNotMatch(JSON.stringify({ CV_CONTENT, CV_FR_CONTENT, LETTER_CONTENT }), /classes start|starting on 21 September|début des cours le 21 septembre/i);
   assert.match(JSON.stringify(CV_CONTENT.education), /CESS/);
   assert.match(JSON.stringify(CV_FR_CONTENT.education), /CESS/);
   assert.match(CV_CONTENT.languages, /EF SET 77\/100, C2 overall/);
@@ -385,6 +379,7 @@ test("PDF generator and reader share the same career content", async () => {
   assert.deepEqual(LETTER_CONTENT, shared.letter);
   const generator = await readFile(new URL("../scripts/build_public_documents.py", import.meta.url), "utf8");
   assert.match(generator, /careerContent.json/);
+  assert.match(generator, /entry\["url"\]/);
   assert.match(JSON.stringify(shared), /OPIT/);
   assert.doesNotMatch(JSON.stringify(shared), /institution not yet finalised|enrolment pending/);
 });

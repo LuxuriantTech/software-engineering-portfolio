@@ -237,7 +237,10 @@ def header(role="", location="Brussels, Belgium"):
 
 
 def item(entry):
-    lines = [p(escape(entry["name"]), "item_title")]
+    title = escape(entry["name"])
+    if entry.get("url"):
+        title = f'<link href="{escape(entry["url"], quote=True)}">{title}</link>'
+    lines = [p(title, "item_title")]
     if entry.get("meta"):
         lines.append(p(escape(entry["meta"]), "item_meta"))
     lines.append(p(escape(entry["detail"])))

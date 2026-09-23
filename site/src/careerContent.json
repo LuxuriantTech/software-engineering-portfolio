@@ -2,22 +2,25 @@
   "cv": {
     "role": "Junior software developer | Python & TypeScript",
     "location": "Brussels, Belgium",
-    "profile": "My personal projects focus on API checks, document review and web applications. I use AI coding assistants for implementation, define expected behaviour and review the results. I am looking for my first development role with code review and practical feedback.",
+    "profile": "Junior software developer focused on developer tooling, workflow checks and data quality. I define expected behaviour, use AI coding assistants for implementation and review code, tests and observed results. I am seeking my first role with scoped tasks and code review.",
     "projects": [
       {
         "name": "API Contract Guard",
+        "url": "https://github.com/LuxuriantTech/api-contract-guard",
         "meta": "TypeScript, Node.js, OpenAPI",
         "detail": "Local CLI comparing five categories of API contract changes, with JSON/HTML reports and explicit rejection of unsupported inputs. Defined the supported checks and expected reports; reviewed the assisted implementation and test cases. Published validation records 102 local tests."
       },
       {
-        "name": "EvidenceDesk",
-        "meta": "Python, FastAPI, React, PostgreSQL, Redis",
-        "detail": "Local document-review prototype with background processing, source citations and access controls. Framed the citation and abstention workflow and iterated with coding assistants. The published evaluation fell short; limitations remain documented."
+        "name": "ToolCall Replay",
+        "url": "https://github.com/LuxuriantTech/toolcall-replay",
+        "meta": "Python, pytest, deterministic rules",
+        "detail": "Local trace evaluator that checks seven supported rule types without executing tools. Public source snapshot includes synthetic examples and selected tests; browser walkthrough displays prepared results."
       },
       {
-        "name": "Synthévia",
-        "meta": "React, TypeScript, FastAPI",
-        "detail": "Web workspace for market information and learning, with a public demo using fictional data. Define product needs and coordinate implementation and reviews. The separate public code sample connects React, FastAPI and SQLite."
+        "name": "Entity Resolution Workbench",
+        "url": "https://github.com/LuxuriantTech/entity-resolution-workbench",
+        "meta": "Python, pytest, record matching",
+        "detail": "Local matcher that returns MATCH, REVIEW or NO_MATCH with visible reasons. Public source snapshot includes synthetic catalogues and selected tests. Similarity scores are not business accuracy claims."
       }
     ],
     "experience": [
@@ -35,7 +38,7 @@
     "education": [
       {
         "name": "OPIT | BSc (Hons) Computer Science, online",
-        "detail": "Admitted; classes start 21 September 2026. Studies planned alongside work."
+        "detail": "Online course began in September 2026. Studying alongside my search for full-time work."
       },
       {
         "name": "Institut Technique René Cartigny | CESS | June 2025",
@@ -44,7 +47,7 @@
     ],
     "certification": "HackerRank: SQL Advanced and Python Basic, September 2026.",
     "languages": "French: main language | Albanian: native | English: EF SET 77/100, C2 overall (18 September 2026).",
-    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, REST APIs, PostgreSQL, Git, Docker, pytest, Playwright and GitHub Actions. Programming independence is still developing."
+    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, REST APIs, PostgreSQL, Git, Docker, pytest, Playwright and GitHub Actions."
   },
   "letter": {
     "subject": "Open application | Junior software developer",
@@ -53,29 +56,32 @@
       "I am applying for a junior software development role. My personal projects focus on API checks, document review and web applications. I am looking for a team where I can work on scoped development tasks with code review and practical feedback.",
       "API Contract Guard compares a defined subset of OpenAPI contracts. I defined its supported checks and expected reports, then reviewed the AI-assisted implementation and test cases. These personal projects give us concrete examples to discuss, including the assistance used and the limits of each result.",
       "I use coding assistants for implementation and continue to develop programming independence. I would be glad to walk through a project, explain its decisions and work through a suitable technical exercise. My earlier retail work and volunteer tutoring also gave me experience coordinating tasks and explaining unfamiliar topics.",
-      "I am based in Brussels and looking for full-time remote work from Belgium. I have been admitted to OPIT’s online BSc (Hons) Computer Science, starting on 21 September 2026, and plan to study alongside work. My English is certified at EF SET C2 overall (77/100). I can discuss the working hours and support needed for a first role."
+      "I am based in Brussels and looking for full-time remote work from Belgium. My online BSc (Hons) Computer Science at OPIT began in September 2026, and I plan to study alongside work. My English is certified at EF SET C2 overall (77/100). I can discuss the working hours and support needed for a first role."
     ],
     "closing": "Thank you for your time,"
   },
   "cv_fr": {
     "role": "Développeur logiciel junior | Python & TypeScript",
     "location": "Bruxelles, Belgique",
-    "profile": "Mes projets personnels portent sur les contrôles d’API, la revue de documents et les applications web. Je m’appuie sur des assistants IA pour l’implémentation, définis les comportements attendus et examine les résultats. Je cherche un premier poste en développement avec revue de code et retours réguliers.",
+    "profile": "Développeur logiciel junior intéressé par les outils de développement, les contrôles de flux et la qualité des données. Je définis les comportements attendus, utilise des assistants IA pour l’implémentation et vérifie le code, les tests et les résultats observés. Je cherche un premier poste avec des tâches cadrées et une revue de code.",
     "projects": [
       {
         "name": "API Contract Guard",
+        "url": "https://github.com/LuxuriantTech/api-contract-guard",
         "meta": "TypeScript, Node.js, OpenAPI",
         "detail": "Outil CLI local comparant cinq catégories de changements de contrats API, avec rapports JSON/HTML et rejet des entrées non prises en charge. Définition des contrôles et rapports attendus ; revue de l’implémentation assistée et des tests. La validation publiée recense 102 tests locaux."
       },
       {
-        "name": "EvidenceDesk",
-        "meta": "Python, FastAPI, React, PostgreSQL, Redis",
-        "detail": "Prototype local de revue de documents : traitement en arrière-plan, citations des sources et contrôle des accès. Définition du parcours de citation et d’abstention, puis itérations avec les assistants. L’évaluation n’a pas atteint ses objectifs ; les limites restent documentées."
+        "name": "ToolCall Replay",
+        "url": "https://github.com/LuxuriantTech/toolcall-replay",
+        "meta": "Python, pytest, règles déterministes",
+        "detail": "Évaluateur local de traces couvrant sept types de règles, sans exécuter les outils. Le dépôt public contient des exemples fictifs et une sélection de tests ; la démo web présente des résultats préparés."
       },
       {
-        "name": "Synthévia",
-        "meta": "React, TypeScript, FastAPI",
-        "detail": "Espace web d’information de marché et d’apprentissage, avec une démo publique sur données fictives. Définition des besoins et coordination de l’implémentation et des revues. L’extrait de code public distinct relie React, FastAPI et SQLite."
+        "name": "Entity Resolution Workbench",
+        "url": "https://github.com/LuxuriantTech/entity-resolution-workbench",
+        "meta": "Python, pytest, rapprochement de données",
+        "detail": "Outil local qui classe les paires en MATCH, REVIEW ou NO_MATCH avec des raisons visibles. Le dépôt public contient des catalogues fictifs et une sélection de tests. Les scores de similarité ne mesurent pas la précision métier."
       }
     ],
     "experience": [
@@ -93,7 +99,7 @@
     "education": [
       {
         "name": "OPIT | BSc (Hons) Computer Science, en ligne",
-        "detail": "Admis ; début des cours le 21 septembre 2026. Études prévues en parallèle du travail."
+        "detail": "Cursus en ligne commencé en septembre 2026. Études poursuivies en parallèle de ma recherche d’emploi à temps plein."
       },
       {
         "name": "Institut Technique René Cartigny | CESS | Juin 2025",
@@ -102,6 +108,6 @@
     ],
     "certification": "HackerRank : SQL Advanced et Python Basic, septembre 2026.",
     "languages": "Français : langue principale | Albanais : langue maternelle | Anglais : EF SET 77/100, C2 global (18 septembre 2026).",
-    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, API REST, PostgreSQL, Git, Docker, pytest, Playwright et GitHub Actions. Autonomie en programmation en cours d’acquisition."
+    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, API REST, PostgreSQL, Git, Docker, pytest, Playwright et GitHub Actions."
   }
 }

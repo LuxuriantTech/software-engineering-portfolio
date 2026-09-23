@@ -2,11 +2,13 @@
 
 Static React portfolio for a junior software candidate working with AI coding assistants. It retains the existing Archivo typography, paper surfaces, orange and cobalt accents, keyboard navigation and restrained motion.
 
+The home page opens with a short, skippable motion sequence on every full page load, including browser reloads. It waits briefly for local fonts, has a firm timeout, and is omitted for reduced-motion preferences. The underlying portfolio and its no-JavaScript links remain available.
+
 ## Reading order
 
-API Contract Guard, ToolCall Replay and Entity Resolution Workbench are the three primary examples. Each explains the user problem, an observable example, a design choice, AI-assisted contribution and its current limit. Technical notes link rule code, focused tests and local commands in the public repositories.
+API Contract Guard, ToolCall Replay and Entity Resolution Workbench are the three primary examples. Each explains the user problem, an observable example, a design choice, the contribution with AI assistance and the current limitation. Decision code, focused tests and local commands are linked beside each case; technical scope remains accessible in native disclosure controls.
 
-All ten projects remain accessible. API Contract Guard computes reports from editable contracts in the browser; the ToolCall, Entity and PMR pages show prepared fictional examples. Their three public source snapshots include selected tests and omit complete private histories. EvidenceDesk supports the evaluation story; Synthévia's public React/FastAPI/in-memory SQLite sample is separate from its private PostgreSQL product. Trading and Skill Studio remain annexes.
+All ten projects remain accessible. API Contract Guard computes a bounded report from editable fictional contracts in the browser. ToolCall Replay and Entity Resolution Workbench show prepared synthetic outcomes and link to public local source snapshots. PMR has a separate six-invoice CLI baseline, while its browser page shows historical prepared stages. The other browser pages describe their runtime limits. Synthévia's public product demo is separate from its smaller React/FastAPI/SQLite code sample.
 
 EvidenceDesk's failed answer evaluation remains visible. Historical metrics have not been changed or rerun. PMR's separate CLI baseline does not resolve its historical browser reproducibility limits. MyTradingBot has no demonstrated profitability.
 
@@ -16,7 +18,7 @@ Every demo and the collection link back to the author, the English and French CV
 
 The profile states that Ardian uses AI for implementation and is developing programming independence. Implementation, review and testing use AI assistance. The suggested first team task is an aspiration with mentoring and review, not a newly verified claim of independent competence.
 
-OPIT admission is confirmed for the online September 2026 BSc intake, starting 21 September. No completed degree is claimed. Studies are planned alongside work; the exact schedule needs to be agreed with the employer. Full-time work is sought remotely from Belgium or with employer-funded relocation; exact hours are to be agreed with the employer.
+The online BSc (Hons) Computer Science course at OPIT began in September 2026. No completed degree is claimed. Studies are planned alongside work; exact working hours can be discussed with an employer. Full-time work is sought remotely from Belgium or with employer-funded relocation.
 
 The English/French CVs and English motivation letter share src/careerContent.json with the HTML document reader. They omit private address, phone, finances and application-specific identifiers. Never replace previously submitted application evidence with these newer files.
 
@@ -41,7 +43,7 @@ Review PDF text extraction and page rendering after edits. The reader supports E
 
 ## Delivery and provenance
 
-vercel.json publishes only dist/client with restrictive headers. No environment file, credentials, analytics, remote font service or private backend connection is needed. Public code samples and demo engines are unchanged by the September 10 editorial update.
+vercel.json publishes only dist/client with restrictive headers. No environment file, credentials, analytics, remote font service or private backend connection is needed. This portfolio update changes the project presentation and career documents; the local demo engines retain their stated boundaries.
 
 Publish through reviewed Git changes, verify CI, then verify actual public HTML, JavaScript, styles and PDFs. Local validation alone is not production verification.
 

@@ -37,9 +37,9 @@
 </div>
 <section class="demo" id="interactive-demo" aria-labelledby="contract-demo-title">
 <div class="demo-head"><div><p class="eyebrow">Run the real comparison rules</p><h2 id="contract-demo-title">Compare your two API contracts</h2></div><button class="action" type="button" id="contract-reset">Reset example</button></div>
-<p>Edit the examples or paste two OpenAPI JSON/YAML documents. The TypeScript engine computes the report locally in a browser worker. Your input is not uploaded or stored.</p>
+<p>Try three outcomes first: a supported breaking change, an unsupported reference, and unchanged contracts. Then edit the examples or paste two OpenAPI JSON/YAML documents. The TypeScript engine computes locally in a browser worker; your input is not uploaded or stored.</p>
 <p class="quiet">Two documents, up to 200 KB each. Internal references only; no file or network references, consumer manifests or disk operations. Five-second time limit. Use non-confidential samples.</p>
-<div class="demo-controls"><label for="contract-select">Starting example</label><select id="contract-select"><option value="parameter">Required region parameter added</option><option value="removed">GET /orders removed</option><option value="response">Required response email removed</option><option value="request">Required request property added</option><option value="enum">Request enum value removed</option><option value="same">Identical contracts</option></select></div>
+<div class="demo-controls"><label for="contract-select">Starting example</label><select id="contract-select"><option value="parameter">1. Breaking: required region parameter added</option><option value="unsupported">2. Unsupported: network reference</option><option value="same">3. Unchanged: identical contracts</option><option value="removed">GET /orders removed</option><option value="response">Required response email removed</option><option value="request">Required request property added</option><option value="enum">Request enum value removed</option></select></div>
 <div class="contract-editors"><label for="contract-baseline">Baseline contract<textarea id="contract-baseline" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="200000"></textarea></label><label for="contract-candidate">Candidate contract<textarea id="contract-candidate" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="200000"></textarea></label></div>
 <div class="actions"><button class="action primary" type="button" id="contract-run">Compare contracts</button><button class="action" type="button" id="contract-download" disabled>Download JSON report</button></div>
 <p id="contract-live" role="status" aria-live="polite"></p><div id="contract-output" class="demo-output"></div>
@@ -51,7 +51,7 @@
 <h2>Three distinct outcomes</h2>
 <ul>
 <li>
-<strong>Exit 0:</strong> no supported breaking change found.</li>
+<strong>Exit 0:</strong> no breaking change found within the five supported checks on these documents. This is not a general compatibility verdict.</li>
 <li>
 <strong>Exit 2:</strong> a supported breaking change was detected. The browser uses the same comparison rules with memory-only input/output adapters.</li>
 <li>
@@ -64,13 +64,15 @@
 </section>
 </div>
 <details>
-<summary>Source and local quick start</summary>
+<summary>Source and local quick starts</summary>
 <p>Comparison engine pinned to <a href="https://github.com/LuxuriantTech/api-contract-guard/tree/6ee1e569bbe751748a96e52aa0eee86864f20d69">6ee1e569</a>. Browser adapters replace file access and hashing, not the comparison rules. <a href="https://github.com/LuxuriantTech/software-engineering-portfolio/tree/main/site/contract-demo">Adapter source and validation</a>.</p>
+<p>Trace a finding from the <a href="https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/src/engine.ts">comparison code</a> to the <a href="https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/tests/rules.test.ts">rule tests</a> and the <a href="https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/src/report.ts">report renderer</a>.</p>
+<p>To run this browser demo, clone the portfolio repository. From its <code>site/</code> directory, run:</p>
 <pre class="command">
 <code>npm ci
-npm run demo</code>
+npm run dev</code>
 </pre>
-<p>Use Node 24.15.0 and npm 11.18.0 from the prepared checkout. The demo compares local synthetic fixtures and makes no network, traffic, customer-data, or hosted-service claim.</p>
+<p>Use Node 24 and npm 11. The separate <a href="https://github.com/LuxuriantTech/api-contract-guard/tree/6ee1e569bbe751748a96e52aa0eee86864f20d69">API Contract Guard CLI repository</a> has its own <code>npm run demo</code> command for local synthetic fixtures; that command is not part of this portfolio site. The browser comparison processes pasted inputs locally. Neither run demonstrates production traffic, customer data or a hosted service.</p>
 </details>
 <section class="notice">
 <strong>Limit</strong>A change outside the supported document subset is deliberately an input/unsupported outcome, not evidence that an API is compatible. The result applies only to the compared local documents.</section>

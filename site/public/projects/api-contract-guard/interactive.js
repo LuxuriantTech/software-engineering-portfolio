@@ -1,4 +1,5 @@
 import { examplePair } from './examples.js';
+import { RULE_LINKS } from './rule-links.js';
 const byId = id => document.getElementById(id);
 const output = byId('contract-output'), live = byId('contract-live');
 const run = byId('contract-run'), download = byId('contract-download');
@@ -14,11 +15,12 @@ function load() {
   byId('contract-candidate').value = pair.candidate;
 }
 function line(tag, text) { const node = document.createElement(tag); node.textContent = text; return node; }
+function sourceLink(label, href) { const node = line('a', label); node.href = href; node.target = '_blank'; node.rel = 'noopener noreferrer'; return node; }
 function render(result) {
   stop(); output.replaceChildren(); latest = undefined; download.disabled = true;
   if (result.exitCode === 3) {
     live.textContent = 'Comparison refused. No compatibility result.';
-    output.append(line('h3', `Input refused — ${result.errorCode}`), line('p', 'No report is available. Fix the input or use a supported document shape. File and network references are not supported in this browser version.'));
+    output.append(line('h3', `Input refused: ${result.errorCode}`), line('p', 'No report is available. Fix the input or use a supported document shape. File and network references are not supported in this browser version.'));
     return;
   }
   latest = result.report; download.disabled = false;
@@ -28,10 +30,12 @@ function render(result) {
   for (const finding of result.report.findings) {
     const item = document.createElement('section'); item.className = 'demo-row';
     item.append(line('h4', finding.ruleId), line('p', `${finding.method.toUpperCase()} ${finding.path}: ${finding.message}`), line('code', finding.pointer));
+    const links = RULE_LINKS[finding.ruleId];
+    if (links) { const evidence = line('p', 'This rule: '); evidence.append(sourceLink('decision code', links.source), ' · ', sourceLink('focused test', links.test)); item.append(evidence); }
     output.append(item);
   }
   output.append(line('h4', `Warnings (${result.report.warnings.length})`));
-  for (const warning of result.report.warnings) output.append(line('p', `${warning.code}: ${warning.message} — ${warning.location}`));
+  for (const warning of result.report.warnings) output.append(line('p', `${warning.code}: ${warning.message} (${warning.location})`));
   const details = document.createElement('details'); details.append(line('summary', 'Computed JSON report and input fingerprints'), line('pre', JSON.stringify(result.report, null, 2))); output.append(details);
 }
 run.addEventListener('click', () => {

@@ -22,7 +22,9 @@ import {
 test("publishes ten bounded project stories", () => {
   assert.equal(PROJECTS.length, 10);
   assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 10);
+  assert.equal(new Set(PROJECTS.map(({ number }) => number)).size, 10);
   assert.equal(PROJECTS.filter(({ featured }) => featured).length, 3);
+  assert.deepEqual(PROJECTS.filter(({ featured }) => featured).sort((a, b) => a.number.localeCompare(b.number)).map(({ id }) => id), ["api-contract-guard", "toolcall-replay", "entity-resolution-workbench"]);
 
   for (const project of PROJECTS) {
     assert.match(project.number, /^(0[1-9]|10)$/);
@@ -49,6 +51,9 @@ test("uses dedicated public repositories for the featured projects", () => {
     assert.equal(project.url, `https://github.com/LuxuriantTech/${project.id}`);
     assert.equal(project.demoUrl, `/projects/${project.id}/`);
     assert.ok(project.repositoryEvidenceUrl?.startsWith(project.url));
+    assert.ok(project.repositorySourceUrl?.startsWith(project.url));
+    assert.ok(project.repositoryTestUrl?.startsWith(project.url));
+    assert.ok(project.localCommand?.length > 10);
   }
 });
 
@@ -81,13 +86,13 @@ test("keeps all secondary project limits visible", () => {
     .map(({ scope }) => scope)
     .join(" ");
 
-  assert.match(secondaryCopy, /Public sample only · Separate from the product site/);
+  assert.match(secondaryCopy, /Public React\/FastAPI\/SQLite sample · Private product separate/);
   assert.match(secondaryCopy, /Current runtime unverified/);
   assert.match(secondaryCopy, /Internal R&D · Synthetic research only/);
   assert.match(secondaryCopy, /Paper-only · No profitability claim/);
 });
 
-test("links the three CPL walkthroughs directly from the portfolio", () => {
+test("distinguishes the three public snapshots from browser walkthroughs", () => {
   for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
     const project = PROJECTS.find((candidate) => candidate.id === id);
     assert.ok(project);
@@ -97,7 +102,7 @@ test("links the three CPL walkthroughs directly from the portfolio", () => {
   }
 });
 
-test("keeps walkthroughs interactive without promoting the rejected reel", async () => {
+test("distinguishes prepared walkthroughs from the live API demo without promoting the rejected reel", async () => {
   const index = await readFile(new URL("../public/projects/index.html", import.meta.url), "utf8");
   const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
   const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");

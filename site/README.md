@@ -6,9 +6,9 @@ The home page opens with a short, skippable motion sequence on a first visit in 
 
 ## Reading order
 
-API Contract Guard, ToolCall Replay and Entity Resolution Workbench are the three primary examples. Each explains the user problem, an observable example, a design choice, the contribution with AI assistance and the current limitation. Public source and tests are linked beside each case; technical scope remains accessible in native disclosure controls.
+API Contract Guard, ToolCall Replay and Entity Resolution Workbench are the three primary examples. Each explains the user problem, an observable example, a design choice, the contribution with AI assistance and the current limitation. Decision code, focused tests and local commands are linked beside each case; technical scope remains accessible in native disclosure controls.
 
-All ten projects remain accessible. API Contract Guard computes a bounded report from editable fictional contracts in the browser. ToolCall Replay and Entity Resolution Workbench show prepared synthetic outcomes and link to public local source snapshots. The other browser pages describe their runtime limits. Synthévia's public product demo is separate from its smaller React/FastAPI/SQLite code sample.
+All ten projects remain accessible. API Contract Guard computes a bounded report from editable fictional contracts in the browser. ToolCall Replay and Entity Resolution Workbench show prepared synthetic outcomes and link to public local source snapshots. PMR has a separate six-invoice CLI baseline, while its browser page shows historical prepared stages. The other browser pages describe their runtime limits. Synthévia's public product demo is separate from its smaller React/FastAPI/SQLite code sample.
 
 EvidenceDesk's failed answer evaluation remains visible. Historical metrics have not been changed or rerun. PMR's separate CLI baseline does not resolve its historical browser reproducibility limits. MyTradingBot has no demonstrated profitability.
 

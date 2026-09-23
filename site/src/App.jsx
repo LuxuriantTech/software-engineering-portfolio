@@ -36,7 +36,7 @@ function repositoryHandoffProject() {
   if (typeof window === "undefined") return null;
 
   const projectId = new URLSearchParams(window.location.search).get("repository");
-  return PROJECTS.find(({ id }) => id === projectId && ["evidencedesk", "api-contract-guard"].includes(id)) ?? null;
+  return PROJECTS.find(({ id }) => id === projectId && ["evidencedesk", "api-contract-guard", "toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"].includes(id)) ?? null;
 }
 
 function ProjectStatus({ status }) {
@@ -784,6 +784,7 @@ function ProjectCase({ project }) {
           <details className="project-checks">
             <summary>What runs, and what remains unproven</summary>
             <p>{project.works}</p><p>{project.limit}</p>
+            {project.repositorySourceUrl ? <p>Follow the <a href={project.repositorySourceUrl} target="_blank" rel="noopener noreferrer">decision code</a>, <a href={project.repositoryTestUrl} target="_blank" rel="noopener noreferrer">focused test</a>, then run <code>{project.localCommand}</code> from the public repository.</p> : null}
           </details>
         </div>
       </div>

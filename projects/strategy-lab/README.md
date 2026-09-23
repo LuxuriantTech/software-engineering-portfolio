@@ -4,6 +4,23 @@ Strategy Lab is where a promising backtest is expected to fail. This public
 edition contains a few generic controls I use to reject weak conclusions, all
 driven by synthetic data and strict typed checks. It is not a trading product.
 
+## One candidate, one rejection
+
+Run the [seeded example](src/strategy_lab_showcase/demo.py) with the command below.
+On the local check of 23 September 2026, its 40 generated values averaged
+-0.217 basis points before a simulated cost of 0.75 basis points: -0.967 after
+that stated cost, so the output is `FAIL`. One basis point is one hundredth of
+a percentage point. These numbers are fictional arithmetic, not observed returns.
+The [rejection test](tests/test_demo.py) checks the verdict.
+
+The other controls answer separate questions: the
+[BH adjustment](src/strategy_lab_showcase/statistics.py) limits false discoveries
+when many hypotheses are tested; the HAC calculation accounts for dependence
+between observations. The [protocol](src/strategy_lab_showcase/protocol.py)
+prevents a second holdout use inside one process and rejects declared fills
+that cannot support a position. This public example does not enforce the
+holdout rule across restarts or establish a general statistical result.
+
 ## Research boundary
 
 The private project is internal R&D. It is not a trading product, not
@@ -140,7 +157,7 @@ metric or the private research corpus.
 ## Review check: abstention contract
 
 The portfolio-wide Claude Code and Codex workflow is described in the
-[portfolio README](../../README.md#how-i-use-coding-agents). Here, malformed
+[portfolio README](../../README.md#development-process). Here, malformed
 LLM output must become `ABSTAIN`, never an inferred approval; the synthetic
 candidate verdict is a separate conditional comparison, not a market result.
 

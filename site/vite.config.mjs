@@ -16,11 +16,21 @@ export default defineConfig({
     },
   },
   plugins: [react(), {
-    name: 'contract-demo-index',
+    name: 'project-demo-indexes',
     configureServer(server) {
+      const projectPaths = new Set([
+        '/projects/',
+        '/projects/api-contract-guard/',
+        '/projects/toolcall-replay/',
+        '/projects/entity-resolution-workbench/',
+        '/projects/evidencedesk/',
+        '/projects/postgres-migration-rehearsal/',
+        '/projects/skill-studio/',
+      ]);
       server.middlewares.use((request, _response, next) => {
-        if (request.url?.split('?')[0] === '/projects/api-contract-guard/') {
-          request.url = request.url.replace('/api-contract-guard/', '/api-contract-guard/index.html');
+        const path = request.url?.split('?')[0];
+        if (projectPaths.has(path)) {
+          request.url = request.url.replace(path, `${path}index.html`);
         }
         next();
       });

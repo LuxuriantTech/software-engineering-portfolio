@@ -8,6 +8,22 @@ import { createHash } from 'node:crypto';
 import { build } from 'esbuild';
 import { bundle } from '../scripts/build-contract-demo.mjs';
 import { examplePair } from '../public/projects/api-contract-guard/examples.js';
+import { RULE_LINKS } from '../public/projects/api-contract-guard/rule-links.js';
+
+test('each supported finding links to its pinned rule implementation and focused test', async () => {
+  const rules = [
+    'OPERATION_REMOVED', 'REQUIRED_PARAMETER_ADDED', 'REQUEST_REQUIRED_PROPERTY_ADDED',
+    'RESPONSE_REQUIRED_PROPERTY_REMOVED', 'ENUM_VALUE_REMOVED',
+  ];
+  assert.deepEqual(Object.keys(RULE_LINKS).sort(), rules.sort());
+  for (const { source, test: focusedTest } of Object.values(RULE_LINKS)) {
+    assert.match(source, /\/blob\/6ee1e569bbe751748a96e52aa0eee86864f20d69\/src\/engine\.ts#L\d+$/);
+    assert.match(focusedTest, /\/blob\/6ee1e569bbe751748a96e52aa0eee86864f20d69\/tests\/rules\.test\.ts#L\d+$/);
+  }
+  const ui = await readFile(new URL('../public/projects/api-contract-guard/interactive.js', import.meta.url), 'utf8');
+  assert.match(ui, /RULE_LINKS\[finding\.ruleId\]/);
+  assert.match(ui, /noopener noreferrer/);
+});
 
 test('browser comparison matches the original engine on fresh documents', async t => {
   const temp = await mkdtemp(join(tmpdir(), 'acg-browser-parity-'));
@@ -36,6 +52,10 @@ test('browser comparison matches the original engine on fresh documents', async 
       await t.test(name, () => parity(examplePair(name), 2, rule));
     }
     await t.test('no supported change', () => parity(examplePair('same'), 0));
+    await t.test('quick-start unsupported network reference has no report', async () => {
+      const result = await parity(examplePair('unsupported'), 3);
+      assert.equal(result.report, undefined);
+    });
     await t.test('new input changes paths and pointers, not just a prepared report', async () => {
       const pair = examplePair('removed'); pair.baseline = pair.baseline.replaceAll('/orders', '/invoices~2026');
       const result = await parity(pair, 2);

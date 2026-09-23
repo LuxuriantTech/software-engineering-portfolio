@@ -3,6 +3,7 @@ export function examplePair(name) {
   let candidate = structuredClone(baseline);
   if (name === 'removed') candidate.paths = {};
   if (name === 'parameter') candidate.paths['/orders'].get.parameters = [{ name: 'region', in: 'query', required: true, schema: { type: 'string' } }];
+  if (name === 'unsupported') candidate.paths['/orders'].get.parameters = [{ $ref: 'https://example.invalid/parameters.yaml' }];
   if (name === 'request') {
     baseline.paths['/orders'].get.requestBody = { content: { 'application/json': { schema: { type: 'object', properties: { region: { type: 'string' } }, required: [] } } } };
     candidate = structuredClone(baseline);

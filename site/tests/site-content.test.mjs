@@ -23,6 +23,7 @@ test("publishes ten bounded project stories", () => {
   assert.equal(PROJECTS.length, 10);
   assert.equal(new Set(PROJECTS.map(({ id }) => id)).size, 10);
   assert.equal(PROJECTS.filter(({ featured }) => featured).length, 3);
+  assert.deepEqual(PROJECTS.filter(({ featured }) => featured).sort((a, b) => a.number.localeCompare(b.number)).map(({ id }) => id), ["api-contract-guard", "toolcall-replay", "entity-resolution-workbench"]);
 
   for (const project of PROJECTS) {
     assert.match(project.number, /^(0[1-9]|10)$/);
@@ -44,7 +45,7 @@ test("gives every featured project a complete decision dossier", () => {
   }
 });
 
-test("uses dedicated public repositories for the featured projects", () => {
+test("links all five public source repositories and selected local test paths", () => {
   const evidenceDesk = PROJECTS.find(({ id }) => id === "evidencedesk");
   const contractGuard = PROJECTS.find(({ id }) => id === "api-contract-guard");
 
@@ -52,6 +53,18 @@ test("uses dedicated public repositories for the featured projects", () => {
   assert.equal(contractGuard.url, "https://github.com/LuxuriantTech/api-contract-guard");
   assert.equal(evidenceDesk.demoUrl, "/projects/evidencedesk/");
   assert.equal(contractGuard.demoUrl, "/projects/api-contract-guard/");
+  for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
+    const project = PROJECTS.find((candidate) => candidate.id === id);
+    assert.equal(project.url, `https://github.com/LuxuriantTech/${id}`);
+    assert.equal(project.demoUrl, `/projects/${id}/`);
+    assert.match(project.scope, /Public source snapshot/);
+  }
+  for (const id of ["api-contract-guard", "toolcall-replay", "entity-resolution-workbench"]) {
+    const project = PROJECTS.find((candidate) => candidate.id === id);
+    assert.match(project.repositorySourceUrl, /github.com\/LuxuriantTech\/.+\/blob\/.+\/src\//);
+    assert.match(project.repositoryTestUrl, /github.com\/LuxuriantTech\/.+\/blob\/.+\/tests\//);
+    assert.ok(project.localCommand.length > 15);
+  }
 });
 
 test("keeps EvidenceDesk's positive and negative evaluation together", () => {
@@ -83,19 +96,19 @@ test("keeps all secondary project limits visible", () => {
     .map(({ scope }) => scope)
     .join(" ");
 
-  assert.match(secondaryCopy, /Public sample only · Separate from the product site/);
+  assert.match(secondaryCopy, /Public React\/FastAPI\/SQLite sample · Private product separate/);
   assert.match(secondaryCopy, /Current runtime unverified/);
   assert.match(secondaryCopy, /Internal R&D · Synthetic research only/);
   assert.match(secondaryCopy, /Paper-only · No profitability claim/);
 });
 
-test("links the three CPL walkthroughs directly from the portfolio", () => {
+test("distinguishes the three public snapshots from browser walkthroughs", () => {
   for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
     const project = PROJECTS.find((candidate) => candidate.id === id);
     assert.ok(project);
-    assert.match(project.url, /^\/projects\//);
-    assert.match(project.scope, /Synthetic browser walkthrough/);
-    assert.match(project.scope, /Local application/);
+    assert.match(project.url, /^https:\/\/github.com\/LuxuriantTech\//);
+    assert.match(project.demoUrl, /^\/projects\//);
+    assert.match(project.scope, /Public source snapshot/);
   }
 });
 
@@ -104,8 +117,8 @@ test("distinguishes prepared walkthroughs from the live API demo without promoti
   const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
   const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");
 
-  assert.match(index, /Prepared walkthroughs and a live API comparison/);
-  assert.match(index, /API Contract Guard also computes reports from contracts you edit in the browser/);
+  assert.match(index, /One computed browser comparison/);
+  assert.match(index, /API Contract Guard computes reports on contracts you edit in the browser/);
   assert.match(demo, /Hand-authored synthetic illustration/);
   assert.doesNotMatch(index, /<video|portfolio-reel\.mp4/);
   assert.match(css, /\.reel\s+video/);

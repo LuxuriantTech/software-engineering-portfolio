@@ -150,13 +150,13 @@ database. Initial dependency installation requires package-index access.
 ## Review check: live-mode rejection
 
 The portfolio-wide Claude Code and Codex workflow is described in the
-[portfolio README](../../README.md#how-i-use-coding-agents). For this sample,
+[portfolio README](../../README.md#development-process). For this sample,
 review rejected a runtime-flag-only design: there is no live adapter, and a
 live-mode request must raise before any paper-fill path can run.
 
 ## Paper-execution boundary
 
-- The paper fill model is deterministic and deliberately small.
+- The paper fill model is deterministic and deliberately small. It does not model market liquidity or latency and cannot establish future returns.
 - Risk evaluation demonstrates absolute and configurable equity-relative
   notional limits, not portfolio risk.
 - The API has no strategy or order route.

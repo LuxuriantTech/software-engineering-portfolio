@@ -20,6 +20,13 @@ sample narrows that problem to one asynchronous boundary: a non-moderator must
 not create an audit action, while an allowed action records only its identifiers
 and a synthetic reason.
 
+Follow the denial from [the service role gate](src/gargantua_showcase/moderation.py)
+to [the member rejection test](tests/test_moderation.py). The separate
+[FastAPI response](src/gargantua_showcase/api.py) and [API test](tests/test_api.py)
+show how a fictional guild summary can be transferred through a business API
+without connecting to Discord. Those checks cover this selected boundary;
+they do not establish live permission freshness or full bot behavior.
+
 ## Included here
 
 - an asynchronous moderation service with a role gate;
@@ -124,7 +131,7 @@ historical test count or current deployment health.
 ## Review check: member-action rejection
 
 The portfolio-wide Claude Code and Codex workflow is described in the
-[portfolio README](../../README.md#how-i-use-coding-agents). Here, the review
+[portfolio README](../../README.md#development-process). Here, the review
 criterion was that a member-level action fails before an audit mutation; the
 accepted path records actor, subject and reason without a message-content field.
 

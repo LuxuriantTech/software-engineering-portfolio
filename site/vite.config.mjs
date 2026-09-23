@@ -18,9 +18,18 @@ export default defineConfig({
   plugins: [react(), {
     name: 'project-demo-indexes',
     configureServer(server) {
+      const projectPaths = new Set([
+        '/projects/',
+        '/projects/api-contract-guard/',
+        '/projects/toolcall-replay/',
+        '/projects/entity-resolution-workbench/',
+        '/projects/evidencedesk/',
+        '/projects/postgres-migration-rehearsal/',
+        '/projects/skill-studio/',
+      ]);
       server.middlewares.use((request, _response, next) => {
         const path = request.url?.split('?')[0];
-        if (path === '/projects/' || path === '/projects/api-contract-guard/') {
+        if (projectPaths.has(path)) {
           request.url = request.url.replace(path, `${path}index.html`);
         }
         next();

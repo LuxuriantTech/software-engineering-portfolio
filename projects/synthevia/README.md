@@ -6,6 +6,16 @@ end to end: a React view loads a synthetic workspace through local FastAPI and
 in-memory SQLite. Deterministic retrieval and data generation remain separate,
 smaller examples.
 
+## Inspect one request
+
+The [React view](frontend/src/App.tsx) requests
+`GET /api/workspaces/demo-workspace-01`. The [FastAPI route](src/synthevia_showcase/api.py)
+reads the fictional Northstar Demo workspace through the
+[in-memory SQLite store](src/synthevia_showcase/storage.py).
+The [API test](tests/test_api.py) checks its fields and the 404 for an unknown ID;
+the [frontend tests](frontend/tests/App.test.tsx) cover loading, display and failure.
+This path has no private account, authentication or durable database.
+
 ## Scope of this sample
 
 The private product is pre-launch. This repository is a small, independently
@@ -145,7 +155,7 @@ Full commands and limits are recorded in
 ## Review check: bounded retrieval
 
 The portfolio-wide Claude Code and Codex workflow is described in the
-[portfolio README](../../README.md#how-i-use-coding-agents). For this sample,
+[portfolio README](../../README.md#development-process). For this sample,
 adversarial review found an unbounded document iterable; the public helper now
 rejects oversized queries, documents and collections, with a test that verifies
 consumption stops at the validation boundary.

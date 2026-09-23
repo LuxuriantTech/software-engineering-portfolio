@@ -27,14 +27,14 @@ import {
 } from "./sessionIntroState.js";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured).sort((a, b) => a.number.localeCompare(b.number));
-const additionalProjects = PROJECTS.filter((project) => !project.featured && project.id !== "synthevia");
-const browserProjects = PROJECTS.filter((project) => project.demoUrl?.startsWith("/projects/") || project.url.startsWith("/projects/"));
+const additionalProjects = PROJECTS.filter((project) => !project.featured).sort((a, b) => a.number.localeCompare(b.number));
+const browserProjects = PROJECTS.filter((project) => project.demoUrl?.startsWith("/projects/") || project.url.startsWith("/projects/")).sort((a, b) => a.number.localeCompare(b.number));
 
 function repositoryHandoffProject() {
   if (typeof window === "undefined") return null;
 
   const projectId = new URLSearchParams(window.location.search).get("repository");
-  return featuredProjects.find(({ id }) => id === projectId && ["evidencedesk", "api-contract-guard"].includes(id)) ?? null;
+  return PROJECTS.find(({ id }) => id === projectId && ["evidencedesk", "api-contract-guard", "toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"].includes(id)) ?? null;
 }
 
 function ProjectStatus({ status }) {
@@ -748,13 +748,20 @@ function ProjectCase({ project }) {
           <figure className="project-preview"><a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label="Explore the Synthévia public demo"><img src="/images/synthevia-product.png" width="1440" height="900" loading="lazy" decoding="async" alt="Synthévia's market overview and learning workspace, using fictional data." /></a><figcaption><span>Synthévia · Product demo</span><span>Explore ↗</span></figcaption></figure>
         ) : project.id === "skill-studio" ? (
           <figure className="project-preview"><a href={project.preview.href} aria-label={project.preview.label}><img src={project.preview.src} width="964" height="529" loading="lazy" decoding="async" alt={project.preview.alt} /></a><figcaption><span>Skill Studio · Static demo · Synthetic inputs</span><span>Open the demo ↗</span></figcaption></figure>
-        ) : (
+        ) : project.id === "api-contract-guard" ? (
           <a href={project.demoUrl} className="contract-workflow" aria-label="Try API Contract Guard: compare a change to an API contract">
             <span className="section-label">One change. An existing client.</span>
             <div className="contract-inputs"><span>Before<br /><strong>GET /invoices</strong><br />No query parameter</span><span>After<br /><strong>+ region</strong><br />Required parameter</span></div>
             <div className="contract-compare">Could an existing request break? <ArrowRightIcon size={22} aria-hidden="true" /></div>
             <div className="contract-outputs"><span>JSON report</span><span>HTML report</span></div>
             <p>Open the example and inspect the reported change.</p>
+          </a>
+        ) : (
+          <a href={project.demoUrl} className="contract-workflow" aria-label={`Open the prepared ${project.name} walkthrough`}>
+            <span className="section-label">Prepared synthetic walkthrough</span>
+            <div className="contract-inputs"><span>{project.id === "toolcall-replay" ? "Safe trace" : "Two catalogue records"}<br /><strong>{project.id === "toolcall-replay" ? "PASS" : "Harbor Desk Lamp"}</strong></span><span>{project.id === "toolcall-replay" ? "Risky update" : "Conflicting SKU"}<br /><strong>{project.id === "toolcall-replay" ? "Expected FAIL" : "Engine REVIEW"}</strong></span></div>
+            <div className="contract-compare">Inspect the rule and public local source <ArrowRightIcon size={22} aria-hidden="true" /></div>
+            <p>This page displays prepared data. The public repository contains the local evaluator and selected tests.</p>
           </a>
         )}
         <div className="project-notes">
@@ -766,12 +773,13 @@ function ProjectCase({ project }) {
           </dl>
           <div className="project-links">
             <a className="primary-action" href={project.demoUrl}>Try {project.name} <ArrowRightIcon size={18} aria-hidden="true" /></a>
-            <a href={project.url} target={project.id === "skill-studio" ? undefined : "_blank"} rel="noopener noreferrer">{project.id === "skill-studio" ? "Recorded example" : project.id === "synthevia" ? "Local code sample" : "View code"} {project.id === "skill-studio" ? <ArrowRightIcon size={18} aria-hidden="true" /> : <MarkGithubIcon size={18} aria-hidden="true" />}</a>
+            <a href={project.url} target={project.id === "skill-studio" ? undefined : "_blank"} rel="noopener noreferrer">{project.id === "skill-studio" ? "Recorded example" : project.id === "synthevia" ? "Local code sample" : "View public code"} {project.id === "skill-studio" ? <ArrowRightIcon size={18} aria-hidden="true" /> : <MarkGithubIcon size={18} aria-hidden="true" />}</a>
             {project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Project story <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}
           </div>
           <details className="project-checks">
             <summary>Technical notes and checks</summary>
             <p>{project.proof}</p><p>{project.limit}</p>
+            {project.repositorySourceUrl ? <p>Follow the <a href={project.repositorySourceUrl} target="_blank" rel="noopener noreferrer">decision code</a>, <a href={project.repositoryTestUrl} target="_blank" rel="noopener noreferrer">focused test</a>, then run <code>{project.localCommand}</code> from the public repository.</p> : null}
             {project.repositoryEvidenceUrl ? <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">Read the validation record</a> : null}
           </details>
         </div>
@@ -785,13 +793,13 @@ function Work() {
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
-        <h2 id="work-title">Three projects. Three concrete problems.</h2>
-        <p>Personal projects built with AI assistance. Start with an example, then explore the choices and the code.</p>
+        <h2 id="work-title">An API change. A rejected tool call. An ambiguous record.</h2>
+        <p>Three inspectable engineering problems built with AI assistance. Try each example, then follow its rule, test and local command in the public source.</p>
       </div>
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
         {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">Start with fictional examples. API Contract Guard also computes reports from contracts you edit in the browser; other demos state their limits.</p>
+      <p className="demo-context page-grid">API Contract Guard computes on contracts you edit in the browser. ToolCall Replay and Entity Resolution show prepared fictional examples; their public repositories contain local engines and selected tests.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
         <div className="demo-launchpad-heading"><strong>Explore the engineering demos</strong><a href="/projects/">Demo collection <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
@@ -800,7 +808,7 @@ function Work() {
         </div>
       </nav>
       <div className="project-index page-grid" aria-labelledby="project-index-title">
-        <div className="index-heading"><p className="section-label">More to inspect</p><h3 id="project-index-title">Tools, data and research.</h3></div>
+        <div className="index-heading"><p className="section-label">Supporting work and annexes</p><h3 id="project-index-title">Evaluation, full-stack work and research.</h3></div>
         <div className="index-list">
           {additionalProjects.map((project) => (
             <a href={project.url} target={project.url.startsWith("http") ? "_blank" : undefined} rel={project.url.startsWith("http") ? "noopener noreferrer" : undefined} key={project.id} id={project.id}>

@@ -24,20 +24,21 @@
 </header>
 <main class="wrap" id="main" tabindex="-1">
 <p class="eyebrow">ToolCall Replay · Workflow review</p>
-<p class="quiet demo-disclosure">Interactive demo · Fictional data · Full tool runs locally</p>
+<p class="quiet demo-disclosure">Prepared browser trace · Fictional data · Public local evaluator</p>
 <h1>Understand why a tool call was rejected.</h1>
 <p class="lede">Follow an automated workflow step by step and inspect the rule behind each verdict. An expected rejection is a useful result, not an application crash.</p>
 <div class="actions" aria-label="ToolCall Replay actions">
 <a class="action primary" href="#interactive-demo">Try the demo</a>
-<a class="action" href="https://github.com/LuxuriantTech/toolcall-replay/tree/main">GitHub</a>
+<a class="action" href="https://github.com/LuxuriantTech/toolcall-replay/tree/0c68b24f87992099c05249e27dc16f20d39c7c79">Public source snapshot</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=ToolCall%20Replay">Contact me</a>
 </div>
 <section class="demo" id="interactive-demo" aria-labelledby="tool-demo-title">
 <div class="demo-head"><div><p class="eyebrow">Interactive prepared trace</p><h2 id="tool-demo-title">Inspect an illustrative verdict</h2></div><button class="action" type="button" id="toolcall-reset">Reset demo</button></div>
-<p>All inputs below are synthetic and evaluated in this browser as prepared trace data. No tool, agent, model, or network request runs.</p>
+<p>All inputs below are synthetic and displayed in this browser as prepared trace data. No tool, agent, model, or network request runs.</p>
 <div class="demo-controls"><label>Trace<select id="trace-select" data-initial="safe"><option value="safe">Approved address lookup</option><option value="risky">Risky directory update</option></select></label><label>Filter events<input id="event-filter" data-initial="" type="search" placeholder="for example: approval"></label></div>
 <p id="tool-live" class="sr-status" aria-live="polite"></p><div id="tool-output" class="demo-output" aria-live="polite"></div>
 </section>
+<section class="panel"><h2>From the trace to the rule</h2><p>Choose the risky update above. Its expected FAIL names <code>lookup-scope</code>, <code>no-directory-export</code> and <code>update-needs-approval</code>. Inspect the public <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/src/toolcall_replay/rules.py">evaluator rules</a>, <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/tests/test_rules.py">focused tests</a> and <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/src/toolcall_replay_lab/scenarios/risky-broad-update.jsonl">synthetic trace</a>. In that repository, run <code>uv sync --frozen</code> and <code>scripts/lab.sh start</code> to compute a local verdict; <code>scripts/lab.sh stop</code> ends it.</p><p class="quiet">This public repository is a source snapshot with selected runtime tests. Its private Git history and some historical verification machinery are absent.</p></section>
 <section class="trace" aria-label="Recorded evaluator outcome">
 <b>illustrative</b> baseline: PASS - safe trace outcome<br>
 <b>illustrative</b> candidate: <span class="fail">FAIL</span> - three named concerns<br>

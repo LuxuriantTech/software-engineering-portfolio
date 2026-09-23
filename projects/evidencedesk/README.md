@@ -31,6 +31,15 @@ abstention accuracy and 45.67% extraction F1. The result is
 `HONEST_NEGATIVE`: retrieval found the expected evidence, but answer selection,
 citation recall and extraction did not generalise well enough.
 
+For example, frozen case `v7-a12` asked when custody became effective. The
+expected citation in `chain_of_custody.md`, page 2, says 27 August 2031 at
+08:30. The [recorded answer](https://github.com/LuxuriantTech/evidencedesk/blob/main/artifacts/evaluations/holdout_v7/raw.json)
+said “Conflicting values are supported” and cited that passage alongside a
+page 3 renewal date in 2032. The [case definition](https://github.com/LuxuriantTech/evidencedesk/blob/main/datasets/blind_holdout_v7/evaluation_cases.json)
+and [analysis](https://github.com/LuxuriantTech/evidencedesk/blob/main/docs/holdout-v7-analysis.md)
+support an answer-selection confusion hypothesis; they do not establish a
+measured causal fix.
+
 One v7 adversarial document also caused an injected instruction to be returned.
 A deterministic guard and regression tests were added after the evaluation; v7
 was not rerun or rescored. This is a documented fix, not a new quality claim.

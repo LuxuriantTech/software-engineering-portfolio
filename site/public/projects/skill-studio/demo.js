@@ -20,16 +20,7 @@ const loadButton = document.querySelector("#load-example");
 const exportButton = document.querySelector("#export-example");
 
 function renderDiff() {
-  const before = originalSkill.split("\n");
-  const after = editor.value.split("\n");
-  const count = Math.max(before.length, after.length);
-  const lines = [];
-  for (let index = 0; index < count; index += 1) {
-    if (before[index] === after[index]) continue;
-    if (before[index] !== undefined) lines.push(`- ${before[index]}`);
-    if (after[index] !== undefined) lines.push(`+ ${after[index]}`);
-  }
-  diffOutput.textContent = lines.length ? lines.join("\n") : "No local changes.";
+  diffOutput.textContent = window.SkillStudioLineDiff(originalSkill, editor.value);
   const isOriginal = editor.value === originalSkill;
   preparedOutput.classList.toggle("invalid", !isOriginal);
   correspondence.textContent = isOriginal

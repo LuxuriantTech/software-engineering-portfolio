@@ -70,6 +70,15 @@ test("keeps EvidenceDesk's positive and negative evaluation together", () => {
   assert.match(publicCopy, /synthetic data only/i);
 });
 
+test("separates new development proofs from frozen historical results", async () => {
+  const evidence = await readFile(new URL("../public/projects/evidencedesk/index.html", import.meta.url), "utf8");
+  const pmr = await readFile(new URL("../public/projects/postgres-migration-rehearsal/index.html", import.meta.url), "utf8");
+  assert.match(evidence, /default extractive provider is unchanged/i);
+  assert.match(evidence, /not a new independent evaluation/i);
+  assert.match(pmr, /V2 baseline reproduced the reviewed image/i);
+  assert.match(pmr, /does not repair the old browser runtime or replay historical Phase B/i);
+});
+
 test("keeps API Contract Guard bounded and reproducible", () => {
   const project = PROJECTS.find(({ id }) => id === "api-contract-guard");
   const publicCopy = JSON.stringify(project);
@@ -92,8 +101,12 @@ test("keeps all secondary project limits visible", () => {
   assert.match(secondaryCopy, /Paper-only · No profitability claim/);
 });
 
-test("distinguishes the three public snapshots from browser walkthroughs", () => {
-  for (const id of ["toolcall-replay", "entity-resolution-workbench", "postgres-migration-rehearsal"]) {
+test("distinguishes prepared walkthroughs from computed browser replay", () => {
+  const toolcall = PROJECTS.find(({ id }) => id === "toolcall-replay");
+  assert.match(toolcall.scope, /computed browser replay/i);
+  assert.match(toolcall.works, /editable rules and traces/i);
+  assert.match(toolcall.shortLimit, /never executes tools/i);
+  for (const id of ["entity-resolution-workbench", "postgres-migration-rehearsal"]) {
     const project = PROJECTS.find((candidate) => candidate.id === id);
     assert.ok(project);
     assert.equal(project.demoUrl, `/projects/${id}/`);
@@ -109,6 +122,7 @@ test("distinguishes prepared walkthroughs from the live API demo without promoti
 
   assert.match(index, /prepared synthetic walkthroughs/);
   assert.match(index, /API Contract Guard computes a comparison from editable inputs/);
+  assert.match(index, /ToolCall Replay evaluates editable rules and JSONL traces/);
   assert.match(demo, /Hand-authored synthetic illustration/);
   assert.doesNotMatch(index, /<video|portfolio-reel\.mp4/);
   assert.match(css, /\.reel\s+video/);

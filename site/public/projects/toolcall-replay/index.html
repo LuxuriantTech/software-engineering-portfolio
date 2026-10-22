@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="/project-transition.css">
 <script src="/project-transition.js" defer></script>
 </head>
-<body class="terminal" data-demo="toolcall">
-<a class="skip" href="#main">Skip to recorded trace</a>
+<body class="terminal" data-demo="toolcall-live">
+<a class="skip" href="#main">Skip to evaluator</a>
 <header class="site-head">
 <a class="author-link" href="/"><strong>Ardian Mehaj</strong><span>Back to portfolio ↗</span></a>
 <nav aria-label="Project navigation">
@@ -19,6 +19,7 @@
 <a href="../postgres-migration-rehearsal/">PMR</a>
 <a href="../api-contract-guard/">ACG</a>
 <a href="../evidencedesk/">EvidenceDesk</a>
+<a href="../skill-studio/">Skill Studio</a>
 </nav>
 <nav class="profile-nav" aria-label="Ardian Mehaj profile">
 <a href="/">Portfolio</a><a href="/documents/Ardian_Mehaj_Public_CV_EN.pdf">CV (EN)</a><a href="/documents/Ardian_Mehaj_Public_CV_FR.pdf" lang="fr">CV (FR)</a><a href="mailto:mehajardian@gmail.com">Contact</a>
@@ -26,71 +27,36 @@
 </header>
 <main class="wrap" id="main" tabindex="-1">
 <p class="eyebrow">ToolCall Replay · Workflow review</p>
-<p class="quiet demo-disclosure">Prepared browser trace · Fictional data · Public local evaluator</p>
-<h1>Understand why a tool call was rejected.</h1>
-<p class="lede">Follow an automated workflow step by step and inspect the rule behind each verdict. An expected rejection is a useful result, not an application crash.</p>
+<p class="quiet demo-disclosure">Local browser evaluation · Synthetic data · No tool or network execution</p>
+<h1>See why a tool call passes or fails.</h1>
+<p class="lede">Edit the rules and trace events, then run the deterministic evaluator in this browser. A FAIL is a rule verdict for the input, not an evaluator crash.</p>
 <div class="actions" aria-label="ToolCall Replay actions">
-<a class="action primary" href="#interactive-demo">Try the demo</a>
+<a class="action primary" href="#interactive-demo">Try the evaluator</a>
 <a class="action" href="https://github.com/LuxuriantTech/toolcall-replay/tree/0c68b24f87992099c05249e27dc16f20d39c7c79">Public source snapshot</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=ToolCall%20Replay">Contact me</a>
 </div>
-<section class="demo" id="interactive-demo" aria-labelledby="tool-demo-title">
-<div class="demo-head"><div><p class="eyebrow">Interactive prepared trace</p><h2 id="tool-demo-title">Inspect an illustrative verdict</h2></div><button class="action" type="button" id="toolcall-reset">Reset demo</button></div>
-<p>All inputs below are synthetic and displayed in this browser as prepared trace data. No tool, agent, model, or network request runs.</p>
-<div class="demo-controls"><label>Trace<select id="trace-select" data-initial="safe"><option value="safe">Approved address lookup</option><option value="risky">Risky directory update</option></select></label><label>Filter events<input id="event-filter" data-initial="" type="search" placeholder="for example: approval"></label></div>
-<p id="tool-live" class="sr-status" aria-live="polite"></p><div id="tool-output" class="demo-output" aria-live="polite"></div>
-</section>
-<section class="panel"><h2>From the trace to the rule</h2><p>Choose the risky update above. Its expected FAIL names <code>lookup-scope</code>, <code>no-directory-export</code> and <code>update-needs-approval</code>. Inspect the public <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/src/toolcall_replay/rules.py">evaluator rules</a>, <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/tests/test_rules.py">focused tests</a> and <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/src/toolcall_replay_lab/scenarios/risky-broad-update.jsonl">synthetic trace</a>. In that repository, run <code>uv sync --frozen</code> and <code>scripts/lab.sh start</code> to compute a local verdict; <code>scripts/lab.sh stop</code> ends it.</p><p class="quiet">This public repository is a source snapshot with selected runtime tests. Its private Git history and some historical verification machinery are absent.</p></section>
-<section class="trace" aria-label="Recorded evaluator outcome">
-<b>illustrative</b> baseline: PASS - safe trace outcome<br>
-<b>illustrative</b> candidate: <span class="fail">FAIL</span> - three named concerns<br>
-<span class="quiet">This hand-authored example explains an expected evaluator verdict; it is not an application failure or a browser engine run.</span>
-</section>
-<hr class="rule">
-<div class="grid two">
-<section>
-<h2>A useful failure</h2>
-<p>The synthetic candidate asks for an over-broad lookup, calls a forbidden directory export, and misses approval before an update. The evaluator reports <code>lookup-scope</code>, <code>no-directory-export</code>, and <code>update-needs-approval</code>.</p>
-<p>A separate invalid JSON trace is an input or application error: it publishes no partial result. That differs from an illustrative trace whose intended verdict is FAIL.</p>
-</section>
-<section class="panel">
-<h2>Recorded state</h2>
-<p>
-<span class="tag">Synthetic</span>
-</p>
-<p>The safe built-in trace starts selected. A second built-in trace is deliberately risky and is expected to receive FAIL. Both are local, versioned examples.</p>
-</section>
+<section class="demo live-evaluator" id="interactive-demo" aria-labelledby="tool-demo-title">
+<div class="demo-head"><div><p class="eyebrow">Synthetic inputs</p><h2 id="tool-demo-title">Evaluate baseline and candidate traces</h2></div><button class="action" type="button" id="toolcall-reset">Reset example</button></div>
+<p>Change any JSON line or rule, then run it. This page only validates and evaluates the supplied data; it never executes a tool, agent, model, or network request.</p>
+<div class="toolcall-editors">
+<label>Rules (JSON array)<textarea id="rules-input" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="input-limits"></textarea></label>
+<label>Baseline trace (one JSON event per line)<textarea id="baseline-input" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="input-limits"></textarea></label>
+<label>Candidate trace (one JSON event per line)<textarea id="candidate-input" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="input-limits"></textarea></label>
 </div>
-<figure class="figure">
-<img src="../assets/toolcall-real-evaluator-expected-fail.png" alt="Recorded local evaluator result for the risky synthetic trace: evaluation complete, candidate FAIL, with three named rule violations.">
-<figcaption>Recorded local browser result. FAIL is the expected trace verdict for this synthetic candidate; it is not a crash.</figcaption>
-</figure>
-<div class="caption-grid">
-<section>
-<h2>What the evaluator makes inspectable</h2>
-<ul>
-<li>the baseline and candidate verdicts separately;</li>
-<li>rule-by-rule evidence and a repeatable report digest;</li>
-<li>bounded JSON parsing before replay starts.</li>
-</ul>
+<p id="input-limits" class="quiet">Limits: 1 MB per trace, 2,000 events, 50,000 JSON nodes, 64 rules, 1,000,000 evaluation operations. Numeric values must be exact integers within JavaScript’s safe range; decimals and exponent notation are rejected.</p>
+<div class="actions"><button class="action primary" type="button" id="toolcall-run">Run evaluation</button></div>
+<label class="toolcall-filter">Filter trace events<input id="event-filter" type="search" placeholder="for example: request.update"></label>
+<p id="tool-live" class="toolcall-state" role="status" aria-live="polite">Run evaluation to calculate both results.</p>
+<div id="tool-error" class="toolcall-error" role="alert" hidden></div>
+<div id="tool-output" class="toolcall-results" aria-live="polite"></div>
 </section>
-<details>
-<summary>Local start and stop</summary>
-<pre class="command">
-<code>uv sync --frozen
-scripts/lab.sh start
-scripts/lab.sh stop</code>
-</pre>
-<p>Open the loopback address printed by the start script. The documented mode is local launch with recorded static captures; do not expose the local HTTP engine online.</p>
-</details>
-</div>
-<hr class="rule">
-<section class="notice">
-<strong>Limit</strong>The published adapter limits trace bytes, events, JSON nodes, and nesting. Those fixed limits do not establish production scale, multi-user safety, real-data suitability, general accessibility, or security certification.</section>
+<section class="panel spaced"><h2>Supported rule types</h2><p>This browser evaluator implements the seven public rule types: call presence, call order, argument constraints, forbidden tools, required approvals, expected result, and step budget. It rejects unknown rules and unsupported event shapes. These synthetic checks do not establish production safety.</p>
+<p>See the <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/src/toolcall_replay/rules.py">public evaluator rules</a>, <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/schemas/trace-event.schema.json">trace event schema</a>, and <a href="https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/schemas/suite.schema.json">suite rule schema</a>. The hosted page is a separate bounded browser implementation, not the Python application.</p></section>
+<section class="notice spaced"><strong>Limit</strong>The browser evaluator is a review demo over synthetic input. Its fixed parsing and evaluation bounds do not establish production scale, multi-user safety, real-data suitability, or security certification.</section>
 </main>
 <footer class="site-foot">
 <p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
 </footer>
-<script src="../demo.js"></script>
+<script type="module" src="./toolcall-replay.js"></script>
 </body>
 </html>

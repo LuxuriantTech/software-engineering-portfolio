@@ -23,11 +23,6 @@ import {
   ROOT_REPOSITORY_URL,
   WORKFLOW_STEPS,
 } from "./siteData.js";
-import {
-  browserPrefersReducedMotion,
-} from "./portfolioIntroState.js";
-import { PortfolioIntro } from "./PortfolioIntro.jsx";
-import { usePortfolioIntro } from "./usePortfolioIntro.js";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured).sort((a, b) => a.number.localeCompare(b.number));
 const additionalProjects = PROJECTS.filter((project) => !project.featured).sort((a, b) => a.number.localeCompare(b.number));
@@ -193,7 +188,7 @@ function Intro({ onOpenDocument }) {
         <div className="intro-title">
           <p>Junior software developer · Python &amp; TypeScript</p>
           <h1 id="intro-title">Working software.<br />Visible proof.</h1>
-          <p className="intro-description">I build developer tools for API changes, workflow rules and data quality. Try the examples, inspect the public code and see where each result stops. I use AI coding assistants and review the work they help implement.</p>
+          <p className="intro-description">I build developer tools for API changes, workflow checks and data quality. Try a demo or explore the code.</p>
           <div className="intro-actions">
             <a className="primary-action" href="#work">Explore three projects <ArrowRightIcon size={18} aria-hidden="true" /></a>
             <button className="secondary-action" type="button" onClick={(event) => onOpenDocument("cv", event.currentTarget)}>
@@ -218,10 +213,9 @@ function RepositoryHandoff({ project }) {
   return <main className="legacy-repository page-grid"><h1>{project.name}</h1><a href={project.url}>Open repository on GitHub</a></main>;
 }
 
-function usePageMotion(enabled) {
+function useScrollProgress() {
   useEffect(() => {
     const root = document.documentElement;
-    const motionIsReduced = browserPrefersReducedMotion();
     let scrollFrame = null;
     let lastScrollY = window.scrollY;
     let scrollDirection = "down";
@@ -247,47 +241,14 @@ function usePageMotion(enabled) {
     window.addEventListener("scroll", queueScrollProgress, { passive: true });
     window.addEventListener("resize", queueScrollProgress);
 
-    if (!enabled || motionIsReduced || typeof window.IntersectionObserver !== "function") {
-      return () => {
-        if (scrollFrame !== null) window.cancelAnimationFrame(scrollFrame);
-        window.removeEventListener("scroll", queueScrollProgress);
-        window.removeEventListener("resize", queueScrollProgress);
-        root.style.removeProperty("--scroll-progress");
-      };
-    }
-
-    root.classList.add("motion-ready");
-    const revealTargets = document.querySelectorAll(
-      "[data-reveal], .intro-kicker, .intro-title, .availability, .proof-line, .section-heading, .case-file, .project-index, .method-intro, .skills-intro, .skills-list, .documents-copy, .document-deck, .about-copy, .about-facts, .contact-inner",
-    );
-    const observer = new window.IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.01, rootMargin: "0px" },
-    );
-
-    revealTargets.forEach((target) => observer.observe(target));
-
     return () => {
       if (scrollFrame !== null) window.cancelAnimationFrame(scrollFrame);
-      observer.disconnect();
-      revealTargets.forEach((target) => {
-        target.classList.remove("is-revealed");
-        delete target.dataset.revealFrom;
-      });
       window.removeEventListener("scroll", queueScrollProgress);
       window.removeEventListener("resize", queueScrollProgress);
-      root.classList.remove("motion-ready");
       root.removeAttribute("data-scroll-direction");
       root.style.removeProperty("--scroll-progress");
     };
-  }, [enabled]);
+  }, []);
 }
 
 function useControlPressFeedback() {
@@ -613,7 +574,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
     if (dialog?.open) dialog.close();
     document.body.classList.remove("document-viewer-open");
     onDismiss();
-    window.requestAnimationFrame(() => lastTriggerRef.current?.focus());
+    lastTriggerRef.current?.focus({ preventScroll: true });
   }
 
   function requestClose() {
@@ -733,11 +694,11 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
 function ProjectVisual({ project }) {
   if (project.id === "toolcall-replay") {
     return (
-      <a href={project.demoUrl} className="case-visual case-visual--toolcall" aria-label="Open the prepared ToolCall Replay walkthrough">
-        <span className="case-visual__eyebrow">PREPARED TRACE / EXPECTED REJECTION</span>
+      <a href={project.demoUrl} className="case-visual case-visual--toolcall" aria-label="Try ToolCall Replay with editable rules and traces">
+        <span className="case-visual__eyebrow">STARTING EXAMPLE / COMPUTED VERDICT</span>
         <span className="trace-path"><span>01 / EXPORT</span><span>02 / LOOKUP</span><span>03 / UPDATE</span></span>
         <span className="trace-verdict"><strong>FAIL</strong><span>Three rule violations<br />No tools executed</span></span>
-        <span className="case-visual__footer">Inspect the rejected trace <ArrowRightIcon size={19} aria-hidden="true" /></span>
+        <span className="case-visual__footer">Edit the trace and run the rules <ArrowRightIcon size={19} aria-hidden="true" /></span>
       </a>
     );
   }
@@ -778,19 +739,19 @@ function ProjectCase({ project }) {
       <div className="project-body">
         <ProjectVisual project={project} />
         <div className="project-notes">
-          <dl>
-            <div><dt>Start here</dt><dd>{project.example}</dd></div>
-            <div><dt>Design choice</dt><dd>{project.decision}</dd></div>
-            <div><dt>{project.contributionLabel ?? "My role, with AI assistance"}</dt><dd>{project.contribution}</dd></div>
-            <div className="project-limit"><dt>Current limit</dt><dd>{project.shortLimit}</dd></div>
-          </dl>
+          <p className="project-limit"><strong>Scope</strong>{project.shortLimit}</p>
           <div className="project-proof"><strong>What you can inspect</strong><p>{project.proof}</p>{project.repositoryEvidenceUrl ? <a href={project.repositoryEvidenceUrl} target="_blank" rel="noopener noreferrer">{project.evidenceLinkLabel ?? "Read the validation record"} <ArrowRightIcon size={16} aria-hidden="true" /></a> : null}</div>
           <div className="project-links">
             <a className="primary-action" href={project.demoUrl} data-project-transition={project.name}>{project.actionLabel ?? `Try ${project.name}`} <ArrowRightIcon size={18} aria-hidden="true" /></a>
             <a href={project.url} target="_blank" rel="noopener noreferrer">View public source <MarkGithubIcon size={18} aria-hidden="true" /></a>
           </div>
           <details className="project-checks">
-            <summary>What runs, and what remains unproven</summary>
+            <summary>Design, role and validation</summary>
+            <dl>
+              <div><dt>Try this</dt><dd>{project.example}</dd></div>
+              <div><dt>Design choice</dt><dd>{project.decision}</dd></div>
+              <div><dt>{project.contributionLabel ?? "My role, with AI assistance"}</dt><dd>{project.contribution}</dd></div>
+            </dl>
             <p>{project.works}</p><p>{project.limit}</p>
             {project.repositorySourceUrl ? <p>Follow the <a href={project.repositorySourceUrl} target="_blank" rel="noopener noreferrer">decision code</a>, <a href={project.repositoryTestUrl} target="_blank" rel="noopener noreferrer">focused test</a>, then run <code>{project.localCommand}</code> from the public repository.</p> : null}
           </details>
@@ -806,15 +767,15 @@ function Work() {
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
         <h2 id="work-title">Three projects. Three ways to verify.</h2>
-        <p>Run an API comparison, inspect a rejected workflow, then review an uncertain record match. Each case links to public source, tests and a stated limit.</p>
+        <p>Compare API contracts, evaluate a workflow trace or review an uncertain record match.</p>
       </div>
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
-        {featuredProjects.map(project => <a key={project.id} href={`#${project.id}`}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
+        {featuredProjects.map(project => <a key={project.id} href={project.demoUrl}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">API Contract Guard computes a report from editable contracts in the browser. ToolCall Replay and Entity Resolution show prepared synthetic outcomes; their source snapshots and local run instructions are public.</p>
+      <p className="demo-context page-grid">API Contract Guard and ToolCall Replay calculate results from editable inputs. Entity Resolution explains a recorded match. All examples use synthetic data.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
-        <div className="demo-launchpad-heading"><strong>Explore more demonstrations</strong><a href="/projects/">All demo notes <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
+        <div className="demo-launchpad-heading"><strong>All six demos</strong><a href="/projects/">Choose a demo <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
         <div className="demo-launchpad-links">
           {browserProjects.map(project => <a key={project.id} href={project.demoUrl || project.url}><span>{project.name}</span><ArrowRightIcon size={18} aria-hidden="true" /></a>)}
         </div>
@@ -989,9 +950,7 @@ function PortfolioExperience() {
   const [activeDocumentId, setActiveDocumentId] = useState(null);
   const [documentOrigin, setDocumentOrigin] = useState(null);
   const lastDocumentTriggerRef = useRef(null);
-  const intro = usePortfolioIntro();
-
-  usePageMotion(true);
+  useScrollProgress();
   useControlPressFeedback();
 
   function openDocument(documentId, trigger) {
@@ -1007,8 +966,7 @@ function PortfolioExperience() {
 
   return (
     <div className="site-shell" id="top">
-      <PortfolioIntro phase={intro.phase} introRef={intro.introRef} onSkip={intro.skip} />
-      <div className="site-content site-content--ready" inert={intro.phase !== "done"}>
+      <div className="site-content site-content--ready">
         <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader />
         <main id="main-content" tabIndex="-1">

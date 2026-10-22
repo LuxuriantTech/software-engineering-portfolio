@@ -373,7 +373,7 @@ test("keeps project access immediate and retains native document controls", asyn
   assert.doesNotMatch(app, /SessionIntro|ProjectTransition|WorkPortal|onClickCapture/);
   assert.doesNotMatch(app, /href=\{`\?repository=/);
   assert.match(app, /href=\{project.url\}/);
-  assert.match(app, /observer.unobserve\(entry.target\)/);
+  assert.doesNotMatch(app, /IntersectionObserver|usePortfolioIntro|inert=\{/);
 });
 
 test("ships actual project previews in full and mobile sizes", async () => {

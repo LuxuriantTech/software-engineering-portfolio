@@ -13,8 +13,8 @@
       {
         "name": "ToolCall Replay",
         "url": "https://github.com/LuxuriantTech/toolcall-replay",
-        "meta": "Python, pytest, deterministic rules",
-        "detail": "Local trace evaluator that checks seven supported rule types without executing tools. Public source snapshot includes synthetic examples and selected tests; browser walkthrough displays prepared results."
+        "meta": "JavaScript browser demo; Python, pytest evaluator",
+        "detail": "Browser demo evaluates editable synthetic JSONL traces against seven supported rule types; it executes no tools or models. The separate local Python evaluator and selected tests are available in the public source snapshot."
       },
       {
         "name": "Entity Resolution Workbench",
@@ -74,8 +74,8 @@
       {
         "name": "ToolCall Replay",
         "url": "https://github.com/LuxuriantTech/toolcall-replay",
-        "meta": "Python, pytest, règles déterministes",
-        "detail": "Évaluateur local de traces couvrant sept types de règles, sans exécuter les outils. Le dépôt public contient des exemples fictifs et une sélection de tests ; la démo web présente des résultats préparés."
+        "meta": "Démo navigateur JavaScript ; évaluateur Python, pytest",
+        "detail": "La démo web évalue des traces JSONL fictives et modifiables selon sept types de règles ; elle n’exécute aucun outil ni modèle. L’évaluateur Python local, distinct, et une sélection de tests sont disponibles dans le dépôt public."
       },
       {
         "name": "Entity Resolution Workbench",

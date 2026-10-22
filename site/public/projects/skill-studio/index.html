@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0d5b58" />
+    <meta name="theme-color" content="#f4f1e8" />
     <meta name="description" content="Skill Studio: an instruction workshop in development, with a static public demo and documented limits." />
     <title>Skill Studio | Local skill workshop</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../demo-family.css">
     <link rel="stylesheet" href="/project-transition.css">
     <script src="/project-transition.js" defer></script>
   </head>
@@ -16,11 +17,11 @@
       <a class="wordmark" href="#top" aria-label="Skill Studio home">Skill <span>Studio</span></a>
       <nav aria-label="Page sections"><a href="/">Back to portfolio</a><a href="/projects/">All projects</a><a href="#how-it-works">How it works</a><a href="#skill-editor">Open editor</a><a href="guide.html">5-minute guide</a></nav>
     </header>
-    <main id="main">
+    <main tabindex="-1" id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
         <p class="kicker">In development · static public demo</p>
         <h1 id="hero-title">Edit an instruction.<br /><em>See the diff.</em></h1>
-        <div class="hero-copy"><p>Edit the prepared instruction, inspect its text diff and export Markdown in this browser. The displayed response stays fixed. The separate private workshop explores saved versions and response comparisons; no general benefit from additional instructions has been demonstrated.</p><a class="button" href="#skill-editor">Open the instruction editor <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-copy"><p>Edit an instruction, review the diff and export Markdown. The example response stays fixed; this demo does not run a model.</p><a class="button" href="#skill-editor">Open the instruction editor <span aria-hidden="true">↓</span></a></div>
         <dl class="hero-facts"><div><dt>Public page</dt><dd>HTML · CSS · JavaScript</dd></div><div><dt>Actions</dt><dd>Edit · Diff · Markdown export</dd></div><div><dt>Model execution</dt><dd>Private workshop only</dd></div></dl>
       </section>
 

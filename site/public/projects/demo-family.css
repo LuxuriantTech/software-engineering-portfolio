@@ -38,3 +38,4 @@ button,summary,a,select{touch-action:manipulation}button{cursor:pointer}button.a
 
 .arch-card.accent :focus-visible{outline-color:#fffdf7}
 main:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+.hero{padding-top:clamp(48px,6vw,80px)}.hero h1 em{color:#2f5cff;font-style:normal}

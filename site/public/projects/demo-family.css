@@ -1,0 +1,37 @@
+@font-face{font-family:Archivo;src:url("/projects/assets/fonts/archivo-latin-wght-normal.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/projects/assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("/projects/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");font-style:normal;font-weight:500;font-display:swap}
+:root{--ink:#151512;--paper:#fffdf7;--muted:#625e55;--line:#cbc6ba;--accent:#2f5cff;--focus:#ff5a36;--code:#151512;font:16px/1.55 Archivo,Arial,sans-serif;color:var(--ink);background:#f4f1e8}
+html{scroll-padding-top:5rem}body{font-family:Archivo,Arial,sans-serif;color:var(--ink);background:#f4f1e8;overflow-x:hidden}
+body.terminal,body.desk,body.sheet,body.guard,body.notebook{--ink:#151512;--paper:#fffdf7;--muted:#625e55;--line:#cbc6ba;--accent:#2f5cff;--panel:#fffdf7;--code:#151512;--focus:#ff5a36;font-family:Archivo,Arial,sans-serif}
+.site-head,.site-header{max-width:none;min-height:68px;padding:10px max(20px,calc((100% - 1328px)/2));align-items:center;gap:8px 24px;border-bottom:2px solid #151512;background:#f4f1e8}
+.site-head .author-link,.site-header .wordmark{font-family:"IBM Plex Mono",Consolas,monospace;font-size:.84rem;font-weight:500;letter-spacing:.04em}
+.site-head .profile-nav{border-top:1px solid #cbc6ba;padding-top:4px}
+.site-head nav,.site-header nav{align-items:center;gap:4px 10px;font-family:Archivo,Arial,sans-serif;font-size:.84rem}
+.site-head nav a,.site-header nav a{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;border-bottom:2px solid transparent}
+.site-head nav a[aria-current="page"],.site-head nav a:hover,.site-header nav a:hover{border-color:#ff5a36;color:#151512}
+.site-head a:focus-visible,.site-header a:focus-visible,.skip:focus-visible,.skip:focus{outline:3px solid #ff5a36;outline-offset:3px}
+.skip{z-index:100;padding:10px 14px;border:2px solid #151512;background:#f4ed53;color:#151512;font-weight:700}
+.wrap,.evidence-main{width:min(100% - 40px,1328px);max-width:1328px;margin-inline:auto;padding-top:clamp(24px,4vw,48px)}
+h1,h2,h3{font-family:Archivo,Arial,sans-serif;color:#151512;letter-spacing:-.035em}h1{font-size:clamp(2.2rem,5vw,4.5rem);line-height:.98}h2{font-size:clamp(1.6rem,3.2vw,2.8rem)}.eyebrow,.kicker,.label,.prepared-badge,.tag,.site-foot,footer{font-family:"IBM Plex Mono",Consolas,monospace}
+.lede{font-size:clamp(1rem,1.5vw,1.16rem);line-height:1.6}.quiet{color:#625e55}
+.panel,.demo,.figure,.notice,.arch-card,.guide-exercises article,.evaluation-case{border-color:#cbc6ba;background:#fffdf7;color:#151512}.notice{border-left-color:#2f5cff}.action,.button{min-height:44px;padding:10px 16px;border:1px solid #151512;border-radius:0;background:#fffdf7;color:#151512;font:600 .88rem/1.25 Archivo,Arial,sans-serif;text-decoration:none;white-space:normal;transition:background-color 160ms ease-out,color 160ms ease-out,border-color 160ms ease-out}
+.action.primary,.button{background:#151512;color:#fffdf7}.action.primary:hover,.button:hover{border-color:#2f5cff;background:#2f5cff;color:#fffdf7}.action:not(.primary):hover,.text-button:hover{background:#f4ed53;color:#151512}.actions,.demo-controls{gap:10px}
+button,summary,a,select{touch-action:manipulation}button{cursor:pointer}button.action,.button,.action,summary{min-height:44px}a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.table-scroll:focus-visible{outline:3px solid #ff5a36;outline-offset:3px}
+.demo{padding:clamp(14px,2vw,24px)}.demo-head{gap:10px}.demo-controls{margin-block:16px}.demo select,.demo input,.toolcall-filter input,.toolcall-editors textarea,.instruction-panel textarea{min-height:44px;border-radius:0;border-color:#8d887e;background:#fffdf7;color:#151512;font-family:"IBM Plex Mono",Consolas,monospace}.demo-output{min-width:0}.command,.contract,.toolcall-evidence,.evidence-section pre,.diff-panel pre{max-width:100%;overflow-wrap:anywhere}
+.demo-status.fail,.toolcall-verdict.fail,.toolcall-rule.fail>strong{color:#a32218}.demo-status.pass,.toolcall-verdict.pass,.toolcall-rule.pass>strong{color:#146444}.toolcall-empty,.toolcall-error{border-left-color:#b32819;background:#fff0ed;color:#61170f}.toolcall-rule-details,.toolcall-event-details{border-top:1px solid var(--line);padding:.65rem 0}.toolcall-rule-details>summary,.toolcall-event-details>summary{display:flex;align-items:center;gap:.5rem;min-height:44px;font-weight:700}.toolcall-rule-details[open],.toolcall-event-details[open]{padding-bottom:.8rem}.toolcall-rule-details .toolcall-evidence,.toolcall-event-details .toolcall-evidence{margin-top:.5rem}
+.site-foot{border-color:#cbc6ba;background:#f4f1e8;color:#625e55}.site-foot a,footer a{min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:760px){.site-head,.site-header{align-items:flex-start;padding:10px 20px}.site-head nav,.site-header nav{width:100%;gap:2px 5px}.wrap,.evidence-main{width:min(100% - 32px,1328px);padding-top:24px}.actions>*{flex:0 1 auto}.demo-toolbar button,.button.small{min-height:44px}.recorded-workshop{margin-inline:0}}
+@media(max-width:430px){.site-head nav,.site-header nav{gap:2px}.site-head nav a,.site-header nav a{padding-inline:5px;font-size:.78rem}.wrap,.evidence-main{width:calc(100% - 28px)}.actions>*{flex:1 1 100%}.demo-toolbar>div{flex-wrap:wrap}.hero h1{font-size:clamp(2.7rem,13vw,3.3rem)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* Skill Studio keeps its content structure while adopting the portfolio palette. */
+.skill-studio,.hero .kicker,.evidence-hero .kicker,.evidence-section .label{color:#2f5cff}
+.hero,.section-grid,.architecture,.limits,.evidence-hero,.evidence-observation{background:#f4f1e8;border-color:#cbc6ba}
+.workflow,.recorded-workshop,.evidence-section{background:#fffdf7;border-color:#cbc6ba}
+.architecture-map .arch-card{background:#fffdf7;border-color:#cbc6ba}.architecture-map .arch-card.accent{background:#2f5cff;border-color:#2f5cff;color:#fffdf7}
+.arch-arrow,.evidence-back,.guide-timeline strong,.site-header .wordmark span{color:#2f5cff}
+.demo-section,.outputs{background:#151512;color:#fffdf7}.demo-section .kicker,.outputs .kicker{color:#f4ed53}.demo-shell,.output-card{background:#fffdf7;color:#151512;border-color:#cbc6ba}
+.demo-toolbar,.instruction-panel,.prepared-output,.synthetic-inputs,.diff-panel{background:#f4f1e8;border-color:#cbc6ba;color:#151512}
+.text-button{min-height:44px;padding:8px 12px;color:#2f5cff}.prepared-output.invalid{background:#fff0ed}.prepared-output.invalid #correspondence{color:#7d321f}
+.evidence-notice{border-left-color:#ff5a36;background:#fff0ed;color:#61170f}.evidence-data>p{background:#eef1ff;color:#172d74}.output-card header{background:#f4f1e8;border-color:#cbc6ba}.arch-card.accent span,.arch-card.accent small{color:#fffdf7}
+.terminal .site-head{background:#f4f1e8}.terminal .toolcall-state{background:#202728;color:#ece8de}

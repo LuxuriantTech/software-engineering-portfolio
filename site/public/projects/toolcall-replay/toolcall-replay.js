@@ -31,13 +31,27 @@ function renderEvaluation(label, evaluation) {
   const section = el("section", "toolcall-result");
   const heading = el("h3", "", label);
   const badge = el("p", `toolcall-verdict ${evaluation.verdict.toLowerCase()}`, `${evaluation.verdict} · ${evaluation.rules.filter((item) => item.verdict === "PASS").length}/${evaluation.rules.length} rules passed`);
+  const failedRules = evaluation.rules.filter((rule) => rule.verdict === "FAIL");
+  const failureSummary = el("div", "toolcall-failed-summary");
+  if (failedRules.length) {
+    failureSummary.append(el("h4", "", `Failed rules (${failedRules.length})`));
+    const failures = el("ul", "toolcall-failed-list");
+    for (const rule of failedRules) failures.append(el("li", "", `${rule.rule_id} · ${rule.message}`));
+    failureSummary.append(failures);
+  } else {
+    failureSummary.append(el("p", "toolcall-no-failures", "No rules failed."));
+  }
   const list = el("ol", "toolcall-rule-list");
   for (const rule of evaluation.rules) {
     const item = el("li", `toolcall-rule ${rule.verdict.toLowerCase()}`);
-    item.append(el("strong", "", `${rule.verdict} · ${rule.rule_id}`), el("p", "", rule.message), el("pre", "toolcall-evidence", JSON.stringify(rule.evidence, null, 2)));
+    const details = el("details", "toolcall-rule-details");
+    if (rule.verdict === "FAIL") details.open = true;
+    const summary = el("summary", "", `${rule.verdict} · ${rule.rule_id} · ${rule.message}`);
+    details.append(summary, el("p", "", rule.message), el("pre", "toolcall-evidence", JSON.stringify(rule.evidence, null, 2)));
+    item.append(details);
     list.append(item);
   }
-  section.append(heading, badge, list);
+  section.append(heading, badge, failureSummary, list);
   return section;
 }
 
@@ -49,7 +63,9 @@ function renderEvents(label, events, filter) {
   const visible = events.filter((event) => !needle || JSON.stringify(event).toLocaleLowerCase().includes(needle));
   for (const event of visible) {
     const row = el("li", "toolcall-event");
-    row.append(el("strong", "", `Step ${event.step} · ${event.kind}${event.tool ? ` · ${event.tool}` : ""}`), el("pre", "toolcall-evidence", JSON.stringify(event, null, 2)));
+    const details = el("details", "toolcall-event-details");
+    details.append(el("summary", "", `Step ${event.step} · ${event.kind}${event.tool ? ` · ${event.tool}` : ""}`), el("pre", "toolcall-evidence", JSON.stringify(event, null, 2)));
+    row.append(details);
     list.append(row);
   }
   section.append(visible.length ? list : el("p", "toolcall-empty", "No events match this filter. Clear the filter or try another term."));

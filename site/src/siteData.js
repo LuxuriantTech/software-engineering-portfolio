@@ -147,7 +147,7 @@ export const PROJECTS = [
     status: "Public source",
     featured: true,
     demoMode: "Computed browser replay",
-    actionLabel: "Inspect ToolCall Replay",
+    actionLabel: "Try ToolCall Replay",
     summary: "Inspect an automated tool-call trace and see why three risky actions are rejected in a replay that executes no tools.",
     example: "Edit the candidate JSONL trace and run the seven rules. The starting candidate fails its scope, export and approval checks.",
     decision: "Keep an expected rule rejection separate from invalid input, so a FAIL is not mistaken for an application crash.",

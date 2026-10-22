@@ -1,4 +1,10 @@
 /* Content-first layout, retaining the portfolio's Archivo / paper identity. */
+.project-notes > .project-limit { margin: 0 0 18px; padding: 14px 16px; border-left: 3px solid var(--orange); background: #ece8dd; color: var(--muted); font-size: .9rem; line-height: 1.6; }
+.project-notes > .project-limit strong { display: block; margin-bottom: 5px; color: var(--ink); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; }
+.project-checks dl { margin-top: 18px; }
+.project-checks summary { min-height: 44px; display: flex; align-items: center; gap: 10px; }
+.project-checks summary::before { content: "+"; font-size: 1.2rem; }
+.project-checks[open] summary::before { content: "−"; }
 .intro { padding-block: clamp(40px, 5vw, 72px); }
 .intro-kicker { grid-column: 1 / -1; display: flex; justify-content: space-between; margin: 0 0 20px; }
 .intro-title { grid-column: 1 / 9; }

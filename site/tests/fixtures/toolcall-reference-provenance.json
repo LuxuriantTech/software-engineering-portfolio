@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "reference_repository": "LuxuriantTech/toolcall-replay",
+  "reference_commit": "09dce279b84ae2530e5bd8e7e600991332ba1387",
+  "published_suite": "examples/synthetic-suite.json",
+  "published_case": "bounded-update",
+  "sha256": {
+    "src/toolcall_replay/rules.py": "4a1b24ed41de7600b923f51467628ed563998c22d453004f8e7e10cac47242b7",
+    "src/toolcall_replay/report.py": "440871ed5f3df68745b532a381d08f166de9f0217f8c3e9fde20ad574321a8e5",
+    "src/toolcall_replay/suite.py": "39be060c4d2f4e334ff2b31f1d971b54b2b7a8b49d26107b113e3b5a0b605a1d",
+    "src/toolcall_replay/trace.py": "41e34e07c7885a5f5ad697047ddd8ca1e2aada2d25b5afafedab35d4458222f9",
+    "src/toolcall_replay/jsonutil.py": "16bd177e85ad3a1440021209006eb91ac27ef5354fdc5fc92aa511dab7e7c714",
+    "src/toolcall_replay/models.py": "419bbb4651d963ff4434283d657be5d3318a227f8a4d2b30a8465f28f7e20c24",
+    "src/toolcall_replay/errors.py": "16dc8fc78ff2a67d03be7c4a58903c47d74126f62e1b74aaf4cec885c36e09b5",
+    "schemas/suite.schema.json": "2ff09d5c5247247cbfba7337505a036f0e538d00f06f7a94296275de7c29b800",
+    "schemas/trace-event.schema.json": "33a4a7aa65788a09befd62d735907c8d07c8b8533b00f20682d3a32b9ed4c77a",
+    "examples/synthetic-suite.json": "c4a53ff3b7a3d65e81376c2c49c8a25eb7cb16a2d64055a57cb9d72477fc3090",
+    "examples/traces/bounded-update.baseline.jsonl": "1febb508c430cdff8565837f9c6f4397af6fbe3d763b721a5bd272edeaf55894",
+    "examples/traces/bounded-update.candidate.jsonl": "b1b9323382db57bc26dc4b261a341f9efc32e03d5ea7a0ed546316d3b20072ec"
+  },
+  "fresh_pair_mutation": "Correct the broad lookup scope, remove the forbidden export, and attach the matching prior approval to the update call."
+}

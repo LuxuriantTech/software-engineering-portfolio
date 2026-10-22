@@ -217,12 +217,11 @@ export function parseRules(text) {
   return rules;
 }
 
-function checkBudgets(rules, events) {
+function evaluationCost(rules, events) {
   const toolCalls = new Map();
   for (const event of events) if (event.kind === "tool_call") toolCalls.set(event.tool, (toolCalls.get(event.tool) || 0) + 1);
   let operations = rules.length * events.length;
   for (const rule of rules) if (rule.type === "argument_constraint") operations += rule.allowed_values.length * (toolCalls.get(rule.tool) || 0);
-  if (operations > LIMITS.operations) fail("EVALUATION_BUDGET_EXCEEDED", `evaluation exceeds ${LIMITS.operations}-operation limit`);
   let outputNodes = 5;
   for (const rule of rules) {
     outputNodes += 10;
@@ -237,7 +236,13 @@ function checkBudgets(rules, events) {
     else if (rule.type === "expected_result") outputNodes += 7;
     else outputNodes += 5;
   }
-  if (outputNodes > LIMITS.outputNodes) fail("EVALUATION_OUTPUT_LIMIT_EXCEEDED", `evaluation output exceeds ${LIMITS.outputNodes}-node limit`);
+  return { operations, outputNodes };
+}
+function checkPairBudgets(rules, baseline, candidate) {
+  const left = evaluationCost(rules, baseline);
+  const right = evaluationCost(rules, candidate);
+  if (left.operations + right.operations > LIMITS.operations) fail("EVALUATION_BUDGET_EXCEEDED", `baseline and candidate exceed the shared ${LIMITS.operations}-operation limit`);
+  if (left.outputNodes + right.outputNodes > LIMITS.outputNodes) fail("EVALUATION_OUTPUT_LIMIT_EXCEEDED", `baseline and candidate exceed the shared ${LIMITS.outputNodes}-node output limit`);
 }
 function countValueNodes(value) { let count = 1; if (Array.isArray(value)) for (const item of value) count += countValueNodes(item); else if (isRecord(value)) { count += Object.keys(value).length; for (const item of Object.values(value)) count += countValueNodes(item); } return count; }
 function result(rule, ok, message, evidence) { return { rule_id: rule.rule_id, type: rule.type, verdict: ok ? "PASS" : "FAIL", message, evidence }; }
@@ -297,8 +302,7 @@ function evaluateRule(rule, events) {
   return result(rule, ok, ok ? "step budget respected" : "step budget exceeded", { observed_steps: events.length, max_steps: rule.max_steps });
 }
 
-function evaluateOne(traceText, rules) {
-  const events = parseTrace(traceText); checkBudgets(rules, events);
+function evaluateOne(events, rules) {
   const results = rules.map((rule) => evaluateRule(rule, events));
   return { verdict: results.every((item) => item.verdict === "PASS") ? "PASS" : "FAIL", rules: results };
 }
@@ -309,8 +313,9 @@ export function evaluatePair({ rulesText, baselineText, candidateText }) {
   const baseline = parseTrace(baselineText);
   const candidate = parseTrace(candidateText);
   if (baseline[0].case_id !== candidate[0].case_id) fail("TRACE_SCHEMA_INVALID", "baseline and candidate case_id values must match");
-  const baselineResult = evaluateOne(baselineText, rules);
-  const candidateResult = evaluateOne(candidateText, rules);
+  checkPairBudgets(rules, baseline, candidate);
+  const baselineResult = evaluateOne(baseline, rules);
+  const candidateResult = evaluateOne(candidate, rules);
   return { baseline: baselineResult, candidate: candidateResult, baselineEvents: baseline, candidateEvents: candidate };
 }
 

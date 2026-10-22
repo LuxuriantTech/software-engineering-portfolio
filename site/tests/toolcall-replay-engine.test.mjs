@@ -118,3 +118,23 @@ test("trace count, byte, node, depth, operation, and output bounds reject abuse"
   const large = [{ ...DEFAULT_BASELINE[0], arguments: { scope: Array.from({ length: 12_000 }, (_, i) => i) } }, ...DEFAULT_BASELINE.slice(1)];
   assert.throws(() => evaluate(large, large, outputRule), /EVALUATION_OUTPUT_LIMIT_EXCEEDED/);
 });
+
+test("pair shares operation and output budgets across baseline and candidate", () => {
+  const calls = (count) => {
+    const events = Array.from({ length: count }, (_, i) => ({
+      schema_version: "1.0", case_id: "bounded-update", step: i + 1,
+      kind: "tool_call", tool: "request.lookup", arguments: { scope: "outside" },
+    }));
+    events.push({ schema_version: "1.0", case_id: "bounded-update", step: count + 1, kind: "result", status: "completed", output: null });
+    return events;
+  };
+  const argumentRule = [{ rule_id: "scope", type: "argument_constraint", tool: "request.lookup", argument: "scope", allowed_values: Array.from({ length: 6_000 }, (_, i) => `scope-${i}`) }];
+  const operationTrace = calls(84);
+  // Each trace costs 504,085 operations, under 1,000,000; the pair costs 1,008,170.
+  assert.throws(() => evaluate(operationTrace, operationTrace, argumentRule), /EVALUATION_BUDGET_EXCEEDED: baseline and candidate/);
+
+  const outputRules = Array.from({ length: 64 }, (_, i) => ({ rule_id: `presence-${i}`, type: "call_presence", tool: "request.lookup", min_calls: 0, max_calls: 100 }));
+  const outputTrace = calls(100);
+  // Each report is below the 10,000-node output cap; their combined output exceeds it.
+  assert.throws(() => evaluate(outputTrace, outputTrace, outputRules), /EVALUATION_OUTPUT_LIMIT_EXCEEDED: baseline and candidate/);
+});

@@ -73,7 +73,7 @@ test("keeps EvidenceDesk's positive and negative evaluation together", () => {
 test("separates new development proofs from frozen historical results", async () => {
   const evidence = await readFile(new URL("../public/projects/evidencedesk/index.html", import.meta.url), "utf8");
   const pmr = await readFile(new URL("../public/projects/postgres-migration-rehearsal/index.html", import.meta.url), "utf8");
-  assert.match(evidence, /default extractive provider is unchanged/i);
+  assert.match(evidence, /the extractive provider is unchanged/i);
   assert.match(evidence, /not a new independent evaluation/i);
   assert.match(pmr, /V2 baseline reproduced the reviewed image/i);
   assert.match(pmr, /does not repair the old browser runtime or replay historical Phase B/i);

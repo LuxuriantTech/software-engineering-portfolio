@@ -5,6 +5,8 @@ import test from "node:test";
 const routes = ["api-contract-guard", "toolcall-replay", "entity-resolution-workbench", "evidencedesk", "postgres-migration-rehearsal", "skill-studio"];
 
 test("each public demo loads the shared family and its local font assets", async () => {
+  const index=await readFile(new URL("../public/projects/index.html", import.meta.url),"utf8");
+  assert.match(index, /href="demo-family\.css"/);
   for (const route of routes) {
     const html = await readFile(new URL(`../public/projects/${route}/index.html`, import.meta.url), "utf8");
     assert.match(html, /href="\.\.\/demo-family\.css"/);

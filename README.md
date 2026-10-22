@@ -19,6 +19,21 @@ The ToolCall, Entity and PostgreSQL repositories are clean public source snapsho
 with selected runtime tests, not complete copies of their private Git histories.
 Each repository declares its release scope.
 
+## Education and certificates
+
+I study Computer Science at OPIT online, alongside my search for a first software
+development role. I completed the certificates below through Coursera.
+
+| Certificate | Issuer | Issued |
+|---|---|---|
+| [IBM Data Science Professional Certificate](https://coursera.org/verify/professional-cert/N32U47MIOPT8) | IBM | 21 October 2026 |
+| [IBM RAG and Agentic AI Professional Certificate](https://coursera.org/verify/professional-cert/6US6D34EP5HH) | IBM | 20 October 2026 |
+| [HBR Guide to Generative AI for Managers Specialization](https://coursera.org/verify/specialization/L63FZRUUHWZO) | Harvard Business Review | 16 October 2026 |
+| [Strengthen Your Business Savvy Specialization](https://coursera.org/verify/specialization/8U4BHMJ3Q7OJ) | Harvard Business Review | 16 October 2026 |
+| [Google AI Professional Certificate](https://coursera.org/verify/professional-cert/OHRKXV88PT8R) | Google | 13 May 2026 |
+
+[Public CV in English](https://ardian-mehaj-portfolio.vercel.app/documents/Ardian_Mehaj_Public_CV_EN.pdf) · [Public CV in French](https://ardian-mehaj-portfolio.vercel.app/documents/Ardian_Mehaj_Public_CV_FR.pdf)
+
 ## First three review paths
 
 1. [API Contract Guard browser comparison](site/public/projects/api-contract-guard/index.html): edit two contracts, then inspect the [five rule categories](https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/src/engine.ts), [focused tests](https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/tests/rules.test.ts) and `npm ci && npm run demo` in the public repository. An empty report is bounded to the supported checks.

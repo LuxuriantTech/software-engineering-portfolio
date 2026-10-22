@@ -38,6 +38,7 @@ export const DOCUMENTS = [
 export const CV_CONTENT = careerContent.cv;
 export const CV_FR_CONTENT = careerContent.cv_fr;
 export const LETTER_CONTENT = careerContent.letter;
+export const CERTIFICATES = careerContent.certificates;
 
 export function documentById(id) {
   return DOCUMENTS.find((document) => document.id === id) ?? DOCUMENTS[0];

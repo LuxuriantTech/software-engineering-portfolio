@@ -160,10 +160,11 @@ test("keeps navigation and capability copy concise", () => {
     "Work",
     "Method",
     "Skills",
+    "Certificates",
     "Documents",
     "About",
   ]);
-  assert.equal(new Set(NAV_ITEMS.map(({ href }) => href)).size, 5);
+  assert.equal(new Set(NAV_ITEMS.map(({ href }) => href)).size, 6);
 });
 
 test("keeps recruiter-ready contact and skill information", () => {

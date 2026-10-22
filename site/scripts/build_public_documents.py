@@ -254,7 +254,15 @@ def build_cv(language="en") -> Path:
     for title, entries in [(labels[1], cv["projects"]), (labels[2], cv["experience"]), (labels[3], cv["education"])]:
         story.append(p(title, "section"))
         story.extend(item(entry) for entry in entries)
-    story += [p(escape(cv["certification"]), "small"), p(escape(cv["languages"]), "small"), p(labels[4], "section"), p(escape(cv["tools"]), "small")]
+    story.append(p(escape(cv["certification"]), "small"))
+    for certificate in CONTENT["certificates"]:
+        if certificate["issuer"] == "IBM":
+            title = escape(certificate["title"])
+            url = escape(certificate["url"], quote=True)
+            issued = certificate["issued"]
+            date = f"{int(issued[8:])} octobre {issued[:4]}" if language == "fr" else certificate["dateLabel"]
+            story.append(p(f'<link href="{url}">{title}</link> · IBM / Coursera · {date}', "small"))
+    story += [p(escape(cv["languages"]), "small"), p(labels[4], "section"), p(escape(cv["tools"]), "small")]
     path = OUTPUT_DIR / f"Ardian_Mehaj_Public_CV_{language.upper()}.pdf"
     document(path, "Ardian Mehaj - Public CV", "Public portfolio CV", story, "ARDIAN MEHAJ · CV " + language.upper())
     return path

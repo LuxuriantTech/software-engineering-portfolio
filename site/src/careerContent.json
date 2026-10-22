@@ -109,5 +109,52 @@
     "certification": "HackerRank : SQL Advanced et Python Basic, septembre 2026.",
     "languages": "Français : langue principale | Albanais : langue maternelle | Anglais : EF SET 77/100, C2 global (18 septembre 2026).",
     "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, API REST, PostgreSQL, Git, Docker, pytest, Playwright et GitHub Actions."
-  }
+  },
+  "certificates": [
+    {
+      "id": "ibm-data-science",
+      "title": "IBM Data Science Professional Certificate",
+      "issuer": "IBM",
+      "issued": "2026-10-21",
+      "dateLabel": "21 October 2026",
+      "url": "https://coursera.org/verify/professional-cert/N32U47MIOPT8",
+      "topics": "Python, SQL, data analysis, visualization and machine learning."
+    },
+    {
+      "id": "ibm-rag-agentic-ai",
+      "title": "IBM RAG and Agentic AI Professional Certificate",
+      "issuer": "IBM",
+      "issued": "2026-10-20",
+      "dateLabel": "20 October 2026",
+      "url": "https://coursera.org/verify/professional-cert/6US6D34EP5HH",
+      "topics": "RAG, vector databases, LangChain, LangGraph and AI agents."
+    },
+    {
+      "id": "hbr-generative-ai",
+      "title": "HBR Guide to Generative AI for Managers Specialization",
+      "issuer": "Harvard Business Review",
+      "issued": "2026-10-16",
+      "dateLabel": "16 October 2026",
+      "url": "https://coursera.org/verify/specialization/L63FZRUUHWZO",
+      "topics": "Generative AI for communication, team management and decision-making."
+    },
+    {
+      "id": "hbr-business-savvy",
+      "title": "Strengthen Your Business Savvy Specialization",
+      "issuer": "Harvard Business Review",
+      "issued": "2026-10-16",
+      "dateLabel": "16 October 2026",
+      "url": "https://coursera.org/verify/specialization/8U4BHMJ3Q7OJ",
+      "topics": "Business strategy, financial fundamentals and technology decisions."
+    },
+    {
+      "id": "google-ai",
+      "title": "Google AI Professional Certificate",
+      "issuer": "Google",
+      "issued": "2026-05-13",
+      "dateLabel": "13 May 2026",
+      "url": "https://coursera.org/verify/professional-cert/OHRKXV88PT8R",
+      "topics": "Practical AI for research, communication, data analysis and app building."
+    }
+  ]
 }

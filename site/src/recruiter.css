@@ -235,3 +235,46 @@
 .method-layout>.contribution-boundaries{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-block:0}.method-section .contribution-boundaries dd{color:#d5d1c7}.method-layout>.method-current{grid-column:1/-1;margin-top:0;max-width:none}.method-layout>.method-current p{max-width:85ch}
 .documents-copy>.section-label,.documents-lead{color:#fff}
 @media(max-width:900px){.method-layout>.contribution-boundaries{grid-template-columns:1fr;gap:0}}
+
+.certificates-section {
+  padding-block: clamp(72px, 8vw, 120px);
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper);
+}
+.certificate-list {
+  list-style: none;
+  margin-block: 56px 0;
+}
+.certificate-list li {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(0, 2.2fr) auto;
+  align-items: start;
+  gap: 32px;
+  padding-block: 28px;
+  border-top: 1px solid var(--soft-line);
+}
+.certificate-list li:last-child { border-bottom: 1px solid var(--soft-line); }
+.certificate-issuer { display: grid; gap: 8px; }
+.certificate-issuer span { font-weight: 650; }
+.certificate-issuer time { color: var(--muted); font-size: .82rem; }
+.certificate-detail h3 { margin: 0; font-size: 1.18rem; line-height: 1.4; }
+.certificate-detail p { margin: 10px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.6; }
+.certificate-list li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: .86rem;
+  white-space: nowrap;
+}
+.certificate-list a svg { flex-shrink: 0; }
+.availability .availability-certificates { color: var(--cobalt); font-size: .78rem; line-height: 1.6; }
+@media (max-width: 900px) {
+  .certificate-list li { grid-template-columns: minmax(130px, 1fr) minmax(0, 2fr); gap: 16px 24px; }
+  .certificate-list li > a { grid-column: 2; justify-self: start; }
+}
+@media (max-width: 600px) {
+  .certificate-list li { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .certificate-list li > a { grid-column: 1; }
+  .certificate-issuer { display: flex; justify-content: space-between; gap: 16px; }
+}

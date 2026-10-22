@@ -10,6 +10,7 @@ import {
 import {
   CV_CONTENT,
   CV_FR_CONTENT,
+  CERTIFICATES,
   DOCUMENTS,
   LETTER_CONTENT,
   documentById,
@@ -203,6 +204,7 @@ function Intro({ onOpenDocument }) {
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
           <p>Developer tools · Backend · Data quality</p>
+          <a className="availability-certificates" href="#certificates">IBM Data Science · RAG &amp; Agentic AI</a>
           <p>Seeking full-time work · Hours to discuss<br />OPIT online BSc · Began September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
@@ -460,6 +462,12 @@ function CvDocument({ language = "en" }) {
             </div>
           ))}
           <p className="document-certificate">{cv.certification}</p>
+          {CERTIFICATES.filter(({ issuer }) => issuer === "IBM").map((certificate) => (
+            <p className="document-certificate" key={certificate.id}>
+              <a href={certificate.url} target="_blank" rel="noopener noreferrer">{certificate.title}</a>
+              <br />IBM · Coursera · {language === "fr" ? new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${certificate.issued}T00:00:00Z`)) : certificate.dateLabel}
+            </p>
+          ))}
           <p className="document-languages">{cv.languages}</p>
         </div>
       </section>
@@ -890,6 +898,35 @@ function Skills() {
   );
 }
 
+function Certificates() {
+  return (
+    <section className="certificates-section" id="certificates" aria-labelledby="certificates-title">
+      <div className="section-heading page-grid">
+        <p className="section-label">Education</p>
+        <h2 id="certificates-title">Certificates.</h2>
+        <p>Completed through Coursera. Each link opens the credential verification page.</p>
+      </div>
+      <ul className="certificate-list page-grid">
+        {CERTIFICATES.map((certificate) => (
+          <li key={certificate.id}>
+            <div className="certificate-issuer">
+              <span>{certificate.issuer}</span>
+              <time dateTime={certificate.issued}>{certificate.dateLabel}</time>
+            </div>
+            <div className="certificate-detail">
+              <h3>{certificate.title}</h3>
+              <p>{certificate.topics}</p>
+            </div>
+            <a href={certificate.url} target="_blank" rel="noopener noreferrer" aria-label={`Verify ${certificate.title}`}>
+              Verify certificate <ArrowRightIcon size={18} aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function About() {
   return (
     <section className="about-section" id="about" aria-labelledby="about-title">
@@ -979,6 +1016,7 @@ function PortfolioExperience() {
           <Work />
           <Method />
           <Skills />
+          <Certificates />
           <Documents onOpenDocument={openDocument} />
           <About />
           <Contact />

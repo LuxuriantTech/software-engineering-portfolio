@@ -21,6 +21,7 @@ p,code,a,strong{overflow-wrap:anywhere}@media(prefers-reduced-motion:reduce){htm
 .toolcall-editors label:first-child textarea{min-height:13rem}
 .toolcall-editors textarea:focus-visible,.toolcall-filter input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 .toolcall-filter{display:grid;gap:.3rem;max-width:30rem;font-weight:700}
+.toolcall-state{max-width:none;margin:.8rem 0;padding:.65rem .8rem;border-left:4px solid var(--accent);background:#202728;color:#ece8de;font-weight:700}
 .toolcall-filter input{min-height:2.8rem;padding:.45rem .6rem;border:1px solid var(--line);background:#0c1011;color:#f3f0e8;font:inherit}
 .toolcall-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}
 .toolcall-result{min-width:0;border:1px solid var(--line);padding:.85rem;background:var(--paper)}

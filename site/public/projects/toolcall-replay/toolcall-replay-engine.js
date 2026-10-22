@@ -44,20 +44,110 @@ function bytes(text) { return new TextEncoder().encode(text).byteLength; }
 function isRecord(value) { return value !== null && typeof value === "object" && !Array.isArray(value); }
 function isInt(value) { return Number.isSafeInteger(value); }
 function exactKeys(value, keys) { return Object.keys(value).length === keys.length && keys.every((key) => Object.hasOwn(value, key)); }
-function countNodes(value, state, depth = 0) {
-  state.nodes += 1;
-  if (state.nodes > state.maxNodes) fail("JSON_NODE_LIMIT_EXCEEDED", `input exceeds ${state.maxNodes}-value limit`);
-  if (depth > LIMITS.traceDepth) fail("JSON_DEPTH_LIMIT_EXCEEDED", `input exceeds ${LIMITS.traceDepth}-level nesting limit`);
-  if (Array.isArray(value)) for (const item of value) countNodes(item, state, depth + 1);
-  else if (isRecord(value)) {
-    state.nodes += Object.keys(value).length;
-    if (state.nodes > state.maxNodes) fail("JSON_NODE_LIMIT_EXCEEDED", `input exceeds ${state.maxNodes}-value limit`);
-    for (const item of Object.values(value)) countNodes(item, state, depth + 1);
+class StrictJsonParser {
+  constructor(text, code, budget) { this.text = text; this.code = code; this.budget = budget; this.index = 0; }
+  invalid(message = "input is not valid JSON") { fail(this.code, message); }
+  node() {
+    this.budget.nodes += 1;
+    if (this.budget.nodes > this.budget.maxNodes) fail("JSON_NODE_LIMIT_EXCEEDED", `input exceeds ${this.budget.maxNodes}-node limit`);
+  }
+  whitespace() { while ([" ", "\t", "\r", "\n"].includes(this.text[this.index])) this.index += 1; }
+  parse() {
+    this.whitespace();
+    const value = this.value(0);
+    this.whitespace();
+    if (this.index !== this.text.length) this.invalid();
+    return value;
+  }
+  value(depth) {
+    if (depth > LIMITS.traceDepth) this.invalid(`JSON exceeds ${LIMITS.traceDepth}-level nesting limit`);
+    this.whitespace();
+    const char = this.text[this.index];
+    if (char === "{") return this.object(depth);
+    if (char === "[") return this.array(depth);
+    if (char === '"') { this.node(); return this.string(); }
+    if (char === "t" && this.text.startsWith("true", this.index)) { this.node(); this.index += 4; return true; }
+    if (char === "f" && this.text.startsWith("false", this.index)) { this.node(); this.index += 5; return false; }
+    if (char === "n" && this.text.startsWith("null", this.index)) { this.node(); this.index += 4; return null; }
+    if (char === "-" || (char >= "0" && char <= "9")) return this.number();
+    this.invalid();
+  }
+  object(depth) {
+    this.node();
+    this.index += 1;
+    this.whitespace();
+    const result = Object.create(null);
+    if (this.text[this.index] === "}") { this.index += 1; return result; }
+    while (true) {
+      this.whitespace();
+      if (this.text[this.index] !== '"') this.invalid();
+      this.node(); // The reference engine counts object keys as JSON nodes.
+      const key = this.string();
+      if (Object.hasOwn(result, key)) this.invalid("duplicate object key is not supported");
+      this.whitespace();
+      if (this.text[this.index] !== ":") this.invalid();
+      this.index += 1;
+      result[key] = this.value(depth + 1);
+      this.whitespace();
+      const separator = this.text[this.index++];
+      if (separator === "}") return result;
+      if (separator !== ",") this.invalid();
+    }
+  }
+  array(depth) {
+    this.node();
+    this.index += 1;
+    this.whitespace();
+    const result = [];
+    if (this.text[this.index] === "]") { this.index += 1; return result; }
+    while (true) {
+      result.push(this.value(depth + 1));
+      this.whitespace();
+      const separator = this.text[this.index++];
+      if (separator === "]") return result;
+      if (separator !== ",") this.invalid();
+    }
+  }
+  string() {
+    const start = this.index;
+    this.index += 1;
+    while (this.index < this.text.length) {
+      const code = this.text.charCodeAt(this.index);
+      if (code < 0x20) this.invalid();
+      if (this.text[this.index] === '"') {
+        this.index += 1;
+        let value;
+        try { value = JSON.parse(this.text.slice(start, this.index)); } catch { this.invalid(); }
+        for (let i = 0; i < value.length; i += 1) {
+          const unit = value.charCodeAt(i);
+          if (unit >= 0xd800 && unit <= 0xdbff) {
+            const next = value.charCodeAt(i + 1);
+            if (!(next >= 0xdc00 && next <= 0xdfff)) this.invalid("unpaired Unicode surrogate is not supported");
+            i += 1;
+          } else if (unit >= 0xdc00 && unit <= 0xdfff) this.invalid("unpaired Unicode surrogate is not supported");
+        }
+        return value;
+      }
+      if (this.text[this.index] === "\\") this.index += 1;
+      this.index += 1;
+    }
+    this.invalid();
+  }
+  number() {
+    this.node();
+    const match = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(this.text.slice(this.index));
+    if (!match) this.invalid();
+    const token = match[0];
+    this.index += token.length;
+    if (/[.eE]/.test(token)) fail("UNSUPPORTED_JSON_NUMBER", "decimal and exponent numbers are not supported; use exact integers");
+    const value = Number(token);
+    if (!Number.isSafeInteger(value)) fail("UNSAFE_JSON_INTEGER", "integer exceeds JavaScript's exact range; use a smaller exact integer");
+    return value;
   }
 }
-function parseJson(text, code, limit) {
+function parseJson(text, code, limit, budget = { nodes: 0, maxNodes: LIMITS.traceNodes }) {
   if (bytes(text) > limit) fail("INPUT_TOO_LARGE", `input exceeds ${limit}-byte limit`);
-  try { return JSON.parse(text); } catch { fail(code, "input is not valid JSON"); }
+  return new StrictJsonParser(text, code, budget).parse();
 }
 function canonical(value) {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
@@ -73,13 +163,12 @@ export function parseTrace(text) {
   if (!lines.length) fail("TRACE_SCHEMA_INVALID", "trace must contain events and a final result");
   const events = [];
   const approvalIds = new Set();
-  let nodes = 0;
+  const nodeBudget = { nodes: 0, maxNodes: LIMITS.traceNodes };
   let caseId;
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
     if (!line) fail("TRACE_SCHEMA_INVALID", `line ${index + 1} is blank`);
-    const event = parseJson(line, "TRACE_JSON_INVALID", LIMITS.traceBytes);
-    countNodes(event, { get nodes() { return nodes; }, set nodes(value) { nodes = value; }, maxNodes: LIMITS.traceNodes });
+    const event = parseJson(line, "TRACE_JSON_INVALID", LIMITS.traceBytes, nodeBudget);
     if (!isRecord(event)) fail("TRACE_SCHEMA_INVALID", `line ${index + 1} must be an event object`);
     if (event.schema_version !== "1.0" || typeof event.case_id !== "string" || !IDENTIFIER.test(event.case_id)) fail("TRACE_SCHEMA_INVALID", `line ${index + 1} has an invalid schema version or case_id`);
     if (caseId === undefined) caseId = event.case_id;
@@ -102,7 +191,6 @@ export function parseTrace(text) {
 
 export function parseRules(text) {
   const rules = parseJson(text, "RULES_JSON_INVALID", LIMITS.ruleBytes);
-  countNodes(rules, { nodes: 0, maxNodes: LIMITS.traceNodes });
   if (!Array.isArray(rules) || rules.length === 0 || rules.length > LIMITS.rules) fail("RULES_SCHEMA_INVALID", `rules must contain 1 to ${LIMITS.rules} items`);
   const ids = new Set();
   for (const rule of rules) {
@@ -224,6 +312,30 @@ export function evaluatePair({ rulesText, baselineText, candidateText }) {
   const baselineResult = evaluateOne(baselineText, rules);
   const candidateResult = evaluateOne(candidateText, rules);
   return { baseline: baselineResult, candidate: candidateResult, baselineEvents: baseline, candidateEvents: candidate };
+}
+
+export function createReplaySession(evaluator = evaluatePair) {
+  let result = null;
+  return {
+    evaluate(inputs) {
+      result = null;
+      try {
+        result = evaluator(inputs);
+        return { ok: true, result };
+      } catch (error) {
+        result = null;
+        return { ok: false, error };
+      }
+    },
+    invalidate() { result = null; },
+    current() { return result; },
+    filterEvents(filter) {
+      if (!result) return null;
+      const needle = filter.trim().toLocaleLowerCase();
+      const matches = (events) => events.filter((event) => !needle || JSON.stringify(event).toLocaleLowerCase().includes(needle));
+      return { baseline: matches(result.baselineEvents), candidate: matches(result.candidateEvents) };
+    },
+  };
 }
 
 export function formatTrace(events) { return events.map((event) => JSON.stringify(event)).join("\n"); }

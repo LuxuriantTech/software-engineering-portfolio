@@ -42,10 +42,10 @@
 <label>Baseline trace (one JSON event per line)<textarea id="baseline-input" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="input-limits"></textarea></label>
 <label>Candidate trace (one JSON event per line)<textarea id="candidate-input" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="input-limits"></textarea></label>
 </div>
-<p id="input-limits" class="quiet">Limits: 1 MB per trace, 2,000 events, 50,000 JSON values, 64 rules, 1,000,000 evaluation operations.</p>
+<p id="input-limits" class="quiet">Limits: 1 MB per trace, 2,000 events, 50,000 JSON nodes, 64 rules, 1,000,000 evaluation operations. Numeric values must be exact integers within JavaScript’s safe range; decimals and exponent notation are rejected.</p>
 <div class="actions"><button class="action primary" type="button" id="toolcall-run">Run evaluation</button></div>
 <label class="toolcall-filter">Filter trace events<input id="event-filter" type="search" placeholder="for example: request.update"></label>
-<p id="tool-live" class="sr-status" aria-live="polite"></p>
+<p id="tool-live" class="toolcall-state" role="status" aria-live="polite">Run evaluation to calculate both results.</p>
 <div id="tool-error" class="toolcall-error" role="alert" hidden></div>
 <div id="tool-output" class="toolcall-results" aria-live="polite"></div>
 </section>

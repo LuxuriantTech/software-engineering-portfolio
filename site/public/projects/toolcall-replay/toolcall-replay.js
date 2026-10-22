@@ -2,7 +2,7 @@ import {
   DEFAULT_BASELINE,
   DEFAULT_CANDIDATE,
   DEFAULT_RULES,
-  evaluatePair,
+  createReplaySession,
   formatRules,
   formatTrace,
 } from "./toolcall-replay-engine.js";
@@ -14,6 +14,7 @@ const candidateInput = byId("candidate-input");
 const output = byId("tool-output");
 const error = byId("tool-error");
 const live = byId("tool-live");
+const session = createReplaySession();
 
 rulesInput.value = formatRules(DEFAULT_RULES);
 baselineInput.value = formatTrace(DEFAULT_BASELINE);
@@ -55,18 +56,39 @@ function renderEvents(label, events, filter) {
   return section;
 }
 
+function renderResult(filter = "") {
+  output.replaceChildren();
+  const result = session.current();
+  const events = session.filterEvents(filter);
+  if (!result || !events) return;
+  output.append(
+    renderEvaluation("Baseline", result.baseline),
+    renderEvaluation("Candidate", result.candidate),
+    renderEvents("Baseline", events.baseline, ""),
+    renderEvents("Candidate", events.candidate, ""),
+  );
+  const count = events.baseline.length + events.candidate.length;
+  live.textContent = `Evaluation complete. Baseline ${result.baseline.verdict}; candidate ${result.candidate.verdict}; ${count} matching events shown.`;
+}
+
+function invalidateResults() {
+  session.invalidate();
+  error.hidden = true;
+  error.textContent = "";
+  output.replaceChildren();
+  live.textContent = "Inputs changed. Current results cleared. Run evaluation to see updated results.";
+}
+
 function run() {
   error.hidden = true;
   error.textContent = "";
   output.replaceChildren();
   try {
-    const result = evaluatePair({ rulesText: rulesInput.value, baselineText: baselineInput.value, candidateText: candidateInput.value });
-    const filter = byId("event-filter").value;
-    output.append(renderEvaluation("Baseline", result.baseline), renderEvaluation("Candidate", result.candidate), renderEvents("Baseline", result.baselineEvents, filter), renderEvents("Candidate", result.candidateEvents, filter));
-    const needle = filter.trim().toLocaleLowerCase();
-    const count = [...result.baselineEvents, ...result.candidateEvents].filter((event) => !needle || JSON.stringify(event).toLocaleLowerCase().includes(needle)).length;
-    live.textContent = `Evaluation complete. Baseline ${result.baseline.verdict}; candidate ${result.candidate.verdict}; ${count} matching events shown.`;
+    const outcome = session.evaluate({ rulesText: rulesInput.value, baselineText: baselineInput.value, candidateText: candidateInput.value });
+    if (!outcome.ok) throw outcome.error;
+    renderResult(byId("event-filter").value);
   } catch (cause) {
+    session.invalidate();
     error.textContent = cause instanceof Error ? cause.message : "Evaluation failed. Correct the input and run it again.";
     error.hidden = false;
     live.textContent = "Evaluation stopped. No partial result is shown.";
@@ -74,12 +96,16 @@ function run() {
 }
 
 byId("toolcall-run").addEventListener("click", run);
-byId("event-filter").addEventListener("input", run);
+byId("event-filter").addEventListener("input", () => {
+  if (!session.current()) { output.replaceChildren(); return; }
+  renderResult(byId("event-filter").value);
+});
+[rulesInput, baselineInput, candidateInput].forEach((input) => input.addEventListener("input", invalidateResults));
 byId("toolcall-reset").addEventListener("click", () => {
   rulesInput.value = formatRules(DEFAULT_RULES);
   baselineInput.value = formatTrace(DEFAULT_BASELINE);
   candidateInput.value = formatTrace(DEFAULT_CANDIDATE);
-  run();
+  invalidateResults();
   rulesInput.focus();
 });
 run();

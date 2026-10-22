@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { DEFAULT_BASELINE, DEFAULT_CANDIDATE, DEFAULT_RULES, evaluatePair, formatRules, formatTrace, LIMITS, parseRules, parseTrace } from "../public/projects/toolcall-replay/toolcall-replay-engine.js";
+import { DEFAULT_BASELINE, DEFAULT_CANDIDATE, DEFAULT_RULES, createReplaySession, evaluatePair, formatRules, formatTrace, LIMITS, parseRules, parseTrace } from "../public/projects/toolcall-replay/toolcall-replay-engine.js";
 
 const evaluate = (baseline = DEFAULT_BASELINE, candidate = DEFAULT_CANDIDATE, rules = DEFAULT_RULES) => evaluatePair({ rulesText: formatRules(rules), baselineText: formatTrace(baseline), candidateText: formatTrace(candidate) });
 
@@ -66,6 +66,43 @@ test("invalid input and unsupported schema shapes stop without partial evaluatio
   assert.throws(() => evaluate(DEFAULT_BASELINE, otherCase), /case_id values must match/);
 });
 
+test("strict JSON parsing rejects duplicate keys after escape decoding at every nesting level", () => {
+  const duplicateTrace = [
+    '{"schema_version":"1.0","case_id":"bounded-update","step":1,"kind":"tool_call","tool":"request.lookup","arguments":{"scope":"all","\\u0073cope":"team:synthetic"}}',
+    ...DEFAULT_BASELINE.slice(1).map((event) => JSON.stringify(event)),
+  ].join("\n");
+  assert.throws(() => parseTrace(duplicateTrace), /TRACE_JSON_INVALID: duplicate object key/);
+  assert.throws(() => parseRules('[{"rule_id":"x","type":"expected_result","status":"completed","output":{"nested":{"key":1,"\\u006bey":2}}}]'), /RULES_JSON_INVALID: duplicate object key/);
+});
+
+test("unsafe integers and float syntax are rejected rather than rounded into a different verdict", () => {
+  const unsafeTrace = formatTrace(DEFAULT_BASELINE).replace('"scope":"team:synthetic"', '"scope":9007199254740993');
+  const rule = [{ rule_id: "scope", type: "argument_constraint", tool: "request.lookup", argument: "scope", allowed_values: [9007199254740992] }];
+  assert.throws(() => evaluate(DEFAULT_BASELINE, DEFAULT_CANDIDATE, rule), /UNSAFE_JSON_INTEGER/);
+  assert.throws(() => parseRules('[{"rule_id":"scope","type":"argument_constraint","tool":"request.lookup","argument":"scope","allowed_values":[9007199254740992]}]'), /UNSAFE_JSON_INTEGER/);
+  assert.throws(() => evaluatePair({ rulesText: formatRules(rule), baselineText: unsafeTrace, candidateText: formatTrace(DEFAULT_CANDIDATE) }), /UNSAFE_JSON_INTEGER/);
+
+  const floatTrace = formatTrace(DEFAULT_BASELINE).replace('"scope":"team:synthetic"', '"scope":1.0');
+  const floatRule = [{ rule_id: "result", type: "expected_result", status: "completed", output: { status: "updated", scope: 1 } }];
+  assert.throws(() => evaluatePair({ rulesText: formatRules(floatRule), baselineText: floatTrace, candidateText: formatTrace(DEFAULT_CANDIDATE) }), /UNSUPPORTED_JSON_NUMBER/);
+  assert.throws(() => parseRules('[{"rule_id":"scope","type":"argument_constraint","tool":"request.lookup","argument":"scope","allowed_values":[1.0]}]'), /UNSUPPORTED_JSON_NUMBER/);
+});
+
+test("editing invalidates prior results and filtering never evaluates changed text", () => {
+  let calls = 0;
+  const session = createReplaySession((input) => { calls += 1; return evaluatePair(input); });
+  const inputs = { rulesText: formatRules(DEFAULT_RULES), baselineText: formatTrace(DEFAULT_BASELINE), candidateText: formatTrace(DEFAULT_CANDIDATE) };
+  assert.equal(session.evaluate(inputs).ok, true);
+  assert.equal(session.filterEvents("no-such-event").baseline.length, 0);
+  assert.equal(calls, 1);
+  session.invalidate();
+  assert.equal(session.current(), null);
+  assert.equal(session.filterEvents("request.update"), null);
+  assert.equal(calls, 1);
+  assert.equal(session.evaluate({ ...inputs, candidateText: "{" }).ok, false);
+  assert.equal(session.current(), null);
+});
+
 test("trace count, byte, node, depth, operation, and output bounds reject abuse", () => {
   const tooMany = Array.from({ length: LIMITS.traceEvents + 1 }, (_, i) => ({ ...DEFAULT_BASELINE[0], step: i + 1 }));
   assert.throws(() => parseTrace(formatTrace(tooMany)), /TRACE_EVENT_LIMIT_EXCEEDED/);
@@ -73,7 +110,7 @@ test("trace count, byte, node, depth, operation, and output bounds reject abuse"
   const manyKeys = { ...DEFAULT_BASELINE[0], arguments: Object.fromEntries(Array.from({ length: LIMITS.traceNodes }, (_, i) => [`k${i}`, 1])) };
   assert.throws(() => parseTrace(formatTrace([manyKeys, ...DEFAULT_BASELINE.slice(1)])), /JSON_NODE_LIMIT_EXCEEDED/);
   let nested = 1; for (let i = 0; i <= LIMITS.traceDepth; i += 1) nested = [nested];
-  assert.throws(() => parseTrace(formatTrace([{ ...DEFAULT_BASELINE[0], arguments: { nested } }, ...DEFAULT_BASELINE.slice(1)])), /JSON_DEPTH_LIMIT_EXCEEDED/);
+  assert.throws(() => parseTrace(formatTrace([{ ...DEFAULT_BASELINE[0], arguments: { nested } }, ...DEFAULT_BASELINE.slice(1)])), /TRACE_JSON_INVALID: JSON exceeds 64-level nesting limit/);
   const broadRule = [{ rule_id: "scope", type: "argument_constraint", tool: "request.lookup", argument: "scope", allowed_values: Array.from({ length: 10_000 }, (_, i) => `value-${i}`) }];
   const manyCalls = Array.from({ length: 101 }, (_, i) => ({ ...DEFAULT_BASELINE[0], step: i + 1 })); manyCalls.push({ ...DEFAULT_BASELINE[4], step: 102 });
   assert.throws(() => evaluate(manyCalls, manyCalls, broadRule), /EVALUATION_BUDGET_EXCEEDED/);

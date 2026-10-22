@@ -25,6 +25,35 @@ test('shows replacements and bounds oversized inputs', () => {
   assert.ok(createLineDiff(largeMiddle, largeReplacement).length < 20000);
 });
 
+test('bounds large diffs while preserving both replacement sides and exact omitted counts', () => {
+  const countLines = output => output.split('\n');
+  const count = (lines, prefix) => lines.filter(line => line.startsWith(prefix)).length;
+
+  const old600 = Array.from({ length: 600 }, (_, i) => `old-${i}`);
+  const new600 = Array.from({ length: 600 }, (_, i) => `new-${i}`);
+  const fallback = countLines(createLineDiff(old600.join('\n'), new600.join('\n')));
+  assert.equal(count(fallback, '- '), 250);
+  assert.equal(count(fallback, '+ '), 250);
+  assert.equal(fallback.at(-1), '… 700 more diff lines omitted.');
+  assert.equal(fallback.length, 501);
+
+  const oneAdded = countLines(createLineDiff(old600.join('\n'), 'new-only'));
+  assert.equal(count(oneAdded, '- '), 499);
+  assert.equal(count(oneAdded, '+ '), 1);
+  assert.equal(oneAdded.at(-1), '… 101 more diff lines omitted.');
+  assert.equal(oneAdded.length, 501);
+
+  const deletionOnly = countLines(createLineDiff(`${old600.join('\n')}\n`, ''));
+  assert.equal(count(deletionOnly, '- '), 500);
+  assert.equal(count(deletionOnly, '+ '), 0);
+  assert.equal(deletionOnly.at(-1), '… 100 more diff lines omitted.');
+
+  const additionOnly = countLines(createLineDiff('', `${new600.join('\n')}\n`));
+  assert.equal(count(additionOnly, '- '), 0);
+  assert.equal(count(additionOnly, '+ '), 500);
+  assert.equal(additionOnly.at(-1), '… 100 more diff lines omitted.');
+});
+
 test('any edit withdraws the prepared response and reload restores the original state', async () => {
   class Element {
     value = ''; textContent = ''; listeners = {}; classes = new Set();

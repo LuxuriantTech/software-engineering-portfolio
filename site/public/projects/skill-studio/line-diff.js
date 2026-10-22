@@ -4,6 +4,54 @@
   const MAX_CELLS = 250000;
   const MAX_OUTPUT_LINES = 500;
 
+  function boundEdits(edits) {
+    if (edits.length <= MAX_OUTPUT_LINES) return edits;
+
+    const deletedCount = edits.filter(line => line.startsWith('- ')).length;
+    const addedCount = edits.filter(line => line.startsWith('+ ')).length;
+    const hasBothSides = deletedCount > 0 && addedCount > 0;
+    let keepDeleted = 0;
+    let keepAdded = 0;
+
+    if (hasBothSides) {
+      keepDeleted = Math.min(deletedCount, Math.floor(MAX_OUTPUT_LINES / 2));
+      keepAdded = Math.min(addedCount, MAX_OUTPUT_LINES - keepDeleted);
+      let remaining = MAX_OUTPUT_LINES - keepDeleted - keepAdded;
+      const moreDeleted = Math.min(deletedCount - keepDeleted, remaining);
+      keepDeleted += moreDeleted;
+      remaining -= moreDeleted;
+      keepAdded += Math.min(addedCount - keepAdded, remaining);
+    } else if (deletedCount > 0) {
+      keepDeleted = Math.min(deletedCount, MAX_OUTPUT_LINES);
+    } else if (addedCount > 0) {
+      keepAdded = Math.min(addedCount, MAX_OUTPUT_LINES);
+    }
+
+    let keptDeleted = 0;
+    let keptAdded = 0;
+    let keptContext = 0;
+    const contextBudget = MAX_OUTPUT_LINES - keepDeleted - keepAdded;
+    const selected = [];
+    for (const line of edits) {
+      if (line.startsWith('- ')) {
+        if (keptDeleted < keepDeleted) {
+          selected.push(line);
+          keptDeleted += 1;
+        }
+      } else if (line.startsWith('+ ')) {
+        if (keptAdded < keepAdded) {
+          selected.push(line);
+          keptAdded += 1;
+        }
+      } else if (keptContext < contextBudget) {
+        selected.push(line);
+        keptContext += 1;
+      }
+    }
+
+    return [...selected, `… ${edits.length - selected.length} more diff lines omitted.`];
+  }
+
   function createLineDiff(beforeText, afterText) {
     if (beforeText === afterText) return 'No local changes.';
     if (beforeText.length + afterText.length > MAX_CHARS) return 'Diff omitted: input exceeds the 200,000 character limit.';
@@ -41,8 +89,7 @@
     }
 
     if (!edits.length) return 'No local changes.';
-    if (edits.length > MAX_OUTPUT_LINES) edits = [...edits.slice(0, MAX_OUTPUT_LINES), `… ${edits.length - MAX_OUTPUT_LINES} more diff lines omitted.`];
-    return edits.join('\n');
+    return boundEdits(edits).join('\n');
   }
 
   root.SkillStudioLineDiff = createLineDiff;

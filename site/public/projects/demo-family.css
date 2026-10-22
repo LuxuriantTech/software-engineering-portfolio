@@ -37,3 +37,4 @@ button,summary,a,select{touch-action:manipulation}button{cursor:pointer}button.a
 .terminal .site-head{background:#f4f1e8}.terminal .toolcall-state{background:#202728;color:#ece8de}
 
 .arch-card.accent :focus-visible{outline-color:#fffdf7}
+main:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}

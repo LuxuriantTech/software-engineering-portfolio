@@ -21,3 +21,7 @@ html { scroll-behavior: smooth; } body { margin: 0; min-width: 320px; background
 .table-scroll { width:100%; overflow-x:auto; margin:1rem 0; } .table-scroll table { width:100%; min-width:440px; border-collapse:collapse; font: .8rem/1.5 ui-sans-serif,system-ui,sans-serif; } .table-scroll th,.table-scroll td { padding:.7rem; border-bottom:1px solid #bfb4a0; text-align:left; } .table-scroll thead { background:#d9e6dd; } .evaluation-case { margin:1rem 0; border:1px solid #bfb4a0; padding:1rem; min-width:0; } .evaluation-case summary { cursor:pointer; overflow-wrap:anywhere; font:700 .8rem/1.4 ui-sans-serif,system-ui,sans-serif; } .evaluation-case pre { max-height:32rem; overflow:auto; overflow-wrap:anywhere; } .evaluation-arm { margin:1rem 0; padding:.8rem; background:#f6f0e5; min-width:0; } .evaluation-arm h3 { font-size:1rem; } .evaluation-hashes { overflow-wrap:anywhere; font:.7rem/1.5 ui-monospace,monospace; } .evaluation-hashes dt { margin-top:.8rem; } .evaluation-hashes dd { margin-left:0; } summary:focus-visible,.table-scroll:focus-visible { outline:3px solid #dd7444; outline-offset:3px; }
 
 .evidence-section > div { min-width: 0; }
+
+.editor-status { min-height: 1.4em; margin: .55rem 0 0; color: #455c55; font: .76rem/1.4 ui-sans-serif, system-ui, sans-serif; }
+.editor-status[data-state="success"] { color: #165b57; }
+.editor-status[data-state="error"] { color: #812b18; }

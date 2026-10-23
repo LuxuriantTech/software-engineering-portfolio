@@ -1,0 +1,31 @@
+.entity-demo{margin-top:1.5rem;padding:clamp(16px,3vw,30px);background:#fffdf7}
+.entity-demo .demo-head{align-items:center;margin-bottom:.8rem}
+.entity-explainer{max-width:70ch;margin-block:.6rem 1.2rem}
+.entity-records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.entity-record{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;min-width:0;margin:0;padding:16px;border:1px solid #cbc6ba;background:#f4f1e8}
+.entity-record legend{padding:0 6px;font-family:"IBM Plex Mono",Consolas,monospace;font-size:.82rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.entity-record label,.entity-controls label{font-size:.84rem;font-weight:650}
+.entity-record input,.entity-controls input{width:100%;min-width:0;min-height:44px;padding:9px 11px;border:1px solid #8d887e;border-radius:0;background:#fffdf7;color:#151512;font:400 1rem/1.35 Archivo,Arial,sans-serif}
+.entity-record input:focus-visible,.entity-controls input:focus-visible{outline:3px solid #ff5a36;outline-offset:2px}
+.entity-record input[aria-invalid="true"],.entity-controls input[aria-invalid="true"]{border:2px solid #a32218;background:#fff0ed}
+.field-help{margin:.2rem 0 0;font-size:.8rem;line-height:1.45}
+.entity-controls{display:grid;grid-template-columns:minmax(0,15rem) minmax(8rem,12rem);align-items:center;gap:8px 16px;max-width:44rem;margin-top:18px}
+.entity-controls label{display:flex;justify-content:space-between;gap:12px}.entity-controls label span{color:#625e55;font-family:"IBM Plex Mono",Consolas,monospace;font-size:.72rem;font-weight:400}
+.entity-controls .field-help{grid-column:1/-1;margin:0}
+.entity-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.entity-actions button,.entity-demo .demo-head button{min-height:44px}
+.entity-live{margin:18px 0 0;padding:10px 12px;border-left:3px solid #2f5cff;background:#eef1ff;color:#172d74;font-size:.9rem;font-weight:600}
+.entity-error{margin-top:12px;padding:12px 14px;border-left:4px solid #a32218;background:#fff0ed;color:#61170f}
+.entity-error p{margin:0;font-weight:700}.entity-error ul{margin:.5rem 0 0;padding-left:1.25rem}.entity-error li+li{margin-top:.3rem}
+.entity-results{margin-top:22px;padding-top:18px;border-top:1px solid #cbc6ba}.entity-results>h2{margin-bottom:14px;font-size:1.5rem}
+.entity-result-block{min-width:0;margin-top:14px;padding:15px;border:1px solid #cbc6ba;background:#f4f1e8}
+.entity-result-block h3{margin:0 0 10px;font-size:1.15rem}
+.entity-verdict{margin:0 0 6px;color:#172d74;font-size:1rem;font-weight:700}.entity-score{margin:0;font-family:"IBM Plex Mono",Consolas,monospace;font-size:1.2rem;font-weight:500;font-variant-numeric:tabular-nums}
+.entity-result-block .quiet{margin:.55rem 0 0;line-height:1.5}
+.entity-breakdown{display:grid;gap:8px;margin:0}.entity-component{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 16px;padding:10px 0;border-top:1px solid #cbc6ba}.entity-component dt{font-weight:650}.entity-component dd{margin:0;font-family:"IBM Plex Mono",Consolas,monospace;font-size:.9rem;font-variant-numeric:tabular-nums}.entity-component-reason{grid-column:1/-1;margin:0;color:#625e55;font-size:.87rem;line-height:1.45}
+.entity-result-block h4{margin:16px 0 6px;font-size:.9rem}.entity-reasons{margin:0;padding-left:1.2rem}.entity-reasons li+li{margin-top:5px}.entity-skipped{margin-top:14px;border-top:1px solid #cbc6ba}.entity-skipped summary{min-height:44px;padding:8px 0;font-weight:650}
+.entity-score-disclosure{margin:14px 0 0;padding:12px;border-left:3px solid #ff5a36;background:#fffdf7;color:#151512;font-size:.9rem;line-height:1.5}
+.method-panel{margin-top:24px}.method-panel h2{margin-bottom:14px}.method-list{padding-left:1.2rem}.method-list li+li{margin-top:6px}.method-panel a{color:#1748dd;text-underline-offset:3px}.evidence-figure{margin-top:24px}.evidence-figure figcaption{line-height:1.5}.entity-limit{margin-block:24px 36px}
+@media(max-width:680px){.entity-records{grid-template-columns:minmax(0,1fr)}.entity-controls{grid-template-columns:minmax(0,1fr)}.entity-controls .field-help{grid-column:auto}.entity-demo .demo-head{align-items:flex-start;flex-direction:column}.entity-component{grid-template-columns:minmax(0,1fr) auto}}
+@media(max-width:420px){.entity-demo{padding:14px}.entity-record{padding:12px}.entity-component{gap:3px 8px}.entity-score{font-size:1.05rem}}
+@media(prefers-reduced-motion:reduce){.entity-demo *, .entity-demo *::before,.entity-demo *::after{scroll-behavior:auto;transition:none!important;animation:none!important}}

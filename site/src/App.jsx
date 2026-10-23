@@ -44,6 +44,49 @@ function ProjectStatus({ status }) {
   );
 }
 
+export function closeMobileMenu(event) {
+  const trigger = event.currentTarget;
+  const details = trigger.closest("details");
+  if (!details) return false;
+
+  details.open = false;
+  const href = trigger.getAttribute("href") ?? "";
+  const targetId = href.startsWith("#") ? decodeURIComponent(href.slice(1)) : "";
+  const destination = targetId ? document.getElementById(targetId) : null;
+  if (destination && typeof destination.focus === "function") {
+    destination.focus({ preventScroll: true });
+  } else {
+    details.querySelector("summary")?.focus({ preventScroll: true });
+  }
+  return true;
+}
+
+export function dismissMobileMenuOnEscape(event) {
+  const details = event.currentTarget;
+  if (event.key !== "Escape" || !details.open) return false;
+
+  event.preventDefault();
+  details.open = false;
+  details.querySelector("summary")?.focus({ preventScroll: true });
+  return true;
+}
+
+export function nextDocumentTabIndex(key, currentIndex, count) {
+  if (!Number.isInteger(currentIndex) || !Number.isInteger(count) || count < 1 || currentIndex < 0 || currentIndex >= count) return null;
+  if (key === "ArrowLeft") return (currentIndex - 1 + count) % count;
+  if (key === "ArrowRight") return (currentIndex + 1) % count;
+  if (key === "Home") return 0;
+  if (key === "End") return count - 1;
+  return null;
+}
+
+export function finalizeDocumentViewerClose(dialog, trigger, onDismiss, body) {
+  if (dialog?.open) dialog.close();
+  body.classList.remove("document-viewer-open");
+  onDismiss();
+  trigger?.focus({ preventScroll: true });
+}
+
 function HeaderLinks({ className = "", label, onNavigate }) {
   return (
     <nav className={className} aria-label={label}>
@@ -57,10 +100,6 @@ function HeaderLinks({ className = "", label, onNavigate }) {
 }
 
 function SiteHeader() {
-  function closeMenu(event) {
-    event.currentTarget.closest("details")?.removeAttribute("open");
-  }
-
   return (
     <header className="site-header">
       <a className="wordmark" href="#top">
@@ -77,15 +116,15 @@ function SiteHeader() {
         <ArrowRightIcon size={16} aria-hidden="true" />
       </a>
 
-      <details className="mobile-menu">
+      <details className="mobile-menu" onKeyDown={dismissMobileMenuOnEscape}>
         <summary>Menu</summary>
         <div className="mobile-panel">
           <HeaderLinks
             className="mobile-nav"
             label="Mobile navigation"
-            onNavigate={closeMenu}
+            onNavigate={closeMobileMenu}
           />
-          <a className="mobile-email" href={`mailto:${CONTACT.email}`} onClick={closeMenu}>
+          <a className="mobile-email" href={`mailto:${CONTACT.email}`} onClick={closeMobileMenu}>
             Email me
             <ArrowRightIcon size={16} aria-hidden="true" />
           </a>
@@ -329,7 +368,7 @@ function DocumentDeck({ onOpenDocument }) {
 
 function Documents({ onOpenDocument }) {
   return (
-    <section className="documents-section" id="documents" aria-labelledby="documents-title">
+    <section className="documents-section" id="documents" tabIndex={-1} aria-labelledby="documents-title">
       <div className="documents-layout page-grid">
         <div className="documents-copy">
           <p className="section-label">Documents</p>
@@ -570,11 +609,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   if (!activeDocumentId) return null;
 
   function finishClose() {
-    const dialog = dialogRef.current;
-    if (dialog?.open) dialog.close();
-    document.body.classList.remove("document-viewer-open");
-    onDismiss();
-    lastTriggerRef.current?.focus({ preventScroll: true });
+    finalizeDocumentViewerClose(dialogRef.current, lastTriggerRef.current, onDismiss, document.body);
   }
 
   function requestClose() {
@@ -601,18 +636,8 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   }
 
   function moveBetweenTabs(event, currentIndex) {
-    const keyOffsets = { ArrowLeft: -1, ArrowRight: 1 };
-    let nextIndex = currentIndex;
-
-    if (event.key in keyOffsets) {
-      nextIndex = (currentIndex + keyOffsets[event.key] + DOCUMENTS.length) % DOCUMENTS.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = DOCUMENTS.length - 1;
-    } else {
-      return;
-    }
+    const nextIndex = nextDocumentTabIndex(event.key, currentIndex, DOCUMENTS.length);
+    if (nextIndex === null) return;
 
     event.preventDefault();
     tabRefs.current[nextIndex]?.focus();
@@ -705,11 +730,11 @@ function ProjectVisual({ project }) {
 
   if (project.id === "entity-resolution-workbench") {
     return (
-      <a href={project.demoUrl} className="case-visual case-visual--entity" aria-label="Open the prepared Entity Resolution Workbench comparison">
-        <span className="case-visual__eyebrow">RECORDED COMPARISON / SYNTHETIC DATA</span>
+      <a href={project.demoUrl} className="case-visual case-visual--entity" aria-label="Compare two editable fictional product records">
+        <span className="case-visual__eyebrow">EDITABLE PAIR / SYNTHETIC DATA</span>
         <span className="record-pair"><span><small>CATALOGUE A</small><strong>Harbor Desk Lamp</strong><em>SKU / HBL8</em></span><span><small>CATALOGUE B</small><strong>Harbor Desk Lamp</strong><em>SKU / HBL9</em></span></span>
-        <span className="record-verdict"><strong>REVIEW</strong><span>Same name. Conflicting identifier.</span></span>
-        <span className="case-visual__footer">Inspect the decision reasons <ArrowRightIcon size={19} aria-hidden="true" /></span>
+        <span className="record-verdict"><strong>COMPARE</strong><span>One pair. Scores by field.</span></span>
+        <span className="case-visual__footer">Edit the fields and calculate their similarities <ArrowRightIcon size={19} aria-hidden="true" /></span>
       </a>
     );
   }
@@ -763,16 +788,16 @@ function ProjectCase({ project }) {
 
 function Work() {
   return (
-    <section className="work-section" id="work" aria-labelledby="work-title">
+    <section className="work-section" id="work" tabIndex={-1} aria-labelledby="work-title">
       <div className="section-heading page-grid">
         <p className="section-label">Selected work</p>
         <h2 id="work-title">Three projects. Three ways to verify.</h2>
-        <p>Compare API contracts, evaluate a workflow trace or review an uncertain record match.</p>
+        <p>Compare API contracts, evaluate a workflow trace or calculate similarities between two records.</p>
       </div>
       <nav className="selected-project-nav page-grid" aria-label="Selected projects">
         {featuredProjects.map(project => <a key={project.id} href={project.demoUrl}><span>{project.number}</span>{project.name}<ArrowRightIcon size={18} aria-hidden="true" /></a>)}
       </nav>
-      <p className="demo-context page-grid">API Contract Guard and ToolCall Replay calculate results from editable inputs. Entity Resolution explains a recorded match. All examples use synthetic data.</p>
+      <p className="demo-context page-grid">API Contract Guard and ToolCall Replay evaluate editable inputs. Entity Resolution calculates a simple pair score separately from its Python matcher. All examples use synthetic data.</p>
       <div className="case-list page-grid">{featuredProjects.map((project) => <ProjectCase project={project} key={project.id} />)}</div>
       <nav className="demo-launchpad page-grid" aria-label="Try the engineering demos">
         <div className="demo-launchpad-heading"><strong>All six demos</strong><a href="/projects/">Choose a demo <ArrowRightIcon size={16} aria-hidden="true" /></a></div>
@@ -799,7 +824,7 @@ function Work() {
 
 function Method() {
   return (
-    <section className="method-section" id="method" aria-labelledby="method-title">
+    <section className="method-section" id="method" tabIndex={-1} aria-labelledby="method-title">
       <div className="method-layout page-grid">
         <div className="method-intro">
           <p className="section-label">How I work</p>
@@ -837,7 +862,7 @@ function Method() {
 
 function Skills() {
   return (
-    <section className="skills-section" id="skills" aria-labelledby="skills-title">
+    <section className="skills-section" id="skills" tabIndex={-1} aria-labelledby="skills-title">
       <div className="section-heading page-grid">
         <p className="section-label">Working set</p>
         <h2 id="skills-title">Tools behind the work.</h2>
@@ -861,7 +886,7 @@ function Skills() {
 
 function Certificates() {
   return (
-    <section className="certificates-section" id="certificates" aria-labelledby="certificates-title">
+    <section className="certificates-section" id="certificates" tabIndex={-1} aria-labelledby="certificates-title">
       <div className="section-heading page-grid">
         <p className="section-label">Education</p>
         <h2 id="certificates-title">Certificates.</h2>
@@ -890,7 +915,7 @@ function Certificates() {
 
 function About() {
   return (
-    <section className="about-section" id="about" aria-labelledby="about-title">
+    <section className="about-section" id="about" tabIndex={-1} aria-labelledby="about-title">
       <div className="about-layout page-grid">
         <p className="section-label">About</p>
         <div>

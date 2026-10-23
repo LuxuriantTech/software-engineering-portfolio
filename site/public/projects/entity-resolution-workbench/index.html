@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Edit two fictional product records and compare their field similarities in your browser.">
 <title>Entity Resolution Workbench</title>
 <link rel="stylesheet" href="../site.css">
 <link rel="stylesheet" href="../demo-family.css">
+<link rel="stylesheet" href="./workbench.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/project-transition.css">
 <script src="/project-transition.js" defer></script>
 </head>
-<body class="desk" data-demo="entity">
-<a class="skip" href="#main">Skip to comparison desk</a>
+<body>
+<a class="skip" href="#main">Skip to comparison</a>
 <header class="site-head">
 <a class="author-link" href="/"><strong>Ardian Mehaj</strong><span>Back to portfolio ↗</span></a>
 <nav aria-label="Project navigation">
@@ -23,100 +25,92 @@
 <a href="../skill-studio/">Skill Studio</a>
 </nav>
 <nav class="profile-nav" aria-label="Ardian Mehaj profile">
-<a href="/">Portfolio</a><a href="/documents/Ardian_Mehaj_Public_CV_EN.pdf">CV (EN)</a><a href="/documents/Ardian_Mehaj_Public_CV_FR.pdf" lang="fr">CV (FR)</a><a href="mailto:mehajardian@gmail.com">Contact</a>
+<a href="/">Portfolio</a><a href="/documents/Ardian_Mehaj_Public_CV_EN.pdf">CV (EN)</a><a href="/documents/Ardian_Mehaj_Public_CV_FR.pdf" lang="fr">CV (FR)</a><a href="mailto:mehajardian@gmail.com">Contact me</a>
 </nav>
 </header>
 <main class="wrap" id="main" tabindex="-1">
 <p class="eyebrow">Entity Resolution · Data quality</p>
-<p class="quiet demo-disclosure">Prepared browser comparison · Fictional data · Public local matcher</p>
-<h1>Two records. The same thing?</h1>
-<p class="lede">Compare names and attributes, inspect the differences and understand why a pair needs review. Similarity scores explain the comparison; they are not probabilities.</p>
-<div class="actions" aria-label="Entity Resolution actions">
-<a class="action primary" href="#interactive-demo">Try the demo</a>
-<a class="action" href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/adb88a9f8daff82809b2c061b52b85b70fa531b1">Public source snapshot</a>
+<h1>Compare two product records</h1>
+<p class="lede">Edit the fictional records, choose a demonstration threshold, then inspect the field-by-field calculation. The similarity score is not a probability or a match decision.</p>
+<div class="actions" aria-label="Project links">
+<a class="action" href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/adb88a9f8daff82809b2c061b52b85b70fa531b1">Python source snapshot</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=Entity%20Resolution%20Workbench">Contact me</a>
 </div>
-<section class="demo" id="interactive-demo" aria-labelledby="entity-demo-title">
-<div class="demo-head"><div><p class="eyebrow">Interactive prepared comparison</p><h2 id="entity-demo-title">Put two records beside the reasons</h2></div><button class="action" type="button" id="entity-reset">Reset demo</button></div>
-<p>These are fictional catalogues. Selecting a pair renders prepared data in the browser; it does not call the local matcher. The number field changes only the threshold explanation shown below, before any engine input is made.</p>
-<div class="demo-controls"><label>Pair<select id="entity-select" data-initial="review"><option value="review">Harbor Desk Lamp: review</option><option value="match">Lumen Task Chair: match illustration</option><option value="noMatch">Stoneware Mug: no-match illustration</option></select></label><label>Explanation threshold<input id="threshold" data-initial="0.75" type="number" min="0" max="1" step="0.01" value="0.75" required aria-describedby="threshold-help threshold-error"><span id="threshold-help" class="quiet">Enter a number from 0.00 to 1.00. It changes only the explanation.</span><span id="threshold-error" class="demo-status fail" aria-live="polite" hidden></span></label></div>
-<p id="entity-live" class="sr-status" aria-live="polite"></p><div id="entity-output" class="demo-output" aria-live="polite"></div>
-</section>
-<section class="panel"><h2>Three distinct decisions</h2><p>The similarity is an explanatory score, not a probability. The local engine decides MATCH, REVIEW or NO_MATCH using more than one score: contradiction, evidence and competing candidates also matter. A reviewer's session-only annotation can follow REVIEW, but it does not change the engine decision. This browser threshold cannot rerun either step.</p><p>Inspect the public <a href="https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/matcher.py">decision code</a>, <a href="https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/tests/test_scoring_and_decisions.py">focused tests</a> and <a href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/web_fixtures/catalogue-desk-v1">fictional catalogues</a>. In that repository, run <code>uv sync --frozen</code>, then <code>.venv/bin/python scripts/workbench_control.py start --port 8765</code>; stop with the same command and <code>stop</code>.</p><p class="quiet">The public repository is a source snapshot with selected runtime tests, not its full private Git history.</p></section>
-<section class="grid two">
-<article class="panel record">
-<h2>Catalogue A</h2>
-<p>
-<strong>Harbor Desk Lamp</strong>
-<br>
-<span class="quiet">normalized name: harbor desk lamp<br>normalized brand: harbor<br>normalized SKU: hbl8</span>
-</p>
-</article>
-<article class="panel record">
-<h2>Catalogue B</h2>
-<p>
-<strong>Harbor Desk Lamp</strong>
-<br>
-<span class="quiet">normalized name: harbor desk lamp<br>normalized brand: harbor<br>normalized SKU: hbl9</span>
-</p>
-</article>
-</section>
-<section class="grid two spaced">
-<article>
-<h2>Recorded comparison: REVIEW</h2>
-<p>These shown records are a review case, not an asserted match. The same normalized name appears more than once, another candidate shares the top score, the SKU contradicts, and the score is below the automatic-match threshold.</p>
-</article>
-<article class="panel">
-<h2>Five recorded similarities</h2>
-<ul class="score-list">
-<li>
-<span>Product name</span>
-<strong>1.000000</strong>
-</li>
-<li>
-<span>Brand</span>
-<strong>1.000000</strong>
-</li>
-<li>
-<span>SKU</span>
-<strong>0.000000</strong>
-</li>
-<li>
-<span>Price</span>
-<strong>0.891304</strong>
-</li>
-<li>
-<span>Overall</span>
-<strong>0.739130</strong>
-</li>
-</ul>
-</article>
-</section>
-<figure class="figure">
-<img src="../assets/entity-desktop-results.png" alt="Recorded local results screen showing synthetic catalogue comparison cards, with MATCH, REVIEW and NO MATCH decisions and their reasons.">
-<figcaption>Recorded desktop result on the included synthetic catalogue sample. Similarity values are explanations of a deterministic matcher, not probabilities or business-quality guarantees.</figcaption>
-</figure>
-<div class="caption-grid">
-<section>
-<h2>Why leave uncertainty visible?</h2>
-<p>A manual annotation is session-local and applies only to an engine REVIEW. It never changes the engine decision. The page shows raw and normalized values, comparison reasons, and all three decision types together.</p>
-</section>
-<details>
-<summary>Local start and stop</summary>
-<pre class="command">
-<code>uv sync --frozen
-.venv/bin/python scripts/workbench_control.py start --port 8765
-.venv/bin/python scripts/workbench_control.py stop</code>
-</pre>
-<p>Open <code>http://127.0.0.1:8765/</code>. Use only the versioned synthetic sample or small CSV inputs explicitly acknowledged as synthetic. The engine is not a hosted service.</p>
-</details>
+
+<section class="demo entity-demo" aria-labelledby="entity-demo-title">
+<div class="demo-head">
+<div><p class="eyebrow">Browser-only demonstration</p><h2 id="entity-demo-title">Edit the pair</h2></div>
+<button class="action" type="button" id="entity-reset">Reset example</button>
 </div>
-<section class="notice">
-<strong>Limit</strong>This local workbench is not validated on customer data. It does not claim a hosted service, deployment, real users, a human-comprehension study, WCAG certification, or production security.</section>
+<p class="quiet entity-explainer">Values stay in this page. Comparing runs a small JavaScript calculation in your browser; it does not call the separate Python workbench.</p>
+
+<form id="entity-workbench-form" novalidate>
+<div class="entity-records">
+<fieldset class="entity-record">
+<legend>Record A</legend>
+<label for="record-a-name">Product name</label>
+<input id="record-a-name" name="record-a-name" type="text" maxlength="120" autocomplete="off" value="Harbor Desk Lamp" aria-describedby="record-a-help">
+<label for="record-a-brand">Brand</label>
+<input id="record-a-brand" name="record-a-brand" type="text" maxlength="120" autocomplete="off" value="Harbor">
+<label for="record-a-sku">SKU</label>
+<input id="record-a-sku" name="record-a-sku" type="text" maxlength="120" autocomplete="off" value="HBL8">
+<label for="record-a-price">Price</label>
+<input id="record-a-price" name="record-a-price" type="text" inputmode="decimal" maxlength="14" autocomplete="off" value="69.00" aria-describedby="record-a-help">
+<p id="record-a-help" class="quiet field-help">Optional fields. Price uses a non-negative decimal, for example 69.00.</p>
+</fieldset>
+<fieldset class="entity-record">
+<legend>Record B</legend>
+<label for="record-b-name">Product name</label>
+<input id="record-b-name" name="record-b-name" type="text" maxlength="120" autocomplete="off" value="Harbor Desk Lamp">
+<label for="record-b-brand">Brand</label>
+<input id="record-b-brand" name="record-b-brand" type="text" maxlength="120" autocomplete="off" value="Harbor">
+<label for="record-b-sku">SKU</label>
+<input id="record-b-sku" name="record-b-sku" type="text" maxlength="120" autocomplete="off" value="HBL9">
+<label for="record-b-price">Price</label>
+<input id="record-b-price" name="record-b-price" type="text" inputmode="decimal" maxlength="14" autocomplete="off" value="71.00">
+<p class="quiet field-help">Blank fields are skipped. At least one field must be comparable.</p>
+</fieldset>
+</div>
+
+<div class="entity-controls">
+<label for="entity-threshold">Demonstration threshold <span>0.00–1.00</span></label>
+<input id="entity-threshold" name="threshold" type="number" inputmode="decimal" min="0" max="1" step="0.01" value="0.86" required aria-describedby="threshold-help">
+<p id="threshold-help" class="quiet field-help">This only compares the browser score with the number you select. It does not produce MATCH, REVIEW or NO_MATCH.</p>
+</div>
+<div class="entity-actions">
+<button class="action primary" id="entity-compare" type="submit">Compare records</button>
+</div>
+</form>
+
+<p id="entity-live" class="entity-live" role="status" aria-live="polite" aria-atomic="true">Edit either record, then compare.</p>
+<div id="entity-error" class="entity-error" role="alert" tabindex="-1" hidden></div>
+<section id="entity-results" class="entity-results" aria-labelledby="entity-results-title" hidden>
+<h2 id="entity-results-title">Comparison result</h2>
+<div id="entity-output"></div>
+</section>
+</section>
+
+<section class="panel method-panel" aria-labelledby="method-title">
+<p class="eyebrow">How this browser calculation works</p>
+<h2 id="method-title">A small, inspectable pair score</h2>
+<ul class="method-list">
+<li><strong>Name:</strong> Jaccard overlap between normalized word tokens.</li>
+<li><strong>Brand and SKU:</strong> exact equality after normalization.</li>
+<li><strong>Price:</strong> score falls linearly to zero across a 20% relative difference.</li>
+<li><strong>Combined score:</strong> weighted average of comparable fields only, renormalizing the included weights (name 0.45, brand 0.20, SKU 0.25, price 0.10).</li>
+</ul>
+<p>Text normalization lowercases, removes accents, and treats punctuation as spaces; SKU normalization also removes spaces. The threshold only describes whether this pair score is above or below the selected number. Neither the score nor threshold is a probability.</p>
+<p><strong>This is a separate JavaScript demonstrator.</strong> It does not reproduce the Python matcher. The Python workbench uses a different name score and also considers candidate blocking, competing records, ambiguity, contradictions and other evidence before its MATCH, REVIEW or NO_MATCH outcomes.</p>
+<p><a href="https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/matcher.py">Python decision code</a> · <a href="https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/scoring.py">Python scoring code</a> · <a href="https://github.com/LuxuriantTech/entity-resolution-workbench/tree/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/web_fixtures/catalogue-desk-v1">Fictional Python fixtures</a></p>
+</section>
+
+<figure class="figure evidence-figure">
+<img src="../assets/entity-desktop-results.png" alt="Screenshot of the separate local Python workbench showing synthetic catalogue results and its MATCH, REVIEW and NO MATCH categories." loading="lazy">
+<figcaption>This archived screenshot shows the Python workbench. The editable browser calculation above is a separate demonstration.</figcaption>
+</figure>
+<section class="notice entity-limit"><strong>Limit</strong>This browser pair calculator is educational and has not been validated on customer data. It does not establish business accuracy, engine parity, production security or suitability for operational decisions.</section>
 </main>
-<footer class="site-foot">
-<p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
-</footer>
-<script src="../demo.js"></script>
+<footer class="site-foot"><p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p></footer>
+<script type="module" src="./workbench.js"></script>
 </body>
 </html>

@@ -27,6 +27,14 @@ function el(name, className, value) {
   return node;
 }
 
+function evidenceBlock(label, value) {
+  const block = el("pre", "toolcall-evidence", JSON.stringify(value, null, 2));
+  block.tabIndex = 0;
+  block.setAttribute("role", "region");
+  block.setAttribute("aria-label", label);
+  return block;
+}
+
 function renderEvaluation(label, evaluation) {
   const section = el("section", "toolcall-result");
   const heading = el("h3", "", label);
@@ -47,7 +55,7 @@ function renderEvaluation(label, evaluation) {
     const details = el("details", "toolcall-rule-details");
     if (rule.verdict === "FAIL") details.open = true;
     const summary = el("summary", "", `${rule.verdict} · ${rule.rule_id} · ${rule.message}`);
-    details.append(summary, el("p", "", rule.message), el("pre", "toolcall-evidence", JSON.stringify(rule.evidence, null, 2)));
+    details.append(summary, el("p", "", rule.message), evidenceBlock(`Evidence for ${rule.verdict.toLowerCase()} rule ${rule.rule_id}`, rule.evidence));
     item.append(details);
     list.append(item);
   }
@@ -64,7 +72,10 @@ function renderEvents(label, events, filter) {
   for (const event of visible) {
     const row = el("li", "toolcall-event");
     const details = el("details", "toolcall-event-details");
-    details.append(el("summary", "", `Step ${event.step} · ${event.kind}${event.tool ? ` · ${event.tool}` : ""}`), el("pre", "toolcall-evidence", JSON.stringify(event, null, 2)));
+    details.append(
+      el("summary", "", `Step ${event.step} · ${event.kind}${event.tool ? ` · ${event.tool}` : ""}`),
+      evidenceBlock(`Event JSON for step ${event.step}, ${event.kind}${event.tool ? `, ${event.tool}` : ""}`, event),
+    );
     row.append(details);
     list.append(row);
   }

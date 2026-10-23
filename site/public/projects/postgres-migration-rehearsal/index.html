@@ -36,15 +36,53 @@
 <a class="action" href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/59089570e877f0bdd3de83193e2b9aed740bed7a">Public source snapshot</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=PostgreSQL%20Migration%20Rehearsal">Contact me</a>
 </div>
-<section class="panel" id="current-baseline"><h2>Current path: six-invoice CLI</h2><p>The separate opt-in <code>PMR-DEMO-20260908-v1</code> baseline completed a synthetic six-invoice migration, rollback, roll-forward and resource cleanup after matching image builds. Start with its <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/59089570e877f0bdd3de83193e2b9aed740bed7a/runtime-baselines/demo-20260908/README.md">exact build and local command</a>, <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/59089570e877f0bdd3de83193e2b9aed740bed7a/scripts/rehearse_baseline_v1.py">CLI source</a> and <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/59089570e877f0bdd3de83193e2b9aed740bed7a/tests/test_demo_baseline_v1.py">focused tests</a>. It is a new bounded demonstration, not a replay of historical Phase B.</p><p>The frozen original browser environment still rejects its unavailable image identity. LOW02 remains open for browser executable and system-library provenance. The current CLI does not repair or retest that archived environment. The public repository is a source snapshot with selected runtime tests, not the complete private history.</p></section>
+<section class="panel" id="current-baseline"><h2>Current path: separate V2 CLI</h2><p>The runnable route is the opt-in <code>PMR-DEMO-20261022-v2</code> CLI. It rebuilds and checks a versioned image, runs six fictional invoices through migration, rollback, roll-forward and cleanup, then prints a JSON result. It leaves the historical browser image and Phase B record unchanged.</p><p><a href="#pmr-v2-run">Go to exact install and run commands</a> · <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/f765d10124a54a99e81bc37010751bc567f34860/runtime-baselines/demo-20261022-v2/README.md">V2 procedure</a> · <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/626072c0eac87f0b05c287c51f9cc5f150299c9e/runtime-baselines/demo-20261022-v2/rehearsal-result.json">recorded result</a> · <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/626072c0eac87f0b05c287c51f9cc5f150299c9e/runtime-baselines/demo-20261022-v2/provenance.json">runtime provenance</a>.</p><p>The local CLI was rerun from a clean WSL checkout at the linked commit: package provenance, image build and preflight passed; the six-row scenario returned <code>LOCAL_REHEARSAL_PASSED</code> with rollback complete and zero owned resources remaining.</p></section>
 <section class="demo" id="interactive-demo" aria-labelledby="pmr-demo-title">
 <div class="demo-head"><div><p class="eyebrow">Interactive prepared preview</p><h2 id="pmr-demo-title">Follow the five-stage rehearsal</h2></div><button class="action" type="button" id="pmr-reset">Reset preview</button></div>
 <p>All values are fictional. This guided report runs only in the browser and never starts PostgreSQL, Docker, a database, or a migration.</p>
 <div class="demo-controls"><label>Stage<select id="pmr-stage" data-initial="0"><option value="0">1. Expand</option><option value="1">2. Compatibility</option><option value="2">3. Backfill</option><option value="3">4. Switch</option><option value="4">5. Contract</option></select></label></div>
 <p id="pmr-live" class="sr-status" aria-live="polite"></p><div id="pmr-output" class="demo-output" aria-live="polite"></div>
 </section>
-<section class="notice"><strong>Frozen browser reproducibility limit</strong><p>The interface starts, but a fresh PostgreSQL image build is rejected by the runtime integrity check. The recorded successful rehearsal below is historical evidence from the prepared local environment; it is not proof that a fresh clone can run the engine. The required image identity and browser-dependency provenance remain open.</p></section>
-<section class="panel spaced"><h2>A new, separate CLI run</h2><p>The 22 October 2026 V2 baseline reproduced the reviewed image, migrated six synthetic invoices, verified rollback and roll-forward, and confirmed that no owned resources remained. Its Docker packages are traced to signed repository metadata. This bounded local run does not repair the old browser runtime or replay historical Phase B.</p><p><a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/1389845cbd28a80b10b52f5bd041c6e448b985b5/runtime-baselines/demo-20261022-v2">Inspect the V2 procedure, provenance and exact run result</a>.</p></section>
+<section class="notice"><strong>Frozen browser reproducibility limit</strong><p>The old browser runner is pinned to image <code>sha256:e4155efc…</code>, which is unavailable in the current Docker engine. The separate V2 CLI rebuilds the reviewed image <code>sha256:1a5aa9ff…</code>; these are different identities, so substituting one for the other would change the historical record. LOW02 also remains open for browser executable and system-library provenance. The prepared browser preview below remains a report only.</p></section>
+<section class="panel spaced" id="pmr-v2-run"><h2>Run the V2 rehearsal locally</h2><p>This is a command-line run that starts a disposable local PostgreSQL database. The browser walkthrough above stays static and never starts Docker or executes SQL. Use WSL 2 with Ubuntu 24.04.5 LTS on Linux amd64 and the exact Docker packages, executables and context listed in the V2 provenance.</p><p><a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/tree/f765d10124a54a99e81bc37010751bc567f34860/runtime-baselines/demo-20261022-v2">V2 procedure and error guidance</a> · <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/626072c0eac87f0b05c287c51f9cc5f150299c9e/runtime-baselines/demo-20261022-v2/rehearsal-result.json">recorded JSON result</a> · <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/626072c0eac87f0b05c287c51f9cc5f150299c9e/scripts/rehearse_baseline_v2.py">V2 runner source</a> · <a href="https://github.com/LuxuriantTech/postgres-migration-rehearsal/blob/626072c0eac87f0b05c287c51f9cc5f150299c9e/runtime-baselines/demo-20261022-v2/package-verification.json">signed Docker package verification</a>.</p>
+<details id="pmr-v2-commands"><summary>Exact install, preflight, build and run commands</summary><p>Run the following in a WSL login shell. The pinned Docker package block changes system packages: use it only when preparing the host, with the official Docker Ubuntu apt source configured and the exact versions available. The Python check skips downloading when 3.12.14 is already installed; <code>uv sync --frozen</code> creates the project environment from the lockfile.</p><pre><code>set -euo pipefail
+sudo apt-get update
+sudo apt-get install --no-install-recommends \
+  'docker-ce-cli=5:29.8.2-1~ubuntu.24.04~noble' \
+  'docker-ce=5:29.8.2-1~ubuntu.24.04~noble' \
+  'docker-buildx-plugin=0.37.1-1~ubuntu.24.04~noble'
+
+mkdir -p ~/src
+cd ~/src
+git -c core.autocrlf=false clone https://github.com/LuxuriantTech/postgres-migration-rehearsal.git pmr-v2
+cd pmr-v2
+git checkout --detach 626072c0eac87f0b05c287c51f9cc5f150299c9e
+uv python find 3.12.14 &gt;/dev/null 2&gt;&amp;1 || uv python install 3.12.14
+uv sync --frozen
+uv run --frozen python --version
+dpkg-query -W docker-ce-cli docker-ce docker-buildx-plugin
+docker context show
+docker context inspect default --format '{{.Endpoints.docker.Host}}'
+sha256sum /usr/bin/docker /usr/bin/dockerd /usr/libexec/docker/cli-plugins/docker-buildx
+docker buildx version
+docker buildx inspect --bootstrap
+PYTHONPATH=src:scripts uv run --frozen python scripts/verify_docker_repository_provenance.py
+
+pmr_tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/pmr-demo-v2.XXXXXX")"
+trap 'rm -rf "$pmr_tmpdir"' EXIT
+docker buildx build --platform linux/amd64 --no-cache --provenance=false \
+  --build-arg SOURCE_DATE_EPOCH=1788825600 \
+  --output "type=oci,rewrite-timestamp=true,dest=$pmr_tmpdir/image.oci.tar" \
+  --metadata-file "$pmr_tmpdir/build.json" runtime-baselines/demo-20260908
+PYTHONPATH=src:scripts uv run --frozen python scripts/verify_demo_baseline_v2_build.py \
+  "$pmr_tmpdir/build.json"
+docker load -i "$pmr_tmpdir/image.oci.tar"
+PYTHONPATH=src:scripts uv run --frozen python scripts/rehearse_baseline_v2.py --preflight-only
+PYTHONPATH=src:scripts uv run --frozen python scripts/rehearse_baseline_v2.py --scenario small-shop \
+  | tee /tmp/pmr-demo-v2-result.json</code></pre><p>The last command prints and saves a fresh JSON result. The runner itself performs rollback to the original schema, rolls forward through contract, and cleans only its own labelled resources. Check the return state:</p><pre><code>docker ps -a --filter name=pmr-demo-v2-
+docker network ls --filter name=pmr-demo-v2-</code></pre></details>
+<p>The optional package block prepares the host; the remaining commands verify the runtime and run the bounded rehearsal. If the package versions, executable hashes or context differ, stop at preflight and follow the signed package evidence; do not edit the manifest. If the build verifier reports a manifest, config, platform or material mismatch, do not load that image.</p>
+<p>The deliberate rejection route is <code>--scenario invalid-negative-amount</code>. It exits with <code>Amount must be a positive whole number of cents.</code> before preflight or resource creation; this is an expected input error. After a successful run, expect <code>LOCAL_REHEARSAL_PASSED</code>, restored legacy rows, completed roll-forward, <code>cleanup_state: complete</code>, <code>owned_resources_remaining: 0</code>, and <code>historical_phase_b_replayed: false</code>.</p></section>
 <section class="grid two">
 <article class="panel">
 <h2>Before</h2>

@@ -19,8 +19,8 @@
       {
         "name": "Entity Resolution Workbench",
         "url": "https://github.com/LuxuriantTech/entity-resolution-workbench",
-        "meta": "Python, pytest, record matching",
-        "detail": "Local matcher that returns MATCH, REVIEW or NO_MATCH with visible reasons. Public source snapshot includes synthetic catalogues and selected tests. Similarity scores are not business accuracy claims."
+        "meta": "JavaScript browser demo; Python, pytest matcher",
+        "detail": "The browser demo applies a bounded JavaScript score to two editable fictional product records; it makes no MATCH, REVIEW or NO_MATCH decision, and the score is not a probability. The separate public Python matcher uses candidate context and additional decision rules."
       }
     ],
     "experience": [
@@ -80,8 +80,8 @@
       {
         "name": "Entity Resolution Workbench",
         "url": "https://github.com/LuxuriantTech/entity-resolution-workbench",
-        "meta": "Python, pytest, rapprochement de données",
-        "detail": "Outil local qui classe les paires en MATCH, REVIEW ou NO_MATCH avec des raisons visibles. Le dépôt public contient des catalogues fictifs et une sélection de tests. Les scores de similarité ne mesurent pas la précision métier."
+        "meta": "Démo navigateur JavaScript ; moteur Python, pytest",
+        "detail": "Dans la démo web, un calcul JavaScript borné compare deux fiches fictives modifiables ; le score n’est ni une décision MATCH, REVIEW ou NO_MATCH ni une probabilité. Le moteur Python public est distinct et tient compte du contexte des candidats et d’autres règles de décision."
       }
     ],
     "experience": [

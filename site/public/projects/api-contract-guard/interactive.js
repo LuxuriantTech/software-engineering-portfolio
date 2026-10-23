@@ -3,10 +3,10 @@ import { RULE_LINKS } from './rule-links.js';
 const byId = id => document.getElementById(id);
 const output = byId('contract-output'), live = byId('contract-live');
 const run = byId('contract-run'), download = byId('contract-download');
-let worker, timeout, latest;
+let worker, timeout, latest, comparisonId = 0;
 function stop() { clearTimeout(timeout); worker?.terminate(); worker = undefined; run.disabled = false; }
 function invalidate(message = 'Inputs changed. Run the comparison again.') {
-  stop(); latest = undefined; download.disabled = true; output.replaceChildren(); live.textContent = message;
+  comparisonId += 1; stop(); latest = undefined; download.disabled = true; output.replaceChildren(); live.textContent = message;
 }
 function load() {
   invalidate('Example loaded. You can edit either document before comparing.');
@@ -16,7 +16,9 @@ function load() {
 }
 function line(tag, text) { const node = document.createElement(tag); node.textContent = text; return node; }
 function sourceLink(label, href) { const node = line('a', label); node.href = href; node.target = '_blank'; node.rel = 'noopener noreferrer'; return node; }
-function render(result) {
+function render(result, requestId = comparisonId) {
+  if (requestId !== comparisonId) return;
+  comparisonId += 1;
   stop(); output.replaceChildren(); latest = undefined; download.disabled = true;
   if (result.exitCode === 3) {
     live.textContent = 'Comparison refused. No compatibility result.';
@@ -40,11 +42,12 @@ function render(result) {
 }
 run.addEventListener('click', () => {
   invalidate('Comparing locally…'); run.disabled = true;
+  const requestId = comparisonId;
   try {
     worker = new Worker('./compare-worker.js', { type: 'module' });
-    worker.onmessage = ({ data }) => render(data);
-    worker.onerror = () => render({ exitCode: 3, errorCode: 'WORKER_UNAVAILABLE' });
-    timeout = setTimeout(() => render({ exitCode: 3, errorCode: 'TIME_LIMIT' }), 5000);
+    worker.onmessage = ({ data }) => render(data, requestId);
+    worker.onerror = () => render({ exitCode: 3, errorCode: 'WORKER_UNAVAILABLE' }, requestId);
+    timeout = setTimeout(() => render({ exitCode: 3, errorCode: 'TIME_LIMIT' }, requestId), 5000);
     worker.postMessage({ baseline: byId('contract-baseline').value, candidate: byId('contract-candidate').value });
   } catch { render({ exitCode: 3, errorCode: 'WORKER_UNAVAILABLE' }); }
 });

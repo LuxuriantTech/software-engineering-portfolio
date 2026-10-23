@@ -1,0 +1,637 @@
+{
+  "evaluation": {
+    "id": "E4",
+    "scope": "28 frozen synthetic questions; identical corpus, scorer and model configuration",
+    "baseline_commit": "0ae029757bfae524034d07335d0c518423b4afa9",
+    "candidate_commit": "ffeba12c4d4d64a1e1f003f211dfa1781c64515d",
+    "verdict": "Baseline FAIL / candidate FAIL",
+    "note": "Both versions fail. The same two correct answers and citations remain; returning fewer citations (10 to 5) raises precision from 20% to 40%. Correct abstention rises from 3/10 to 5/10. Accuracy and citation recall do not improve. This is one internally reviewed synthetic development comparison, not production qualification. Earlier negative experiments remain in the repository.",
+    "links": [
+      {
+        "label": "Protocol, inputs and raw results",
+        "url": "https://github.com/LuxuriantTech/evidencedesk/tree/6a42e9f70453c6c0f64e528d2625210eaa90c021/docs/evaluations/answer-quality-20261023/e4"
+      },
+      {
+        "label": "Evaluated implementation",
+        "url": "https://github.com/LuxuriantTech/evidencedesk/tree/ffeba12c4d4d64a1e1f003f211dfa1781c64515d"
+      }
+    ]
+  },
+  "metrics": {
+    "baseline": {
+      "answerable_correct": 2,
+      "answerable_total": 18,
+      "abstention_correct": 3,
+      "abstention_total": 10,
+      "citation_precision": 0.2,
+      "citation_recall": 0.111111
+    },
+    "candidate": {
+      "answerable_correct": 2,
+      "answerable_total": 18,
+      "abstention_correct": 5,
+      "abstention_total": 10,
+      "citation_precision": 0.4,
+      "citation_recall": 0.111111
+    }
+  },
+  "cases": [
+    {
+      "id": "e4-a01",
+      "question": "Which FieldPlanID is listed for CampaignID C-17?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a02",
+      "question": "Quel SiteCode le plan associe-t-il à CampaignID C-17 ?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "Permit PR-88 | CampaignID C-17 | SiteCode BR-4 | Approved for 2026-10-14.",
+        "citations": [
+          {
+            "document_name": "permit.txt",
+            "page": 1,
+            "excerpt": "Permit PR-88 | CampaignID C-17 | SiteCode BR-4 | Approved for 2026-10-14."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a03",
+      "question": "What field date is printed on FieldPlanID FP-611?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "2026-10-14",
+        "citations": [
+          {
+            "document_name": "plan.txt",
+            "page": 1,
+            "excerpt": "Field Plan FP-611 | CampaignID C-17 | SiteCode BR-4 | Field date 2026-10-14 | Lead: Nadia Laurent."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a04",
+      "question": "Which PermitID does FP-611 explicitly reference?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "Permit PR-88 explicitly authorizes FieldPlanID FP-611.",
+        "citations": [
+          {
+            "document_name": "permit.txt",
+            "page": 1,
+            "excerpt": "Permit PR-88 explicitly authorizes FieldPlanID FP-611."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a05",
+      "question": "Selon le permis PR-88 lui-même, à quelle heure commence la fenêtre d'entrée ?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a06",
+      "question": "What access point does PermitID PR-88 name?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "FP-611 references PermitID PR-88 for access to BR-4.",
+        "citations": [
+          {
+            "document_name": "plan.txt",
+            "page": 1,
+            "excerpt": "FP-611 references PermitID PR-88 for access to BR-4."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a07",
+      "question": "Which AssetTag does CheckoutID CO-090 explicitly assign to CampaignID C-17?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "CheckoutID CO-090, dated 2026-10-14: the checkout record explicitly assigns AssetTag CTD-204 to CampaignID C-17.",
+        "citations": [
+          {
+            "document_name": "checkout.txt",
+            "page": 1,
+            "excerpt": "CheckoutID CO-090, dated 2026-10-14: the checkout record explicitly assigns AssetTag CTD-204 to CampaignID C-17."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "CheckoutID CO-090, dated 2026-10-14: the checkout record explicitly assigns AssetTag CTD-204 to CampaignID C-17.",
+        "citations": [
+          {
+            "document_name": "checkout.txt",
+            "page": 1,
+            "excerpt": "CheckoutID CO-090, dated 2026-10-14: the checkout record explicitly assigns AssetTag CTD-204 to CampaignID C-17."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-a08",
+      "question": "Quel modèle est indiqué pour AssetTag CTD-204 dans CO-090 ?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a09",
+      "question": "Which CalibrationCertificateID is entered on the CO-090 line?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "CalibrationCertificateID CAL-204A is entered on the same checkout line.",
+        "citations": [
+          {
+            "document_name": "checkout.txt",
+            "page": 1,
+            "excerpt": "CalibrationCertificateID CAL-204A is entered on the same checkout line."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "CalibrationCertificateID CAL-204A is entered on the same checkout line.",
+        "citations": [
+          {
+            "document_name": "checkout.txt",
+            "page": 1,
+            "excerpt": "CalibrationCertificateID CAL-204A is entered on the same checkout line."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-a10",
+      "question": "At 10:15 CEST, what salinity does SR-901 record for SB-031?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "At 10:40 CEST, the same SampleBatchID SB-031 has a second salinity reading of 12.9 PSU.",
+        "citations": [
+          {
+            "document_name": "station.txt",
+            "page": 2,
+            "excerpt": "At 10:40 CEST, the same SampleBatchID SB-031 has a second salinity reading of 12.9 PSU."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "At 10:40 CEST, the same SampleBatchID SB-031 has a second salinity reading of 12.9 PSU.",
+        "citations": [
+          {
+            "document_name": "station.txt",
+            "page": 2,
+            "excerpt": "At 10:40 CEST, the same SampleBatchID SB-031 has a second salinity reading of 12.9 PSU."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-a11",
+      "question": "What water temperature was recorded at 10:15 CEST in SR-901?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "At 10:15 CEST, salinity was 12.6 PSU, water temperature 15.8 °C, and turbidity 2.1 NTU.",
+        "citations": [
+          {
+            "document_name": "station.txt",
+            "page": 1,
+            "excerpt": "At 10:15 CEST, salinity was 12.6 PSU, water temperature 15.8 °C, and turbidity 2.1 NTU."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "At 10:15 CEST, salinity was 12.6 PSU, water temperature 15.8 °C, and turbidity 2.1 NTU.",
+        "citations": [
+          {
+            "document_name": "station.txt",
+            "page": 1,
+            "excerpt": "At 10:15 CEST, salinity was 12.6 PSU, water temperature 15.8 °C, and turbidity 2.1 NTU."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-a12",
+      "question": "Quelle est la turbidité maximale indiquée pour SR-901 ?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a13",
+      "question": "Which sample batch does StationRecordID SR-901 explicitly bind to CampaignID C-17?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a14",
+      "question": "What nitrate concentration does LR-550 report for SampleBatchID SB-031?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "A separate entry for SampleBatchID SB-013 reports nitrate 0.48 mg/L.",
+        "citations": [
+          {
+            "document_name": "lab.txt",
+            "page": 2,
+            "excerpt": "A separate entry for SampleBatchID SB-013 reports nitrate 0.48 mg/L."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a15",
+      "question": "Quel pH de laboratoire le rapport LR-550 donne-t-il pour SB-031 ?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a16",
+      "question": "On what date was LabReportID LR-550 finalized?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "2026-10-16",
+        "citations": [
+          {
+            "document_name": "lab.txt",
+            "page": 1,
+            "excerpt": "Finalized 2026-10-16 by M."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "2026-10-16",
+        "citations": [
+          {
+            "document_name": "lab.txt",
+            "page": 1,
+            "excerpt": "Finalized 2026-10-16 by M."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-a17",
+      "question": "Which service order explicitly names both CTD-204 and CampaignID C-17?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-a18",
+      "question": "À quelle heure le remplacement de batterie de CTD-204 est-il noté comme terminé ?",
+      "kind": "answerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-u01",
+      "question": "What is the street address of SiteCode BR-4?",
+      "kind": "unanswerable",
+      "baseline": {
+        "status": "answered",
+        "answer": "No street address for BR-4, boat operator, or grant amount is recorded in this plan.",
+        "citations": [
+          {
+            "document_name": "plan.txt",
+            "page": 2,
+            "excerpt": "No street address for BR-4, boat operator, or grant amount is recorded in this plan."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-u02",
+      "question": "Who was the boat operator for CampaignID C-17?",
+      "kind": "unanswerable",
+      "baseline": {
+        "status": "partially_supported",
+        "answer": "The retrieved evidence does not state the requested value.",
+        "citations": [
+          {
+            "document_name": "permit.txt",
+            "page": 2,
+            "excerpt": "The permit does not name a boat operator, give a postal address for BR-4, or state a grant amount."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "partially_supported",
+        "answer": "The retrieved evidence does not state the requested value.",
+        "citations": [
+          {
+            "document_name": "plan.txt",
+            "page": 2,
+            "excerpt": "No street address for BR-4, boat operator, or grant amount is recorded in this plan."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-u03",
+      "question": "What phosphate concentration was measured for SampleBatchID SB-031?",
+      "kind": "unanswerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-u04",
+      "question": "How many visitors were at BR-4 on 2026-10-14?",
+      "kind": "unanswerable",
+      "baseline": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-u05",
+      "question": "Quel était le montant de la subvention pour CampaignID C-17 ?",
+      "kind": "unanswerable",
+      "baseline": {
+        "status": "partially_supported",
+        "answer": "The retrieved evidence does not state the requested value.",
+        "citations": [
+          {
+            "document_name": "bulletin.txt",
+            "page": 1,
+            "excerpt": "Bulletin FB-204 | PermitID PR-88 | CampaignID C-17 | SiteCode BR-4 | Date 2026-10-14."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-c01",
+      "question": "What entry time should the team use for PermitID PR-88 on 2026-10-14?",
+      "kind": "ambiguous",
+      "baseline": {
+        "status": "answered",
+        "answer": "Meet at North Gate; team entry time is printed as 08:00 CEST.",
+        "citations": [
+          {
+            "document_name": "bulletin.txt",
+            "page": 1,
+            "excerpt": "Meet at North Gate; team entry time is printed as 08:00 CEST."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "Meet at North Gate; team entry time is printed as 08:00 CEST.",
+        "citations": [
+          {
+            "document_name": "bulletin.txt",
+            "page": 1,
+            "excerpt": "Meet at North Gate; team entry time is printed as 08:00 CEST."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-c02",
+      "question": "What was the salinity of SB-031?",
+      "kind": "ambiguous",
+      "baseline": {
+        "status": "answered",
+        "answer": "At 10:40 CEST, the same SampleBatchID SB-031 has a second salinity reading of 12.9 PSU.",
+        "citations": [
+          {
+            "document_name": "station.txt",
+            "page": 2,
+            "excerpt": "At 10:40 CEST, the same SampleBatchID SB-031 has a second salinity reading of 12.9 PSU."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    },
+    {
+      "id": "e4-c03",
+      "question": "Quelle est la date d'expiration applicable de la calibration de CTD-204 ?",
+      "kind": "ambiguous",
+      "baseline": {
+        "status": "ambiguous",
+        "answer": "Conflicting values are supported; review the cited passages.",
+        "citations": [
+          {
+            "document_name": "asset-register.txt",
+            "page": 1,
+            "excerpt": "Register snapshot dated 2026-10-10: AssetTag CTD-204 is active."
+          },
+          {
+            "document_name": "asset-register.txt",
+            "page": 1,
+            "excerpt": "The register lists calibration due 2026-11-15."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "ambiguous",
+        "answer": "Conflicting values are supported; review the cited passages.",
+        "citations": [
+          {
+            "document_name": "asset-register.txt",
+            "page": 1,
+            "excerpt": "The register lists calibration due 2026-11-15."
+          },
+          {
+            "document_name": "calibration.txt",
+            "page": 1,
+            "excerpt": "The certificate states that calibration remains valid through 2026-10-31."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-c04",
+      "question": "Which Quadrat in CampaignID C-17 was flooded after the 2026-10-14 storm?",
+      "kind": "ambiguous",
+      "baseline": {
+        "status": "answered",
+        "answer": "After the storm of 2026-10-14, FO-18 marks Quadrat Q-3 as flooded.",
+        "citations": [
+          {
+            "document_name": "ranger.txt",
+            "page": 1,
+            "excerpt": "After the storm of 2026-10-14, FO-18 marks Quadrat Q-3 as flooded."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "answered",
+        "answer": "After the storm of 2026-10-14, FO-18 marks Quadrat Q-3 as flooded.",
+        "citations": [
+          {
+            "document_name": "ranger.txt",
+            "page": 1,
+            "excerpt": "After the storm of 2026-10-14, FO-18 marks Quadrat Q-3 as flooded."
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4-c05",
+      "question": "Did AssetTag CTD-204 malfunction during CampaignID C-17?",
+      "kind": "ambiguous",
+      "baseline": {
+        "status": "answered",
+        "answer": "IncidentTicketID IT-77 also references AssetTag CTD-204 and CampaignID C-17.",
+        "citations": [
+          {
+            "document_name": "service.txt",
+            "page": 2,
+            "excerpt": "IncidentTicketID IT-77 also references AssetTag CTD-204 and CampaignID C-17."
+          }
+        ]
+      },
+      "candidate": {
+        "status": "abstained",
+        "answer": "Insufficient evidence in the selected dossier.",
+        "citations": []
+      }
+    }
+  ],
+  "provenance": {
+    "suite_sha256": "d8492380fd91ab058de0c05eb773d5fe79048cdd77894b24249be9de06baa228",
+    "corpus_sha256": "7fd7b7991557515c6007cf1a6982763b74c46e99929d0575f8be1023a8220951",
+    "candidate_raw_results_sha256": "5bff3758538ae10fe47907826de9a945b13b3cc50cb12beb91a02b2dae6ca2a1"
+  }
+}

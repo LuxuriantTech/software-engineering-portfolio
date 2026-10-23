@@ -25,27 +25,27 @@ export const PROJECTS = [
     status: "Experimental",
     featured: false,
     summary:
-      "Inspect a frozen v7 question that retrieved the right passage but confused an effective date with renewal. The public source keeps the failed evaluation visible.",
-    example: "Ask about an annual fee, follow the answer to its source, then try a question the document cannot answer.",
-    decision: "Keep the source beside the answer, and leave a question unanswered when evidence is missing.",
-    shortLimit: "The answer evaluation did not pass. Finding a relevant passage was not enough to produce reliable answers.",
+      "Compare recorded answers with their sources. The latest change abstains more often, but still answers only 2/18 questions correctly in its frozen synthetic follow-up.",
+    example: "Choose one of 28 recorded questions and compare the baseline answer, candidate answer and cited passages.",
+    decision: "Keep source evidence beside each answer and abstain when the evidence does not support it.",
+    shortLimit: "The follow-up still fails its quality targets. Greater caution has not improved answer accuracy.",
     intention:
-      "Help a reviewer find source-backed answers without asking them to trust generated text on its own.",
+      "Help a reviewer trace document answers to their sources and see when the evidence is insufficient.",
     contribution:
       "I framed the review workflow, defined the evidence and abstention rules, and iterated on the implementation with coding assistants.",
     works:
-      "The prototype retrieves supporting passages, links an answer to its page and can abstain when it does not find enough evidence.",
-    proof: "Recall@5 reached 100% on 25 of 25 answerable synthetic v7 cases.",
+      "The local prototype retrieves passages, links answers to page evidence, and can abstain. The public reader shows the actual saved before-and-after results; it does not query the local API.",
+    proof: "Frozen follow-up E4: answer accuracy stays 2/18; correct abstention rises from 3/10 to 5/10. Both versions receive FAIL. Historical v7 Recall@5 was 100%: 25 of 25 answerable synthetic v7 cases.",
     limit:
-      "The wider answer evaluation did not pass: 36% answerable-case accuracy and 45.67% extraction F1. It remains experimental and uses synthetic data only.",
+      "E4 did not pass: citation precision rises from 20% to 40% by returning fewer citations, with the same two correct citations and no recall gain. Accuracy stays 2/18. Historical v7 remains HONEST_NEGATIVE at 36% answerable-case accuracy and 45.67% extraction F1. These are different synthetic sets, not comparable accuracy trends. The project remains experimental.",
     stack: "React · FastAPI · Redis · PostgreSQL · pgvector",
     scope: "Experimental public project · Synthetic data only",
     url: "https://github.com/LuxuriantTech/evidencedesk",
-    demoUrl: "/projects/evidencedesk/",
+    demoUrl: "/projects/evidencedesk/#follow-up-evaluation",
     linkLabel: "Inspect the repository",
-    repositorySignals: ["25/25 RECALL@5", "PAGE-LINKED", "LIMITS VISIBLE"],
+    repositorySignals: ["RECORDED COMPARISON", "PAGE-LINKED", "FAIL VISIBLE"],
     repositoryEvidenceUrl:
-      "https://github.com/LuxuriantTech/evidencedesk/blob/main/docs/release-validation.md",
+      "https://github.com/LuxuriantTech/evidencedesk/blob/6a42e9f70453c6c0f64e528d2625210eaa90c021/docs/evaluations/answer-quality-20261023/e4/README.md",
   },
   {
     id: "api-contract-guard",

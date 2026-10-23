@@ -75,8 +75,8 @@ test("separates new development proofs from frozen historical results", async ()
   const pmr = await readFile(new URL("../public/projects/postgres-migration-rehearsal/index.html", import.meta.url), "utf8");
   assert.match(evidence, /the extractive provider is unchanged/i);
   assert.match(evidence, /not a new independent evaluation/i);
-  assert.match(pmr, /V2 baseline reproduced the reviewed image/i);
-  assert.match(pmr, /does not repair the old browser runtime or replay historical Phase B/i);
+  assert.match(pmr, /PMR-DEMO-20261022-v2/);
+  assert.match(pmr, /historical browser image and Phase B record unchanged/i);
 });
 
 test("keeps API Contract Guard bounded and reproducible", () => {
@@ -106,7 +106,11 @@ test("distinguishes prepared walkthroughs from computed browser replay", () => {
   assert.match(toolcall.scope, /computed browser replay/i);
   assert.match(toolcall.works, /editable rules and traces/i);
   assert.match(toolcall.shortLimit, /never executes tools/i);
-  for (const id of ["entity-resolution-workbench", "postgres-migration-rehearsal"]) {
+  const entity = PROJECTS.find((candidate) => candidate.id === "entity-resolution-workbench");
+  assert.match(entity.scope, /editable browser pair calculator/i);
+  assert.match(entity.works, /separate Python matcher/i);
+  assert.match(entity.limit, /does not invoke the Python matcher/i);
+  for (const id of ["postgres-migration-rehearsal"]) {
     const project = PROJECTS.find((candidate) => candidate.id === id);
     assert.ok(project);
     assert.equal(project.demoUrl, `/projects/${id}/`);
@@ -120,10 +124,10 @@ test("distinguishes prepared walkthroughs from the live API demo without promoti
   const demo = await readFile(new URL("../public/projects/demo.js", import.meta.url), "utf8");
   const css = await readFile(new URL("../public/projects/site.css", import.meta.url), "utf8");
 
-  assert.match(index, /prepared synthetic walkthroughs/);
+  assert.match(index, /Editable browser demos/);
   assert.match(index, /API Contract Guard computes a comparison from editable inputs/);
   assert.match(index, /ToolCall Replay evaluates editable rules and JSONL traces/);
-  assert.match(demo, /Hand-authored synthetic illustration/);
+  assert.match(demo, /Prepared illustration based on a synthetic document excerpt/);
   assert.doesNotMatch(index, /<video|portfolio-reel\.mp4/);
   assert.match(css, /\.reel\s+video/);
   for (const asset of ["portfolio-reel.mp4", "portfolio-reel-poster.png", "portfolio-reel-source.zip", "portfolio-reel-transcript.md"]) {
@@ -343,7 +347,7 @@ test("renders documents inside the portfolio with native accessible controls", a
   assert.match(appSource, /aria-selected=/);
   assert.match(appSource, /download={activeDocument\.fileName}/);
   assert.match(appSource, /prefers-reduced-motion: reduce/);
-  assert.match(appSource, /lastTriggerRef\.current\?\.focus/);
+  assert.match(appSource, /finalizeDocumentViewerClose\(/);
   assert.doesNotMatch(appSource, /<iframe|<embed|<object/i);
   assert.doesNotMatch(appSource, /adobe|docs\.google|drive\.google/i);
 });

@@ -38,7 +38,7 @@ development role. I completed the certificates below through Coursera.
 
 1. [API Contract Guard browser comparison](site/public/projects/api-contract-guard/index.html): edit two contracts, then inspect the [five rule categories](https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/src/engine.ts), [focused tests](https://github.com/LuxuriantTech/api-contract-guard/blob/6ee1e569bbe751748a96e52aa0eee86864f20d69/tests/rules.test.ts) and `npm ci && npm run demo` in the public repository. An empty report is bounded to the supported checks.
 2. [ToolCall Replay browser demo](site/public/projects/toolcall-replay/index.html): evaluate editable synthetic JSONL traces against seven supported rule types and inspect the result. The browser runs a bounded JavaScript implementation; it executes no tools or models. The separate local Python evaluator is available in the [public source snapshot](https://github.com/LuxuriantTech/toolcall-replay), with [rule code](https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/src/toolcall_replay/rules.py), [rule tests](https://github.com/LuxuriantTech/toolcall-replay/blob/0c68b24f87992099c05249e27dc16f20d39c7c79/tests/test_rules.py) and the repository's `uv sync --frozen; scripts/lab.sh start` quick start.
-3. [Entity Resolution prepared pair](site/public/projects/entity-resolution-workbench/index.html): compare the score, engine REVIEW and session-only annotation; follow the [matcher](https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/matcher.py), [decision tests](https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/tests/test_scoring_and_decisions.py) and the local start command in its README. The browser threshold changes explanation only.
+3. [Entity Resolution browser comparison](site/public/projects/entity-resolution-workbench/index.html): edit two fictional product records and inspect the bounded JavaScript field scores and reasons. Its threshold only describes the pair score; the browser makes no MATCH, REVIEW or NO_MATCH decision. The separate [Python matcher](https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/src/entity_resolution_workbench/matcher.py), [decision tests](https://github.com/LuxuriantTech/entity-resolution-workbench/blob/adb88a9f8daff82809b2c061b52b85b70fa531b1/tests/test_scoring_and_decisions.py) and local start command are available in the public repository.
 
 ## Projects
 
@@ -46,7 +46,7 @@ development role. I completed the certificates below through Coursera.
 |---|---|---|
 | [API Contract Guard](projects/api-contract-guard/README.md) | Dedicated TypeScript CLI repository: five bounded OpenAPI compatibility checks, local reference handling, deterministic JSON/HTML reports and a synthetic demo | Public repository; local-only tool with a defined subset, not a general compatibility verdict |
 | [ToolCall Replay](https://github.com/LuxuriantTech/toolcall-replay) | Browser evaluates editable synthetic JSONL traces against seven supported rule types; public source snapshot contains a separate local Python evaluator and selected tests | Bounded browser-side evaluation; no tools or models execute |
-| [Entity Resolution Workbench](https://github.com/LuxuriantTech/entity-resolution-workbench) | Public source snapshot with local matcher, synthetic catalogues and selected tests; browser explanation of uncertain results | Prepared browser result; similarity is not a probability |
+| [Entity Resolution Workbench](https://github.com/LuxuriantTech/entity-resolution-workbench) | Browser calculates field scores for an editable fictional pair; public source snapshot contains the separate Python matcher, synthetic catalogues and selected tests | Bounded JavaScript pair score; no match class or probability |
 | [EvidenceDesk](projects/evidencedesk/README.md) | Dedicated full-source repository: React/FastAPI application, asynchronous ingestion, hybrid retrieval, pgvector, RBAC, PII masking, audit trail and reproducible evaluation | Experimental local prototype; blind v7 is `HONEST_NEGATIVE` |
 | [Synthevia](projects/synthevia/README.md) | React → local FastAPI → in-memory SQLite synthetic record, deterministic retrieval and focused frontend/backend tests | Private product is pre-launch; this edition is offline and not production-ready |
 | [Gargantua / GLXBot](projects/gargantua/README.md) | Asynchronous moderation logic, a rejected member action, a record type without a message-content field and a local API | Historically deployed; current runtime is unverified |
@@ -59,8 +59,10 @@ The bundled samples keep their own README, decisions, limitations, source and te
 API Contract Guard also computes a bounded comparison from editable inputs in the browser.
 ToolCall Replay evaluates editable synthetic JSONL traces against seven supported rule
 types in the browser; its public repository has a separate local Python evaluator and
-selected tests. Entity Resolution and migration browser walkthroughs show prepared
-synthetic results, with reviewable local source and tests in their public repositories.
+selected tests. Entity Resolution calculates a descriptive field score for an editable
+synthetic pair in the browser, while migration still shows prepared historical stages.
+Both projects link to their separate public repositories with reviewable local source
+and tests.
 
 ## Project Atlas navigator
 
@@ -73,7 +75,7 @@ analytics, private API call or runtime secret.
 flowchart LR
     P[Portfolio index] --> A[ACG browser computes five checks]
     P --> T[ToolCall editable trace evaluation]
-    P --> R[Entity prepared pair]
+    P --> R[Entity editable pair score]
     P --> E[EvidenceDesk public evaluation]
     P --> S[Synthevia public React API SQLite sample]
     P --> G[Gargantua\nmoderation service sample]
@@ -94,7 +96,7 @@ flowchart LR
     D --> K
 
     T --> TL[Public local evaluator]
-    R --> RL[Public local matcher]
+    R --> RL[Separate public Python matcher]
     S -. separate .-> O[Private PostgreSQL product]
 ```
 

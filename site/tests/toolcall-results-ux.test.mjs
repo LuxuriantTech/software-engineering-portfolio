@@ -11,6 +11,7 @@ class FakeElement {
     this.text = "";
     this.hidden = false;
     this.open = false;
+    this.attributes = new Map();
   }
   set textContent(value) { this.text = String(value); this.children = []; }
   get textContent() { return this.text + this.children.map((child) => child.textContent).join(""); }
@@ -21,6 +22,8 @@ class FakeElement {
     callbacks.push(callback);
     this.listeners.set(type, callbacks);
   }
+  setAttribute(name, value) { this.attributes.set(name, String(value)); }
+  getAttribute(name) { return this.attributes.get(name) ?? null; }
   dispatch(type) { for (const callback of this.listeners.get(type) ?? []) callback({ target: this }); }
   focus() { this.focused = true; }
   queryAll(tagName) {
@@ -56,6 +59,13 @@ test("default render leads with the known verdicts and keeps JSON in disclosures
   assert.equal(ruleDetails().filter((details) => details.open).length, 3);
   assert.equal(eventDetails().length, 10);
   assert.equal(eventDetails().filter((details) => details.open).length, 0);
+  const scrollableEvidence = output.queryAll("pre").filter((node) => node.className === "toolcall-evidence");
+  assert.equal(scrollableEvidence.length, 24);
+  assert.ok(scrollableEvidence.every((node) => node.tabIndex === 0));
+  assert.ok(scrollableEvidence.every((node) => node.getAttribute("role") === "region"));
+  assert.ok(scrollableEvidence.every((node) => node.getAttribute("aria-label")?.length > 0));
+  assert.ok(scrollableEvidence.some((node) => node.getAttribute("aria-label").includes("rule lookup-scope")));
+  assert.ok(scrollableEvidence.some((node) => node.getAttribute("aria-label").includes("step 1, tool_call")));
   assert.match(live.textContent, /Baseline PASS; candidate FAIL; 10 matching events shown/);
 });
 

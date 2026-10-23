@@ -39,6 +39,6 @@ test("project shortcuts lead to demos while implementation detail stays optional
   assert.equal((html.match(/<details class="project-checks">/g) ?? []).length, 3);
   assert.equal((html.match(/<summary>Design, role and validation<\/summary>/g) ?? []).length, 3);
   assert.match(html, /AI assistance/);
-  assert.match(html, /Entity Resolution explains a recorded match/);
+  assert.match(html, /Entity Resolution calculates a simple pair score/);
   assert.doesNotMatch(html, /ToolCall Replay and Entity Resolution show prepared/);
 });

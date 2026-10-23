@@ -9,10 +9,11 @@ class FakeElement {
     this.value = "";
     this.text = "";
     this.disabled = false;
+    this.hidden = false;
   }
   set textContent(value) { this.text = String(value); this.children = []; }
   get textContent() { return this.text + this.children.map((child) => typeof child === "string" ? child : child.textContent).join(""); }
-  append(...children) { this.children.push(...children); }
+  append(...children) { for (const child of children) if (child && typeof child === "object") child.parentNode = this; this.children.push(...children); }
   replaceChildren(...children) { this.text = ""; this.children = [...children]; }
   addEventListener(type, callback) {
     const callbacks = this.listeners.get(type) ?? [];
@@ -20,6 +21,11 @@ class FakeElement {
     this.listeners.set(type, callbacks);
   }
   dispatch(type) { for (const callback of this.listeners.get(type) ?? []) callback({ target: this }); }
+  remove() {
+    if (this.parentNode) this.parentNode.children = this.parentNode.children.filter((child) => child !== this);
+    this.parentNode = null;
+  }
+  click() { this.clickedParent = this.parentNode; }
 }
 
 const elements = new Map([
@@ -33,6 +39,7 @@ class FakeWorker {
   terminate() { this.terminated = true; }
 }
 globalThis.document = { getElementById: (id) => elements.get(id), createElement: (tag) => new FakeElement(tag) };
+globalThis.document.body = new FakeElement("body");
 globalThis.Worker = FakeWorker;
 
 await import("../public/projects/api-contract-guard/interactive.js?workflow-test");
@@ -129,4 +136,63 @@ test("worker errors leave a visible refusal and reset reloads the default exampl
   assert.match(live.textContent, /Example loaded/);
   assert.equal(output.children.length, 0);
   assert.equal(download.disabled, true);
+});
+
+test("report download clicks an attached hidden link and delays object URL cleanup", () => {
+  const run = elements.get("contract-run");
+  const download = elements.get("contract-download");
+  const baseline = elements.get("contract-baseline");
+  const live = elements.get("contract-live");
+  const originalURL = globalThis.URL;
+  const originalWindow = globalThis.window;
+  const originalCreateElement = globalThis.document.createElement;
+  const links = [];
+  const released = [];
+  const deferred = [];
+  globalThis.URL = {
+    createObjectURL(blob) {
+      assert.equal(blob.type, "application/json");
+      return "blob:api-contract-report";
+    },
+    revokeObjectURL(url) { released.push(url); },
+  };
+  globalThis.window = { setTimeout(callback, delay) { deferred.push({ callback, delay }); return deferred.length; } };
+  globalThis.document.createElement = (tag) => { const link = new FakeElement(tag); links.push(link); return link; };
+  try {
+    run.dispatch("click");
+    workers.at(-1).onmessage({ data: resultFor("downloadable result") });
+    download.dispatch("click");
+
+    const [link] = links.filter((candidate) => candidate.download === "api-contract-report.json");
+    assert.ok(link);
+    assert.equal(link.hidden, true);
+    assert.equal(link.download, "api-contract-report.json");
+    assert.equal(link.clickedParent, globalThis.document.body);
+    assert.equal(link.parentNode, null);
+    assert.deepEqual(released, []);
+    assert.equal(deferred.length, 1);
+    assert.equal(deferred[0].delay, 60_000);
+    assert.equal(live.textContent, "Supported breaking changes detected");
+
+    deferred[0].callback();
+    assert.deepEqual(released, ["blob:api-contract-report"]);
+
+    baseline.value += " ";
+    baseline.dispatch("input");
+    download.dispatch("click");
+    assert.equal(links.filter((candidate) => candidate.download === "api-contract-report.json").length, 1);
+    assert.match(live.textContent, /Inputs changed/);
+
+    run.dispatch("click");
+    workers.at(-1).onmessage({ data: resultFor("fallback report") });
+    globalThis.URL.createObjectURL = () => { throw new Error("blocked by browser"); };
+    download.dispatch("click");
+    assert.equal(live.textContent, "Could not start the JSON download. Open the computed JSON report below to copy it.");
+    assert.match(elements.get("contract-output").textContent, /fallback report/);
+    assert.equal(links.filter((candidate) => candidate.download === "api-contract-report.json").length, 1);
+  } finally {
+    globalThis.URL = originalURL;
+    globalThis.window = originalWindow;
+    globalThis.document.createElement = originalCreateElement;
+  }
 });

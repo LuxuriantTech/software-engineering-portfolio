@@ -30,9 +30,10 @@
 <p class="eyebrow">EvidenceDesk · Document review</p>
 <p class="quiet demo-disclosure">Interactive demo · Fictional data · Full tool runs locally</p>
 <h1>An answer you can trace to its source.</h1>
-<p class="lede">Look up an annual fee, open the supporting passage and see what happens when the document cannot answer. The wider answer evaluation did not pass.</p>
+<p class="lede">Inspect answers beside their sources. The latest change abstains more often, but still answers only 2/18 questions correctly in its frozen synthetic follow-up. The prototype remains experimental.</p>
 <div class="actions" aria-label="EvidenceDesk actions">
-<a class="action primary" href="#interactive-demo">Try the examples</a>
+<a class="action primary" href="#follow-up-evaluation">Compare recorded answers</a>
+<a class="action" href="#interactive-demo">Prepared examples</a>
 <a class="action" href="https://github.com/LuxuriantTech/evidencedesk/tree/main">GitHub</a>
 <a class="action" href="mailto:mehajardian@gmail.com?subject=EvidenceDesk">Contact me</a>
 </div>
@@ -42,9 +43,23 @@
 <div class="demo-controls"><label>Example<select id="evidence-select" data-initial="answer"><option value="answer">Answer with source passage</option><option value="abstain">Abstention when evidence is absent</option><option value="limitation">Known frozen v7 limitation</option></select></label></div>
 <p id="evidence-live" class="sr-status" aria-live="polite"></p><div id="evidence-output" class="demo-output" aria-live="polite"></div>
 </section>
+<section class="panel demo spaced" id="follow-up-evaluation" aria-labelledby="follow-up-title">
+<p class="eyebrow">Recorded comparison</p>
+<h2 id="follow-up-title">Follow-up evaluation</h2>
+<p><strong>Both versions failed. Answer accuracy stays at 2/18.</strong> The candidate returns fewer unsupported answers. It does not find more correct answers or resolve all conflicting evidence.</p>
+<p>Recorded evaluation; no live model or backend call. The evaluation uses a synthetic corpus. Results apply only to the recorded scope and cases; they do not establish performance on other documents or production traffic.</p>
+<p id="follow-up-status" class="quiet" role="status" aria-live="polite">Loading the recorded comparison…</p>
+<div id="follow-up-content" hidden>
+<p id="follow-up-summary"></p>
+<div id="follow-up-metrics" class="grid two" aria-label="Baseline and candidate metrics"></div>
+<div class="demo-controls"><label for="follow-up-case">Recorded case</label><select id="follow-up-case" aria-controls="follow-up-case-output"></select></div>
+<div id="follow-up-case-output" aria-live="polite"></div>
+<ul id="follow-up-links"></ul>
+</div>
+</section>
 <section class="panel"><h2>A concrete frozen v7 error</h2><p>Case <code>v7-a12</code> asked, “When did the custody become effective, including the time?” The expected source was <code>chain_of_custody.md</code>, page 2: “Custody became effective on 27 August 2031 at 08:30.” The recorded answer instead said “Conflicting values are supported” and cited both that page and a page 3 renewal date in 2032. The relevant passage was retrieved, but the answer failed.</p><p><strong>Hypothesis:</strong> the answer decision confused the effective date with renewal despite a relevant citation. That is an interpretation of this case, not a measured causal fix. Check the <a href="https://github.com/LuxuriantTech/evidencedesk/blob/main/datasets/blind_holdout_v7/evaluation_cases.json">frozen case</a>, <a href="https://github.com/LuxuriantTech/evidencedesk/blob/main/artifacts/evaluations/holdout_v7/raw.json">recorded output</a> and <a href="https://github.com/LuxuriantTech/evidencedesk/blob/main/docs/holdout-v7-analysis.md">analysis</a>. Later fixes did not rerun v7.</p></section>
 <section class="negative">
-<p>A development fix now separates effective and renewal dates in the <code>grounded-local-v3</code> provider, with regression cases for dates and clock times. The extractive provider is unchanged. These are development checks, not a new independent evaluation or an improvement measured on v7. <a href="https://github.com/LuxuriantTech/evidencedesk/blob/b8f153db913dc109646c98b8183f24d098b9dc2b/docs/independent-evaluation-plan.md">Read the next evaluation protocol</a>.</p>
+<p>Later development changes check source scope, local conditions and compatible record identifiers before retaining an answer. E4 above is a separate synthetic comparison; v7 was not rerun or rescored. Earlier unsuccessful follow-ups remain in the repository alongside the current record.</p>
 <strong>Relevant passages, unreliable answers</strong>
 <p>The recorded evaluation found the right passage in all 25 answerable examples, but answered only 9 correctly (36%). That evaluation failed and has not been rerun. The technical record calls this HONEST_NEGATIVE.</p>
 </section>
@@ -121,5 +136,6 @@ docker compose down</code>
 <p>Built with AI assistance. I frame the tasks and review the results with coding assistants while learning to write code independently. <a href="/#method">How I work</a> · <a href="mailto:mehajardian@gmail.com">Contact me</a></p>
 </footer>
 <script src="../demo.js"></script>
+<script type="module" src="./recorded-evaluation.js"></script>
 </body>
 </html>

@@ -55,9 +55,32 @@ byId('contract-select').addEventListener('change', load);
 byId('contract-reset').addEventListener('click', () => { byId('contract-select').value = 'parameter'; load(); });
 for (const id of ['contract-baseline', 'contract-candidate']) byId(id).addEventListener('input', () => invalidate());
 download.addEventListener('click', () => {
-  if (!latest) return;
-  const url = URL.createObjectURL(new Blob([JSON.stringify(latest, null, 2) + '\n'], { type: 'application/json' }));
-  const link = document.createElement('a'); link.href = url; link.download = 'api-contract-report.json'; link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  const report = latest;
+  if (!report) return;
+  let url = '';
+  let link;
+  try {
+    if (typeof Blob !== 'function' || typeof URL?.createObjectURL !== 'function') throw new Error('Download APIs are unavailable.');
+    url = URL.createObjectURL(new Blob([JSON.stringify(report, null, 2) + '\n'], { type: 'application/json' }));
+    if (!url) throw new Error('A download URL could not be created.');
+    link = document.createElement('a');
+    if (!link) throw new Error('A download link could not be created.');
+    link.href = url;
+    link.download = 'api-contract-report.json';
+    link.hidden = true;
+    document.body.append(link);
+    link.click();
+  } catch {
+    live.textContent = 'Could not start the JSON download. Open the computed JSON report below to copy it.';
+  } finally {
+    link?.remove();
+    if (url) {
+      const release = () => {
+        try { URL.revokeObjectURL(url); } catch { /* Keep cleanup failures out of the comparison. */ }
+      };
+      try { window.setTimeout(release, 60_000); }
+      catch { release(); }
+    }
+  }
 });
 load();

@@ -68,13 +68,18 @@ test("keeps EvidenceDesk's positive and negative evaluation together", () => {
   assert.match(project.limit, /36% answerable-case accuracy/);
   assert.match(project.limit, /45\.67% extraction F1/);
   assert.match(publicCopy, /synthetic data only/i);
+  assert.match(project.proof, /2\/18/);
+  assert.match(project.proof, /Both versions receive FAIL/);
+  assert.match(project.limit, /same two correct citations and no recall gain/);
 });
 
 test("separates new development proofs from frozen historical results", async () => {
   const evidence = await readFile(new URL("../public/projects/evidencedesk/index.html", import.meta.url), "utf8");
   const pmr = await readFile(new URL("../public/projects/postgres-migration-rehearsal/index.html", import.meta.url), "utf8");
-  assert.match(evidence, /the extractive provider is unchanged/i);
-  assert.match(evidence, /not a new independent evaluation/i);
+  assert.match(evidence, /Both versions failed\. Answer accuracy stays at 2\/18/);
+  assert.match(evidence, /Recorded evaluation; no live model or backend call/);
+  assert.match(evidence, /v7 was not rerun or rescored/i);
+  assert.match(evidence, /recorded comparison file|recorded-evaluation\.js/);
   assert.match(pmr, /PMR-DEMO-20261022-v2/);
   assert.match(pmr, /historical browser image and Phase B record unchanged/i);
 });

@@ -265,22 +265,93 @@
 .certificate-issuer time { color: var(--muted); font-size: .82rem; }
 .certificate-detail h3 { margin: 0; font-size: 1.18rem; line-height: 1.4; }
 .certificate-detail p { margin: 10px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.6; }
-.certificate-list li > a {
+.certificate-list li > a,
+.certificate-list li > button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
   font-size: .86rem;
   white-space: nowrap;
 }
-.certificate-list a svg { flex-shrink: 0; }
+.certificate-list li > button:hover,
+.certificate-list li > button:focus-visible { color: var(--cobalt); }
+.certificate-list a svg,
+.certificate-list button svg { flex-shrink: 0; }
 .availability .availability-certificates { color: var(--cobalt); font-size: .78rem; line-height: 1.6; }
 @media (max-width: 900px) {
   .certificate-list li { grid-template-columns: minmax(130px, 1fr) minmax(0, 2fr); gap: 16px 24px; }
-  .certificate-list li > a { grid-column: 2; justify-self: start; }
+  .certificate-list li > a,
+  .certificate-list li > button { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 600px) {
   .certificate-list li { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-  .certificate-list li > a { grid-column: 1; }
+  .certificate-list li > a,
+  .certificate-list li > button { grid-column: 1; }
   .certificate-issuer { display: flex; justify-content: space-between; gap: 16px; }
+}
+
+.document-viewer[data-family="certificate"] .document-viewer-toolbar {
+  grid-template-areas: "title actions" "tabs tabs";
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.document-viewer[data-family="certificate"] .document-viewer-canvas { overflow-x: hidden; }
+.document-viewer[data-family="certificate"] .document-viewer-toolbar > div:first-child { grid-area: title; min-width: 0; }
+.document-viewer[data-family="certificate"] .document-tabs { grid-area: tabs; width: 100%; flex-wrap: wrap; }
+.document-viewer[data-family="certificate"] .document-tabs button {
+  min-width: 0;
+  min-height: 44px;
+  flex: 1 1 150px;
+  padding-inline: 10px;
+  white-space: normal;
+  line-height: 1.25;
+}
+.document-viewer[data-family="certificate"] .document-viewer-actions {
+  grid-area: actions;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.document-viewer[data-family="certificate"] .document-page--certificate {
+  width: min(1320px, 100%);
+  padding: clamp(18px, 3vw, 42px);
+}
+.certificate-preview-heading { margin-bottom: clamp(16px, 2.5vw, 32px); }
+.certificate-preview-heading h3 { margin: 8px 0 0; font-size: clamp(1.1rem, 2vw, 1.6rem); line-height: 1.35; }
+.certificate-preview-heading .document-page-kicker { margin: 0; }
+.certificate-preview-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 74dvh;
+  object-fit: contain;
+  background: #fff;
+}
+.certificate-preview-error { min-height: 35vh; display: grid; align-content: center; justify-items: center; gap: 12px; text-align: center; }
+.certificate-preview-error p { margin: 0; }
+.certificate-preview-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--soft-line); }
+.certificate-preview-links a { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: inherit; font-size: .84rem; }
+
+@media (max-width: 680px) {
+  .document-viewer[data-family="certificate"] .document-viewer-toolbar {
+    grid-template-areas: "title actions" "tabs tabs";
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .document-viewer[data-family="certificate"] .document-tabs button { flex-basis: 120px; }
+  .document-viewer[data-family="certificate"] .document-viewer-actions a {
+    width: auto;
+    max-width: 100%;
+    padding-inline: 8px;
+    overflow: visible;
+    font-size: .65rem;
+    white-space: normal;
+  }
+  .document-viewer[data-family="certificate"] .document-viewer-actions { gap: 4px; }
+  .document-viewer[data-family="certificate"] .document-page--certificate { padding: 18px 12px 22px; }
+  .certificate-preview-image { max-height: 62dvh; }
 }

@@ -118,7 +118,12 @@
       "issued": "2026-10-21",
       "dateLabel": "21 October 2026",
       "url": "https://coursera.org/verify/professional-cert/N32U47MIOPT8",
-      "topics": "Python, SQL, data analysis, visualization and machine learning."
+      "topics": "Python, SQL, data analysis, visualization and machine learning.",
+      "pdfPath": "/certificates/ibm-data-science.pdf",
+      "previewPath": "/certificates/ibm-data-science.webp",
+      "previewWidth": 2000,
+      "previewHeight": 1546,
+      "shortLabel": "IBM Data Science"
     },
     {
       "id": "ibm-rag-agentic-ai",
@@ -127,7 +132,12 @@
       "issued": "2026-10-20",
       "dateLabel": "20 October 2026",
       "url": "https://coursera.org/verify/professional-cert/6US6D34EP5HH",
-      "topics": "RAG, vector databases, LangChain, LangGraph and AI agents."
+      "topics": "RAG, vector databases, LangChain, LangGraph and AI agents.",
+      "pdfPath": "/certificates/ibm-rag-agentic-ai.pdf",
+      "previewPath": "/certificates/ibm-rag-agentic-ai.webp",
+      "previewWidth": 2000,
+      "previewHeight": 1546,
+      "shortLabel": "IBM RAG"
     },
     {
       "id": "hbr-generative-ai",
@@ -136,7 +146,12 @@
       "issued": "2026-10-16",
       "dateLabel": "16 October 2026",
       "url": "https://coursera.org/verify/specialization/L63FZRUUHWZO",
-      "topics": "Generative AI for communication, team management and decision-making."
+      "topics": "Generative AI for communication, team management and decision-making.",
+      "pdfPath": "/certificates/hbr-generative-ai.pdf",
+      "previewPath": "/certificates/hbr-generative-ai.webp",
+      "previewWidth": 2000,
+      "previewHeight": 1546,
+      "shortLabel": "HBR GenAI"
     },
     {
       "id": "hbr-business-savvy",
@@ -145,7 +160,12 @@
       "issued": "2026-10-16",
       "dateLabel": "16 October 2026",
       "url": "https://coursera.org/verify/specialization/8U4BHMJ3Q7OJ",
-      "topics": "Business strategy, financial fundamentals and technology decisions."
+      "topics": "Business strategy, financial fundamentals and technology decisions.",
+      "pdfPath": "/certificates/hbr-business-savvy.pdf",
+      "previewPath": "/certificates/hbr-business-savvy.webp",
+      "previewWidth": 2000,
+      "previewHeight": 1546,
+      "shortLabel": "HBR Business"
     },
     {
       "id": "google-ai",
@@ -154,7 +174,12 @@
       "issued": "2026-05-13",
       "dateLabel": "13 May 2026",
       "url": "https://coursera.org/verify/professional-cert/OHRKXV88PT8R",
-      "topics": "Practical AI for research, communication, data analysis and app building."
+      "topics": "Practical AI for research, communication, data analysis and app building.",
+      "pdfPath": "/certificates/google-ai.pdf",
+      "previewPath": "/certificates/google-ai.webp",
+      "previewWidth": 2000,
+      "previewHeight": 1546,
+      "shortLabel": "Google AI"
     }
   ]
 }

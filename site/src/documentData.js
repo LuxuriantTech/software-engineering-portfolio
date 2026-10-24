@@ -40,6 +40,23 @@ export const CV_FR_CONTENT = careerContent.cv_fr;
 export const LETTER_CONTENT = careerContent.letter;
 export const CERTIFICATES = careerContent.certificates;
 
+export const CERTIFICATE_DOCUMENTS = CERTIFICATES.map((certificate, index) => ({
+  ...certificate,
+  index: String(index + 1).padStart(2, "0"),
+  shortLabel: certificate.shortLabel,
+  fileName: certificate.pdfPath?.split("/").at(-1) ?? `${certificate.id}.pdf`,
+}));
+
+export function documentFamily(id) {
+  return CERTIFICATE_DOCUMENTS.some((certificate) => certificate.id === id)
+    ? "certificate"
+    : "document";
+}
+
 export function documentById(id) {
-  return DOCUMENTS.find((document) => document.id === id) ?? DOCUMENTS[0];
+  return (
+    DOCUMENTS.find((document) => document.id === id) ??
+    CERTIFICATE_DOCUMENTS.find((certificate) => certificate.id === id) ??
+    DOCUMENTS[0]
+  );
 }

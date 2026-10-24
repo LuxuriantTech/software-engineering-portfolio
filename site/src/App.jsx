@@ -11,9 +11,11 @@ import {
   CV_CONTENT,
   CV_FR_CONTENT,
   CERTIFICATES,
+  CERTIFICATE_DOCUMENTS,
   DOCUMENTS,
   LETTER_CONTENT,
   documentById,
+  documentFamily,
 } from "./documentData.js";
 import {
   CAPABILITY_GROUPS,
@@ -510,6 +512,46 @@ function LetterDocument() {
   );
 }
 
+function CertificateDocument({ certificate }) {
+  const [previewFailed, setPreviewFailed] = useState(false);
+
+  return (
+    <article
+      className="document-page document-page--certificate"
+      id="document-panel"
+      role="tabpanel"
+      aria-labelledby={`document-tab-${certificate.id}`}
+    >
+      <header className="certificate-preview-heading">
+        <p className="document-page-kicker">{certificate.issuer} · {certificate.dateLabel}</p>
+        <h3>{certificate.title}</h3>
+      </header>
+      {previewFailed ? (
+        <div className="certificate-preview-error" role="status">
+          <p>The certificate preview could not be loaded.</p>
+          <a href={certificate.pdfPath} target="_blank" rel="noopener noreferrer">Open the original PDF</a>
+        </div>
+      ) : (
+        <img
+          className="certificate-preview-image"
+          src={certificate.previewPath}
+          width={certificate.previewWidth}
+          height={certificate.previewHeight}
+          alt={`Preview of the ${certificate.title} certificate issued by ${certificate.issuer}`}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          onError={() => setPreviewFailed(true)}
+        />
+      )}
+      <div className="certificate-preview-links">
+        {!previewFailed ? <a href={certificate.pdfPath} target="_blank" rel="noopener noreferrer">Open PDF</a> : null}
+        <a href={certificate.url} target="_blank" rel="noopener noreferrer">Verify on Coursera <ArrowRightIcon size={17} aria-hidden="true" /></a>
+      </div>
+    </article>
+  );
+}
+
 function readDocumentOrigin(trigger) {
   if (!(trigger instanceof Element)) return null;
 
@@ -531,6 +573,8 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   const tabRefs = useRef([]);
   const [slideDirection, setSlideDirection] = useState("forward");
   const activeDocument = documentById(activeDocumentId);
+  const activeFamily = documentFamily(activeDocumentId);
+  const activeDocuments = activeFamily === "certificate" ? CERTIFICATE_DOCUMENTS : DOCUMENTS;
 
   function updateFlightGeometry(preferredOrigin = originRect) {
     const dialog = dialogRef.current;
@@ -629,19 +673,19 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
   function selectDocument(nextDocumentId) {
     if (nextDocumentId === activeDocumentId) return;
 
-    const currentIndex = DOCUMENTS.findIndex(({ id }) => id === activeDocumentId);
-    const nextIndex = DOCUMENTS.findIndex(({ id }) => id === nextDocumentId);
+    const currentIndex = activeDocuments.findIndex(({ id }) => id === activeDocumentId);
+    const nextIndex = activeDocuments.findIndex(({ id }) => id === nextDocumentId);
     setSlideDirection(nextIndex >= currentIndex ? "forward" : "back");
     onSelect(nextDocumentId);
   }
 
   function moveBetweenTabs(event, currentIndex) {
-    const nextIndex = nextDocumentTabIndex(event.key, currentIndex, DOCUMENTS.length);
+    const nextIndex = nextDocumentTabIndex(event.key, currentIndex, activeDocuments.length);
     if (nextIndex === null) return;
 
     event.preventDefault();
     tabRefs.current[nextIndex]?.focus();
-    selectDocument(DOCUMENTS[nextIndex].id);
+    selectDocument(activeDocuments[nextIndex].id);
   }
 
   return (
@@ -649,6 +693,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
       className="document-viewer"
       ref={dialogRef}
       data-direction={slideDirection}
+      data-family={activeFamily}
       aria-labelledby="document-viewer-title"
       onCancel={(event) => {
         event.preventDefault();
@@ -673,7 +718,7 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
           </div>
 
           <div className="document-tabs" role="tablist" aria-label="Choose a document">
-            {DOCUMENTS.map((document, index) => (
+          {activeDocuments.map((document, index) => (
               <button
                 type="button"
                 role="tab"
@@ -705,7 +750,9 @@ function DocumentViewer({ activeDocumentId, originRect, lastTriggerRef, onSelect
         </header>
 
         <div className="document-viewer-canvas">
-          {activeDocumentId === "letter" ? (
+          {activeFamily === "certificate" ? (
+            <CertificateDocument key={activeDocumentId} certificate={activeDocument} />
+          ) : activeDocumentId === "letter" ? (
             <LetterDocument key="letter" />
           ) : (
             <CvDocument key={activeDocumentId} language={activeDocumentId === "cv-fr" ? "fr" : "en"} />
@@ -884,7 +931,7 @@ function Skills() {
   );
 }
 
-function Certificates() {
+function Certificates({ onOpenDocument }) {
   return (
     <section className="certificates-section" id="certificates" tabIndex={-1} aria-labelledby="certificates-title">
       <div className="section-heading page-grid">
@@ -903,9 +950,9 @@ function Certificates() {
               <h3>{certificate.title}</h3>
               <p>{certificate.topics}</p>
             </div>
-            <a href={certificate.url} target="_blank" rel="noopener noreferrer" aria-label={`Verify ${certificate.title}`}>
-              Verify certificate <ArrowRightIcon size={18} aria-hidden="true" />
-            </a>
+            <button type="button" onClick={(event) => onOpenDocument(certificate.id, event.currentTarget)}>
+              View certificate <ArrowRightIcon size={18} aria-hidden="true" />
+            </button>
           </li>
         ))}
       </ul>
@@ -999,7 +1046,7 @@ function PortfolioExperience() {
           <Work />
           <Method />
           <Skills />
-          <Certificates />
+          <Certificates onOpenDocument={openDocument} />
           <Documents onOpenDocument={openDocument} />
           <About />
           <Contact />

@@ -226,7 +226,7 @@ def header(role="", location="Brussels, Belgium"):
         '<link href="mailto:mehajardian@gmail.com">mehajardian@gmail.com</link><br/>'
         '<link href="https://github.com/LuxuriantTech">github.com/LuxuriantTech</link><br/>'
         '<link href="https://www.linkedin.com/in/ardian-mehaj-572b5a3b0/">LinkedIn / Ardian Mehaj</link><br/>'
-        '<link href="https://ardian-mehaj-portfolio.vercel.app/">Portfolio</link>')
+        '<link href="https://ardianmehaj.dev/">Portfolio</link>')
     table = Table([[p("ARDIAN MEHAJ", "name"), p(contact, "contact")],
         [p(escape(role), "role"), ""]], colWidths=[112 * mm, 62 * mm])
     table.setStyle(TableStyle([

@@ -10,7 +10,7 @@ EvidenceDesk is an experimental document-review and retrieval project built arou
 
 The local prototype includes a React and TypeScript frontend, a FastAPI API, PostgreSQL/pgvector hybrid retrieval, local ONNX embeddings, Redis/ARQ ingestion, and evidence-linked extractive answers. Its API and answer engine are prototype components; they are not an Internet-hosted service or a production deployment. No external model API is required, and the answer engine is deterministic and extractive rather than a proprietary LLM.
 
-The [public comparison reader](https://ardian-mehaj-portfolio.vercel.app/projects/evidencedesk/#follow-up-evaluation) shows all 28 questions from frozen synthetic follow-up E4, with the actual saved baseline and candidate answers and their cited passages. It does not call the local API or run a model.
+The [public comparison reader](https://ardianmehaj.dev/projects/evidencedesk/#follow-up-evaluation) shows all 28 questions from frozen synthetic follow-up E4, with the actual saved baseline and candidate answers and their cited passages. It does not call the local API or run a model.
 
 **Both versions receive FAIL.** Answer accuracy stays at 2/18. Citation precision rises from 20% to 40% because fewer citations are returned (10 to 5); the number of correct citations remains two and citation recall stays 2/18. Correct abstention rises from 3/10 to 5/10. This is greater caution, not improved answer accuracy or production qualification. Earlier unsuccessful E1/E2/E3 comparisons and the E3 evidence-loss incident are retained in the source repository.
 

@@ -8,7 +8,7 @@ five projects link to dedicated public repositories, including clean source snap
 ToolCall Replay, Entity Resolution Workbench and PostgreSQL Migration Rehearsal. Examples use
 synthetic data and keep their limitations visible.
 
-- [Browse the live portfolio](https://ardian-mehaj-portfolio.vercel.app)
+- [Browse the live portfolio](https://ardianmehaj.dev)
 - [Review the complete EvidenceDesk repository](https://github.com/LuxuriantTech/evidencedesk)
 - [Review API Contract Guard](https://github.com/LuxuriantTech/api-contract-guard)
 - [Review ToolCall Replay](https://github.com/LuxuriantTech/toolcall-replay)
@@ -32,7 +32,7 @@ development role. I completed the certificates below through Coursera.
 | [Strengthen Your Business Savvy Specialization](https://coursera.org/verify/specialization/8U4BHMJ3Q7OJ) | Harvard Business Review | 16 October 2026 |
 | [Google AI Professional Certificate](https://coursera.org/verify/professional-cert/OHRKXV88PT8R) | Google | 13 May 2026 |
 
-[Public CV in English](https://ardian-mehaj-portfolio.vercel.app/documents/Ardian_Mehaj_Public_CV_EN.pdf) · [Public CV in French](https://ardian-mehaj-portfolio.vercel.app/documents/Ardian_Mehaj_Public_CV_FR.pdf)
+[Public CV in English](https://ardianmehaj.dev/documents/Ardian_Mehaj_Public_CV_EN.pdf) · [Public CV in French](https://ardianmehaj.dev/documents/Ardian_Mehaj_Public_CV_FR.pdf)
 
 ## First three review paths
 

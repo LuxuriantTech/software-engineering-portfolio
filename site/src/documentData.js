@@ -8,7 +8,7 @@ export const DOCUMENTS = [
     eyebrow: "Public CV · English",
     title: "My projects, experience and studies.",
     summary:
-      "A one-page overview of my background and the projects I have built with AI assistance.",
+      "A one-page CV with my OPIT results, technical projects and selected certificates.",
     pdfPath: "/documents/Ardian_Mehaj_Public_CV_EN.pdf",
     fileName: "Ardian_Mehaj_Public_CV_EN.pdf",
   },
@@ -18,7 +18,7 @@ export const DOCUMENTS = [
     index: "02",
     eyebrow: "CV public · Français",
     title: "Mes projets, mon parcours et mes études.",
-    summary: "Mon profil et mes projets en une page, en français.",
+    summary: "Mes résultats à l’OPIT, mes projets techniques et une sélection de certificats en une page.",
     pdfPath: "/documents/Ardian_Mehaj_Public_CV_FR.pdf",
     fileName: "Ardian_Mehaj_Public_CV_FR.pdf",
   },
@@ -39,6 +39,9 @@ export const CV_CONTENT = careerContent.cv;
 export const CV_FR_CONTENT = careerContent.cv_fr;
 export const LETTER_CONTENT = careerContent.letter;
 export const CERTIFICATES = careerContent.certificates;
+
+const certificatesById = new Map(CERTIFICATES.map((certificate) => [certificate.id, certificate]));
+export const CV_CERTIFICATES = careerContent.cvCertificateIds.map((id) => certificatesById.get(id));
 
 export const CERTIFICATE_DOCUMENTS = CERTIFICATES.map((certificate, index) => ({
   ...certificate,

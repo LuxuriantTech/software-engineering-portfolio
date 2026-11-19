@@ -1,53 +1,54 @@
 {
   "cv": {
-    "role": "Junior software developer | Python & TypeScript",
+    "role": "Computer Science Student | Python, Backend & Applied AI",
     "location": "Brussels, Belgium",
-    "profile": "Junior software developer focused on developer tooling, workflow checks and data quality. I define expected behaviour, use AI coding assistants for implementation and review code, tests and observed results. I am seeking my first role with scoped tasks and code review.",
+    "profile": "I am looking for an internship or junior role in software development. On personal projects, I define requirements, integrate components, use AI coding assistants for implementation and review code, tests and observed results.",
     "projects": [
+      {
+        "name": "Synthévia",
+        "url": "https://github.com/LuxuriantTech/software-engineering-portfolio/tree/main/projects/synthevia",
+        "meta": "Creator and project lead | Python, FastAPI, React, PostgreSQL, Redis",
+        "detail": "Led a personal market analysis, simulated trading and learning project. Integrated a document-grounded assistant with citations and access checks."
+      },
+      {
+        "name": "EvidenceDesk",
+        "url": "https://github.com/LuxuriantTech/evidencedesk",
+        "meta": "Document review prototype | Python, FastAPI",
+        "detail": "Worked on passage retrieval, page-linked citations and per-user access controls. Defined checks for source support and abstention, and documented evaluation limits."
+      },
       {
         "name": "API Contract Guard",
         "url": "https://github.com/LuxuriantTech/api-contract-guard",
-        "meta": "TypeScript, Node.js, OpenAPI",
-        "detail": "Local CLI comparing five categories of API contract changes, with JSON/HTML reports and explicit rejection of unsupported inputs. Defined the supported checks and expected reports; reviewed the assisted implementation and test cases. Published validation records 102 local tests."
-      },
-      {
-        "name": "ToolCall Replay",
-        "url": "https://github.com/LuxuriantTech/toolcall-replay",
-        "meta": "JavaScript browser demo; Python, pytest evaluator",
-        "detail": "Browser demo evaluates editable synthetic JSONL traces against seven supported rule types; it executes no tools or models. The separate local Python evaluator and selected tests are available in the public source snapshot."
-      },
-      {
-        "name": "Entity Resolution Workbench",
-        "url": "https://github.com/LuxuriantTech/entity-resolution-workbench",
-        "meta": "JavaScript browser demo; Python, pytest matcher",
-        "detail": "The browser demo applies a bounded JavaScript score to two editable fictional product records; it makes no MATCH, REVIEW or NO_MATCH decision, and the score is not a probability. The separate public Python matcher uses candidate context and additional decision rules."
+        "meta": "Developer tooling | TypeScript, Node.js, OpenAPI",
+        "detail": "Defined requirements for a CLI and demo comparing five categories of API changes, with JSON and HTML reports. Reviewed tests for unsupported inputs."
       }
     ],
     "experience": [
       {
         "name": "Delhaize, Brussels",
-        "meta": "Student employee | 2020 - 2022",
-        "detail": "Coordinated daily tasks with colleagues and helped organise the team when the manager was absent."
+        "meta": "Student employee | 2020–2022",
+        "detail": "Coordinated daily tasks and helped organise the team when the manager was absent."
       },
       {
         "name": "Volunteer tutor",
-        "meta": "2020 - present",
-        "detail": "Explain mathematics, science and business topics in clear steps, adapting to the learner."
+        "meta": "2020–present",
+        "detail": "Explain mathematics, science and business topics in steps adapted to the learner."
       }
     ],
     "education": [
       {
-        "name": "OPIT | BSc (Hons) Computer Science, online",
-        "detail": "Online course began in September 2026. Studying alongside my search for full-time work."
+        "name": "OPIT (Open Institute of Technology) | BSc (Hons) Computer Science",
+        "meta": "First year, online | September 2026–June 2029 (expected)",
+        "detail": "Provisional results across five courses: 100%, 100%, 97%, 97%, 94% (97.6% unweighted average)."
       },
       {
-        "name": "Institut Technique René Cartigny | CESS | June 2025",
-        "detail": "Completed Belgian upper-secondary education, polyvalent mechanics."
+        "name": "Institut Technique René Cartigny | CESS",
+        "meta": "June 2025",
+        "detail": "Belgian upper-secondary diploma, polyvalent mechanics."
       }
     ],
-    "certification": "HackerRank: SQL Advanced and Python Basic, September 2026.",
-    "languages": "French: main language | Albanian: native | English: EF SET 77/100, C2 overall (18 September 2026).",
-    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, REST APIs, PostgreSQL, Git, Docker, pytest, Playwright and GitHub Actions."
+    "languages": "French: primary | Albanian: native | English: EF SET 77/100, C2 overall.",
+    "tools": "Python (foundations), SQL, TypeScript, JavaScript, FastAPI, REST APIs, PostgreSQL, Redis, Git, Docker, pytest and GitHub Actions. Coursework in RAG, vector retrieval, LangChain and LangGraph."
   },
   "letter": {
     "subject": "Open application | Junior software developer",
@@ -61,56 +62,113 @@
     "closing": "Thank you for your time,"
   },
   "cv_fr": {
-    "role": "Développeur logiciel junior | Python & TypeScript",
+    "role": "Étudiant en informatique | Python, backend et IA appliquée",
     "location": "Bruxelles, Belgique",
-    "profile": "Développeur logiciel junior intéressé par les outils de développement, les contrôles de flux et la qualité des données. Je définis les comportements attendus, utilise des assistants IA pour l’implémentation et vérifie le code, les tests et les résultats observés. Je cherche un premier poste avec des tâches cadrées et une revue de code.",
+    "profile": "Je recherche un stage ou un premier poste en développement logiciel. Sur mes projets personnels, je définis les besoins, j’intègre les composants, j’utilise des assistants IA pour l’implémentation et je vérifie le code, les tests et les résultats.",
     "projects": [
+      {
+        "name": "Synthévia",
+        "url": "https://github.com/LuxuriantTech/software-engineering-portfolio/tree/main/projects/synthevia",
+        "meta": "Créateur et responsable du projet | Python, FastAPI, React, PostgreSQL, Redis",
+        "detail": "Pilotage d’un projet personnel d’analyse des marchés, de simulation de trading et d’apprentissage. Intégration d’un assistant qui cite ses sources et contrôle les accès."
+      },
+      {
+        "name": "EvidenceDesk",
+        "url": "https://github.com/LuxuriantTech/evidencedesk",
+        "meta": "Prototype de revue documentaire | Python, FastAPI",
+        "detail": "Travail sur la recherche de passages, les citations par page et les accès par utilisateur. Définition des contrôles de réponse et d’abstention, avec documentation des limites de l’évaluation."
+      },
       {
         "name": "API Contract Guard",
         "url": "https://github.com/LuxuriantTech/api-contract-guard",
-        "meta": "TypeScript, Node.js, OpenAPI",
-        "detail": "Outil CLI local comparant cinq catégories de changements de contrats API, avec rapports JSON/HTML et rejet des entrées non prises en charge. Définition des contrôles et rapports attendus ; revue de l’implémentation assistée et des tests. La validation publiée recense 102 tests locaux."
-      },
-      {
-        "name": "ToolCall Replay",
-        "url": "https://github.com/LuxuriantTech/toolcall-replay",
-        "meta": "Démo navigateur JavaScript ; évaluateur Python, pytest",
-        "detail": "La démo web évalue des traces JSONL fictives et modifiables selon sept types de règles ; elle n’exécute aucun outil ni modèle. L’évaluateur Python local, distinct, et une sélection de tests sont disponibles dans le dépôt public."
-      },
-      {
-        "name": "Entity Resolution Workbench",
-        "url": "https://github.com/LuxuriantTech/entity-resolution-workbench",
-        "meta": "Démo navigateur JavaScript ; moteur Python, pytest",
-        "detail": "Dans la démo web, un calcul JavaScript borné compare deux fiches fictives modifiables ; le score n’est ni une décision MATCH, REVIEW ou NO_MATCH ni une probabilité. Le moteur Python public est distinct et tient compte du contexte des candidats et d’autres règles de décision."
+        "meta": "Outil de développement | TypeScript, Node.js, OpenAPI",
+        "detail": "Définition des besoins d’une CLI et d’une démo qui comparent cinq catégories de changements d’API et produisent des rapports JSON et HTML. Revue des tests sur les entrées non prises en charge."
       }
     ],
     "experience": [
       {
         "name": "Delhaize, Bruxelles",
-        "meta": "Employé étudiant | 2020 - 2022",
-        "detail": "Coordination des tâches quotidiennes avec les collègues et aide à l’organisation de l’équipe en l’absence du responsable."
+        "meta": "Employé étudiant | 2020–2022",
+        "detail": "Coordination des tâches quotidiennes et aide à l’organisation de l’équipe en l’absence du responsable."
       },
       {
         "name": "Tutorat bénévole",
-        "meta": "2020 - aujourd’hui",
-        "detail": "Explication progressive de notions de mathématiques, sciences et gestion, adaptée à chaque élève."
+        "meta": "2020–aujourd’hui",
+        "detail": "Explication de notions de mathématiques, sciences et gestion, au rythme de chaque élève."
       }
     ],
     "education": [
       {
-        "name": "OPIT | BSc (Hons) Computer Science, en ligne",
-        "detail": "Cursus en ligne commencé en septembre 2026. Études poursuivies en parallèle de ma recherche d’emploi à temps plein."
+        "name": "OPIT (Open Institute of Technology) | BSc (Hons) Computer Science",
+        "meta": "Première année, en ligne | septembre 2026–juin 2029 (prévu)",
+        "detail": "Résultats provisoires dans cinq cours : 100 %, 100 %, 97 %, 97 %, 94 % (moyenne non pondérée de 97,6 %)."
       },
       {
-        "name": "Institut Technique René Cartigny | CESS | Juin 2025",
-        "detail": "Enseignement secondaire supérieur terminé, option mécanicien polyvalent."
+        "name": "Institut Technique René Cartigny | CESS",
+        "meta": "Juin 2025",
+        "detail": "Certificat d’enseignement secondaire supérieur, option mécanicien polyvalent."
       }
     ],
-    "certification": "HackerRank : SQL Advanced et Python Basic, septembre 2026.",
-    "languages": "Français : langue principale | Albanais : langue maternelle | Anglais : EF SET 77/100, C2 global (18 septembre 2026).",
-    "tools": "Python, TypeScript/JavaScript, SQL, React, FastAPI, API REST, PostgreSQL, Git, Docker, pytest, Playwright et GitHub Actions."
+    "languages": "Français : langue principale | Albanais : langue maternelle | Anglais : EF SET 77/100, C2 global.",
+    "tools": "Python (bases), SQL, TypeScript, JavaScript, FastAPI, API REST, PostgreSQL, Redis, Git, Docker, pytest et GitHub Actions. Formations sur le RAG, la recherche vectorielle, LangChain et LangGraph."
   },
   "certificates": [
+    {
+      "id": "ibm-ai-engineering",
+      "title": "IBM AI Engineering Professional Certificate",
+      "issuer": "IBM",
+      "issued": "2026-11-06",
+      "dateLabel": "6 November 2026",
+      "url": "https://coursera.org/verify/professional-cert/O13LT6TZVRZL",
+      "topics": "Deep learning with PyTorch, TensorFlow and Keras, plus LLM fine-tuning and RAG.",
+      "pdfPath": "/certificates/ibm-ai-engineering.pdf",
+      "previewPath": "/certificates/ibm-ai-engineering.webp",
+      "shortLabel": "IBM AI Engineering",
+      "previewWidth": 1901,
+      "previewHeight": 1469
+    },
+    {
+      "id": "ibm-machine-learning",
+      "title": "IBM Machine Learning Professional Certificate",
+      "issuer": "IBM",
+      "issued": "2026-11-06",
+      "dateLabel": "6 November 2026",
+      "url": "https://coursera.org/verify/professional-cert/4SOICHU3DLPK",
+      "topics": "Exploratory analysis, supervised and unsupervised learning, and model evaluation in Python.",
+      "pdfPath": "/certificates/ibm-machine-learning.pdf",
+      "previewPath": "/certificates/ibm-machine-learning.webp",
+      "shortLabel": "IBM ML",
+      "previewWidth": 1901,
+      "previewHeight": 1469
+    },
+    {
+      "id": "sas-managing-machine-learning-models",
+      "title": "Managing Machine Learning Models",
+      "issuer": "SAS",
+      "issued": "2026-11-06",
+      "dateLabel": "6 November 2026",
+      "url": "https://coursera.org/verify/MVGYEYJH7I6J",
+      "topics": "Course certificate covering deployment testing, automated scoring and model monitoring.",
+      "pdfPath": "/certificates/sas-managing-machine-learning-models.pdf",
+      "previewPath": "/certificates/sas-managing-machine-learning-models.webp",
+      "shortLabel": "SAS Model Management",
+      "previewWidth": 1901,
+      "previewHeight": 1469
+    },
+    {
+      "id": "ibm-data-analyst",
+      "title": "IBM Data Analyst Professional Certificate",
+      "issuer": "IBM",
+      "issued": "2026-10-28",
+      "dateLabel": "28 October 2026",
+      "url": "https://coursera.org/verify/professional-cert/SZQ8PUJISP56",
+      "topics": "Data analysis with Excel, SQL and Python, plus visualization and dashboards.",
+      "pdfPath": "/certificates/ibm-data-analyst.pdf",
+      "previewPath": "/certificates/ibm-data-analyst.webp",
+      "shortLabel": "IBM Data Analyst",
+      "previewWidth": 1901,
+      "previewHeight": 1469
+    },
     {
       "id": "ibm-data-science",
       "title": "IBM Data Science Professional Certificate",
@@ -181,5 +239,13 @@
       "previewHeight": 1546,
       "shortLabel": "Google AI"
     }
+  ],
+  "cvCertificateIds": [
+    "ibm-ai-engineering",
+    "ibm-machine-learning",
+    "ibm-rag-agentic-ai",
+    "ibm-data-science",
+    "hbr-generative-ai",
+    "hbr-business-savvy"
   ]
 }

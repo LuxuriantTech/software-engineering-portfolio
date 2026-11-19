@@ -10,6 +10,7 @@ import {
 import {
   CV_CONTENT,
   CV_FR_CONTENT,
+  CV_CERTIFICATES,
   CERTIFICATES,
   CERTIFICATE_DOCUMENTS,
   DOCUMENTS,
@@ -240,7 +241,7 @@ function Intro({ onOpenDocument }) {
         <aside className="availability" aria-label="Role and availability">
           <p className="availability-status"><span aria-hidden="true" />Available for junior roles</p>
           <p>Developer tools · Backend · Data quality</p>
-          <a className="availability-certificates" href="#certificates">IBM Data Science · RAG &amp; Agentic AI</a>
+          <a className="availability-certificates" href="#certificates">IBM AI Engineering · Machine Learning</a>
           <p>Seeking full-time work · Hours to discuss<br />OPIT online BSc · Began September 2026</p>
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </aside>
@@ -405,7 +406,29 @@ function Documents({ onOpenDocument }) {
 
 function CvDocument({ language = "en" }) {
   const cv = language === "fr" ? CV_FR_CONTENT : CV_CONTENT;
-  const labels = language === "fr" ? { edition: "CV public · 2026", profile: "Profil", projects: "Projets sélectionnés", experience: "Expérience", education: "Formation et certification", tools: "Outils utilisés avec l’IA" } : { edition: "Public CV · 2026", profile: "Profile", projects: "Selected projects", experience: "Experience", education: "Education & certification", tools: "Tools used with AI assistance" };
+  const labels = language === "fr"
+    ? {
+        edition: "CV public · 2026",
+        profile: "Profil",
+        projects: "Projets sélectionnés",
+        experience: "Expérience",
+        education: "Formation",
+        certificates: "Certificats",
+        tools: "Compétences techniques",
+        languages: "Langues et disponibilité",
+        availability: "Disponible immédiatement.",
+      }
+    : {
+        edition: "Public CV · 2026",
+        profile: "Profile",
+        projects: "Selected projects",
+        experience: "Experience",
+        education: "Education",
+        certificates: "Certificates",
+        tools: "Technical skills",
+        languages: "Languages and availability",
+        availability: "Available immediately.",
+      };
   return (
     <article className="document-page document-page--cv" id="document-panel" role="tabpanel" lang={language} aria-labelledby={language === "fr" ? "document-tab-cv-fr" : "document-tab-cv"}>
       <header className="document-page-header">
@@ -425,6 +448,17 @@ function CvDocument({ language = "en" }) {
           </a>
         </address>
       </header>
+
+      <section className="document-block">
+        <h3>{labels.education}</h3>
+        {cv.education.map((education) => (
+          <div className="document-compact-item" key={education.name}>
+            <h4>{education.name}</h4>
+            <p className="document-meta">{education.meta}</p>
+            <p>{education.detail}</p>
+          </div>
+        ))}
+      </section>
 
       <section className="document-block">
         <h3>{labels.profile}</h3>
@@ -456,27 +490,23 @@ function CvDocument({ language = "en" }) {
           ))}
         </div>
         <div>
-          <h3>{labels.education}</h3>
-          {cv.education.map((education) => (
-            <div className="document-compact-item" key={education.name}>
-              <h4>{education.name}</h4>
-              <p>{education.detail}</p>
-            </div>
-          ))}
-          <p className="document-certificate">{cv.certification}</p>
-          {CERTIFICATES.filter(({ issuer }) => issuer === "IBM").map((certificate) => (
+          <h3>{labels.certificates}</h3>
+          {CV_CERTIFICATES.map((certificate) => (
             <p className="document-certificate" key={certificate.id}>
               <a href={certificate.url} target="_blank" rel="noopener noreferrer">{certificate.title}</a>
-              <br />IBM · Coursera · {language === "fr" ? new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${certificate.issued}T00:00:00Z`)) : certificate.dateLabel}
+              <br />{certificate.issuer} · Coursera
             </p>
           ))}
-          <p className="document-languages">{cv.languages}</p>
         </div>
       </section>
 
       <section className="document-block document-block--tools">
         <h3>{labels.tools}</h3>
         <p>{cv.tools}</p>
+      </section>
+      <section className="document-block">
+        <h3>{labels.languages}</h3>
+        <p>{cv.languages} {labels.availability}</p>
       </section>
     </article>
   );
@@ -937,7 +967,7 @@ function Certificates({ onOpenDocument }) {
       <div className="section-heading page-grid">
         <p className="section-label">Education</p>
         <h2 id="certificates-title">Certificates.</h2>
-        <p>Completed through Coursera. Each link opens the credential verification page.</p>
+        <p>View each Coursera certificate, download the original PDF or verify it on Coursera.</p>
       </div>
       <ul className="certificate-list page-grid">
         {CERTIFICATES.map((certificate) => (
@@ -979,7 +1009,7 @@ function About() {
             unfamiliar.
           </p>
           <p>
-            My online BSc (Hons) Computer Science at OPIT began in September 2026. I study alongside my search for full-time work. I speak
+            My online BSc (Hons) Computer Science at OPIT began in September 2026. I’m in my first year and looking for internships and junior roles. I speak
             French and Albanian, with English certified at EF SET C2 overall (77/100, 18 September 2026). I&apos;m based in Brussels
             and looking for remote work from Belgium or an employer-funded move. I plan to combine my studies with full-time work and can discuss the exact working hours with the team.
           </p>

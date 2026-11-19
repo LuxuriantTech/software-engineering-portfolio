@@ -320,13 +320,15 @@ test("publishes three local, public-safe career documents", async () => {
   }
 
   assert.match(CV_CONTENT.profile, /AI coding assistants for implementation/i);
-  assert.deepEqual(CV_CONTENT.projects.map(({ name }) => name), ["API Contract Guard", "ToolCall Replay", "Entity Resolution Workbench"]);
+  assert.deepEqual(CV_CONTENT.projects.map(({ name }) => name), ["Synthévia", "EvidenceDesk", "API Contract Guard"]);
   for (const cv of [CV_CONTENT, CV_FR_CONTENT]) {
-    for (const project of cv.projects) assert.match(project.url, /^https:\/\/github\.com\/LuxuriantTech\/[a-z-]+$/);
+    for (const project of cv.projects) assert.match(project.url, /^https:\/\/github\.com\/LuxuriantTech\/[a-z-]+(?:\/tree\/main\/projects\/[a-z-]+)?$/);
   }
   assert.match(JSON.stringify(CV_CONTENT.education[0]), /OPIT/);
-  assert.match(JSON.stringify(CV_CONTENT.education[0]), /began in September 2026/);
-  assert.match(JSON.stringify(CV_FR_CONTENT.education[0]), /commencé en septembre 2026/);
+  assert.match(CV_CONTENT.education[0].meta, /September 2026–June 2029 \(expected\)/);
+  assert.match(CV_FR_CONTENT.education[0].meta, /septembre 2026–juin 2029 \(prévu\)/);
+  assert.match(CV_CONTENT.education[0].detail, /Provisional.*97\.6% unweighted average/);
+  assert.match(CV_FR_CONTENT.education[0].detail, /provisoires.*97,6 %/);
   assert.doesNotMatch(JSON.stringify({ CV_CONTENT, CV_FR_CONTENT, LETTER_CONTENT }), /classes start|starting on 21 September|début des cours le 21 septembre/i);
   assert.match(JSON.stringify(CV_CONTENT.education), /CESS/);
   assert.match(JSON.stringify(CV_FR_CONTENT.education), /CESS/);
